@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>ThemedControls/TransparentButton.qml</file>
+        <file>Resources/noise.png</file>
+        <file>Resources/properiaty/minecraft.svg</file>
     </qresource>
 </RCC>

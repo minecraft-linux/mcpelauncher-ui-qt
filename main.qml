@@ -17,20 +17,56 @@ Window {
         spacing: 0
         anchors.fill: parent
 
-        Rectangle {
-            id: appbar
-            height: 50
+        Image {
+            id: title
+            smooth: false
+            fillMode: Image.Tile
+            source: "Resources/noise.png"
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
-            color: "#000"
+            Layout.preferredHeight: 100
 
             RowLayout {
                 anchors.fill: parent
 
-                TransparentButton {
-                    text: "This is a test"
-                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    //
+                ColumnLayout {
+
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                    Image {
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        source: "Resources/properiaty/minecraft.svg"
+                    }
+
+                    Text {
+                        color: "#ffffff"
+                        text: qsTr("Unofficial Linux Launcher")
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        font.pixelSize: 16
+                    }
+
+                }
+
+            }
+
+        }
+
+        Image {
+            id: bottomPanel
+            smooth: false
+            fillMode: Image.Tile
+            source: "Resources/noise.png"
+            horizontalAlignment: Image.AlignBottom
+            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            Layout.preferredHeight: 100
+
+            RowLayout {
+                anchors.fill: parent
+
+                Button {
+                    Layout.alignment: Qt.AlignHCenter
+                    text: "Start!"
                 }
 
             }
