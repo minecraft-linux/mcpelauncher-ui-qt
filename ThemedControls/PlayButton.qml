@@ -10,11 +10,19 @@ T.Button {
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
     background: BorderImage {
+        id: buttonBackground
         source: "../Resources/green-button.png"
         smooth: false
-        border { left: 10; top: 10; right: 10; bottom: 10; }
+        border { left: 5; top: 5; right: 5; bottom: 5 }
         horizontalTileMode: BorderImage.Stretch
         verticalTileMode: BorderImage.Stretch
+
+        Rectangle {
+            id: buttonBackgroundOverlay
+            anchors.fill: background
+            color: "#20000000"
+            opacity: 0
+        }
     }
 
     contentItem: Text {
@@ -26,4 +34,38 @@ T.Button {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
+
+    states: [
+        State {
+            name: "normal"
+            when: !control.hovered
+        },
+        State {
+            name: "hovered"
+            when: control.hovered
+            PropertyChanges {
+                target: buttonBackground
+                scale: 1.1
+            }
+            PropertyChanges {
+                target: buttonBackgroundOverlay
+                opacity: 1
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            from: "normal"
+            to: "hovered"
+            PropertyAnimation { target: buttonBackground; property: "scale"; duration: 100; easing.type: Easing.InSine}
+            PropertyAnimation { target: buttonBackgroundOverlay; property: "opacity"; duration: 100; easing.type: Easing.InSine}
+        },
+        Transition {
+            from: "hovered"
+            to: "normal"
+            PropertyAnimation { target: buttonBackground; property: "scale"; duration: 100; easing.type: Easing.OutSine}
+            PropertyAnimation { target: buttonBackgroundOverlay; property: "opacity"; duration: 100; easing.type: Easing.OutSine}
+        }
+    ]
 }
