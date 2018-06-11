@@ -4,5 +4,7 @@
         <file>ThemedControls/TransparentButton.qml</file>
         <file>Resources/noise.png</file>
         <file>Resources/properiaty/minecraft.svg</file>
+        <file>ThemedControls/PlayButton.qml</file>
+        <file>Resources/green-button.png</file>
     </qresource>
 </RCC>

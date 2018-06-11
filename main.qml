@@ -64,9 +64,11 @@ Window {
             RowLayout {
                 anchors.fill: parent
 
-                Button {
+                PlayButton {
                     Layout.alignment: Qt.AlignHCenter
-                    text: "Start!"
+                    text: "PLAY"
+                    Layout.preferredWidth: 200
+                    Layout.preferredHeight: 60
                 }
 
             }
