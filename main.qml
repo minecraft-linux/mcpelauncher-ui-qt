@@ -51,8 +51,40 @@ Window {
 
         }
 
-        MBusyIndicator {
+        Item {
             Layout.alignment: Qt.AlignCenter
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            Layout.margins: 16
+
+            Image {
+                id: newsImage
+                width: parent.width
+                height: parent.height
+                source: "https://community-content-assets.minecraft.net/upload/6626fc3df04c455b2c0000c5c981b341-TileMassive.jpg"
+                fillMode: Image.PreserveAspectFit
+            }
+
+            Rectangle {
+                x: newsImage.x + newsImage.width / 2 - width / 2
+                y: newsImage.height - height
+                width: newsImage.paintedWidth
+                height: childrenRect.height
+                color: "#A0000000"
+
+                Text {
+                    font.weight: Font.Bold
+                    text: "News text placeholder"
+                    color: "white"
+                    padding: 8
+                }
+            }
+
+            MBusyIndicator {
+                x: parent.width / 2 - width / 2
+                y: parent.height / 2 - height / 2
+                visible: newsImage.status == Image.Loading
+            }
         }
 
         Image {
