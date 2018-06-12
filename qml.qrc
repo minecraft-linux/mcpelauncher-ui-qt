@@ -11,5 +11,6 @@
         <file>Resources/dropdown-bg.png</file>
         <file>Resources/dropdown-active.png</file>
         <file>ThemedControls/MBusyIndicator.qml</file>
+        <file>MinecraftNews.qml</file>
     </qresource>
 </RCC>
