@@ -6,5 +6,9 @@
         <file>Resources/properiaty/minecraft.svg</file>
         <file>ThemedControls/PlayButton.qml</file>
         <file>Resources/green-button.png</file>
+        <file>ThemedControls/MComboBox.qml</file>
+        <file>Resources/dropdown.png</file>
+        <file>Resources/dropdown-bg.png</file>
+        <file>Resources/dropdown-active.png</file>
     </qresource>
 </RCC>

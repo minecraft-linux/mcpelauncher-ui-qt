@@ -64,11 +64,31 @@ Window {
             RowLayout {
                 anchors.fill: parent
 
+                ColumnLayout {
+                    Layout.leftMargin: 20
+
+                    Text {
+                        text: "Profile"
+                        color: "#fff"
+                        font.pointSize: 10
+                    }
+
+                    MComboBox {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.preferredWidth: 200
+                        model: ["Default", "Another Profile", "Add new profile..."]
+                    }
+
+                }
+
                 PlayButton {
                     Layout.alignment: Qt.AlignHCenter
                     text: "PLAY"
-                    Layout.preferredWidth: 200
-                    Layout.preferredHeight: 60
+                    Layout.maximumWidth: 400
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 65
+                    Layout.leftMargin: width / 5
+                    Layout.rightMargin: width / 5
                 }
 
             }
