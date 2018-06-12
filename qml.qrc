@@ -10,5 +10,6 @@
         <file>Resources/dropdown.png</file>
         <file>Resources/dropdown-bg.png</file>
         <file>Resources/dropdown-active.png</file>
+        <file>ThemedControls/MBusyIndicator.qml</file>
     </qresource>
 </RCC>

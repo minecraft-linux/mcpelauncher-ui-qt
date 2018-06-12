@@ -51,6 +51,10 @@ Window {
 
         }
 
+        MBusyIndicator {
+            Layout.alignment: Qt.AlignCenter
+        }
+
         Image {
             id: bottomPanel
             smooth: false
