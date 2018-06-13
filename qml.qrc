@@ -12,5 +12,7 @@
         <file>Resources/dropdown-active.png</file>
         <file>ThemedControls/MBusyIndicator.qml</file>
         <file>MinecraftNews.qml</file>
+        <file>LauncherMain.qml</file>
+        <file>LauncherLogin.qml</file>
     </qresource>
 </RCC>

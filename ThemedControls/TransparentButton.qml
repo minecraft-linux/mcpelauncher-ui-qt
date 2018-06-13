@@ -4,6 +4,8 @@ import QtQuick.Templates 2.1 as T
 T.Button {
     id: control
 
+    property color textColor: "white"
+
     padding: 8
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
     implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
@@ -11,8 +13,8 @@ T.Button {
 
     background: Rectangle {
         id: buttonBackground
-        color: "#fff"
-        opacity: control.hovered ? 0.3 : 0
+        color: "#000"
+        opacity: control.hovered ? 0.1 : 0
     }
 
     contentItem: Text {
@@ -21,7 +23,7 @@ T.Button {
 
         font: control.font
         opacity: enabled ? 1.0 : 0.3
-        color: "#fff"
+        color: textColor
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
