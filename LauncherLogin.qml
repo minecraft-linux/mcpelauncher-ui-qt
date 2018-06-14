@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.11
+import QtQuick.Window 2.3
 import "ThemedControls"
+import io.mrarm.mcpelauncher 1.0
 
 Item {
     anchors.fill: parent
@@ -56,6 +58,7 @@ Item {
                 rightPadding: 50
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 22
+                onClicked: googleLoginHelper.acquireAccount(window)
             }
 
             RowLayout {
@@ -96,6 +99,10 @@ Item {
         font.pointSize: 10
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
+    }
+
+    GoogleLoginHelper {
+        id: googleLoginHelper
     }
 
 }
