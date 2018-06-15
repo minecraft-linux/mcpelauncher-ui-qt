@@ -5,7 +5,12 @@ import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
 Item {
-    anchors.fill: parent
+    id: root
+
+    property GoogleLoginHelper googleLoginHelper
+    property bool acquiringAccount: false
+
+    signal finished()
 
     Image {
         anchors.fill: parent
@@ -58,7 +63,10 @@ Item {
                 rightPadding: 50
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 22
-                onClicked: googleLoginHelper.acquireAccount(window)
+                onClicked: function() {
+                    acquiringAccount = true
+                    googleLoginHelper.acquireAccount(window)
+                }
             }
 
             RowLayout {
@@ -75,6 +83,7 @@ Item {
                     textColor: "#0aa82f"
                     Layout.preferredWidth: alternativeOptions.buttonWidth
                     font.pointSize: 12
+                    onClicked: root.finished()
                 }
 
                 TransparentButton {
@@ -101,8 +110,24 @@ Item {
         verticalAlignment: Text.AlignVCenter
     }
 
-    GoogleLoginHelper {
-        id: googleLoginHelper
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        opacity: 0.2
+        visible: acquiringAccount
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+    }
+
+    Connections {
+        target: googleLoginHelper
+        onAccountAcquireFinished: function(acc) {
+            acquiringAccount = false;
+            console.log(acc);
+        }
     }
 
 }

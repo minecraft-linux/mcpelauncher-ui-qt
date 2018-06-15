@@ -5,7 +5,6 @@ import "ThemedControls"
 ColumnLayout {
     id: rowLayout
     spacing: 0
-    anchors.fill: parent
 
     Image {
         id: title

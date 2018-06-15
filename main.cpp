@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
+    qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
 
     QQmlApplicationEngine engine;

@@ -19,6 +19,15 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 }
 
 void GoogleLoginHelper::onLoginFinished(int code) {
+    if (code == QDialog::Accepted) {
+        currentAccount.setAccountIdentifier(window->accountIdentifier());
+        currentAccount.setAccountUserId(window->accountUserId());
+        currentAccount.setAccountToken(window->accountToken());
+        accountAcquireFinished(&currentAccount);
+    } else {
+        accountAcquireFinished(nullptr);
+    }
+
     delete window;
     window = nullptr;
 }
