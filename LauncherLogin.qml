@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.11
+import QtQuick.Dialogs 1.3
 import QtQuick.Window 2.3
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
@@ -8,6 +9,7 @@ Item {
     id: root
 
     property GoogleLoginHelper googleLoginHelper
+    property VersionManager versionManager
     property bool acquiringAccount: false
 
     signal finished()
@@ -30,7 +32,7 @@ Item {
         radius: 4
 
         ColumnLayout {
-            id: container
+            id: mainContainer
             x: rectangle.xPadding
             y: rectangle.yPadding
             width: parent.width - rectangle.xPadding * 2
@@ -83,7 +85,7 @@ Item {
                     textColor: "#0aa82f"
                     Layout.preferredWidth: alternativeOptions.buttonWidth
                     font.pointSize: 12
-                    onClicked: root.finished()
+                    onClicked: gamePicker.open()
                 }
 
                 TransparentButton {
@@ -95,8 +97,8 @@ Item {
                 }
 
             }
-
         }
+
     }
 
     Text {
@@ -120,6 +122,26 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
         }
+    }
+
+    FileDialog {
+        id: gamePicker
+        title: "Please pick the Minecraft .apk file"
+        nameFilters: [ "Android package files (*.apk *.zip)", "All files (*)" ]
+
+        onAccepted: {
+            if (!apkExtractionTask.setSourceUrl(fileUrl)) {
+                console.error("Invalid file URL")
+                return;
+            }
+            apkExtractionTask.setDestinationTemporary()
+            console.log("Extracting " + apkExtractionTask.source + " to " + apkExtractionTask.destination)
+            apkExtractionTask.start()
+        }
+    }
+
+    ApkExtractionTask {
+        id: apkExtractionTask
     }
 
     Connections {

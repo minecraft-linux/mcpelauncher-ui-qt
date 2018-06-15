@@ -10,6 +10,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp googleloginhelper.cpp googleloginhelper.h googleaccount.h qml.qrc)
+add_executable(${PROJECT_NAME} main.cpp googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h qml.qrc)
 
-target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick playdl-signin-ui-qt-lib)
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick playdl-signin-ui-qt-lib mcpelauncher-extract-lib)

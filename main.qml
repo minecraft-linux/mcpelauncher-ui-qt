@@ -22,11 +22,16 @@ Window {
         id: googleLoginHelperInstance
     }
 
+    VersionManager {
+        id: versionManagerInstance
+    }
+
     Component {
         id: panelLogin
 
         LauncherLogin {
             googleLoginHelper: googleLoginHelperInstance
+            versionManager: versionManagerInstance
             onFinished: stackView.replace(panelMain)
         }
     }
