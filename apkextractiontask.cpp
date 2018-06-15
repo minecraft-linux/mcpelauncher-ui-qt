@@ -15,9 +15,14 @@ bool ApkExtractionTask::setSourceUrl(const QUrl &url) {
 }
 
 void ApkExtractionTask::run() {
-    ZipExtractor extractor (source().toStdString());
-    extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(destination().toStdString()),
-            [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
-        emit progress(current * 100.f / max);
-    });
+    try {
+        ZipExtractor extractor (source().toStdString());
+        extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(destination().toStdString()),
+                [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
+            emit progress((float)  current / max);
+        });
+        emit finished();
+    } catch (ZipExtractionError& e) {
+        emit error(e.what());
+    }
 }

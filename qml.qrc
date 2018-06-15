@@ -14,5 +14,6 @@
         <file>MinecraftNews.qml</file>
         <file>LauncherMain.qml</file>
         <file>LauncherLogin.qml</file>
+        <file>CenteredRectangle.qml</file>
     </qresource>
 </RCC>

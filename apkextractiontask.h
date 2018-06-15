@@ -55,7 +55,7 @@ signals:
 
     void finished();
 
-    void error();
+    void error(QString const& err);
 
 };
 

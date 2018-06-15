@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.3
 import QtQuick.Window 2.3
@@ -11,6 +12,7 @@ Item {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property bool acquiringAccount: false
+    property bool extractingApk: false
 
     signal finished()
 
@@ -21,22 +23,13 @@ Item {
         source: "Resources/noise.png"
     }
 
-    Rectangle {
-        property real xPadding: 5
-        property real yPadding: 20
-        id: rectangle
-        x: parent.width / 2 - width / 2
-        y: parent.height / 2 - height / 2
-        width: Math.min(500, parent.width)
-        height: childrenRect.height + yPadding * 2
+    CenteredRectangle {
         radius: 4
+        visible: !extractingApk
 
         ColumnLayout {
-            id: mainContainer
-            x: rectangle.xPadding
-            y: rectangle.yPadding
-            width: parent.width - rectangle.xPadding * 2
             spacing: 0
+            width: parent.width
 
             Text {
                 text: "Sign in"
@@ -101,6 +94,36 @@ Item {
 
     }
 
+    CenteredRectangle {
+        radius: 4
+        visible: extractingApk
+
+        ColumnLayout {
+            spacing: 0
+            width: parent.width
+
+            Text {
+                text: "Extracting apk"
+                font.pointSize: 18
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                Layout.alignment: Qt.AlignTop
+                Layout.fillWidth: true
+            }
+
+            ProgressBar {
+                id: apkExtractionProgressBar
+                indeterminate: true
+                Layout.preferredWidth: parent.width * 0.7
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.topMargin: 20
+            }
+
+        }
+
+    }
+
+
     Text {
         text: "This is an unofficial Linux launcher for the Minecraft Bedrock codebase.\nThis project is not affiliated with Minecraft, Mojang or Microsoft."
         color: "#fff"
@@ -131,17 +154,39 @@ Item {
 
         onAccepted: {
             if (!apkExtractionTask.setSourceUrl(fileUrl)) {
-                console.error("Invalid file URL")
+                apkExtractionMessageDialog.text = "Invalid file URL"
+                apkExtractionMessageDialog.open()
                 return;
             }
             apkExtractionTask.setDestinationTemporary()
             console.log("Extracting " + apkExtractionTask.source + " to " + apkExtractionTask.destination)
+            extractingApk = true
             apkExtractionTask.start()
         }
     }
 
     ApkExtractionTask {
         id: apkExtractionTask
+
+        onProgress: function(val) {
+            apkExtractionProgressBar.indeterminate = false
+            apkExtractionProgressBar.value = val
+        }
+
+        onFinished: function() {
+            root.finished()
+        }
+
+        onError: function(err) {
+            apkExtractionMessageDialog.text = "Error while extracting the file: " + err
+            apkExtractionMessageDialog.open()
+            extractingApk = false
+        }
+    }
+
+    MessageDialog {
+        id: apkExtractionMessageDialog
+        title: "Apk extraction"
     }
 
     Connections {
