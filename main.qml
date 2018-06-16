@@ -14,7 +14,7 @@ Window {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: panelLogin
+        initialItem: hasAnyVersionInstalled() ? panelMain : panelLogin
     }
 
 
@@ -43,5 +43,9 @@ Window {
         }
     }
 
+    function hasAnyVersionInstalled() {
+        var versions = versionManagerInstance.listVersions()
+        return versions.length > 0
+    }
 
 }

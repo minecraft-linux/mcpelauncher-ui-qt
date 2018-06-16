@@ -21,3 +21,7 @@ QString VersionManager::getDirectoryFor(const MinecraftElfInfo &version) {
         stream << QStringLiteral(" (beta)");
     return QDir(getBaseDir()).filePath(versionStr);
 }
+
+QStringList VersionManager::listVersions() {
+    return QDir(getBaseDir()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+}

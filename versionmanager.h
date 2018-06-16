@@ -22,7 +22,7 @@ public:
     QString getDirectoryFor(MinecraftElfInfo const& version);
 
 public slots:
-
+    QStringList listVersions();
 
 };
 
