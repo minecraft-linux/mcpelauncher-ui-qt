@@ -158,8 +158,7 @@ Item {
                 apkExtractionMessageDialog.open()
                 return;
             }
-            apkExtractionTask.setDestinationTemporary()
-            console.log("Extracting " + apkExtractionTask.source + " to " + apkExtractionTask.destination)
+            console.log("Extracting " + apkExtractionTask.source)
             extractingApk = true
             apkExtractionTask.start()
         }
@@ -167,6 +166,7 @@ Item {
 
     ApkExtractionTask {
         id: apkExtractionTask
+        versionManager: root.versionManager
 
         onProgress: function(val) {
             apkExtractionProgressBar.indeterminate = false

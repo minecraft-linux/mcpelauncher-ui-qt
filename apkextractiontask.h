@@ -5,16 +5,17 @@
 #include <QMutex>
 #include <QTemporaryDir>
 
+class VersionManager;
+
 class ApkExtractionTask : public QThread
 {
     Q_OBJECT
+    Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
     Q_PROPERTY(QString source READ source WRITE setSource)
-    Q_PROPERTY(QString destination READ destination WRITE setDestination)
 
     QMutex mutex;
     QString m_source;
-    QString m_destination;
-    QScopedPointer<QTemporaryDir> m_tempDir;
+    VersionManager* m_versionManager;
 
     void run() override;
 
@@ -31,23 +32,16 @@ public:
         m_source = value;
     }
 
-    QString destination() {
+    VersionManager* versionManager() {
         QMutexLocker locker(&mutex);
-        return m_destination;
+        return m_versionManager;
     }
 
-    void setDestination(QString const& value) {
+    void setVersionManager(VersionManager* value) {
         QMutexLocker locker(&mutex);
-        m_destination = value;
+        m_versionManager = value;
     }
-
 public slots:
-    void setDestinationTemporary() {
-        QMutexLocker locker(&mutex);
-        m_tempDir.reset(new QTemporaryDir());
-        m_destination = m_tempDir->path();
-    }
-
     bool setSourceUrl(QUrl const& url);
 
 signals:
