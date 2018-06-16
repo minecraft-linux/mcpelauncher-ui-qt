@@ -2,6 +2,7 @@
 #define GOOGLELOGINHELPER_H
 
 #include <QObject>
+#include <QSettings>
 #include "googleaccount.h"
 
 class QWindow;
@@ -12,6 +13,7 @@ class GoogleLoginHelper : public QObject {
     Q_PROPERTY(GoogleAccount* account READ account)
 
 private:
+    QSettings settings;
     GoogleLoginWindow* window = nullptr;
     GoogleAccount currentAccount;
     bool hasAccount = false;
@@ -19,6 +21,8 @@ private:
     void onLoginFinished(int code);
 
 public:
+    GoogleLoginHelper();
+
     ~GoogleLoginHelper();
 
     GoogleAccount* account() {

@@ -9,6 +9,9 @@ int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(googlesigninui);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setOrganizationName("Minecraft Linux Launcher");
+    QCoreApplication::setOrganizationDomain("mrarm.io");
+    QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
 
     QApplication app(argc, argv);
 

@@ -193,7 +193,8 @@ Item {
         target: googleLoginHelper
         onAccountAcquireFinished: function(acc) {
             acquiringAccount = false;
-            console.log(acc);
+            if (acc)
+                root.finished()
         }
     }
 

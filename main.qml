@@ -14,7 +14,6 @@ Window {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: hasAnyVersionInstalled() ? panelMain : panelLogin
     }
 
 
@@ -43,9 +42,16 @@ Window {
         }
     }
 
-    function hasAnyVersionInstalled() {
-        var versions = versionManagerInstance.listVersions()
-        return versions.length > 0
+    function needsToLogIn() {
+        return googleLoginHelperInstance.account == null && versionManagerInstance.listVersions().length === 0
+    }
+
+    Component.onCompleted: {
+        if (needsToLogIn()) {
+            stackView.push(panelLogin);
+        } else {
+            stackView.push(panelMain);
+        }
     }
 
 }
