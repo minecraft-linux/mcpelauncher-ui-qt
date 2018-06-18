@@ -1,8 +1,12 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.11
 import "ThemedControls"
+import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {
+
+    property GoogleLoginHelper googleLoginHelper
+
     id: rowLayout
     spacing: 0
 
@@ -85,4 +89,22 @@ ColumnLayout {
         }
 
     }
+
+    GooglePlayApi {
+        id: playApi
+        login: googleLoginHelper
+
+        onAppInfoReceived: function(pkg, versionStr, versionCode) {
+            console.log("Got app info " + versionStr + " " + versionCode)
+        }
+
+        onTosApprovalRequired: {
+            // setTosApproved(true, false)
+        }
+
+        Component.onCompleted: {
+            playApi.handleCheckinAndTos()
+        }
+    }
+
 }

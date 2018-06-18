@@ -39,6 +39,7 @@ Window {
         id: panelMain
 
         LauncherMain {
+            googleLoginHelper: googleLoginHelperInstance
         }
     }
 

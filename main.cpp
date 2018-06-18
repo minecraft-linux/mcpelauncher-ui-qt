@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include "googleloginhelper.h"
+#include "googleplayapi.h"
 #include "versionmanager.h"
 #include "apkextractiontask.h"
 
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
+    qmlRegisterType<GooglePlayApi>("io.mrarm.mcpelauncher", 1, 0, "GooglePlayApi");
     qmlRegisterType<VersionManager>("io.mrarm.mcpelauncher", 1, 0, "VersionManager");
     qmlRegisterType<ApkExtractionTask>("io.mrarm.mcpelauncher", 1, 0, "ApkExtractionTask");
 
