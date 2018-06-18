@@ -32,6 +32,10 @@ public:
 
     void setLogin(GoogleLoginHelper* helper);
 
+    GoogleLoginHelper* getLogin() { return loginHelper; }
+
+    playapi::api* getApi() { return api.get(); }
+
 signals:
     void ready();
 

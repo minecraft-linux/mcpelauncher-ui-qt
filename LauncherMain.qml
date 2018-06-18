@@ -1,11 +1,13 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.11
+import QtQuick.Controls 1.4
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {
 
     property GoogleLoginHelper googleLoginHelper
+    property VersionManager versionManager
 
     id: rowLayout
     spacing: 0
@@ -46,6 +48,42 @@ ColumnLayout {
 
     MinecraftNews {}
 
+    Rectangle {
+        Layout.alignment: Qt.AlignBottom
+        Layout.fillWidth: true
+        Layout.preferredHeight: childrenRect.height + 2 * 5
+        color: "#fff"
+        visible: playDownloadTask.active || apkExtractionTask.active
+
+        Item {
+            y: 5
+            x: parent.width / 10
+            width: parent.width * 8 / 10
+            height: childrenRect.height
+
+            ProgressBar {
+                id: downloadProgress
+                width: parent.width
+            }
+
+            Label {
+                id: downloadStatus
+                width: parent.width
+                height: parent.height
+                text: {
+                    if (playDownloadTask.active)
+                        return "Downloading Minecraft..."
+                    if (apkExtractionTask.active)
+                        return "Extracting Minecraft..."
+                    return "Please wait..."
+                }
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+
+        }
+    }
+
     Image {
         id: bottomPanel
         smooth: false
@@ -78,13 +116,20 @@ ColumnLayout {
 
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
-                text: "PLAY"
+                text: (!versionManager.hasVersion(playVerChannel.latestVersion) ? "Download and play" : "Play").toUpperCase()
                 subText: ("Minecraft " + playVerChannel.latestVersion).toUpperCase()
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70
-                Layout.leftMargin: width / 5
-                Layout.rightMargin: width / 5
+                Layout.leftMargin: width / 6
+                Layout.rightMargin: width / 6
+                onClicked: {
+                    if (!versionManager.hasVersion(playVerChannel.latestVersion)) {
+                        playDownloadTask.versionCode = playVerChannel.latestVersionCode
+                        playDownloadTask.start()
+                        return;
+                    }
+                }
             }
 
         }
@@ -109,6 +154,24 @@ ColumnLayout {
     GoogleVersionChannel {
         id: playVerChannel
         playApi: playApi
+    }
+
+    GoogleApkDownloadTask {
+        id: playDownloadTask
+        playApi: playApi
+        packageName: "com.mojang.minecraftpe"
+        onProgress: downloadProgress.value = progress
+        onError: console.log("Download failed: " + err)
+        onFinished: {
+            apkExtractionTask.source = filePath
+            apkExtractionTask.start()
+        }
+    }
+
+    ApkExtractionTask {
+        id: apkExtractionTask
+        versionManager: rowLayout.versionManager
+        onProgress: downloadProgress.value = progress
     }
 
     GoogleTosApprovalWindow {

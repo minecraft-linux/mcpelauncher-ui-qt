@@ -22,6 +22,10 @@ QString VersionManager::getDirectoryFor(const MinecraftElfInfo &version) {
     return QDir(getBaseDir()).filePath(versionStr);
 }
 
-QStringList VersionManager::listVersions() {
+QStringList VersionManager::listVersions() const {
     return QDir(getBaseDir()).entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+}
+
+bool VersionManager::hasVersion(QString version) const {
+    return listVersions().contains(version);
 }

@@ -9,7 +9,9 @@
 #include <mcpelauncher/minecraft_elf_info.h>
 #include "versionmanager.h"
 
-ApkExtractionTask::ApkExtractionTask(QObject *parent) : QThread(parent){
+ApkExtractionTask::ApkExtractionTask(QObject *parent) : QThread(parent) {
+    connect(this, &QThread::started, this, &ApkExtractionTask::emitActiveChanged);
+    connect(this, &QThread::finished, this, &ApkExtractionTask::emitActiveChanged);
 }
 
 bool ApkExtractionTask::setSourceUrl(const QUrl &url) {

@@ -10,7 +10,7 @@ class GoogleVersionChannel : public QObject {
     Q_OBJECT
     Q_PROPERTY(GooglePlayApi* playApi WRITE setPlayApi)
     Q_PROPERTY(QString latestVersion READ latestVersion NOTIFY latestVersionChanged)
-    Q_PROPERTY(QString latestVersionCode READ latestVersionCode NOTIFY latestVersionChanged)
+    Q_PROPERTY(qint32 latestVersionCode READ latestVersionCode NOTIFY latestVersionChanged)
 private:
     QSettings m_settings;
     GooglePlayApi* m_playApi = nullptr;

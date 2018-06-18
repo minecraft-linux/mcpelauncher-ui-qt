@@ -12,6 +12,7 @@ class ApkExtractionTask : public QThread
     Q_OBJECT
     Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
     Q_PROPERTY(QString source READ source WRITE setSource)
+    Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
     QMutex mutex;
     QString m_source;
@@ -19,8 +20,14 @@ class ApkExtractionTask : public QThread
 
     void run() override;
 
+    void emitActiveChanged() {
+        emit activeChanged();
+    }
+
 public:
     explicit ApkExtractionTask(QObject *parent = nullptr);
+
+    bool active() const { return isRunning(); }
 
     QString source() {
         QMutexLocker locker(&mutex);
@@ -50,6 +57,8 @@ signals:
     void finished();
 
     void error(QString const& err);
+
+    void activeChanged();
 
 };
 

@@ -40,6 +40,7 @@ Window {
 
         LauncherMain {
             googleLoginHelper: googleLoginHelperInstance
+            versionManager: versionManagerInstance
         }
     }
 
