@@ -98,13 +98,21 @@ ColumnLayout {
             console.log("Got app info " + versionStr + " " + versionCode)
         }
 
-        onTosApprovalRequired: {
-            // setTosApproved(true, false)
+        onTosApprovalRequired: function(tos, marketing) {
+            googleTosApprovalWindow.tosText = tos
+            googleTosApprovalWindow.marketingText = marketing
+            googleTosApprovalWindow.show()
         }
 
         Component.onCompleted: {
             playApi.handleCheckinAndTos()
         }
+    }
+
+    GoogleTosApprovalWindow {
+        id: googleTosApprovalWindow
+
+        onDone: playApi.setTosApproved(approved, marketing)
     }
 
 }

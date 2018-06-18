@@ -15,5 +15,6 @@
         <file>LauncherMain.qml</file>
         <file>LauncherLogin.qml</file>
         <file>CenteredRectangle.qml</file>
+        <file>GoogleTosApprovalWindow.qml</file>
     </qresource>
 </RCC>
