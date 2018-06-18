@@ -113,6 +113,8 @@ void GooglePlayApi::handleCheckinAndTos() {
                 }
             }
         }
+
+        emit ready();
     });
 }
 

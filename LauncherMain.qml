@@ -79,9 +79,10 @@ ColumnLayout {
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
                 text: "PLAY"
+                subText: ("Minecraft " + playVerChannel.latestVersion).toUpperCase()
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
-                Layout.preferredHeight: 65
+                Layout.preferredHeight: 70
                 Layout.leftMargin: width / 5
                 Layout.rightMargin: width / 5
             }
@@ -103,16 +104,21 @@ ColumnLayout {
             googleTosApprovalWindow.marketingText = marketing
             googleTosApprovalWindow.show()
         }
+    }
 
-        Component.onCompleted: {
-            playApi.handleCheckinAndTos()
-        }
+    GoogleVersionChannel {
+        id: playVerChannel
+        playApi: playApi
     }
 
     GoogleTosApprovalWindow {
         id: googleTosApprovalWindow
 
         onDone: playApi.setTosApproved(approved, marketing)
+    }
+
+    Component.onCompleted: {
+        playApi.handleCheckinAndTos()
     }
 
 }

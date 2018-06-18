@@ -1,8 +1,11 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.11
 import QtQuick.Templates 2.1 as T
 
 T.Button {
     id: control
+
+    property string subText: null
 
     padding: 8
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
@@ -25,14 +28,33 @@ T.Button {
         }
     }
 
-    contentItem: Text {
-        id: textItem
-        text: control.text
-        font.pointSize: 16
-        opacity: enabled ? 1.0 : 0.3
-        color: "#fff"
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
+    contentItem: Item {
+        ColumnLayout {
+            spacing: 3
+            width: parent.width
+            y: parent.height / 2 - height / 2
+            Text {
+                id: textItem
+                text: control.text
+                font.pointSize: 16
+                opacity: enabled ? 1.0 : 0.3
+                color: "#fff"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                Layout.fillWidth: true
+            }
+            Text {
+                id: subTextItem
+                visible: control.subText != null
+                text: control.subText
+                font.pointSize: 10
+                opacity: enabled ? 1.0 : 0.3
+                color: "#fff"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                Layout.fillWidth: true
+            }
+        }
     }
 
     states: [
