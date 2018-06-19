@@ -16,5 +16,8 @@
         <file>LauncherLogin.qml</file>
         <file>CenteredRectangle.qml</file>
         <file>GoogleTosApprovalWindow.qml</file>
+        <file>ThemedControls/MProgressBar.qml</file>
+        <file>Resources/progressbar.png</file>
+        <file>Resources/progressbar-progress.png</file>
     </qresource>
 </RCC>

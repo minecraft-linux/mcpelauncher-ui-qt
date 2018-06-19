@@ -1,6 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.11
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.4
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
@@ -61,7 +61,7 @@ ColumnLayout {
             width: parent.width * 8 / 10
             height: childrenRect.height
 
-            ProgressBar {
+            MProgressBar {
                 id: downloadProgress
                 width: parent.width
             }
@@ -125,6 +125,7 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 onClicked: {
                     if (!versionManager.hasVersion(playVerChannel.latestVersion)) {
+                        downloadProgress.value = 0
                         playDownloadTask.versionCode = playVerChannel.latestVersionCode
                         playDownloadTask.start()
                         return;
