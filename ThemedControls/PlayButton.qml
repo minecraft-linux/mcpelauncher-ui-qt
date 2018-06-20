@@ -29,9 +29,12 @@ T.Button {
     }
 
     contentItem: Item {
+        implicitWidth: childrenRect.width
+        implicitHeight: content.height
         ColumnLayout {
+            id: content
             spacing: 3
-            width: parent.width
+            width: Math.max(parent.width, Math.max(textItem.implicitWidth, subTextItem.implicitWidth))
             y: parent.height / 2 - height / 2
             Text {
                 id: textItem
@@ -45,7 +48,7 @@ T.Button {
             }
             Text {
                 id: subTextItem
-                visible: control.subText != null
+                visible: control.subText != null && control.subText.length > 0
                 text: control.subText
                 font.pointSize: 10
                 opacity: enabled ? 1.0 : 0.3

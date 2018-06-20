@@ -130,6 +130,7 @@ ColumnLayout {
                         playDownloadTask.start()
                         return;
                     }
+                    gameLauncher.start()
                 }
             }
 
@@ -173,12 +174,20 @@ ColumnLayout {
         id: apkExtractionTask
         versionManager: rowLayout.versionManager
         onProgress: downloadProgress.value = progress
+        onError: console.log("Extraction failed: " + err)
+        onFinished: function() {
+            gameLauncher.start()
+        }
     }
 
     GoogleTosApprovalWindow {
         id: googleTosApprovalWindow
 
         onDone: playApi.setTosApproved(approved, marketing)
+    }
+
+    GameLauncher {
+        id: gameLauncher
     }
 
     Component.onCompleted: {
