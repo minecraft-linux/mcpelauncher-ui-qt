@@ -116,7 +116,7 @@ ColumnLayout {
 
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
-                text: (!versionManager.hasVersion(playVerChannel.latestVersion) ? "Download and play" : "Play").toUpperCase()
+                text: (!versionManager.versions.contains(playVerChannel.latestVersionCode) ? "Download and play" : "Play").toUpperCase()
                 subText: ("Minecraft " + playVerChannel.latestVersion).toUpperCase()
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
@@ -124,7 +124,7 @@ ColumnLayout {
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 6
                 onClicked: {
-                    if (!versionManager.hasVersion(playVerChannel.latestVersion)) {
+                    if (!versionManager.versions.contains(playVerChannel.latestVersionCode)) {
                         downloadProgress.value = 0
                         playDownloadTask.versionCode = playVerChannel.latestVersionCode
                         playDownloadTask.start()

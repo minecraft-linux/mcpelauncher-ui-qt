@@ -49,6 +49,7 @@ void ApkExtractionTask::run() {
         if (!QDir().rename(dir.path(), targetDir))
             throw std::runtime_error("rename failed");
         dir.setAutoRemove(false);
+        versionManager()->addVersion(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
     } catch (std::exception& e) {
         if (elfFd != -1)
             close(elfFd);

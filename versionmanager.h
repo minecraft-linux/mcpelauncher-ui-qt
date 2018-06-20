@@ -2,13 +2,61 @@
 #define VERSIONMANAGER_H
 
 #include <QObject>
+#include <QVector>
+#include <QMap>
 
-class VersionManager : public QObject
-{
+class VersionInfo : public QObject {
     Q_OBJECT
+    Q_PROPERTY(QString directory MEMBER directory CONSTANT)
+    Q_PROPERTY(QString versionName MEMBER versionName CONSTANT)
+    Q_PROPERTY(int versionCode MEMBER versionCode CONSTANT)
+public:
+    QString directory;
+    QString versionName;
+    int versionCode;
+
+    VersionInfo() {}
+    VersionInfo(VersionInfo const& v) : directory(v.directory), versionName(v.versionName), versionCode(v.versionCode) {}
+
+    VersionInfo& operator=(VersionInfo const& v) {
+        directory = v.directory;
+        versionName = v.versionName;
+        versionCode = v.versionCode;
+        return *this;
+    }
+};
+
+class VersionList : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(int size READ size)
+    Q_PROPERTY(VersionInfo latestDownloadedVersion READ latestDownloadedVersion)
+
+private:
+    QMap<int, VersionInfo>& m_versions;
+
+public:
+    VersionList(QMap<int, VersionInfo>& versions) : m_versions(versions) {}
+
+    int size() const { return m_versions.size(); }
+
+    VersionInfo* latestDownloadedVersion() const;
+
+public slots:
+    bool contains(int versionCode) const { return m_versions.contains(versionCode); }
+
+};
+
+class VersionManager : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(VersionList* versions READ versionList NOTIFY versionListChanged)
 
 private:
     QString baseDir;
+    QMap<int, VersionInfo> m_versions;
+    VersionList m_versionList;
+
+    void loadVersions();
+    void saveVersions();
 
 public:
     VersionManager();
@@ -20,10 +68,14 @@ public:
 
     QString getDirectoryFor(std::string const& versionName);
 
-public slots:
-    QStringList listVersions() const;
+    void addVersion(QString directory, QString versionName, int versionCode);
 
-    bool hasVersion(QString version) const;
+    int latestDownloadedVersion() const;
+
+    VersionList* versionList() { return &m_versionList; }
+
+signals:
+    void versionListChanged();
 
 };
 

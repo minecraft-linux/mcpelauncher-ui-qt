@@ -45,7 +45,7 @@ Window {
     }
 
     function needsToLogIn() {
-        return googleLoginHelperInstance.account == null && versionManagerInstance.listVersions().length === 0
+        return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size > 0
     }
 
     Component.onCompleted: {
