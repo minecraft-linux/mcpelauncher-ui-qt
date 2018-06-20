@@ -130,6 +130,8 @@ ColumnLayout {
                         playDownloadTask.start()
                         return;
                     }
+                    gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
+                    console.log("Game dir = " + gameLauncher.gameDir)
                     gameLauncher.start()
                 }
             }

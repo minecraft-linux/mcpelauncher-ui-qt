@@ -42,6 +42,13 @@ public:
     VersionInfo* latestDownloadedVersion() const;
 
 public slots:
+    VersionInfo* get(int versionCode) const {
+        auto it = m_versions.find(versionCode);
+        if (it != m_versions.end())
+            return &it.value();
+        return nullptr;
+    }
+
     bool contains(int versionCode) const { return m_versions.contains(versionCode); }
 
 };
@@ -73,6 +80,11 @@ public:
     int latestDownloadedVersion() const;
 
     VersionList* versionList() { return &m_versionList; }
+
+public slots:
+    QString getDirectoryFor(QString const& versionName);
+
+    QString getDirectoryFor(VersionInfo* version);
 
 signals:
     void versionListChanged();

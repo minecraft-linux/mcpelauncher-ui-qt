@@ -5,5 +5,10 @@ GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 
 void GameLauncher::start() {
     process.reset(new QProcess);
-    process->start(GAME_PATH, QStringList());
+    QStringList args;
+    if (m_gameDir.length() > 0) {
+        args.append("-dg");
+        args.append(m_gameDir);
+    }
+    process->start(GAME_PATH, args);
 }

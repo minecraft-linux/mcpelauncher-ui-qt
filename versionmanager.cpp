@@ -39,8 +39,16 @@ QString VersionManager::getTempTemplate() {
     return QDir(getBaseDir()).filePath("temp-XXXXXX");
 }
 
+QString VersionManager::getDirectoryFor(QString const& versionName) {
+    return QDir(getBaseDir()).filePath(versionName);
+}
+
 QString VersionManager::getDirectoryFor(std::string const& versionName) {
-    return QDir(getBaseDir()).filePath(QString::fromStdString(versionName));
+    return getDirectoryFor(QString::fromStdString(versionName));
+}
+
+QString VersionManager::getDirectoryFor(VersionInfo *version) {
+    return getDirectoryFor(version->versionName);
 }
 
 void VersionManager::addVersion(QString directory, QString versionName, int versionCode) {
