@@ -16,10 +16,12 @@ void VersionManager::loadVersions() {
     for (QString group : settings.childGroups()) {
         settings.beginGroup(group);
         int versionCode = settings.value("versionCode").toInt();
-        VersionInfo& ver = m_versions[versionCode];
-        ver.directory = group;
-        ver.versionName = settings.value("versionName").toString();
-        ver.versionCode = versionCode;
+        auto& ver = m_versions[versionCode];
+        if (ver == nullptr)
+            ver = new VersionInfo(this);
+        ver->directory = group;
+        ver->versionName = settings.value("versionName").toString();
+        ver->versionCode = versionCode;
         settings.endGroup();
     }
 }
@@ -27,9 +29,9 @@ void VersionManager::loadVersions() {
 void VersionManager::saveVersions() {
     QSettings settings(QDir(baseDir).filePath("versions.ini"), QSettings::IniFormat);
     for (auto const& ver : m_versions) {
-        settings.beginGroup(ver.directory);
-        settings.setValue("versionName", ver.versionName);
-        settings.setValue("versionCode", ver.versionCode);
+        settings.beginGroup(ver->directory);
+        settings.setValue("versionName", ver->versionName);
+        settings.setValue("versionCode", ver->versionCode);
         settings.endGroup();
     }
     settings.sync();
@@ -52,10 +54,12 @@ QString VersionManager::getDirectoryFor(VersionInfo *version) {
 }
 
 void VersionManager::addVersion(QString directory, QString versionName, int versionCode) {
-    VersionInfo& ver = m_versions[versionCode];
-    ver.directory = directory;
-    ver.versionName = directory;
-    ver.versionCode = versionCode;
+    auto& ver = m_versions[versionCode];
+    if (ver == nullptr)
+        ver = new VersionInfo(this);
+    ver->directory = directory;
+    ver->versionName = directory;
+    ver->versionCode = versionCode;
     saveVersions();
     emit versionListChanged();
 }
@@ -63,5 +67,5 @@ void VersionManager::addVersion(QString directory, QString versionName, int vers
 VersionInfo* VersionList::latestDownloadedVersion() const {
     if (m_versions.empty())
         return nullptr;
-    return &(m_versions.end() - 1).value();
+    return (m_versions.end() - 1).value();
 }

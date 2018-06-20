@@ -15,7 +15,7 @@ public:
     QString versionName;
     int versionCode;
 
-    VersionInfo() {}
+    VersionInfo(QObject* parent = nullptr) : QObject(parent) {}
     VersionInfo(VersionInfo const& v) : directory(v.directory), versionName(v.versionName), versionCode(v.versionCode) {}
 
     VersionInfo& operator=(VersionInfo const& v) {
@@ -29,13 +29,13 @@ public:
 class VersionList : public QObject {
     Q_OBJECT
     Q_PROPERTY(int size READ size)
-    Q_PROPERTY(VersionInfo latestDownloadedVersion READ latestDownloadedVersion)
+    Q_PROPERTY(VersionInfo* latestDownloadedVersion READ latestDownloadedVersion)
 
 private:
-    QMap<int, VersionInfo>& m_versions;
+    QMap<int, VersionInfo*>& m_versions;
 
 public:
-    VersionList(QMap<int, VersionInfo>& versions) : m_versions(versions) {}
+    VersionList(QMap<int, VersionInfo*>& versions) : m_versions(versions) {}
 
     int size() const { return m_versions.size(); }
 
@@ -45,7 +45,7 @@ public slots:
     VersionInfo* get(int versionCode) const {
         auto it = m_versions.find(versionCode);
         if (it != m_versions.end())
-            return &it.value();
+            return it.value();
         return nullptr;
     }
 
@@ -59,7 +59,7 @@ class VersionManager : public QObject {
 
 private:
     QString baseDir;
-    QMap<int, VersionInfo> m_versions;
+    QMap<int, VersionInfo*> m_versions;
     VersionList m_versionList;
 
     void loadVersions();
