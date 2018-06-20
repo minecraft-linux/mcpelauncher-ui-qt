@@ -2,7 +2,6 @@
 #define VERSIONMANAGER_H
 
 #include <QObject>
-#include <mcpelauncher/minecraft_elf_info.h>
 
 class VersionManager : public QObject
 {
@@ -19,7 +18,7 @@ public:
 
     QString getTempTemplate();
 
-    QString getDirectoryFor(MinecraftElfInfo const& version);
+    QString getDirectoryFor(std::string const& versionName);
 
 public slots:
     QStringList listVersions() const;

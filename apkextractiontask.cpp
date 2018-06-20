@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <mcpelauncher/zip_extractor.h>
 #include <mcpelauncher/minecraft_extract_utils.h>
-#include <mcpelauncher/minecraft_elf_info.h>
+#include <mcpelauncher/apkinfo.h>
 #include "versionmanager.h"
 
 ApkExtractionTask::ApkExtractionTask(QObject *parent) : QThread(parent) {
@@ -28,19 +28,22 @@ void ApkExtractionTask::run() {
         std::string path = dir.path().toStdString();
 
         ZipExtractor extractor (source().toStdString());
+        ApkInfo apkInfo;
+        {
+            auto manifest = extractor.readFile("AndroidManifest.xml");
+            axml::AXMLFile manifestFile (manifest.data(), manifest.size());
+            axml::AXMLParser manifestParser (manifestFile);
+            apkInfo = ApkInfo::fromXml(manifestParser);
+        }
+        qDebug() << "Apk info: versionCode=" << apkInfo.versionCode
+                 << " versionName=" << QString::fromStdString(apkInfo.versionName);
+
         extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path),
                 [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
             emit progress((float)  current / max);
         });
 
-        elfFd = open((path + "/libs/libminecraftpe.so").c_str(), O_RDONLY);
-        if (elfFd < 0)
-            throw std::runtime_error("Failed to open libminecraftpe.so");
-        ElfReader<Elf32Types> elfReader (elfFd);
-        MinecraftElfInfo elfInfo = MinecraftElfInfo::fromElf(elfReader);
-        close(elfFd);
-
-        QString targetDir = versionManager()->getDirectoryFor(elfInfo);
+        QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
         qDebug() << "Moving " << dir.path() << " to " << targetDir;
         QDir(targetDir).removeRecursively();
         if (!QDir().rename(dir.path(), targetDir))

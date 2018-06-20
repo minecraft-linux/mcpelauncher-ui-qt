@@ -13,13 +13,8 @@ QString VersionManager::getTempTemplate() {
     return QDir(getBaseDir()).filePath("temp-XXXXXX");
 }
 
-QString VersionManager::getDirectoryFor(const MinecraftElfInfo &version) {
-    QString versionStr;
-    QTextStream stream (&versionStr, QIODevice::WriteOnly);
-    stream << version.versionMajor << '.' << version.versionMinor << '.' << version.versionPatch << '.' << version.versionRevision;
-    if (version.isBeta)
-        stream << QStringLiteral(" (beta)");
-    return QDir(getBaseDir()).filePath(versionStr);
+QString VersionManager::getDirectoryFor(std::string const& versionName) {
+    return QDir(getBaseDir()).filePath(QString::fromStdString(versionName));
 }
 
 QStringList VersionManager::listVersions() const {
