@@ -53,6 +53,11 @@ Window {
         return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size > 0
     }
 
+    EditProfileWindow {
+        id: profileEditWindow
+        visible: true
+    }
+
     Component.onCompleted: {
         if (needsToLogIn()) {
             stackView.push(panelLogin);
