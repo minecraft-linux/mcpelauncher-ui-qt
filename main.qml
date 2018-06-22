@@ -25,6 +25,10 @@ Window {
         id: versionManagerInstance
     }
 
+    ProfileManager {
+        id: profileManagerInstance
+    }
+
     Component {
         id: panelLogin
 
@@ -41,6 +45,7 @@ Window {
         LauncherMain {
             googleLoginHelper: googleLoginHelperInstance
             versionManager: versionManagerInstance
+            profileManager: profileManagerInstance
         }
     }
 

@@ -8,6 +8,7 @@ ColumnLayout {
 
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
+    property ProfileManager profileManager
 
     id: rowLayout
     spacing: 0
@@ -106,10 +107,9 @@ ColumnLayout {
                     font.pointSize: 10
                 }
 
-                MComboBox {
+                ProfileComboBox {
                     Layout.alignment: Qt.AlignHCenter
                     Layout.preferredWidth: 200
-                    model: ["Default", "Another Profile", "Add new profile..."]
                 }
 
             }

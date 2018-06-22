@@ -19,5 +19,6 @@
         <file>ThemedControls/MProgressBar.qml</file>
         <file>Resources/progressbar.png</file>
         <file>Resources/progressbar-progress.png</file>
+        <file>ProfileComboBox.qml</file>
     </qresource>
 </RCC>
