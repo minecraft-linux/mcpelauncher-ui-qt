@@ -20,8 +20,12 @@
         <file>Resources/progressbar.png</file>
         <file>Resources/progressbar-progress.png</file>
         <file>ProfileComboBox.qml</file>
-        <file>EditProfileWindow.qml</file>
         <file>ThemedControls/MTextField.qml</file>
         <file>Resources/field.png</file>
+        <file>Resources/button-active.png</file>
+        <file>Resources/button.png</file>
+        <file>ThemedControls/MButton.qml</file>
+        <file>ThemedControls/MCheckBox.qml</file>
+        <file>Resources/check.png</file>
     </qresource>
 </RCC>

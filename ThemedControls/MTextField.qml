@@ -8,7 +8,7 @@ T.TextField {
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
     implicitHeight: 36
     verticalAlignment: TextInput.AlignVCenter
-    font.pixelSize: 13
+    font.pointSize: 13
 
     background: BorderImage {
         id: buttonBackground
