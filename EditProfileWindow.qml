@@ -68,6 +68,7 @@ Window {
             }
             MComboBox {
                 property var versions: versionManager.versions.getAll()
+                property var extraVersionDirName: null
 
                 id: profileVersion
                 Layout.fillWidth: true
@@ -76,6 +77,8 @@ Window {
                     ret.push("Latest version (Google Play)")
                     for (var i = 0; i < versions.length; i++)
                         ret.push(versions[i].versionName)
+                    if (extraVersionDirName != null)
+                        ret.push(extraVersionDirName)
                     return ret
                 }
             }
@@ -158,6 +161,9 @@ Window {
                 PlayButton {
                     Layout.preferredWidth: 150
                     text: "Save"
+                    onClicked: {
+                        saveProfile()
+                    }
                 }
 
                 PlayButton {
@@ -175,15 +181,42 @@ Window {
     function setProfile(p) {
         profile = p
         profileName.text = profile.name
-        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profileVersion.currentIndex = 0
-        else
-            profileVersion.currentIndex = 1 + profileVersion.versions.getByDirectory(profile.versionDirName)
+        } else if (profile.versionType == ProfileInfo.LOCKED) {
+            var index = -1
+            for (var i = 0; i < profileVersion.versions.length; i++) {
+                if (profileVersion.versions[i].directory === profile.versionDirName) {
+                    index = i
+                    break
+                }
+            }
+            if (index === -1) {
+                profileVersion.extraVersionDirName = profile.versionDirName
+                profileVersion.currentIndex = profileVersion.versions.length + 1
+            } else {
+                profileVersion.currentIndex = index + 1
+            }
+        }
 
         windowSizeCheck.checked = profile.windowCustomSize
         windowWidth.text = profile.windowWidth
         windowHeight.text = profile.windowHeight
+    }
 
+    function saveProfile() {
+        profile.name = profileName.text
+        if (profileVersion.currentIndex == 0) {
+            profile.versionType = ProfileInfo.LATEST_GOOGLE_PLAY
+        } else {
+            profile.versionType = ProfileInfo.LOCKED
+            profile.versionDirName = profileVersion.versions[profileVersion.currentIndex - 1].directory
+        }
+
+        profile.windowCustomSize = windowSizeCheck.checked
+
+        profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
+        profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
     }
 
 }
