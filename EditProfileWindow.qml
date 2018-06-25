@@ -180,6 +180,14 @@ Window {
 
     }
 
+    function reset() {
+        profile = null
+        profileName.text = ""
+        profileVersion.currentIndex = 0
+        windowSizeCheck.checked = false
+        windowWidth.text = "720"
+        windowHeight.text = "480"
+    }
 
     function setProfile(p) {
         profile = p
@@ -209,7 +217,7 @@ Window {
     }
 
     function saveProfile() {
-        if (profile.name !== profileName.text && !profile.nameLocked) {
+        if (profile == null || (profile.name !== profileName.text && !profile.nameLocked)) {
             var profiles = profileManager.profiles
             for (var i = 0; i < profiles.length; i++) {
                 if (profiles[i].name === profileName.text) {
@@ -217,7 +225,10 @@ Window {
                     return
                 }
             }
-            profile.setName(profileName.text)
+            if (profile == null)
+                profile = profileManager.createProfile(profileName.text)
+            else
+                profile.setName(profileName.text)
         }
         if (profileVersion.currentIndex == 0) {
             profile.versionType = ProfileInfo.LATEST_GOOGLE_PLAY

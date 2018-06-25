@@ -67,6 +67,9 @@ public:
 
     QList<QObject*> const& profiles() const { return (QList<QObject*>&) m_profiles; }
 
+public slots:
+    ProfileInfo* createProfile(QString name);
+
 signals:
     void profilesChanged();
 

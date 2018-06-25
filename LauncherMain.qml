@@ -113,6 +113,10 @@ ColumnLayout {
                     ProfileComboBox {
                         id: profileComboBox
                         Layout.preferredWidth: 200
+                        onAddProfileSelected: {
+                            profileEditWindow.reset()
+                            profileEditWindow.show()
+                        }
                     }
 
                     MButton {
@@ -211,6 +215,11 @@ ColumnLayout {
         id: profileEditWindow
         versionManager: versionManagerInstance
         profileManager: profileManagerInstance
+        modality: Qt.WindowModal
+
+        onClosing: {
+            profileComboBox.onAddProfileResult(profileEditWindow.profile)
+        }
     }
 
     GameLauncher {

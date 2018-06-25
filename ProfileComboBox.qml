@@ -3,12 +3,30 @@ import QtQuick.Controls 2.4
 import "ThemedControls"
 
 MComboBox {
-    property int addProfileIndex: count - 1
-
     property var profiles: profileManager.profiles
+    property int addProfileIndex: profiles.length
+    property int oldCurrentIndex: 0
+
+    signal addProfileSelected()
 
     function getProfile() {
+        if (currentIndex >= profiles.length)
+            return null
         return profiles[currentIndex]
+    }
+    function setProfile(profile) {
+        for (var i = 0; i < profiles.length; i++) {
+            if (profiles[i] === profile) {
+                currentIndex = i
+                return true
+            }
+        }
+        return false
+    }
+    function onAddProfileResult(newProfile) {
+        if (newProfile !== null && setProfile(newProfile))
+            return;
+        currentIndex = oldCurrentIndex
     }
 
     id: control
@@ -49,9 +67,9 @@ MComboBox {
     }
 
     onActivated: function(index) {
-        if (index === addProfileIndex) {
-            console.log("Open add profile dialog " + currentIndex)
-            currentIndex = 0
-        }
+        if (index === addProfileIndex)
+            addProfileSelected()
+        else
+            oldCurrentIndex = index
     }
 }

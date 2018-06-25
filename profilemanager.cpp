@@ -16,17 +16,27 @@ ProfileManager::ProfileManager(QObject *parent) : QObject(parent) {
     loadProfiles();
 }
 
+ProfileInfo* ProfileManager::createProfile(QString name) {
+    ProfileInfo* ret = new ProfileInfo(this);
+    ret->name = name;
+    m_profiles.push_back(ret);
+    emit profilesChanged();
+    return ret;
+}
+
 void ProfileManager::loadProfiles() {
     auto& settings = this->settings();
     for (QString const& group : settings.childGroups()) {
         settings.beginGroup(group);
         ProfileInfo* profile;
-        if (group == "Default")
+        if (group == "Default") {
             profile = defaultProfile();
-        else
+        } else {
             profile = new ProfileInfo(this);
+            m_profiles.push_back(profile);
+        }
         if (!profile->nameLocked)
-            profile->name = settings.value("name").toString();
+            profile->name = group;
         QString version = settings.value("version").toString();
         if (version == "googleplay") {
             profile->versionType = ProfileInfo::VersionType::LATEST_GOOGLE_PLAY;
