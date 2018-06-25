@@ -28,5 +28,6 @@
         <file>ThemedControls/MCheckBox.qml</file>
         <file>Resources/check.png</file>
         <file>EditProfileWindow.qml</file>
+        <file>Resources/icon-edit.png</file>
     </qresource>
 </RCC>

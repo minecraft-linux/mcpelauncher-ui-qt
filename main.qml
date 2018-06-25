@@ -53,21 +53,12 @@ Window {
         return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size > 0
     }
 
-    EditProfileWindow {
-        id: profileEditWindow
-        visible: true
-        versionManager: versionManagerInstance
-        profileManager: profileManagerInstance
-    }
-
     Component.onCompleted: {
         if (needsToLogIn()) {
             stackView.push(panelLogin);
         } else {
             stackView.push(panelMain);
         }
-
-        profileEditWindow.setProfile(profileManagerInstance.defaultProfile)
     }
 
 }

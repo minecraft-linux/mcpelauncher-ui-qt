@@ -107,9 +107,28 @@ ColumnLayout {
                     font.pointSize: 10
                 }
 
-                ProfileComboBox {
+                RowLayout {
                     Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: 200
+
+                    ProfileComboBox {
+                        id: profileComboBox
+                        Layout.preferredWidth: 200
+                    }
+
+                    MButton {
+                        implicitWidth: 36
+                        Image {
+                            anchors.centerIn: parent
+                            source: "Resources/icon-edit.png"
+                            smooth: false
+                        }
+
+                        onClicked: {
+                            profileEditWindow.setProfile(profileComboBox.getProfile())
+                            profileEditWindow.show()
+                        }
+                    }
+
                 }
 
             }
@@ -186,6 +205,12 @@ ColumnLayout {
         id: googleTosApprovalWindow
 
         onDone: playApi.setTosApproved(approved, marketing)
+    }
+
+    EditProfileWindow {
+        id: profileEditWindow
+        versionManager: versionManagerInstance
+        profileManager: profileManagerInstance
     }
 
     GameLauncher {

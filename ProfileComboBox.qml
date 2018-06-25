@@ -5,10 +5,15 @@ import "ThemedControls"
 MComboBox {
     property int addProfileIndex: count - 1
 
+    property var profiles: profileManager.profiles
+
+    function getProfile() {
+        return profiles[currentIndex]
+    }
+
     id: control
 
     model: {
-        var profiles = profileManager.profiles
         var ret = []
         for (var i = 0; i < profiles.length; i++)
             ret.push(profiles[i].name)
