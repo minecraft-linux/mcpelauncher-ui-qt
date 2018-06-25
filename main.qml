@@ -57,6 +57,7 @@ Window {
         id: profileEditWindow
         visible: true
         versionManager: versionManagerInstance
+        profileManager: profileManagerInstance
     }
 
     Component.onCompleted: {

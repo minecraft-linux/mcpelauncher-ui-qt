@@ -13,7 +13,7 @@ VersionManager::VersionManager() : m_versionList(m_versions) {
 
 void VersionManager::loadVersions() {
     QSettings settings(QDir(baseDir).filePath("versions.ini"), QSettings::IniFormat);
-    for (QString group : settings.childGroups()) {
+    for (QString const& group : settings.childGroups()) {
         settings.beginGroup(group);
         int versionCode = settings.value("versionCode").toInt();
         auto& ver = m_versions[versionCode];

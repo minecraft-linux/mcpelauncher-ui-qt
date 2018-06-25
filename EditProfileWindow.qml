@@ -11,6 +11,7 @@ import io.mrarm.mcpelauncher 1.0
 Window {
 
     property VersionManager versionManager
+    property ProfileManager profileManager
     property ProfileInfo profile: null
 
     width: 500
@@ -163,12 +164,14 @@ Window {
                     text: "Save"
                     onClicked: {
                         saveProfile()
+                        close()
                     }
                 }
 
                 PlayButton {
                     Layout.preferredWidth: 150
                     text: "Cancel"
+                    onClicked: close()
                 }
 
             }
@@ -181,6 +184,7 @@ Window {
     function setProfile(p) {
         profile = p
         profileName.text = profile.name
+        profileName.enabled = !profile.nameLocked
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profileVersion.currentIndex = 0
         } else if (profile.versionType == ProfileInfo.LOCKED) {
@@ -205,7 +209,16 @@ Window {
     }
 
     function saveProfile() {
-        profile.name = profileName.text
+        if (profile.name !== profileName.text && !profile.nameLocked) {
+            var profiles = profileManager.profiles
+            for (var i = 0; i < profiles.length; i++) {
+                if (profiles[i].name === profileName.text) {
+                    profileNameConflictDialog.open()
+                    return
+                }
+            }
+            profile.setName(profileName.text)
+        }
         if (profileVersion.currentIndex == 0) {
             profile.versionType = ProfileInfo.LATEST_GOOGLE_PLAY
         } else {
@@ -217,6 +230,13 @@ Window {
 
         profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
         profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        profile.save()
+    }
+
+    MessageDialog {
+        id: profileNameConflictDialog
+        text: "A profile with the specified name already exists"
+        title: "Profile Edit Error"
     }
 
 }
