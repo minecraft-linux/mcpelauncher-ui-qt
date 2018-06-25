@@ -56,6 +56,7 @@ Window {
     EditProfileWindow {
         id: profileEditWindow
         visible: true
+        versionManager: versionManagerInstance
     }
 
     Component.onCompleted: {
@@ -64,6 +65,8 @@ Window {
         } else {
             stackView.push(panelMain);
         }
+
+        profileEditWindow.setProfile(profileManagerInstance.defaultProfile)
     }
 
 }

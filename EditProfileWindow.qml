@@ -3,10 +3,15 @@ import QtQuick 2.4
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.11
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.3
 import QtQuick.Controls.Styles 1.4
 import "ThemedControls"
+import io.mrarm.mcpelauncher 1.0
 
 Window {
+
+    property VersionManager versionManager
+    property ProfileInfo profile: null
 
     width: 500
     height: layout.implicitHeight
@@ -44,37 +49,94 @@ Window {
             Layout.leftMargin: 20
             Layout.rightMargin: 20
             columnSpacing: 20
+            rowSpacing: 8
+
+            property int labelFontSize: 11
 
             Text {
                 text: "Profile Name"
-                font.pixelSize: 13
+                font.pointSize: parent.labelFontSize
             }
             MTextField {
+                id: profileName
                 Layout.fillWidth: true
             }
 
             Text {
                 text: "Version"
-                font.pixelSize: 13
+                font.pointSize: parent.labelFontSize
             }
-            MTextField {
+            MComboBox {
+                property var versions: versionManager.versions.getAll()
+
+                id: profileVersion
                 Layout.fillWidth: true
+                model: {
+                    var ret = []
+                    ret.push("Latest version (Google Play)")
+                    for (var i = 0; i < versions.length; i++)
+                        ret.push(versions[i].versionName)
+                    return ret
+                }
             }
 
-            Text {
-                text: "Arguments"
-                font.pixelSize: 13
-            }
-            MTextField {
-                Layout.fillWidth: true
+            Item {
+                height: 8
+                Layout.columnSpan: 2
             }
 
-            Text {
+            MCheckBox {
                 text: "Data directory"
-                font.pixelSize: 13
+                font.pointSize: parent.labelFontSize
             }
-            MTextField {
+            RowLayout {
                 Layout.fillWidth: true
+                spacing: 2
+                MTextField {
+                    id: gameDirPath
+                    Layout.fillWidth: true
+                }
+                MButton {
+                    text: "..."
+                    onClicked: {
+                        gameDirPathDialog.open()
+                    }
+                }
+                FileDialog {
+                    id: gameDirPathDialog
+                    selectFolder: true
+                    onAccepted: {
+                        gameDirPath.text = fileUrl
+                    }
+                }
+            }
+
+            MCheckBox {
+                id: windowSizeCheck
+                text: "Window size"
+                font.pointSize: parent.labelFontSize
+            }
+            RowLayout {
+                Layout.fillWidth: true
+                MTextField {
+                    id: windowWidth
+                    Layout.fillWidth: true
+                    validator: IntValidator {
+                        bottom: 0
+                        top: 3840
+                    }
+                }
+                Text {
+                    text: "x"
+                }
+                MTextField {
+                    id: windowHeight
+                    Layout.fillWidth: true
+                    validator: IntValidator {
+                        bottom: 0
+                        top: 2160
+                    }
+                }
             }
         }
 
@@ -106,6 +168,21 @@ Window {
             }
 
         }
+
+    }
+
+
+    function setProfile(p) {
+        profile = p
+        profileName.text = profile.name
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
+            profileVersion.currentIndex = 0
+        else
+            profileVersion.currentIndex = 1 + profileVersion.versions.getByDirectory(profile.versionDirName)
+
+        windowSizeCheck.checked = profile.windowCustomSize
+        windowWidth.text = profile.windowWidth
+        windowHeight.text = profile.windowHeight
 
     }
 

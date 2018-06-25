@@ -42,10 +42,25 @@ public:
     VersionInfo* latestDownloadedVersion() const;
 
 public slots:
+    QList<QObject*> getAll() const {
+        QList<QObject*> ret;
+        ret.reserve(m_versions.size());
+        for (VersionInfo* v : m_versions)
+            ret.push_back(v);;
+        return ret;
+    }
+
     VersionInfo* get(int versionCode) const {
         auto it = m_versions.find(versionCode);
         if (it != m_versions.end())
             return it.value();
+        return nullptr;
+    }
+    VersionInfo* getByDirectory(QString const& directory) const {
+        for (VersionInfo* v : m_versions) {
+            if (v->directory == directory)
+                return v;
+        }
         return nullptr;
     }
 

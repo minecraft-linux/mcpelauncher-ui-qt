@@ -27,5 +27,6 @@
         <file>ThemedControls/MButton.qml</file>
         <file>ThemedControls/MCheckBox.qml</file>
         <file>Resources/check.png</file>
+        <file>EditProfileWindow.qml</file>
     </qresource>
 </RCC>
