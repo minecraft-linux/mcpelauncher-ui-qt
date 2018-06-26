@@ -73,6 +73,7 @@ void ProfileManager::loadProfiles() {
         profile->windowCustomSize = settings.value("windowCustomSize").toBool();
         profile->windowWidth = settings.value("windowWidth").toInt();
         profile->windowHeight = settings.value("windowHeight").toInt();
+        profile->pixelScale = settings.value("pixelScale").toInt();
         settings.endGroup();
     }
 }
@@ -95,6 +96,7 @@ void ProfileInfo::save() {
     settings.setValue("windowCustomSize", windowCustomSize);
     settings.setValue("windowWidth", windowWidth);
     settings.setValue("windowHeight", windowHeight);
+    settings.setValue("pixelScale", pixelScale);
     settings.endGroup();
 }
 
