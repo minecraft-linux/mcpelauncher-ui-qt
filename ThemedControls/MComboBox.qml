@@ -6,10 +6,11 @@ import QtQuick.Window 2.3
 T.ComboBox {
     id: control
 
-    padding: 8
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
     implicitHeight: 36
     baselineOffset: contentItem.y + contentItem.baselineOffset
+    leftPadding: 8
+    rightPadding: 36
 
     background: BorderImage {
         id: buttonBackground
@@ -21,6 +22,11 @@ T.ComboBox {
         verticalTileMode: BorderImage.Stretch
     }
 
+    indicator: Item {
+        width: 36
+        height: 36
+    }
+
     contentItem: Text {
         id: textItem
         text: control.displayText
@@ -29,6 +35,7 @@ T.ComboBox {
         color: "#000"
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
+        elide: Text.ElideRight
     }
 
     delegate: ItemDelegate {
