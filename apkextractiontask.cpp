@@ -2,8 +2,6 @@
 
 #include <QUrl>
 #include <QDebug>
-#include <fcntl.h>
-#include <unistd.h>
 #include <mcpelauncher/zip_extractor.h>
 #include <mcpelauncher/minecraft_extract_utils.h>
 #include <mcpelauncher/apkinfo.h>
@@ -23,7 +21,6 @@ bool ApkExtractionTask::setSourceUrl(const QUrl &url) {
 
 void ApkExtractionTask::run() {
     QTemporaryDir dir (versionManager()->getTempTemplate());
-    int elfFd = -1;
     try {
         std::string path = dir.path().toStdString();
 
@@ -51,8 +48,6 @@ void ApkExtractionTask::run() {
         dir.setAutoRemove(false);
         versionManager()->addVersion(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
     } catch (std::exception& e) {
-        if (elfFd != -1)
-            close(elfFd);
         emit error(e.what());
         return;
     }
