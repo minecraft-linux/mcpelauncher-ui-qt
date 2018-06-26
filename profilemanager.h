@@ -50,11 +50,13 @@ class ProfileManager : public QObject {
     Q_OBJECT
     Q_PROPERTY(QList<QObject*> profiles READ profiles NOTIFY profilesChanged)
     Q_PROPERTY(ProfileInfo* defaultProfile READ defaultProfile CONSTANT)
+    Q_PROPERTY(ProfileInfo* activeProfile READ activeProfile WRITE setActiveProfile NOTIFY activeProfileChanged)
 private:
     QString m_baseDir;
     QScopedPointer<QSettings> m_settings;
     QList<ProfileInfo*> m_profiles;
     ProfileInfo* m_defaultProfile;
+    ProfileInfo* m_activeProfile;
 
     void loadProfiles();
 
@@ -67,13 +69,22 @@ public:
 
     QList<QObject*> const& profiles() const { return (QList<QObject*>&) m_profiles; }
 
+
+    ProfileInfo* activeProfile() const { return m_activeProfile; }
+
+    void setActiveProfile(ProfileInfo* profile);
+
 public slots:
     ProfileInfo* createProfile(QString name);
 
     void deleteProfile(ProfileInfo* profile);
 
+    bool validateName(QString const& name);
+
 signals:
     void profilesChanged();
+
+    void activeProfileChanged();
 
 };
 

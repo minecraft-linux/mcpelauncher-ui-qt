@@ -14,6 +14,15 @@ ProfileManager::ProfileManager(QObject *parent) : QObject(parent) {
 
     m_settings.reset(new QSettings(QDir(m_baseDir).filePath("profiles.ini"), QSettings::IniFormat));
     loadProfiles();
+
+    auto selectedProfile = m_settings->value("selected").toString();
+    m_activeProfile = m_defaultProfile;
+    for (ProfileInfo* profile : m_profiles) {
+        if (profile->name == selectedProfile) {
+            m_activeProfile = profile;
+            break;
+        }
+    }
 }
 
 ProfileInfo* ProfileManager::createProfile(QString name) {
@@ -27,12 +36,24 @@ ProfileInfo* ProfileManager::createProfile(QString name) {
 void ProfileManager::deleteProfile(ProfileInfo *profile) {
     m_settings->remove(profile->name);
     m_profiles.removeOne(profile);
+    if (m_activeProfile == profile) {
+        setActiveProfile(m_defaultProfile);
+    }
     emit profilesChanged();
+    delete profile;
+}
+
+void ProfileManager::setActiveProfile(ProfileInfo *profile) {
+    m_activeProfile = profile;
+    m_settings->setValue("selected", profile->name);
+    emit activeProfileChanged();
 }
 
 void ProfileManager::loadProfiles() {
     auto& settings = this->settings();
     for (QString const& group : settings.childGroups()) {
+        if (group == "Metadata")
+            continue;
         settings.beginGroup(group);
         ProfileInfo* profile;
         if (group == "Default") {
@@ -55,6 +76,10 @@ void ProfileManager::loadProfiles() {
         profile->windowHeight = settings.value("windowHeight").toInt();
         settings.endGroup();
     }
+}
+
+bool ProfileManager::validateName(QString const& name) {
+    return (!name.contains('/'));
 }
 
 ProfileInfo::ProfileInfo(ProfileManager* pm) : QObject(pm), manager(pm) {

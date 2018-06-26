@@ -111,11 +111,21 @@ ColumnLayout {
                     Layout.alignment: Qt.AlignHCenter
 
                     ProfileComboBox {
+                        property bool loaded: false
+
                         id: profileComboBox
                         Layout.preferredWidth: 200
                         onAddProfileSelected: {
                             profileEditWindow.reset()
                             profileEditWindow.show()
+                        }
+                        Component.onCompleted: {
+                            setProfile(profileManager.activeProfile)
+                            loaded = true
+                        }
+                        onCurrentProfileChanged: {
+                            if (loaded)
+                                profileManager.activeProfile = currentProfile
                         }
                     }
 

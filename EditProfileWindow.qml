@@ -199,6 +199,7 @@ Window {
     function reset() {
         profile = null
         profileName.text = ""
+        profileName.enabled = true
         profileVersion.currentIndex = 0
         windowSizeCheck.checked = false
         windowWidth.text = "720"
@@ -233,6 +234,10 @@ Window {
     }
 
     function saveProfile() {
+        if (!profileManager.validateName(profileName.text)) {
+            profileInvalidNameDialog.open()
+            return
+        }
         if (profile == null || (profile.name !== profileName.text && !profile.nameLocked)) {
             var profiles = profileManager.profiles
             for (var i = 0; i < profiles.length; i++) {
@@ -263,6 +268,12 @@ Window {
     MessageDialog {
         id: profileNameConflictDialog
         text: "A profile with the specified name already exists"
+        title: "Profile Edit Error"
+    }
+
+    MessageDialog {
+        id: profileInvalidNameDialog
+        text: "The specified profile name is not valid"
         title: "Profile Edit Error"
     }
 

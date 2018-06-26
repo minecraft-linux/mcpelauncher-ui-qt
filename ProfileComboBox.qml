@@ -15,8 +15,10 @@ MComboBox {
     function setProfile(profile) {
         for (var i = 0; i < profiles.length; i++) {
             if (profiles[i] === profile) {
-                currentIndex = i
-                currentProfile = profiles[i]
+                if (currentIndex !== i)
+                    currentIndex = i
+                if (currentProfile !== profiles[i])
+                    currentProfile = profiles[i]
                 return true
             }
         }
