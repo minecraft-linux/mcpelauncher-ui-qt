@@ -163,6 +163,7 @@ ColumnLayout {
                         playDownloadTask.start()
                         return;
                     }
+                    gameLauncher.profile = profileManager.activeProfile
                     gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
                     console.log("Game dir = " + gameLauncher.gameDir)
                     gameLauncher.start()
