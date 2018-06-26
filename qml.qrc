@@ -30,5 +30,6 @@
         <file>EditProfileWindow.qml</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
+        <file>LauncherSettingsWindow.qml</file>
     </qresource>
 </RCC>

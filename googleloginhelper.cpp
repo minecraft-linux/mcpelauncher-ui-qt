@@ -71,5 +71,17 @@ void GoogleLoginHelper::onLoginFinished(int code) {
     } else {
         accountAcquireFinished(nullptr);
     }
+    emit accountInfoChanged();
     window = nullptr;
+}
+
+void GoogleLoginHelper::signOut() {
+    hasAccount = false;
+    currentAccount.setAccountIdentifier("");
+    currentAccount.setAccountUserId("");
+    currentAccount.setAccountToken("");
+    settings.remove("googlelogin");
+    settings.remove("checkin");
+    settings.remove("device_state");
+    emit accountInfoChanged();
 }

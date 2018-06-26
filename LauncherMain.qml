@@ -52,6 +52,7 @@ ColumnLayout {
             anchors.rightMargin: 20
             implicitWidth: 48
             implicitHeight: 48
+            onClicked: launcherSettingsWindow.show()
             Image {
                 anchors.centerIn: parent
                 source: "Resources/icon-settings.png"
@@ -248,8 +249,20 @@ ColumnLayout {
 
     }
 
+    LauncherSettingsWindow {
+        id: launcherSettingsWindow
+    }
+
     GameLauncher {
         id: gameLauncher
+    }
+
+    Connections {
+        target: googleLoginHelper
+        onAccountInfoChanged: {
+            if (googleLoginHelper.account !== null)
+                playApi.handleCheckinAndTos()
+        }
     }
 
     Component.onCompleted: {

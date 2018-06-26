@@ -13,7 +13,7 @@ class GoogleLoginWindow;
 
 class GoogleLoginHelper : public QObject {
     Q_OBJECT
-    Q_PROPERTY(GoogleAccount* account READ account)
+    Q_PROPERTY(GoogleAccount* account READ account NOTIFY accountInfoChanged)
 
 private:
     QSettings settings;
@@ -46,8 +46,12 @@ public:
 public slots:
     void acquireAccount(QWindow *parent);
 
+    void signOut();
+
 signals:
     void accountAcquireFinished(GoogleAccount* account);
+
+    void accountInfoChanged();
 
 };
 
