@@ -5,19 +5,18 @@ import "ThemedControls"
 MComboBox {
     property var profiles: profileManager.profiles
     property int addProfileIndex: profiles.length
-    property int oldCurrentIndex: 0
+    property var currentProfile: profiles[0]
 
     signal addProfileSelected()
 
     function getProfile() {
-        if (currentIndex >= profiles.length)
-            return null
-        return profiles[currentIndex]
+        return currentProfile
     }
     function setProfile(profile) {
         for (var i = 0; i < profiles.length; i++) {
             if (profiles[i] === profile) {
                 currentIndex = i
+                currentProfile = profiles[i]
                 return true
             }
         }
@@ -26,7 +25,8 @@ MComboBox {
     function onAddProfileResult(newProfile) {
         if (newProfile !== null && setProfile(newProfile))
             return;
-        currentIndex = oldCurrentIndex
+        if (!setProfile(currentProfile))
+            currentIndex = 0
     }
 
     id: control
@@ -70,6 +70,11 @@ MComboBox {
         if (index === addProfileIndex)
             addProfileSelected()
         else
-            oldCurrentIndex = index
+            currentProfile = profiles[index]
+    }
+
+    onModelChanged: {
+        if (!setProfile(currentProfile))
+            currentIndex = 0
     }
 }

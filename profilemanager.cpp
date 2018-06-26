@@ -18,10 +18,15 @@ ProfileManager::ProfileManager(QObject *parent) : QObject(parent) {
 
 ProfileInfo* ProfileManager::createProfile(QString name) {
     ProfileInfo* ret = new ProfileInfo(this);
-    ret->name = name;
+    ret->name = std::move(name);
     m_profiles.push_back(ret);
     emit profilesChanged();
     return ret;
+}
+
+void ProfileManager::deleteProfile(ProfileInfo *profile) {
+    m_profiles.removeOne(profile);
+    emit profilesChanged();
 }
 
 void ProfileManager::loadProfiles() {
@@ -75,4 +80,5 @@ void ProfileInfo::setName(const QString &newName) {
     settings.remove(name);
     this->name = newName;
     save();
+    emit manager->profilesChanged();
 }

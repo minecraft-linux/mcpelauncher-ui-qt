@@ -33,13 +33,29 @@ Window {
             Layout.fillWidth: true
             Layout.preferredHeight: 50
 
-            Text {
+            RowLayout {
                 anchors.fill: parent
-                anchors.margins: { left: 20; right: 20 }
-                color: "#ffffff"
-                text: qsTr("Edit profile")
-                font.pixelSize: 24
-                verticalAlignment: Text.AlignVCenter
+
+                Text {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    Layout.leftMargin: 20
+                    color: "#ffffff"
+                    text: qsTr("Edit profile")
+                    font.pixelSize: 24
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                MButton {
+                    text: "Delete profile"
+                    Layout.rightMargin: 20
+                    visible: profile !== null && profile !== profileManager.defaultProfile
+                    onClicked: {
+                        profileManager.deleteProfile(profile)
+                        close()
+                    }
+                }
+
             }
 
         }

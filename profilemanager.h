@@ -49,7 +49,7 @@ signals:
 class ProfileManager : public QObject {
     Q_OBJECT
     Q_PROPERTY(QList<QObject*> profiles READ profiles NOTIFY profilesChanged)
-    Q_PROPERTY(ProfileInfo* defaultProfile READ defaultProfile)
+    Q_PROPERTY(ProfileInfo* defaultProfile READ defaultProfile CONSTANT)
 private:
     QString m_baseDir;
     QScopedPointer<QSettings> m_settings;
@@ -69,6 +69,8 @@ public:
 
 public slots:
     ProfileInfo* createProfile(QString name);
+
+    void deleteProfile(ProfileInfo* profile);
 
 signals:
     void profilesChanged();
