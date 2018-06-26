@@ -124,7 +124,7 @@ ColumnLayout {
                             loaded = true
                         }
                         onCurrentProfileChanged: {
-                            if (loaded)
+                            if (loaded && currentProfile !== null)
                                 profileManager.activeProfile = currentProfile
                         }
                     }
