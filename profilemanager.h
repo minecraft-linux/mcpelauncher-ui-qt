@@ -13,6 +13,8 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(bool nameLocked MEMBER nameLocked CONSTANT)
     Q_PROPERTY(VersionType versionType MEMBER versionType NOTIFY changed)
     Q_PROPERTY(QString versionDirName MEMBER versionDirName NOTIFY changed)
+    Q_PROPERTY(bool dataDirCustom MEMBER dataDirCustom NOTIFY changed)
+    Q_PROPERTY(QString dataDir MEMBER dataDir NOTIFY changed)
     Q_PROPERTY(bool windowCustomSize MEMBER windowCustomSize NOTIFY changed)
     Q_PROPERTY(int windowWidth MEMBER windowWidth NOTIFY changed)
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
@@ -32,6 +34,9 @@ public:
     QString name;
     VersionType versionType = VersionType::LATEST_GOOGLE_PLAY;
     QString versionDirName;
+
+    bool dataDirCustom = false;
+    QString dataDir;
 
     bool windowCustomSize = false;
     int windowWidth = 720;

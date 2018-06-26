@@ -12,6 +12,10 @@ void GameLauncher::start() {
         args.append(m_gameDir);
     }
     if (m_profile != nullptr) {
+        if (m_profile->dataDirCustom) {
+            args.append("-dd");
+            args.append(m_profile->dataDir);
+        }
         if (m_profile->windowCustomSize) {
             args.append("-ww");
             args.append(QString::number(m_profile->windowWidth));

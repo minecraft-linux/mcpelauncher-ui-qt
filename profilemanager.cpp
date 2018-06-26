@@ -70,6 +70,8 @@ void ProfileManager::loadProfiles() {
             profile->versionType = ProfileInfo::VersionType::LOCKED;
             profile->versionDirName = version.right(version.length() - 5);
         }
+        profile->dataDirCustom = settings.value("dataDirCustom").toBool();
+        profile->dataDir = settings.value("dataDir").toString();
         profile->windowCustomSize = settings.value("windowCustomSize").toBool();
         profile->windowWidth = settings.value("windowWidth").toInt();
         profile->windowHeight = settings.value("windowHeight").toInt();
@@ -93,6 +95,8 @@ void ProfileInfo::save() {
     } else if (versionType == VersionType::LOCKED) {
         settings.setValue("version", "lock " + versionDirName);
     }
+    settings.setValue("dataDirCustom", dataDirCustom);
+    settings.setValue("dataDir", dataDir);
     settings.setValue("windowCustomSize", windowCustomSize);
     settings.setValue("windowWidth", windowWidth);
     settings.setValue("windowHeight", windowHeight);

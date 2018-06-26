@@ -114,7 +114,7 @@ Window {
                 Layout.fillWidth: true
                 spacing: 2
                 MTextField {
-                    id: gameDirPath
+                    id: dataDirPath
                     enabled: dataDirCheck.checked
                     Layout.fillWidth: true
                 }
@@ -122,14 +122,16 @@ Window {
                     text: "..."
                     enabled: dataDirCheck.checked
                     onClicked: {
-                        gameDirPathDialog.open()
+                        if (dataDirPath.text !== null && dataDirPath.text.length > 0)
+                            dataDirPathDialog.folder = QmlUrlUtils.localFileToUrl(dataDirPath.text)
+                        dataDirPathDialog.open()
                     }
                 }
                 FileDialog {
-                    id: gameDirPathDialog
+                    id: dataDirPathDialog
                     selectFolder: true
                     onAccepted: {
-                        gameDirPath.text = fileUrl
+                        dataDirPath.text = QmlUrlUtils.urlToLocalFile(fileUrl)
                     }
                 }
             }
@@ -223,6 +225,8 @@ Window {
         profileName.text = ""
         profileName.enabled = true
         profileVersion.currentIndex = 0
+        dataDirCheck.checked = false
+        dataDirPath.text = ""
         windowSizeCheck.checked = false
         windowWidth.text = "720"
         windowHeight.text = "480"
@@ -251,6 +255,8 @@ Window {
             }
         }
 
+        dataDirCheck.checked = profile.dataDirCustom
+        dataDirPath.text = profile.dataDir
         windowSizeCheck.checked = profile.windowCustomSize
         windowWidth.text = profile.windowWidth
         windowHeight.text = profile.windowHeight
@@ -283,7 +289,8 @@ Window {
         }
 
         profile.windowCustomSize = windowSizeCheck.checked
-
+        profile.dataDirCustom = dataDirCheck.checked
+        profile.dataDir = dataDirPath.text
         profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
         profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
         profile.pixelScale = parseFloat(pixelScale.text) || profile.pixelScale
