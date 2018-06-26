@@ -170,7 +170,7 @@ Window {
                     id: pixelScale
                     enabled: windowSizeCheck.checked
                     Layout.preferredWidth: 50
-                    validator: IntValidator {
+                    validator: DoubleValidator {
                         bottom: 0
                         top: 16
                     }
@@ -286,7 +286,7 @@ Window {
 
         profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
         profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
-        profile.pixelScale = parseInt(pixelScale.text) || profile.pixelScale
+        profile.pixelScale = parseFloat(pixelScale.text) || profile.pixelScale
         profile.save()
     }
 

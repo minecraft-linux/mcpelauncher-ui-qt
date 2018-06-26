@@ -2,7 +2,7 @@
 #define GAMELAUNCHER_H
 
 #include <QObject>
-#include <QProcess>>
+#include <QProcess>
 
 class ProfileInfo;
 
