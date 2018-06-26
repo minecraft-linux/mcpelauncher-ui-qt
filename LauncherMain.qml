@@ -182,6 +182,7 @@ ColumnLayout {
                     gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
                     console.log("Game dir = " + gameLauncher.gameDir)
                     gameLauncher.start()
+                    gameLogWindow.show()
                 }
             }
 
@@ -251,6 +252,11 @@ ColumnLayout {
 
     LauncherSettingsWindow {
         id: launcherSettingsWindow
+    }
+
+    GameLogWindow {
+        id: gameLogWindow
+        launcher: gameLauncher
     }
 
     GameLauncher {
