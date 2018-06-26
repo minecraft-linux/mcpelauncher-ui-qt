@@ -45,6 +45,20 @@ ColumnLayout {
 
         }
 
+
+        MButton {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            implicitWidth: 48
+            implicitHeight: 48
+            Image {
+                anchors.centerIn: parent
+                source: "Resources/icon-settings.png"
+                smooth: false
+            }
+        }
+
     }
 
     MinecraftNews {}
@@ -231,6 +245,7 @@ ColumnLayout {
         onClosing: {
             profileComboBox.onAddProfileResult(profileEditWindow.profile)
         }
+
     }
 
     GameLauncher {
