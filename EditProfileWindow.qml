@@ -106,6 +106,7 @@ Window {
             }
 
             MCheckBox {
+                id: dataDirCheck
                 text: "Data directory"
                 font.pointSize: parent.labelFontSize
             }
@@ -114,10 +115,12 @@ Window {
                 spacing: 2
                 MTextField {
                     id: gameDirPath
+                    enabled: dataDirCheck.checked
                     Layout.fillWidth: true
                 }
                 MButton {
                     text: "..."
+                    enabled: dataDirCheck.checked
                     onClicked: {
                         gameDirPathDialog.open()
                     }
@@ -140,6 +143,7 @@ Window {
                 Layout.fillWidth: true
                 MTextField {
                     id: windowWidth
+                    enabled: windowSizeCheck.checked
                     Layout.fillWidth: true
                     validator: IntValidator {
                         bottom: 0
@@ -148,14 +152,32 @@ Window {
                 }
                 Text {
                     text: "x"
+                    font.pointSize: 11
                 }
                 MTextField {
                     id: windowHeight
+                    enabled: windowSizeCheck.checked
                     Layout.fillWidth: true
                     validator: IntValidator {
                         bottom: 0
                         top: 2160
                     }
+                }
+                Item {
+                    Layout.preferredWidth: 10
+                }
+                MTextField {
+                    id: pixelScale
+                    enabled: windowSizeCheck.checked
+                    Layout.preferredWidth: 50
+                    validator: IntValidator {
+                        bottom: 0
+                        top: 16
+                    }
+                }
+                Text {
+                    text: "px scale"
+                    font.pointSize: 11
                 }
             }
         }
@@ -204,6 +226,7 @@ Window {
         windowSizeCheck.checked = false
         windowWidth.text = "720"
         windowHeight.text = "480"
+        pixelScale.text = "2"
     }
 
     function setProfile(p) {
@@ -231,6 +254,7 @@ Window {
         windowSizeCheck.checked = profile.windowCustomSize
         windowWidth.text = profile.windowWidth
         windowHeight.text = profile.windowHeight
+        pixelScale.text = profile.pixelScale
     }
 
     function saveProfile() {
@@ -262,6 +286,7 @@ Window {
 
         profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
         profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        profile.pixelScale = parseInt(pixelScale.text) || profile.pixelScale
         profile.save()
     }
 
