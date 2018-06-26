@@ -25,6 +25,7 @@ ProfileInfo* ProfileManager::createProfile(QString name) {
 }
 
 void ProfileManager::deleteProfile(ProfileInfo *profile) {
+    m_settings->remove(profile->name);
     m_profiles.removeOne(profile);
     emit profilesChanged();
 }
