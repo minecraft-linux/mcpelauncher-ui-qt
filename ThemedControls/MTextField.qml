@@ -9,6 +9,8 @@ T.TextField {
     implicitHeight: 36
     verticalAlignment: TextInput.AlignVCenter
     font.pointSize: 13
+    selectByMouse: true
+    selectionColor: "#51a063"
 
     background: BorderImage {
         id: buttonBackground
