@@ -228,6 +228,8 @@ ColumnLayout {
         onProgress: downloadProgress.value = progress
         onError: console.log("Extraction failed: " + err)
         onFinished: function() {
+            gameLauncher.profile = profileManager.activeProfile
+            gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
             gameLauncher.start()
         }
     }
