@@ -31,7 +31,7 @@ ColumnLayout {
 
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    source: "Resources/properiaty/minecraft.svg"
+                    source: "Resources/proprietary/minecraft.svg"
                 }
 
                 Text {
