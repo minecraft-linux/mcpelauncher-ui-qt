@@ -71,6 +71,3 @@ CMakeLists.txt.user
 # --------
 *.dll
 *.exe
-
-# Proprietary resources
-Resources/proprietary

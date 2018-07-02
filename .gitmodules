@@ -1,0 +1,3 @@
+[submodule "Resources/proprietary"]
+	path = Resources/proprietary
+	url = ../mcpelauncher-proprietary.git
