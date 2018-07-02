@@ -24,6 +24,8 @@ private:
 
     void handleFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
+    static std::string findLauncher();
+
 public:
     explicit GameLauncher(QObject *parent = nullptr);
 

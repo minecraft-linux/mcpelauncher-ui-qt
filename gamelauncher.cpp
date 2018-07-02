@@ -1,7 +1,19 @@
 #include "gamelauncher.h"
 #include "profilemanager.h"
+#include "EnvPathUtil.h"
 
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
+}
+
+std::string GameLauncher::findLauncher() {
+    std::string path;
+#ifdef GAME_LAUNCHER_PATH
+    if (EnvPathUtil::findInPath("mcpelauncher-client", path, GAME_LAUNCHER_PATH, EnvPathUtil::getAppDir().c_str()))
+        return path;
+#endif
+    if (EnvPathUtil::findInPath("mcpelauncher-client", path))
+        return path;
+    return "mcpelauncher-client";
 }
 
 void GameLauncher::start() {
@@ -28,7 +40,7 @@ void GameLauncher::start() {
     process->setProcessChannelMode(QProcess::MergedChannels);
     connect(process.get(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
     connect(process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
-    process->start(GAME_PATH, args);
+    process->start(QString::fromStdString(findLauncher()), args);
     m_crashed = false;
     m_log = QString();
     emit logChanged();
