@@ -34,7 +34,7 @@ public:
 
     GoogleLoginHelper* getLogin() { return loginHelper; }
 
-    playapi::api* getApi() { return api.get(); }
+    playapi::api* getApi() { return api.data(); }
 
 signals:
     void ready();

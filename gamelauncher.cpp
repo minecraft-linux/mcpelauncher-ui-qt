@@ -38,8 +38,8 @@ void GameLauncher::start() {
         }
     }
     process->setProcessChannelMode(QProcess::MergedChannels);
-    connect(process.get(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
-    connect(process.get(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
+    connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     process->start(QString::fromStdString(findLauncher()), args);
     m_crashed = false;
     m_log = QString();
