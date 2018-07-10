@@ -1,5 +1,5 @@
 import QtQuick 2.9
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.4
 import "ThemedControls"
 
 Item {
