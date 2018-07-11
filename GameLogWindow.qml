@@ -3,7 +3,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
 import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.4
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
