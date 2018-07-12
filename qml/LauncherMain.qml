@@ -264,7 +264,17 @@ ColumnLayout {
     GameLauncher {
         id: gameLauncher
         onLaunchFailed: {
+            exited();
             showLaunchError("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).<br><a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/wiki/Troubleshooting#could-not-find-the-game-launcher\">Click here for help and additional informations.</a>")
+        }
+        onStateChanged: {
+            if (!running)
+                exited();
+            if (crashed)
+                gameLogWindow.show()
+        }
+        function exited() {
+            window.show();
         }
     }
 
@@ -358,8 +368,11 @@ ColumnLayout {
             return;
         }
         gameLauncher.gameDir = gameDir
+        if (launcherSettings.startHideLauncher)
+            window.hide();
+        if (launcherSettings.startOpenLog)
+            gameLogWindow.show();
         gameLauncher.start();
-        gameLogWindow.show();
     }
 
 }

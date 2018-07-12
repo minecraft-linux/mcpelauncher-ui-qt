@@ -49,6 +49,10 @@ Window {
         }
     }
 
+    LauncherSettings {
+        id: launcherSettings
+    }
+
     function needsToLogIn() {
         return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size === 0
     }

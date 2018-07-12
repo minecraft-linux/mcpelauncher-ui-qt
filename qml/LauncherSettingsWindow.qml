@@ -80,6 +80,25 @@ Window {
                     }
                 }
             }
+
+            MCheckBox {
+                Layout.topMargin: 20
+                id: autoShowGameLog
+                text: "Show log when starting the game"
+                font.pointSize: parent.labelFontSize
+                Layout.columnSpan: 2
+                Component.onCompleted: checked = launcherSettings.startOpenLog
+                onCheckedChanged: launcherSettings.startOpenLog = checked
+            }
+
+            MCheckBox {
+                id: hideLauncher
+                text: "Hide the launcher when starting the game"
+                font.pointSize: parent.labelFontSize
+                Layout.columnSpan: 2
+                Component.onCompleted: checked = launcherSettings.startHideLauncher
+                onCheckedChanged: launcherSettings.startHideLauncher = checked
+            }
         }
 
         Image {

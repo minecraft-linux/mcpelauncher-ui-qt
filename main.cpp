@@ -10,6 +10,7 @@
 #include "gamelauncher.h"
 #include "profilemanager.h"
 #include "qmlurlutils.h"
+#include "launchersettings.h"
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProfileManager>("io.mrarm.mcpelauncher", 1, 0, "ProfileManager");
     qmlRegisterType<ProfileInfo>("io.mrarm.mcpelauncher", 1, 0, "ProfileInfo");
     qmlRegisterType<ArchivalVersionInfo>("io.mrarm.mcpelauncher", 1, 0, "ArchivalVersionInfo");
+    qmlRegisterType<LauncherSettings>("io.mrarm.mcpelauncher", 1, 0, "LauncherSettings");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
 
     QQmlApplicationEngine engine;

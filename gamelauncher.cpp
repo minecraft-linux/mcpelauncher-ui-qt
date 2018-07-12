@@ -61,6 +61,7 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
         m_log += "Process exited normally\n";
     }
     m_crashed = (exitCode != 0);
+    process.reset();
     emit logChanged();
     emit stateChanged();
 }
