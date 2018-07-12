@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.2
 import "ThemedControls"
@@ -253,10 +254,18 @@ ColumnLayout {
     GameLogWindow {
         id: gameLogWindow
         launcher: gameLauncher
+
+        MessageDialog {
+            id: errorDialog
+            title: "Launcher Error"
+        }
     }
 
     GameLauncher {
         id: gameLauncher
+        onLaunchFailed: {
+            showLaunchError("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).<br><a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/wiki/Troubleshooting#could-not-find-the-game-launcher\">Click here for help and additional informations.</a>")
+        }
     }
 
     Connections {
@@ -335,10 +344,20 @@ ColumnLayout {
     }
 
 
+    function showLaunchError(message) {
+        errorDialog.text = message
+        errorDialog.open();
+    }
+
     function launchGame() {
         gameLauncher.profile = profileManager.activeProfile;
-        gameLauncher.gameDir = getCurrentGameDir();
-        console.log("Game dir = " + gameLauncher.gameDir);
+        var gameDir = getCurrentGameDir();
+        console.log("Game dir = " + gameDir);
+        if (gameDir === null || gameDir.length <= 0) {
+            showLaunchError("Could not find the game directory.")
+            return;
+        }
+        gameLauncher.gameDir = gameDir
         gameLauncher.start();
         gameLogWindow.show();
     }

@@ -13,7 +13,7 @@ std::string GameLauncher::findLauncher() {
 #endif
     if (EnvPathUtil::findInPath("mcpelauncher-client", path))
         return path;
-    return "mcpelauncher-client";
+    return std::string();
 }
 
 void GameLauncher::start() {
@@ -40,6 +40,7 @@ void GameLauncher::start() {
     process->setProcessChannelMode(QProcess::MergedChannels);
     connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
+    connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     process->start(QString::fromStdString(findLauncher()), args);
     m_crashed = false;
     m_log = QString();
@@ -62,4 +63,9 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
     m_crashed = (exitCode != 0);
     emit logChanged();
     emit stateChanged();
+}
+
+void GameLauncher::handleError(QProcess::ProcessError error) {
+    if (error == QProcess::FailedToStart)
+        launchFailed();
 }

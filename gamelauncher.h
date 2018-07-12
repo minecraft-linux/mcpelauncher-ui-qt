@@ -24,6 +24,8 @@ private:
 
     void handleFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
+    void handleError(QProcess::ProcessError error);
+
     static std::string findLauncher();
 
 public:
@@ -48,6 +50,8 @@ signals:
     void logChanged();
 
     void stateChanged();
+
+    void launchFailed();
 };
 
 #endif // GAMELAUNCHER_H
