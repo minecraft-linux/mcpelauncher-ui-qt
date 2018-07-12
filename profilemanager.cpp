@@ -67,8 +67,11 @@ void ProfileManager::loadProfiles() {
         if (version == "googleplay") {
             profile->versionType = ProfileInfo::VersionType::LATEST_GOOGLE_PLAY;
         } else if (version.startsWith("lock ")) {
-            profile->versionType = ProfileInfo::VersionType::LOCKED;
-            profile->versionDirName = version.right(version.length() - 5);
+            profile->versionType = ProfileInfo::VersionType::LOCKED_CODE;
+            profile->versionCode = version.right(version.length() - 5).toInt();
+        } else if (version.startsWith("dir ")) {
+            profile->versionType = ProfileInfo::VersionType::LOCKED_NAME;
+            profile->versionDirName = version.right(version.length() - 4);
         }
         profile->dataDirCustom = settings.value("dataDirCustom").toBool();
         profile->dataDir = settings.value("dataDir").toString();
@@ -92,8 +95,10 @@ void ProfileInfo::save() {
     settings.beginGroup(name);
     if (versionType == VersionType::LATEST_GOOGLE_PLAY) {
         settings.setValue("version", "googleplay");
-    } else if (versionType == VersionType::LOCKED) {
-        settings.setValue("version", "lock " + versionDirName);
+    } else if (versionType == VersionType::LOCKED_CODE) {
+        settings.setValue("version", "lock " + QString::number(versionCode));
+    } else if (versionType == VersionType::LOCKED_NAME) {
+        settings.setValue("version", "dir " + versionDirName);
     }
     settings.setValue("dataDirCustom", dataDirCustom);
     settings.setValue("dataDir", dataDir);

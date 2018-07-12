@@ -13,6 +13,7 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(bool nameLocked MEMBER nameLocked CONSTANT)
     Q_PROPERTY(VersionType versionType MEMBER versionType NOTIFY changed)
     Q_PROPERTY(QString versionDirName MEMBER versionDirName NOTIFY changed)
+    Q_PROPERTY(int versionCode MEMBER versionCode NOTIFY changed)
     Q_PROPERTY(bool dataDirCustom MEMBER dataDirCustom NOTIFY changed)
     Q_PROPERTY(QString dataDir MEMBER dataDir NOTIFY changed)
     Q_PROPERTY(bool windowCustomSize MEMBER windowCustomSize NOTIFY changed)
@@ -24,7 +25,7 @@ class ProfileInfo : public QObject {
 
 public:
     enum VersionType {
-        LATEST_GOOGLE_PLAY, LOCKED
+        LATEST_GOOGLE_PLAY, LOCKED_NAME, LOCKED_CODE
     };
     Q_ENUM(VersionType)
 
@@ -34,6 +35,7 @@ public:
     QString name;
     VersionType versionType = VersionType::LATEST_GOOGLE_PLAY;
     QString versionDirName;
+    int versionCode;
 
     bool dataDirCustom = false;
     QString dataDir;

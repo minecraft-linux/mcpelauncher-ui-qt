@@ -85,7 +85,8 @@ Window {
             MComboBox {
                 property var versions: versionManager.versions.getAll()
                 property var archivalVersions: versionManager.archivalVersions.versions
-                property var extraVersionDirName: null
+                property var extraVersionName: null
+                property int extraVersionIndex: 1 + versions.length + archivalVersions.length
 
                 id: profileVersion
                 Layout.fillWidth: true
@@ -102,8 +103,8 @@ Window {
                             continue;
                         ret.push(archivalVersions[i].versionName + (archivalVersions[i].isBeta ? " (beta)" : ""))
                     }
-                    if (extraVersionDirName != null) {
-                        ret.push(extraVersionDirName)
+                    if (extraVersionName != null) {
+                        ret.push(extraVersionName)
                     }
                     return ret
                 }
@@ -248,7 +249,27 @@ Window {
         profileName.enabled = !profile.nameLocked
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profileVersion.currentIndex = 0
-        } else if (profile.versionType == ProfileInfo.LOCKED) {
+        } else if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+            var index = -1
+            for (var i = 0; i < profileVersion.versions.length; i++) {
+                if (profileVersion.versions[i].versionCode === profile.versionCode) {
+                    index = 1 + i
+                    break
+                }
+            }
+            for (var i = 0; i < profileVersion.archivalVersions.length; i++) {
+                if (profileVersion.archivalVersions[i].versionCode === profile.versionCode) {
+                    index = 1 + profileVersion.versions.length + i
+                    break
+                }
+            }
+            if (index === -1) {
+                profileVersion.extraVersionName = "Archival (" + profile.versionDirName + ")"
+                profileVersion.currentIndex = profileVersion.extraVersionIndex
+            } else {
+                profileVersion.currentIndex = index
+            }
+        } else if (profile.versionType == ProfileInfo.LOCKED_NAME) {
             var index = -1
             for (var i = 0; i < profileVersion.versions.length; i++) {
                 if (profileVersion.versions[i].directory === profile.versionDirName) {
@@ -257,8 +278,8 @@ Window {
                 }
             }
             if (index === -1) {
-                profileVersion.extraVersionDirName = profile.versionDirName
-                profileVersion.currentIndex = profileVersion.versions.length + 1
+                profileVersion.extraVersionName = profile.versionDirName
+                profileVersion.currentIndex = profileVersion.extraVersionIndex
             } else {
                 profileVersion.currentIndex = index + 1
             }
@@ -292,9 +313,12 @@ Window {
         }
         if (profileVersion.currentIndex == 0) {
             profile.versionType = ProfileInfo.LATEST_GOOGLE_PLAY
-        } else {
-            profile.versionType = ProfileInfo.LOCKED
+        } else if (profileVersion.currentIndex >= 1 && profileVersion.currentIndex < 1 + profileVersion.versions.length) {
+            profile.versionType = ProfileInfo.LOCKED_NAME
             profile.versionDirName = profileVersion.versions[profileVersion.currentIndex - 1].directory
+        } else if (profileVersion.currentIndex >= 1 + profileVersion.versions.length && profileVersion.currentIndex < 1 + profileVersion.versions.length + profileVersion.archivalVersions.length) {
+            profile.versionType = ProfileInfo.LOCKED_CODE
+            profile.versionCode = profileVersion.archivalVersions[profileVersion.currentIndex - 1 - profileVersion.versions.length].versionCode
         }
 
         profile.windowCustomSize = windowSizeCheck.checked
