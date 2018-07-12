@@ -1,10 +1,9 @@
 import QtQuick 2.4
 
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.3
-import QtQuick.Controls.Styles 1.4
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
@@ -79,22 +78,21 @@ Window {
             id: logScrollView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-            flickableItem.leftMargin: 8
-            flickableItem.rightMargin: 8
-            flickableItem.topMargin: 8
-            flickableItem.bottomMargin: 8
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            clip: true
 
             function scrollToBottom() {
-                logScrollView.flickableItem.contentY = Math.max(logScrollView.flickableItem.contentHeight - logScrollView.height, 0)
+                ScrollBar.vertical.position = 1 - ScrollBar.vertical.size
             }
+
 
             Text {
                 id: gameLog
-                width: logScrollView.viewport.width - logScrollView.flickableItem.leftMargin - logScrollView.flickableItem.rightMargin
+                x: 8
+                y: 8
+                width: logScrollView.availableWidth - 8 * 2
                 text: launcher.log
-                wrapMode: Text.WordWrap
-
+                wrapMode: Text.Wrap
 
                 onTextChanged: logScrollView.scrollToBottom()
             }
