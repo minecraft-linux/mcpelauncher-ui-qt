@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDir>
-#include <QStandardPaths>>
+#include <QStandardPaths>
 
 #define GET_LIST_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions.json.min"
 
