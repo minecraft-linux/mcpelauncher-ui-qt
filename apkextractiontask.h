@@ -7,8 +7,7 @@
 
 class VersionManager;
 
-class ApkExtractionTask : public QThread
-{
+class ApkExtractionTask : public QThread {
     Q_OBJECT
     Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
     Q_PROPERTY(QString source READ source WRITE setSource)
@@ -23,6 +22,10 @@ class ApkExtractionTask : public QThread
     void emitActiveChanged() {
         emit activeChanged();
     }
+
+private slots:
+    void onVersionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
+
 
 public:
     explicit ApkExtractionTask(QObject *parent = nullptr);
@@ -53,6 +56,8 @@ public slots:
 
 signals:
     void progress(qreal progress);
+
+    void versionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
 
     void finished();
 

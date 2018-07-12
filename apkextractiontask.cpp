@@ -10,6 +10,7 @@
 ApkExtractionTask::ApkExtractionTask(QObject *parent) : QThread(parent) {
     connect(this, &QThread::started, this, &ApkExtractionTask::emitActiveChanged);
     connect(this, &QThread::finished, this, &ApkExtractionTask::emitActiveChanged);
+    connect(this, &ApkExtractionTask::versionInformationObtained, this, &ApkExtractionTask::onVersionInformationObtained);
 }
 
 bool ApkExtractionTask::setSourceUrl(const QUrl &url) {
@@ -46,11 +47,15 @@ void ApkExtractionTask::run() {
         if (!QDir().rename(dir.path(), targetDir))
             throw std::runtime_error("rename failed");
         dir.setAutoRemove(false);
-        versionManager()->addVersion(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
+        emit versionInformationObtained(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
     } catch (std::exception& e) {
         emit error(e.what());
         return;
     }
 
     emit finished();
+}
+
+void ApkExtractionTask::onVersionInformationObtained(const QString &directory, const QString &versionName, int versionCode) {
+    versionManager()->addVersion(directory, versionName, versionCode);
 }
