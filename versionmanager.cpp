@@ -50,6 +50,8 @@ QString VersionManager::getDirectoryFor(std::string const& versionName) {
 }
 
 QString VersionManager::getDirectoryFor(VersionInfo *version) {
+    if (version == nullptr)
+        return QString();
     return getDirectoryFor(version->versionName);
 }
 

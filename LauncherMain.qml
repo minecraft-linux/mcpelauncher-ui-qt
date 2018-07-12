@@ -164,25 +164,21 @@ ColumnLayout {
 
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
-                text: (!versionManager.versions.contains(playVerChannel.latestVersionCode) ? "Download and play" : "Play").toUpperCase()
-                subText: ("Minecraft " + playVerChannel.latestVersion).toUpperCase()
+                text: (needsDownload() ? "Download and play" : "Play").toUpperCase()
+                subText: ("Minecraft " + getDisplayedVersionName()).toUpperCase()
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 6
                 onClicked: {
-                    if (!versionManager.versions.contains(playVerChannel.latestVersionCode)) {
+                    if (needsDownload()) {
                         downloadProgress.value = 0
-                        playDownloadTask.versionCode = playVerChannel.latestVersionCode
+                        playDownloadTask.versionCode = getDownloadVersionCode()
                         playDownloadTask.start()
                         return;
                     }
-                    gameLauncher.profile = profileManager.activeProfile
-                    gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
-                    console.log("Game dir = " + gameLauncher.gameDir)
-                    gameLauncher.start()
-                    gameLogWindow.show()
+                    launchGame()
                 }
             }
 
@@ -228,9 +224,7 @@ ColumnLayout {
         onProgress: downloadProgress.value = progress
         onError: console.log("Extraction failed: " + err)
         onFinished: function() {
-            gameLauncher.profile = profileManager.activeProfile
-            gameLauncher.gameDir = versionManager.getDirectoryFor(versionManager.versions.get((playVerChannel.latestVersionCode)))
-            gameLauncher.start()
+            launchGame()
         }
     }
 
@@ -275,6 +269,78 @@ ColumnLayout {
 
     Component.onCompleted: {
         playApi.handleCheckinAndTos()
+    }
+
+
+    /* utility functions */
+
+    function needsDownload() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
+            return !versionManager.versions.contains(playVerChannel.latestVersionCode);
+        if (profile.versionType == ProfileInfo.LOCKED_CODE)
+            return !versionManager.versions.contains(profile.versionCode);
+        if (profile.versionType == ProfileInfo.LOCKED_NAME)
+            return false;
+        return false;
+    }
+
+    function findArchivalVersion(code) {
+        var versions = versionManager.archivalVersions.versions;
+        for (var i = versions.length - 1; i >= 0; --i) {
+            if (versions[i].versionCode === code)
+                return versions[i];
+        }
+        return null;
+    }
+
+    function getDisplayedNameForCode(code) {
+        var archiveInfo = findArchivalVersion(code);
+        if (archiveInfo !== null)
+            return archiveInfo.versionName + (archiveInfo.isBeta ? " (beta)" : "");
+        if (code === playVerChannel.latestVersionCode)
+            return playVerChannel.latestVersion;
+        return "Unknown";
+    }
+
+    function getDisplayedVersionName() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return getDisplayedNameForCode(playVerChannel.latestVersionCode);
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return getDisplayedNameForCode(profile.versionCode);
+        if (profile.versionType === ProfileInfo.LOCKED_NAME)
+            return profile.versionDirName;
+        return "Unknown";
+    }
+
+    function getDownloadVersionCode() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return playVerChannel.latestVersionCode;
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return profile.versionCode;
+        return null;
+    }
+
+    function getCurrentGameDir() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return versionManager.getDirectoryFor(versionManager.versions.get(playVerChannel.latestVersionCode));
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return versionManager.getDirectoryFor(versionManager.versions.get(profile.versionCode));
+        if (profile.versionType === ProfileInfo.LOCKED_NAME)
+            return versionManager.getDirectoryFor(profile.versionDirName);
+        return null;
+    }
+
+
+    function launchGame() {
+        gameLauncher.profile = profileManager.activeProfile;
+        gameLauncher.gameDir = getCurrentGameDir();
+        console.log("Game dir = " + gameLauncher.gameDir);
+        gameLauncher.start();
+        gameLogWindow.show();
     }
 
 }
