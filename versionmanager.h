@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QMap>
+#include "archivalversionlist.h"
 
 class VersionInfo : public QObject {
     Q_OBJECT
@@ -71,11 +72,13 @@ public slots:
 class VersionManager : public QObject {
     Q_OBJECT
     Q_PROPERTY(VersionList* versions READ versionList NOTIFY versionListChanged)
+    Q_PROPERTY(ArchivalVersionList* archivalVersions READ archivalVersionList CONSTANT)
 
 private:
     QString baseDir;
     QMap<int, VersionInfo*> m_versions;
     VersionList m_versionList;
+    ArchivalVersionList m_archival;
 
     void loadVersions();
     void saveVersions();
@@ -95,6 +98,8 @@ public:
     int latestDownloadedVersion() const;
 
     VersionList* versionList() { return &m_versionList; }
+
+    ArchivalVersionList* archivalVersionList() { return &m_archival; }
 
 public slots:
     QString getDirectoryFor(QString const& versionName);

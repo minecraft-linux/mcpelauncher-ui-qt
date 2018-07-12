@@ -1,6 +1,5 @@
 import QtQuick 2.4
 
-import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
@@ -85,6 +84,7 @@ Window {
             }
             MComboBox {
                 property var versions: versionManager.versions.getAll()
+                property var archivalVersions: versionManager.archivalVersions.versions
                 property var extraVersionDirName: null
 
                 id: profileVersion
@@ -92,10 +92,19 @@ Window {
                 model: {
                     var ret = []
                     ret.push("Latest version (Google Play)")
-                    for (var i = 0; i < versions.length; i++)
-                        ret.push(versions[i].versionName)
-                    if (extraVersionDirName != null)
+                    var installed = {}
+                    for (var i = versions.length - 1; i >= 0; i--) {
+                        installed[versions[i].versionName] = true
+                        ret.push(versions[i].versionName + " (installed)")
+                    }
+                    for (i = archivalVersions.length - 1; i >= 0; i--) {
+                        if (archivalVersions[i].versionName in installed)
+                            continue;
+                        ret.push(archivalVersions[i].versionName + (archivalVersions[i].isBeta ? " (beta)" : ""))
+                    }
+                    if (extraVersionDirName != null) {
                         ret.push(extraVersionDirName)
+                    }
                     return ret
                 }
             }
