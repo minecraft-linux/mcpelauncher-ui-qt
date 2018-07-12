@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.3
@@ -111,7 +110,7 @@ Item {
                 Layout.fillWidth: true
             }
 
-            ProgressBar {
+            MProgressBar {
                 id: apkExtractionProgressBar
                 indeterminate: true
                 Layout.preferredWidth: parent.width * 0.7
