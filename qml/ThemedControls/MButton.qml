@@ -27,7 +27,7 @@ T.Button {
         font.pointSize: 11
         opacity: enabled ? 1.0 : 0.3
         color: "#000"
-        horizontalAlignment: Text.AlignLeft
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
 }
