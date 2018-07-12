@@ -24,7 +24,7 @@ Window {
             id: title
             smooth: false
             fillMode: Image.Tile
-            source: "Resources/noise.png"
+            source: "qrc:/Resources/noise.png"
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             Layout.preferredHeight: 50
@@ -86,7 +86,7 @@ Window {
             id: buttons
             smooth: false
             fillMode: Image.Tile
-            source: "Resources/noise.png"
+            source: "qrc:/Resources/noise.png"
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             Layout.preferredHeight: 50

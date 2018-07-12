@@ -15,7 +15,7 @@ T.TextField {
     background: BorderImage {
         id: buttonBackground
         anchors.fill: parent
-        source: "../Resources/field.png"
+        source: "qrc:/Resources/field.png"
         smooth: false
         border { left: 4; top: 4; right: 4; bottom: 4 }
         horizontalTileMode: BorderImage.Stretch

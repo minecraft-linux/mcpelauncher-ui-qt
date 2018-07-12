@@ -17,7 +17,7 @@ ColumnLayout {
         id: title
         smooth: false
         fillMode: Image.Tile
-        source: "Resources/noise.png"
+        source: "qrc:/Resources/noise.png"
         Layout.alignment: Qt.AlignTop
         Layout.fillWidth: true
         Layout.preferredHeight: 100
@@ -31,7 +31,7 @@ ColumnLayout {
 
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    source: "Resources/proprietary/minecraft.svg"
+                    source: "qrc:/Resources/proprietary/minecraft.svg"
                 }
 
                 Text {
@@ -55,7 +55,7 @@ ColumnLayout {
             onClicked: launcherSettingsWindow.show()
             Image {
                 anchors.centerIn: parent
-                source: "Resources/icon-settings.png"
+                source: "qrc:/Resources/icon-settings.png"
                 smooth: false
             }
         }
@@ -104,7 +104,7 @@ ColumnLayout {
         id: bottomPanel
         smooth: false
         fillMode: Image.Tile
-        source: "Resources/noise.png"
+        source: "qrc:/Resources/noise.png"
         horizontalAlignment: Image.AlignBottom
         Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true
@@ -148,7 +148,7 @@ ColumnLayout {
                         implicitWidth: 36
                         Image {
                             anchors.centerIn: parent
-                            source: "Resources/icon-edit.png"
+                            source: "qrc:/Resources/icon-edit.png"
                             smooth: false
                         }
 

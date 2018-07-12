@@ -19,7 +19,7 @@ Item {
         anchors.fill: parent
         smooth: false
         fillMode: Image.Tile
-        source: "Resources/noise.png"
+        source: "qrc:/Resources/noise.png"
     }
 
     CenteredRectangle {

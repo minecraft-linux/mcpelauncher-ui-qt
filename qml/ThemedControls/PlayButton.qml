@@ -14,7 +14,7 @@ T.Button {
 
     background: BorderImage {
         id: buttonBackground
-        source: "../Resources/green-button.png"
+        source: "qrc:/Resources/green-button.png"
         smooth: false
         border { left: 5; top: 5; right: 5; bottom: 5 }
         horizontalTileMode: BorderImage.Stretch

@@ -1,36 +1,36 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>ThemedControls/TransparentButton.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/ThemedControls/TransparentButton.qml</file>
+        <file>qml/ThemedControls/PlayButton.qml</file>
+        <file>qml/ThemedControls/MComboBox.qml</file>
+        <file>qml/ThemedControls/MProgressBar.qml</file>
+        <file>qml/ThemedControls/MTextField.qml</file>
+        <file>qml/ThemedControls/MBusyIndicator.qml</file>
+        <file>qml/ThemedControls/MButton.qml</file>
+        <file>qml/ThemedControls/MCheckBox.qml</file>
+        <file>qml/MinecraftNews.qml</file>
+        <file>qml/LauncherMain.qml</file>
+        <file>qml/LauncherLogin.qml</file>
+        <file>qml/CenteredRectangle.qml</file>
+        <file>qml/ProfileComboBox.qml</file>
+        <file>qml/GoogleTosApprovalWindow.qml</file>
+        <file>qml/EditProfileWindow.qml</file>
+        <file>qml/LauncherSettingsWindow.qml</file>
+        <file>qml/GameLogWindow.qml</file>
         <file>Resources/noise.png</file>
         <file>Resources/proprietary/minecraft.svg</file>
-        <file>ThemedControls/PlayButton.qml</file>
         <file>Resources/green-button.png</file>
-        <file>ThemedControls/MComboBox.qml</file>
         <file>Resources/dropdown.png</file>
         <file>Resources/dropdown-bg.png</file>
         <file>Resources/dropdown-active.png</file>
-        <file>ThemedControls/MBusyIndicator.qml</file>
-        <file>MinecraftNews.qml</file>
-        <file>LauncherMain.qml</file>
-        <file>LauncherLogin.qml</file>
-        <file>CenteredRectangle.qml</file>
-        <file>GoogleTosApprovalWindow.qml</file>
-        <file>ThemedControls/MProgressBar.qml</file>
         <file>Resources/progressbar.png</file>
         <file>Resources/progressbar-progress.png</file>
-        <file>ProfileComboBox.qml</file>
-        <file>ThemedControls/MTextField.qml</file>
         <file>Resources/field.png</file>
         <file>Resources/button-active.png</file>
         <file>Resources/button.png</file>
-        <file>ThemedControls/MButton.qml</file>
-        <file>ThemedControls/MCheckBox.qml</file>
         <file>Resources/check.png</file>
-        <file>EditProfileWindow.qml</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
-        <file>LauncherSettingsWindow.qml</file>
-        <file>GameLogWindow.qml</file>
     </qresource>
 </RCC>
