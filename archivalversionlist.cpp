@@ -33,7 +33,7 @@ void ArchivalVersionList::onListDownloaded() {
         info->versionCode = el[0].toInt();
         info->versionName = el[1].toString();
         info->isBeta = el[2].toBool();
-        m_versions.push_back(info);
+        m_versions.push_front(info);
     }
     qDebug() << "Version list loaded, entry count:" << m_versions.size();
     emit versionsChanged();

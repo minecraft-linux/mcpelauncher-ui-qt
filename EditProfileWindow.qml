@@ -83,26 +83,33 @@ Window {
                 font.pointSize: parent.labelFontSize
             }
             MComboBox {
-                property var versions: versionManager.versions.getAll()
-                property var archivalVersions: versionManager.archivalVersions.versions
+                property var versions: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
+                property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
                 property var extraVersionName: null
                 property int extraVersionIndex: 1 + versions.length + archivalVersions.length
+
+                function excludeInstalledVersions(arr) {
+                    var ret = []
+                    var installed = {}
+                    for (var i = 0; i < versions.length; i++)
+                        installed[versions[i].versionName] = true
+                    for (i = 0; i < arr.length; i++) {
+                        if (arr[i].versionName in installed)
+                            continue;
+                        ret.push(arr[i])
+                    }
+                    return ret
+                }
 
                 id: profileVersion
                 Layout.fillWidth: true
                 model: {
                     var ret = []
                     ret.push("Latest version (Google Play)")
-                    var installed = {}
-                    for (var i = versions.length - 1; i >= 0; i--) {
-                        installed[versions[i].versionName] = true
+                    for (var i = 0; i < versions.length; i++)
                         ret.push(versions[i].versionName + " (installed)")
-                    }
-                    for (i = archivalVersions.length - 1; i >= 0; i--) {
-                        if (archivalVersions[i].versionName in installed)
-                            continue;
+                    for (i = 0; i < archivalVersions.length; i++)
                         ret.push(archivalVersions[i].versionName + (archivalVersions[i].isBeta ? " (beta)" : ""))
-                    }
                     if (extraVersionName != null) {
                         ret.push(extraVersionName)
                     }
