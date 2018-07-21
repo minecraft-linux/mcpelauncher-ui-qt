@@ -33,7 +33,7 @@ void ArchivalVersionList::onListDownloaded() {
         ArchivalVersionInfo* info = new ArchivalVersionInfo(this);
         info->versionCode = ela.at(0).toInt();
         info->versionName = ela.at(1).toString();
-        info->isBeta = ela.at(2).toBool();
+        info->isBeta = ela.at(2).toInt() == 1;
         m_versions.push_front(info);
     }
     qDebug() << "Version list loaded, entry count:" << m_versions.size();
