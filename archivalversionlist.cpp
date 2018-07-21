@@ -29,10 +29,11 @@ void ArchivalVersionList::onListDownloaded() {
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     m_versions.clear();
     for (QJsonValue const& el : doc.array()) {
+        QJsonArray ela = el.toArray();
         ArchivalVersionInfo* info = new ArchivalVersionInfo(this);
-        info->versionCode = el[0].toInt();
-        info->versionName = el[1].toString();
-        info->isBeta = el[2].toBool();
+        info->versionCode = ela.at(0).toInt();
+        info->versionName = ela.at(1).toString();
+        info->isBeta = ela.at(2).toBool();
         m_versions.push_front(info);
     }
     qDebug() << "Version list loaded, entry count:" << m_versions.size();
