@@ -68,16 +68,16 @@ void GooglePlayApi::saveApiInfo() {
 
 void GooglePlayApi::handleCheckinAndTos() {
     QtConcurrent::run([this]() {
-        checkinMutex.lock();
+        QMutexLocker checkinMutexLocker (&checkinMutex);
         loadCheckinInfo();
-        if (checkinResult.android_id == 0) {
+        if (checkinResult.android_id == 0 && loginHelper->account() != nullptr) {
             playapi::checkin_api checkin(loginHelper->getDevice());
             checkin.add_auth(loginHelper->getLoginApi())->call();
             checkinResult = checkin.perform_checkin()->call();
             saveCheckinInfo();
         }
         api->set_checkin_data(checkinResult);
-        checkinMutex.unlock();
+        checkinMutexLocker.unlock();
         api->set_auth(loginHelper->getLoginApi())->call();
 
         loadApiInfo();
