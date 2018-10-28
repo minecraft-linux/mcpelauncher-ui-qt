@@ -12,7 +12,7 @@
 ArchivalVersionList::ArchivalVersionList() {
     m_netManager = new QNetworkAccessManager(this);
     QNetworkDiskCache* cache = new QNetworkDiskCache(m_netManager);
-    cache->setCacheDirectory(QDir(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)).filePath("versionCache"));
+    cache->setCacheDirectory(QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)).filePath("versionCache"));
     m_netManager->setCache(cache);
     downloadList();
 }
