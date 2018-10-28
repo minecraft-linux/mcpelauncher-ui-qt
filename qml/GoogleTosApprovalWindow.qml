@@ -42,6 +42,7 @@ Window {
         CheckBox {
             id: marketingCheck
             text: marketingText
+            visible: marketingText.length > 0
             Layout.topMargin: 10
             Layout.fillWidth: true
             style: CheckBoxStyle {
