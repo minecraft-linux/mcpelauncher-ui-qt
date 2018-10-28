@@ -32,5 +32,6 @@
         <file>Resources/check.png</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
+        <file>Resources/icon-copy.png</file>
     </qresource>
 </RCC>

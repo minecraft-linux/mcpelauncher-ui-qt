@@ -31,15 +31,30 @@ Window {
             Layout.fillWidth: true
             Layout.preferredHeight: 50
 
+
             Text {
                 anchors.fill: parent
                 anchors.leftMargin: 20
-                anchors.rightMargin: 20
                 color: "#ffffff"
                 text: gameLogWindow.title
                 font.pixelSize: 24
                 verticalAlignment: Text.AlignVCenter
             }
+
+            MButton {
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 20
+                implicitWidth: 36
+                implicitHeight: 36
+                onClicked: { gameLog.selectAll(); gameLog.copy(); gameLog.deselect() }
+                Image {
+                    anchors.centerIn: parent
+                    source: "qrc:/Resources/icon-copy.png"
+                    smooth: false
+                }
+            }
+
         }
 
         Rectangle {
