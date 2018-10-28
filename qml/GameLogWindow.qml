@@ -86,13 +86,16 @@ Window {
             }
 
 
-            Text {
+            TextEdit {
                 id: gameLog
                 x: 8
                 y: 8
                 width: logScrollView.availableWidth - 8 * 2
                 text: launcher.log
                 wrapMode: Text.Wrap
+                selectByMouse: true
+                readOnly: true
+                selectionColor: "#f57c00"
 
                 onTextChanged: logScrollView.scrollToBottom()
             }
