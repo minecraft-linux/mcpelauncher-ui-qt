@@ -14,4 +14,5 @@ add_executable(${PROJECT_NAME} main.cpp googleloginhelper.cpp googleloginhelper.
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Svg Qt5::Concurrent playdl-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-apkinfo file-util gplayapi)
 
-install(TARGETS mcpelauncher-ui-qt RUNTIME DESTINATION bin)
+install(TARGETS mcpelauncher-ui-qt RUNTIME COMPONENT mcpelauncher-ui-qt DESTINATION bin)
+include(CPackSettings.cmake)
