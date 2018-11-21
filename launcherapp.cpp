@@ -14,3 +14,10 @@ bool LauncherApp::event(QEvent *event) {
     }
     return QApplication::event(event);
 }
+
+
+#ifndef __APPLE__
+void LauncherApp::setVisibleInDock(bool) {
+    // stub
+}
+#endif

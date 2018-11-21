@@ -24,6 +24,9 @@ class LauncherApp : public QApplication {
 public:
     LauncherApp(int &argc, char **argv);
 
+public slots:
+    void setVisibleInDock(bool visible);
+
 protected:
     bool event(QEvent*) override;
 

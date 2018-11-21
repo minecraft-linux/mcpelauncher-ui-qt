@@ -275,10 +275,13 @@ ColumnLayout {
         onStateChanged: {
             if (!running)
                 exited();
-            if (crashed)
+            if (crashed) {
+                application.setVisibleInDock(true);
                 gameLogWindow.show()
+            }
         }
         function exited() {
+            application.setVisibleInDock(true);
             window.show();
         }
     }
@@ -410,6 +413,8 @@ ColumnLayout {
             window.hide();
         if (launcherSettings.startOpenLog)
             gameLogWindow.show();
+        else
+            application.setVisibleInDock(false);
         gameLauncher.start();
     }
 
