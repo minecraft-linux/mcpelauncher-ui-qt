@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include "googleloginhelper.h"
 #include "googleplayapi.h"
@@ -11,6 +12,7 @@
 #include "profilemanager.h"
 #include "qmlurlutils.h"
 #include "launchersettings.h"
+#include "launcherapp.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +22,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("mrarm.io");
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
 
-    QApplication app(argc, argv);
+    LauncherApp app(argc, argv);
 
+    app.setQuitOnLastWindowClosed(false);
+    qmlRegisterType<QEvent>();
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
     qmlRegisterType<GooglePlayApi>("io.mrarm.mcpelauncher", 1, 0, "GooglePlayApi");
@@ -38,6 +42,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("application", &app);
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

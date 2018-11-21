@@ -1,5 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Controls 2.1
 import io.mrarm.mcpelauncher 1.0
 
@@ -54,7 +55,7 @@ Window {
     }
 
     function needsToLogIn() {
-        return googleLoginHelperInstance.account == null //&& versionManagerInstance.versions.size === 0
+        return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size === 0
     }
 
     Component.onCompleted: {

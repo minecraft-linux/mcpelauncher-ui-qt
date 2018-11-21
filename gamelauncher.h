@@ -49,6 +49,8 @@ public:
 public slots:
     void start();
 
+    void kill();
+
 signals:
     void logChanged();
 

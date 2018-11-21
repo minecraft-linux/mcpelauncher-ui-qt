@@ -70,3 +70,8 @@ void GameLauncher::handleError(QProcess::ProcessError error) {
     if (error == QProcess::FailedToStart)
         launchFailed();
 }
+
+void GameLauncher::kill() {
+    if (process)
+        process->kill();
+}

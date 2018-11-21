@@ -283,11 +283,44 @@ ColumnLayout {
         }
     }
 
+    MessageDialog {
+        id: closeRunningDialog
+        title: "Game is running"
+        text: "Minecraft is currently running. Would you like to forcibly close it?"
+        standardButtons: StandardButton.Yes | StandardButton.No
+        modality: Qt.ApplicationModal
+
+        onYes: {
+            gameLauncher.kill()
+            application.quit()
+        }
+    }
+
     Connections {
         target: googleLoginHelper
         onAccountInfoChanged: {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
+        }
+    }
+
+    Connections {
+        target: window
+        onClosing: onWindowClose(window)
+    }
+
+    Connections {
+        target: gameLogWindow
+        onClosing: onWindowClose(gameLogWindow)
+    }
+
+    Connections {
+        target: application
+        onClosing: {
+            if (gameLauncher.running) {
+                close.accepted = false
+                closeRunningDialog.open()
+            }
         }
     }
 
@@ -378,6 +411,13 @@ ColumnLayout {
         if (launcherSettings.startOpenLog)
             gameLogWindow.show();
         gameLauncher.start();
+    }
+
+    function onWindowClose(target) {
+        if (!gameLauncher.running &&
+                (target !== this || !this.visible) &&
+                (target !== gameLogWindow && !gameLogWindow.visible))
+            application.quit();
     }
 
 }
