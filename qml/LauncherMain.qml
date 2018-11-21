@@ -174,6 +174,11 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 onClicked: {
                     if (needsDownload()) {
+                        if (googleLoginHelper.account === null) {
+                            showLaunchError("You must sign in to a Google account in order to download Minecraft.");
+                            return;
+                        }
+
                         downloadProgress.value = 0
                         playDownloadTask.versionCode = getDownloadVersionCode()
                         playDownloadTask.start()
