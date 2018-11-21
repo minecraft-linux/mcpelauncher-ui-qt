@@ -25,7 +25,7 @@ private:
     QScopedPointer<QTemporaryFile> file;
     std::atomic_bool m_active;
 
-    void startGzippedDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd);
+    void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd);
 
     static bool curlDoZlibInflate(z_stream& zs, int file, char* data, size_t len, int flags);
 

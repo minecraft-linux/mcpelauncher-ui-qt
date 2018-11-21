@@ -20,7 +20,7 @@ void GoogleApkDownloadTask::start() {
     emit activeChanged();
     m_playApi->getApi()->delivery(m_packageName.toStdString(), m_versionCode, std::string())->call([this](playapi::proto::finsky::response::ResponseWrapper&& resp) {
         auto dd = resp.payload().deliveryresponse().appdeliverydata();
-        startGzippedDownload(dd);
+        startDownload(dd);
     }, [this](std::exception_ptr e) {
         try {
             std::rethrow_exception(e);
@@ -50,12 +50,14 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
     return true;
 }
 
-void GoogleApkDownloadTask::startGzippedDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
+void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
     QMutexLocker l (&fileMutex);
     if (!file)
         file.reset(new QTemporaryFile);
-    playapi::http_request req(dd.gzippeddownloadurl());
-    req.set_encoding("gzip,deflate");
+    bool isGzipped = dd.has_gzippeddownloadurl();
+    playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
+    if (isGzipped)
+        req.set_encoding("gzip,deflate");
     req.add_header("Accept-Encoding", "identity");
     auto cookie = dd.downloadauthcookie(0);
     req.add_header("Cookie", cookie.name() + "=" + cookie.value());
@@ -68,30 +70,40 @@ void GoogleApkDownloadTask::startGzippedDownload(playapi::proto::finsky::downloa
     if (!file->open())
         throw std::runtime_error("Failed to open file");
     int fd = file->handle();
-    z_stream* zs = new z_stream;
-    zs->zalloc = Z_NULL;
-    zs->zfree = Z_NULL;
-    zs->opaque = Z_NULL;
-    int ret = inflateInit2(zs, 31);
-    if (ret != Z_OK)
-        throw std::runtime_error("Failed to init zlib");
+    z_stream* zs;
+    if (isGzipped) {
+        zs = new z_stream;
+        zs->zalloc = Z_NULL;
+        zs->zfree = Z_NULL;
+        zs->opaque = Z_NULL;
+        int ret = inflateInit2(zs, 31);
+        if (ret != Z_OK)
+            throw std::runtime_error("Failed to init zlib");
 
-    req.set_custom_output_func([fd, zs](char* data, size_t size) {
-        if (!curlDoZlibInflate(*zs, fd, data, size, Z_NO_FLUSH))
-            return (size_t) 0;
-        return size;
-    });
+        req.set_custom_output_func([fd, zs](char* data, size_t size) {
+            if (!curlDoZlibInflate(*zs, fd, data, size, Z_NO_FLUSH))
+                return (size_t) 0;
+            return size;
+        });
+    } else {
+        req.set_custom_output_func([fd](char* data, size_t size) {
+            return write(fd, data, size);
+        });
+    }
 
     req.set_progress_callback([this](curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow) {
         if (dltotal > 0)
             emit progress((float) dlnow / dltotal);
     });
     emit progress(0.f);
-    req.perform([this, zs, fd](playapi::http_response resp) {
+    req.perform([this, zs, fd, isGzipped](playapi::http_response resp) {
         QMutexLocker l (&fileMutex);
-        curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
-        inflateEnd(zs);
+        if (isGzipped) {
+            curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
+            inflateEnd(zs);
+        }
         file->close();
+        l.unlock();
 
         if (resp)
             emit finished();
@@ -99,10 +111,14 @@ void GoogleApkDownloadTask::startGzippedDownload(playapi::proto::finsky::downloa
             emit error("CURL error");
         m_active.store(false);
         emit activeChanged();
-    }, [this, zs, fd](std::exception_ptr e) {
-        curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
-        inflateEnd(zs);
+    }, [this, zs, fd, isGzipped](std::exception_ptr e) {
+        QMutexLocker l (&fileMutex);
+        if (isGzipped) {
+            curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
+            inflateEnd(zs);
+        }
         file->close();
+        l.unlock();
 
         try {
             std::rethrow_exception(e);
