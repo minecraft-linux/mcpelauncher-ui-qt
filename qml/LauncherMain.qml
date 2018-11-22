@@ -401,6 +401,11 @@ ColumnLayout {
     }
 
     function launchGame() {
+        if (gameLauncher.running) {
+            showLaunchError("The game is already running.")
+            return;
+        }
+
         gameLauncher.profile = profileManager.activeProfile;
         var gameDir = getCurrentGameDir();
         console.log("Game dir = " + gameDir);
@@ -413,7 +418,7 @@ ColumnLayout {
             window.hide();
         if (launcherSettings.startOpenLog)
             gameLogWindow.show();
-        else
+        if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
         gameLauncher.start();
     }
