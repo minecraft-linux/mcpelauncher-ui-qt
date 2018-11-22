@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Window 2.9
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.2
@@ -33,6 +34,8 @@ ColumnLayout {
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     source: "qrc:/Resources/proprietary/minecraft.svg"
+                    height: 22
+                    sourceSize.height: 22 * Screen.devicePixelRatio
                 }
 
                 Text {
