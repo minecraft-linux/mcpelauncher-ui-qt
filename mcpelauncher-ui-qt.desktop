@@ -4,5 +4,5 @@ Comment=A Minecraft: Bedrock Edition (earlier: Pocket Edition launcher)
 Exec=mcpelauncher-ui-qt
 Icon=mcpelauncher-ui-qt
 Type=Application
-Categories=Game
+Categories=Game;
 Terminal=false
