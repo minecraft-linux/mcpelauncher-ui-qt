@@ -33,5 +33,6 @@
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
         <file>Resources/icon-copy.png</file>
+        <file>qml/TroubleshooterWindow.qml</file>
     </qresource>
 </RCC>
