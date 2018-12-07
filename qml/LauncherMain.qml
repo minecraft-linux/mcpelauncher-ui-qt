@@ -34,8 +34,7 @@ ColumnLayout {
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     source: "qrc:/Resources/proprietary/minecraft.svg"
-                    height: 22
-                    sourceSize.height: 22 * Screen.devicePixelRatio
+                    sourceSize.height: 44
                 }
 
                 Text {
