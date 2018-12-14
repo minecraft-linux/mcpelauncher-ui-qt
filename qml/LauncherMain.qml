@@ -11,6 +11,8 @@ ColumnLayout {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property ProfileManager profileManager
+    property bool hasUpdate: false
+    property string updateDownloadUrl: null
 
     id: rowLayout
     spacing: 0
@@ -63,6 +65,31 @@ ColumnLayout {
             }
         }
 
+    }
+
+    Rectangle {
+        Layout.alignment: Qt.AlignTop
+        Layout.fillWidth: true
+        Layout.preferredHeight: children[0].implicitHeight + 20
+        color: "#BBDEFB"
+        visible: hasUpdate
+
+        Text {
+            width: parent.width
+            height: parent.height
+            text: "A new version of the launcher is available. Click to download the update."
+            color: "#0D47A1"
+            font.pointSize: 9
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: Qt.openUrlExternally(updateDownloadUrl)
+        }
     }
 
     MinecraftNews {}
@@ -305,6 +332,15 @@ ColumnLayout {
         }
     }
 
+    UpdateChecker {
+        id: updateChecker
+
+        onUpdateAvailable: {
+            hasUpdate = true
+            updateDownloadUrl = downloadUrl
+        }
+    }
+
     Connections {
         target: googleLoginHelper
         onAccountInfoChanged: {
@@ -334,6 +370,7 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
+        updateChecker.sendRequest()
         playApi.handleCheckinAndTos()
     }
 
