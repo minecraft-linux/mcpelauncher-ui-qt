@@ -99,6 +99,14 @@ Window {
                 Component.onCompleted: checked = launcherSettings.startHideLauncher
                 onCheckedChanged: launcherSettings.startHideLauncher = checked
             }
+
+            MButton {
+                Layout.topMargin: 20
+                id: runTroubleshooter
+                text: "Run troubleshooter"
+                Layout.columnSpan: 2
+                onClicked: troubleshooterWindow.findIssuesAndShow()
+            }
         }
 
         Image {

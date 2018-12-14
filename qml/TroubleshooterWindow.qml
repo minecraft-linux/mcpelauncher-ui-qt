@@ -96,10 +96,11 @@ Window {
         id: troubleshooter
     }
 
-    Component.onCompleted: {
+    function findIssuesAndShow() {
         issues = troubleshooter.findIssues()
         if (issues.length == 0)
             issues = [{shortDesc: "No issues found", longDesc: "No launcher installation issues were found.", wikiUrl: ""}]
+        show()
     }
 
 }

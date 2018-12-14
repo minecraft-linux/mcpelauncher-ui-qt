@@ -268,6 +268,10 @@ ColumnLayout {
         }
     }
 
+    TroubleshooterWindow {
+        id: troubleshooterWindow
+    }
+
     GameLauncher {
         id: gameLauncher
         onLaunchFailed: {
