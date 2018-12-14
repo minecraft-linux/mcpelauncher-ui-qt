@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Quick Concurrent Svg REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h qml.qrc)
+add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h troubleshooter.cpp troubleshooter.h qml.qrc)
 if (APPLE)
     target_sources(${PROJECT_NAME} PUBLIC launcherapp_osx.mm)
     target_link_libraries(${PROJECT_NAME} "-framework AppKit")

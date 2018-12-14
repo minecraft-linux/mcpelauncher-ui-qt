@@ -61,17 +61,24 @@ Window {
                spacing: 0
 
                Text {
-                   text: modelData.name
+                   text: modelData.shortDesc
                    Layout.fillWidth: true
                    font.bold: true
                    wrapMode: Text.WordWrap
                }
                Text {
-                   text: modelData.description
+                   text: modelData.longDesc
+                   Layout.fillWidth: true
+                   wrapMode: Text.WordWrap
+                   linkColor: "#2962FF"
+               }
+               Text {
+                   text: "<a href=\"" + modelData.wikiUrl + "\">Go to wiki</a>"
                    Layout.fillWidth: true
                    wrapMode: Text.WordWrap
                    linkColor: "#2962FF"
                    onLinkActivated: Qt.openUrlExternally(link)
+                   visible: modelData.wikiUrl.length > 0
                    MouseArea {
                        anchors.fill: parent
                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
@@ -85,23 +92,12 @@ Window {
     }
 
 
-    function createIssue(name, description, wikiUrl) {
-        if (wikiUrl)
-            description += "<br><a href=\"" + wikiUrl + "\">Go to wiki</a>"
-
-        return {name: name, description: description}
-    }
-
-    function startTroubleshooting() {
-        issues = []
-        issues.push(createIssue("No CPU SSSE3 support", "Your CPU may be unsupported and the game may crash on startup.", null))
-        issues.push(createIssue("Software rendering", "The game is using the software (CPU) rendering. This will negatively impact performance.", "https://github.com/minecraft-linux/mcpelauncher-manifest/wiki/Troubleshooting#graphics-performance-issues-software-rendering"))
-        issues.push(createIssue("MSA daemon could not be found", "The MSA component might has not been installed properly. Xbox Live login may not work.", "https://github.com/minecraft-linux/mcpelauncher-manifest/wiki/Troubleshooting#msa-daemon-could-not-be-found"))
-        return issues
+    Troubleshooter {
+        id: troubleshooter
     }
 
     Component.onCompleted: {
-        issues = startTroubleshooting()
+        issues = troubleshooter.findIssues()
     }
 
 }
