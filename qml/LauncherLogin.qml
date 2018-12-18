@@ -85,7 +85,7 @@ Item {
                     textColor: "#0aa82f"
                     Layout.preferredWidth: alternativeOptions.buttonWidth
                     font.pointSize: 12
-                    onClicked: Qt.openUrlExternally("https://github.com/minecraft-linux/")
+                    onClicked: Qt.openUrlExternally("https://github.com/minecraft-linux/mcpelauncher-ui-manifest/wiki")
                 }
 
             }
