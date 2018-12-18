@@ -83,5 +83,6 @@ void GoogleLoginHelper::signOut() {
     settings.remove("googlelogin");
     settings.remove("checkin");
     settings.remove("device_state");
+    loginCache.clear();
     emit accountInfoChanged();
 }
