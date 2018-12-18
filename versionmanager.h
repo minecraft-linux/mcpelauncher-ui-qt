@@ -106,6 +106,8 @@ public slots:
 
     QString getDirectoryFor(VersionInfo* version);
 
+    void removeVersion(VersionInfo* version);
+
 signals:
     void versionListChanged();
 

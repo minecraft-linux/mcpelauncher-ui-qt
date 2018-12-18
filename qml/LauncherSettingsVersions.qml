@@ -10,6 +10,11 @@ ColumnLayout {
 
         MButton {
             text: "Delete selected"
+            onClicked: {
+                if (versions.currentIndex == -1)
+                    return;
+                versionManager.removeVersion(versions.model[versions.currentIndex])
+            }
         }
 
         MButton {

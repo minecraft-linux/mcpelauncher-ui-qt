@@ -28,6 +28,7 @@ void VersionManager::loadVersions() {
 
 void VersionManager::saveVersions() {
     QSettings settings(QDir(baseDir).filePath("versions.ini"), QSettings::IniFormat);
+    settings.clear();
     for (auto const& ver : m_versions) {
         settings.beginGroup(ver->directory);
         settings.setValue("versionName", ver->versionName);
@@ -60,8 +61,18 @@ void VersionManager::addVersion(QString directory, QString versionName, int vers
     if (ver == nullptr)
         ver = new VersionInfo(this);
     ver->directory = directory;
-    ver->versionName = directory;
+    ver->versionName = versionName;
     ver->versionCode = versionCode;
+    saveVersions();
+    emit versionListChanged();
+}
+
+void VersionManager::removeVersion(VersionInfo* version) {
+    auto val = m_versions.find(version->versionCode);
+    if (val.value() != version)
+        return;
+    QDir(getDirectoryFor(version)).removeRecursively();
+    m_versions.erase(val);
     saveVersions();
     emit versionListChanged();
 }
