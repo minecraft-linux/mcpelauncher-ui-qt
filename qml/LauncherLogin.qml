@@ -153,6 +153,16 @@ Item {
         onStarted: root.extractingApk = true
         onError: root.extractingApk = false
         onFinished: root.finished()
+
+        Connections {
+            target: apkImportHelper.task
+            onVersionInformationObtained: {
+                var profile = profileManagerInstance.defaultProfile
+                profile.versionType = ProfileInfo.LOCKED_NAME
+                profile.versionDirName = directory
+                profile.save()
+            }
+        }
     }
 
     Connections {

@@ -7,7 +7,7 @@ import QtQuick.Controls.Styles 1.4
 import io.mrarm.mcpelauncher 1.0
 import "ThemedControls"
 
-Window {
+Item {
 
     signal started()
     signal finished()
@@ -16,6 +16,7 @@ Window {
     property VersionManager versionManager
     property bool extractingApk: false
     property var progressBar: null
+    property alias task: apkExtractionTask
 
     id: root
 
