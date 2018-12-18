@@ -39,5 +39,6 @@
         <file>qml/ThemedControls/MTabButton.qml</file>
         <file>qml/LauncherSettingsGeneral.qml</file>
         <file>qml/TroubleshooterWindow.qml</file>
+        <file>qml/LauncherSettingsVersions.qml</file>
     </qresource>
 </RCC>
