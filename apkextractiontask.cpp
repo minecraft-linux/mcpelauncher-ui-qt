@@ -40,6 +40,8 @@ void ApkExtractionTask::run() {
                 [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
             emit progress((float)  current / max);
         });
+        if (!MinecraftExtractUtils::checkMinecraftLibFile(path))
+            throw std::runtime_error("The specified file is not compatible with the launcher");
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
         qDebug() << "Moving " << dir.path() << " to " << targetDir;
