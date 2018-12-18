@@ -1,7 +1,7 @@
 import QtQuick 2.4
 
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.2
+import QtQuick.Controls 2.4
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.4
@@ -27,77 +27,60 @@ Window {
             source: "qrc:/Resources/noise.png"
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
-            Layout.preferredHeight: 50
+            Layout.preferredHeight: 85
 
             Text {
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
                 anchors.leftMargin: 20
                 anchors.rightMargin: 20
+                height: 50
                 color: "#ffffff"
                 text: qsTr("Launcher Settings")
                 font.pixelSize: 24
                 verticalAlignment: Text.AlignVCenter
             }
-        }
 
-        GridLayout {
-            columns: 2
-            Layout.fillWidth: true
-            Layout.leftMargin: 20
-            Layout.rightMargin: 20
-            columnSpacing: 20
-            rowSpacing: 8
-
-            property int labelFontSize: 12
-
-            Text {
-                text: "Google Account"
-                font.pointSize: parent.labelFontSize
+            Rectangle {
+                anchors.bottom: parent.bottom
+                height: 2
+                anchors.left: parent.left
+                anchors.right: parent.right
+                color: "#000"
             }
             Item {
-                id: item1
-                Layout.fillWidth: true
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 20
+                anchors.rightMargin: 20
                 height: childrenRect.height
 
-                RowLayout {
-                    anchors.right: parent.right
-                    spacing: 20
-                    Text {
-                        text: googleLoginHelper.account !== null ? googleLoginHelper.account.accountIdentifier : ""
-                        id: googleAccountIdLabel
-                        Layout.alignment: Qt.AlignRight
-                        font.pointSize: 11
+                TabBar {
+                    id: tabs
+                    background: none
+
+                    MTabButton {
+                        text: "General"
+                        width: implicitWidth
                     }
-                    MButton {
-                        Layout.alignment: Qt.AlignRight
-                        text: googleLoginHelper.account !== null ? "Sign out" : "Sign in"
-                        onClicked: {
-                            if (googleLoginHelper.account !== null)
-                                googleLoginHelper.signOut()
-                            else
-                                googleLoginHelper.acquireAccount(window)
-                        }
+                    MTabButton {
+                        text: "Versions"
+                        width: implicitWidth
                     }
                 }
             }
+        }
 
-            MCheckBox {
-                Layout.topMargin: 20
-                id: autoShowGameLog
-                text: "Show log when starting the game"
-                font.pointSize: parent.labelFontSize
-                Layout.columnSpan: 2
-                Component.onCompleted: checked = launcherSettings.startOpenLog
-                onCheckedChanged: launcherSettings.startOpenLog = checked
-            }
+        StackLayout {
+            id: content
+            Layout.fillWidth: true
+            Layout.leftMargin: 20
+            Layout.rightMargin: 20
+            currentIndex: tabs.currentIndex
 
-            MCheckBox {
-                id: hideLauncher
-                text: "Hide the launcher when starting the game"
-                font.pointSize: parent.labelFontSize
-                Layout.columnSpan: 2
-                Component.onCompleted: checked = launcherSettings.startHideLauncher
-                onCheckedChanged: launcherSettings.startHideLauncher = checked
+            LauncherSettingsGeneral {
             }
         }
 
@@ -119,7 +102,7 @@ Window {
                 PlayButton {
                     Layout.preferredWidth: 150
                     text: "Save"
-                    onClicked:  close()
+                    onClicked: close()
                 }
 
             }

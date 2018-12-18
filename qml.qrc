@@ -29,9 +29,14 @@
         <file>Resources/field.png</file>
         <file>Resources/button-active.png</file>
         <file>Resources/button.png</file>
+        <file>Resources/button-tab.png</file>
+        <file>Resources/button-tab-active.png</file>
+        <file>Resources/button-tab-selected.png</file>
         <file>Resources/check.png</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
         <file>Resources/icon-copy.png</file>
+        <file>qml/ThemedControls/MTabButton.qml</file>
+        <file>qml/LauncherSettingsGeneral.qml</file>
     </qresource>
 </RCC>
