@@ -33,17 +33,27 @@ ColumnLayout {
         verticalTileMode: BorderImage.Stretch
 
         ListView {
+            id: versions
             anchors.fill: parent
             anchors.margins: 4
             clip: true
             flickableDirection: Flickable.VerticalFlick
             model: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
             delegate: ItemDelegate {
+                id: control
                 width: parent.width
                 height: 32
                 font.pointSize: 11
                 text: modelData.versionName
+                onClicked: versions.currentIndex = index
+                highlighted: ListView.isCurrentItem
+                background: Rectangle {
+                    color: control.highlighted ? "#C5CAE9" : (control.down ? "#dddedf" : "transparent")
+                }
             }
+            highlightResizeVelocity: -1
+            highlightMoveVelocity: -1
+            currentIndex: -1
             ScrollBar.vertical: ScrollBar {}
         }
     }
