@@ -195,7 +195,7 @@ ColumnLayout {
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
                 text: (needsDownload() ? "Download and play" : "Play").toUpperCase()
-                subText: ("Minecraft " + getDisplayedVersionName()).toUpperCase()
+                subText: getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait..."
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70
@@ -207,9 +207,11 @@ ColumnLayout {
                             showLaunchError("You must sign in to a Google account in order to download Minecraft.");
                             return;
                         }
+                        playDownloadTask.versionCode = getDownloadVersionCode()
+                        if (playDownloadTask.versionCode === 0)
+                            return;
 
                         downloadProgress.value = 0
-                        playDownloadTask.versionCode = getDownloadVersionCode()
                         playDownloadTask.start()
                         return;
                     }
