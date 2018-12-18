@@ -15,7 +15,9 @@ public:
         TYPE_LAUNCHER_VERSION_QUERY_FAILED,
         TYPE_LAUNCHER_NO_SSSE3_SUPPORT,
         TYPE_LAUNCHER_SOFTWARE_RENDERER,
-        TYPE_LAUNCHER_MSA_NOT_FOUND
+        TYPE_LAUNCHER_MSA_NOT_FOUND,
+
+        TYPE_LAUNCHER_ZENITY_NOT_FOUND
     };
     Q_ENUM(Type)
 
@@ -43,6 +45,9 @@ public:
 
 public slots:
     QList<QObject*> findIssues();
+
+private:
+    void findLauncherIssues(QList<QObject*>& ret);
 };
 
 #endif // TROUBLESHOOTER_H
