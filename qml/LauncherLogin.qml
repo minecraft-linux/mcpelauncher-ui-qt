@@ -77,7 +77,7 @@ Item {
                     textColor: "#0aa82f"
                     Layout.preferredWidth: alternativeOptions.buttonWidth
                     font.pointSize: 12
-                    onClicked: gamePicker.open()
+                    onClicked: apkImportHelper.pickFile()
                 }
 
                 TransparentButton {
@@ -146,46 +146,13 @@ Item {
         }
     }
 
-    FileDialog {
-        id: gamePicker
-        title: "Please pick the Minecraft .apk file"
-        nameFilters: [ "Android package files (*.apk *.zip)", "All files (*)" ]
-
-        onAccepted: {
-            if (!apkExtractionTask.setSourceUrl(fileUrl)) {
-                apkExtractionMessageDialog.text = "Invalid file URL"
-                apkExtractionMessageDialog.open()
-                return;
-            }
-            console.log("Extracting " + apkExtractionTask.source)
-            extractingApk = true
-            apkExtractionTask.start()
-        }
-    }
-
-    ApkExtractionTask {
-        id: apkExtractionTask
-        versionManager: root.versionManager
-
-        onProgress: function(val) {
-            apkExtractionProgressBar.indeterminate = false
-            apkExtractionProgressBar.value = val
-        }
-
-        onFinished: function() {
-            root.finished()
-        }
-
-        onError: function(err) {
-            apkExtractionMessageDialog.text = "Error while extracting the file: " + err
-            apkExtractionMessageDialog.open()
-            extractingApk = false
-        }
-    }
-
-    MessageDialog {
-        id: apkExtractionMessageDialog
-        title: "Apk extraction"
+    ApkImportHelper {
+        id: apkImportHelper
+        progressBar: apkExtractionProgressBar
+        versionManager: versionManagerInstance
+        onStarted: root.extractingApk = true
+        onError: root.extractingApk = false
+        onFinished: root.finished()
     }
 
     Connections {

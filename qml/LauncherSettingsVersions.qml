@@ -14,6 +14,7 @@ ColumnLayout {
 
         MButton {
             text: "Import .apk"
+            onClicked: apkImportWindow.pickFile()
         }
 
         Item {
@@ -45,6 +46,11 @@ ColumnLayout {
             }
             ScrollBar.vertical: ScrollBar {}
         }
+    }
+
+    ApkImportWindow {
+        id: apkImportWindow
+        versionManager: versionManagerInstance
     }
 
 }

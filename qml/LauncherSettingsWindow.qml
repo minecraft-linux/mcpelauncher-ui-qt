@@ -48,6 +48,7 @@ Window {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: "#000"
+                z: -1
             }
             Item {
                 anchors.bottom: parent.bottom
@@ -59,7 +60,7 @@ Window {
 
                 TabBar {
                     id: tabs
-                    background: none
+                    background: null
 
                     MTabButton {
                         text: "General"

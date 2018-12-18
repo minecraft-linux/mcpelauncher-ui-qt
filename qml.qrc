@@ -40,5 +40,7 @@
         <file>qml/LauncherSettingsGeneral.qml</file>
         <file>qml/TroubleshooterWindow.qml</file>
         <file>qml/LauncherSettingsVersions.qml</file>
+        <file>qml/ApkImportWindow.qml</file>
+        <file>qml/ApkImportHelper.qml</file>
     </qresource>
 </RCC>
