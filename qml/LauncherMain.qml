@@ -204,7 +204,7 @@ ColumnLayout {
                 onClicked: {
                     if (needsDownload()) {
                         if (googleLoginHelper.account === null) {
-                            showLaunchError("You must sign in to a Google account in order to download Minecraft.L");
+                            showLaunchError("You must sign in to a Google account in order to download Minecraft.");
                             return;
                         }
 
