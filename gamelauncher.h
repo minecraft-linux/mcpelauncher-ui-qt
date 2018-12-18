@@ -27,10 +27,10 @@ private:
 
     void handleError(QProcess::ProcessError error);
 
-    static std::string findLauncher();
-
 public:
     explicit GameLauncher(QObject *parent = nullptr);
+
+    static std::string findLauncher();
 
     QString const& gameDir() { return m_gameDir; }
 

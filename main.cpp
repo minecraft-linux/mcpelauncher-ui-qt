@@ -13,6 +13,8 @@
 #include "qmlurlutils.h"
 #include "launchersettings.h"
 #include "launcherapp.h"
+#include "troubleshooter.h"
+#include "updatechecker.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,6 +41,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<ProfileInfo>("io.mrarm.mcpelauncher", 1, 0, "ProfileInfo");
     qmlRegisterType<ArchivalVersionInfo>("io.mrarm.mcpelauncher", 1, 0, "ArchivalVersionInfo");
     qmlRegisterType<LauncherSettings>("io.mrarm.mcpelauncher", 1, 0, "LauncherSettings");
+    qmlRegisterType<Troubleshooter>("io.mrarm.mcpelauncher", 1, 0, "Troubleshooter");
+    qmlRegisterType<UpdateChecker>("io.mrarm.mcpelauncher", 1, 0, "UpdateChecker");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
 
     QQmlApplicationEngine engine;

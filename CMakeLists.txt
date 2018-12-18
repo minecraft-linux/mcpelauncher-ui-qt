@@ -10,7 +10,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Core Quick Concurrent Svg REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h qml.qrc)
+option(ENABLE_UPDATE_CHECK "Enables update checking with a remote server")
+set(UPDATE_CHECK_URL "" CACHE STRING "Specify the URL for the server to check for updates on")
+set(UPDATE_CHECK_BUILD_ID "" CACHE STRING "Specify the numeral version number for the current build")
+
+add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h troubleshooter.cpp troubleshooter.h updatechecker.cpp updatechecker.h qml.qrc)
+if (ENABLE_UPDATE_CHECK)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC UPDATE_CHECK UPDATE_CHECK_BUILD_ID=${UPDATE_CHECK_BUILD_ID} UPDATE_CHECK_URL="${UPDATE_CHECK_URL}")
+endif()
 if (APPLE)
     target_sources(${PROJECT_NAME} PUBLIC launcherapp_osx.mm)
     target_link_libraries(${PROJECT_NAME} "-framework AppKit")
@@ -19,4 +26,9 @@ endif()
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Svg Qt5::Concurrent playdl-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-apkinfo file-util gplayapi)
 
 install(TARGETS mcpelauncher-ui-qt RUNTIME COMPONENT mcpelauncher-ui-qt DESTINATION bin)
+if (NOT APPLE)
+    install(FILES mcpelauncher-ui-qt.desktop COMPONENT mcpelauncher-ui-qt DESTINATION share/applications)
+    install(FILES Resources/proprietary/mcpelauncher-icon-512.png RENAME mcpelauncher-ui-qt.png
+            COMPONENT mcpelauncher-ui-qt DESTINATION share/pixmaps)
+endif()
 include(CPackSettings.cmake)
