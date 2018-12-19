@@ -27,7 +27,6 @@ void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
         return;
     }
     QProcess process;
-    process.setProcessChannelMode(QProcess::MergedChannels);
     process.start(path.c_str(), {"-v"});
     if (!process.waitForFinished()) {
         ret.append(new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_VERSION_QUERY_FAILED, "Failed to query game launcher version information", "An error occurred while trying to run `mcpelauncher-client -v`: " + process.errorString()));
