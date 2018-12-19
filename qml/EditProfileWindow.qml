@@ -64,6 +64,7 @@ Window {
             Layout.fillWidth: true
             Layout.leftMargin: 20
             Layout.rightMargin: 20
+            Layout.alignment: Qt.AlignTop
             columnSpacing: 20
             rowSpacing: 8
 
@@ -199,6 +200,10 @@ Window {
                     font.pointSize: 11
                 }
             }
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
 
         Image {
