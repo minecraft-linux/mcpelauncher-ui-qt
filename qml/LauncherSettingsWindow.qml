@@ -54,7 +54,7 @@ Window {
                 anchors.right: parent.right
                 anchors.leftMargin: 20
                 anchors.rightMargin: 20
-                height: childrenRect.height
+                height: tabs.implicitHeight
 
                 TabBar {
                     id: tabs
