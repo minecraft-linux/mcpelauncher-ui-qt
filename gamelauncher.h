@@ -10,7 +10,6 @@ class GameLauncher : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString gameDir READ gameDir WRITE setGameDir)
     Q_PROPERTY(ProfileInfo* profile READ profile WRITE setProfile)
-    Q_PROPERTY(QString log READ log NOTIFY logChanged)
     Q_PROPERTY(bool crashed READ crashed NOTIFY stateChanged)
     Q_PROPERTY(bool running READ running NOTIFY stateChanged)
 
@@ -18,7 +17,6 @@ private:
     QScopedPointer<QProcess> process;
     QString m_gameDir;
     ProfileInfo* m_profile;
-    QString m_log;
     bool m_crashed = false;
 
     void handleStdOutAvailable();
@@ -40,8 +38,6 @@ public:
 
     void setProfile(ProfileInfo* value) { m_profile = value; }
 
-    QString const& log() const { return m_log; }
-
     bool running() const { return !process.isNull(); }
 
     bool crashed() const { return m_crashed; }
@@ -52,7 +48,9 @@ public slots:
     void kill();
 
 signals:
-    void logChanged();
+    void logCleared();
+
+    void logAppended(QString const& text);
 
     void stateChanged();
 
