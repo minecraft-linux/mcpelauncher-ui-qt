@@ -19,15 +19,6 @@ T.TabButton {
         border { left: 4; top: 4; right: 4; bottom: 0 }
         horizontalTileMode: BorderImage.Stretch
         verticalTileMode: BorderImage.Stretch
-
-        Rectangle {
-            visible: !active
-            anchors.bottom: parent.bottom
-            height: 2
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: "#000"
-        }
     }
 
     contentItem: Text {
