@@ -43,26 +43,25 @@ void GameLauncher::start() {
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     process->start(QString::fromStdString(findLauncher()), args);
     m_crashed = false;
-    m_log = QString();
-    emit logChanged();
+    emit logCleared();
     emit stateChanged();
 }
 
 void GameLauncher::handleStdOutAvailable() {
-    m_log += QString::fromUtf8(process->readAllStandardOutput());
-    emit logChanged();
+    emit logAppended(QString::fromUtf8(process->readAllStandardOutput()));
 }
 
 void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus) {
     handleStdOutAvailable();
+    QString msg;
     if (exitCode != 0) {
-        m_log += "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
+        msg = "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
     } else {
-        m_log += "Process exited normally\n";
+        msg = "Process exited normally\n";
     }
     m_crashed = (exitCode != 0);
     process.reset();
-    emit logChanged();
+    emit logAppended(msg);
     emit stateChanged();
 }
 

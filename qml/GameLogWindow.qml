@@ -106,7 +106,6 @@ Window {
                 x: 8
                 y: 8
                 width: logScrollView.availableWidth - 8 * 2
-                text: launcher.log
                 wrapMode: Text.Wrap
                 selectByMouse: true
                 readOnly: true
@@ -119,6 +118,12 @@ Window {
             onHeightChanged: scrollToBottom()
         }
 
+    }
+
+    Connections {
+        target: launcher
+        onLogCleared: gameLog.clear()
+        onLogAppended: gameLog.insert(gameLog.length, text)
     }
 
 }
