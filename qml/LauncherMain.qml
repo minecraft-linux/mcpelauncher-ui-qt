@@ -305,7 +305,7 @@ ColumnLayout {
         id: gameLauncher
         onLaunchFailed: {
             exited();
-            showLaunchError("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).<br><a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/wiki/Troubleshooting#could-not-find-the-game-launcher\">Click here for help and additional informations.</a>")
+            showLaunchError("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
         }
         onStateChanged: {
             if (!running)
