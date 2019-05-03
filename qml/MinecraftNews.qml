@@ -124,7 +124,7 @@ Item {
     function loadNews() {
         console.log("Load news");
         var req = new XMLHttpRequest();
-        req.open("GET", "https://minecraft.net/en-us/api/tiles/channel/not_set/region/None/category/News", true);
+        req.open("GET", "https://www.minecraft.net/content/minecraft-net/_jcr_content.articles.grid?tileselection=auto&tagsPath=minecraft:article/culture,minecraft:article/insider,minecraft:article/merch,minecraft:article/news&propResPath=/content/minecraft-net/language-masters/en-us/jcr:content/root/generic-container/par/grid&count=2000&pageSize=20&tag=News&lang=/content/minecraft-net/language-masters/en-us", true);
         req.onerror = function() {
             console.log("Failed to load news");
         };
@@ -140,14 +140,14 @@ Item {
     }
     function parseNewsResponse(resp) {
         var entries = [];
-        for (var i = 0; i < resp.result.length; i++) {
-            var e = resp.result[i];
+        for (var i = 0; i < resp.article_grid.length; i++) {
+            var e = resp.article_grid[i];
             var t = e.preferred_tile || e.default_tile;
             if (!t)
                 continue;
-            entries.push({"name": t.title || t.text, "image": t.image.original.url, "url": "https://minecraft.net/" + e.url.substr(1)});
+            entries.push({"name": t.title || t.text, "image": "https://www.minecraft.net/" + t.image.imageURL, "url": "https://minecraft.net/" + e.article_url.substr(1)});
         }
-        repeater.model = entries
+        repeater.model = entries;
         console.log("Loaded " + entries.length + " items");
         sliderTimer.start()
     }
