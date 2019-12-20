@@ -36,12 +36,17 @@ void ApkExtractionTask::run() {
         qDebug() << "Apk info: versionCode=" << apkInfo.versionCode
                  << " versionName=" << QString::fromStdString(apkInfo.versionName);
 
-        extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path),
+#ifdef __arm__
+        std::string arch = "armeabi-v7a";
+#else
+        std::string arch = "x86";
+#endif
+        extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path, arch),
                 [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
             emit progress((float)  current / max);
         });
         if (!MinecraftExtractUtils::checkMinecraftLibFile(path))
-            throw std::runtime_error("The specified file is not compatible with the launcher");
+            throw std::runtime_error("The specified file is not compatible with the launcher\nMinecraft " + arch + " apk required");
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
         qDebug() << "Moving " << dir.path() << " to " << targetDir;
