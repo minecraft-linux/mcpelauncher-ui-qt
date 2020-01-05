@@ -5,7 +5,7 @@ import QtQuick.Templates 2.1 as T
 T.Button {
     id: control
 
-    property string subText: null
+    property string subText: ""
 
     padding: 8
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
@@ -48,7 +48,7 @@ T.Button {
             }
             Text {
                 id: subTextItem
-                visible: control.subText != null && control.subText.length > 0
+                visible: control.subText.length > 0
                 text: control.subText
                 font.pointSize: 10
                 opacity: enabled ? 1.0 : 0.3

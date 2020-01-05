@@ -12,7 +12,7 @@ ColumnLayout {
     property VersionManager versionManager
     property ProfileManager profileManager
     property bool hasUpdate: false
-    property string updateDownloadUrl: null
+    property string updateDownloadUrl: ""
 
     id: rowLayout
     spacing: 0
