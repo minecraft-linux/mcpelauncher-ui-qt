@@ -248,11 +248,19 @@ ColumnLayout {
         playApi: playApi
         packageName: "com.mojang.minecraftpe"
         onProgress: downloadProgress.value = progress
-        onError: console.log("Download failed: " + err)
+        onError: function(err) {
+            playDownloadError.text = err;
+            playDownloadError.open()
+        }
         onFinished: {
             apkExtractionTask.source = filePath
             apkExtractionTask.start()
         }
+    }
+
+    MessageDialog {
+        id: playDownloadError
+        title: "Download failed"
     }
 
     ApkExtractionTask {
