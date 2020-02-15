@@ -194,7 +194,7 @@ ColumnLayout {
 
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
-                text: (needsDownload() ? "Download and play" : "Play").toUpperCase()
+                text: (needsDownload() ? (googleLoginHelper.account !== null ? "Download and play" : "Sign in or import .apk") : "Play").toUpperCase()
                 subText: getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait..."
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
@@ -204,7 +204,7 @@ ColumnLayout {
                 onClicked: {
                     if (needsDownload()) {
                         if (googleLoginHelper.account === null) {
-                            showLaunchError("You must sign in to a Google account in order to download Minecraft.");
+                            launcherSettingsWindow.show();
                             return;
                         }
                         playDownloadTask.versionCode = getDownloadVersionCode()
@@ -248,11 +248,19 @@ ColumnLayout {
         playApi: playApi
         packageName: "com.mojang.minecraftpe"
         onProgress: downloadProgress.value = progress
-        onError: console.log("Download failed: " + err)
+        onError: function(err) {
+            playDownloadError.text = err;
+            playDownloadError.open()
+        }
         onFinished: {
             apkExtractionTask.source = filePath
             apkExtractionTask.start()
         }
+    }
+
+    MessageDialog {
+        id: playDownloadError
+        title: "Download failed"
     }
 
     ApkExtractionTask {
