@@ -17,6 +17,12 @@ void UpdateChecker::onRequestFinished(QNetworkReply* reply) {
 #ifdef UPDATE_CHECK
     if (reply->error() != QNetworkReply::NoError)
         return;
+    auto redirect = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+    if (redirect.isValid()) {
+        QNetworkRequest request(redirect);
+        netAccessManager.get(request);
+        return;
+    }
     QMap<QString, QString> props;
     QString replyText = QString::fromUtf8(reply->readAll());
     for (QStringRef const& line : replyText.splitRef('\n')) {
