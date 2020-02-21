@@ -24,14 +24,15 @@ Item {
         id: apkPicker
         title: "Please pick the Minecraft .apk file"
         nameFilters: [ "Android package files (*.apk *.zip)", "All files (*)" ]
+        selectMultiple: true
 
         onAccepted: {
-            if (!apkExtractionTask.setSourceUrl(fileUrl)) {
+            if (!apkExtractionTask.setSourceUrls(fileUrls)) {
                 apkExtractionMessageDialog.text = "Invalid file URL"
                 apkExtractionMessageDialog.open()
                 return;
             }
-            console.log("Extracting " + apkExtractionTask.source)
+            console.log("Extracting " + apkExtractionTask.sources.join(','))
             extractingApk = true
             root.started()
             apkExtractionTask.start()

@@ -15,20 +15,21 @@ class GoogleApkDownloadTask : public QObject {
     Q_PROPERTY(QString packageName WRITE setPackageName READ packageName)
     Q_PROPERTY(qint32 versionCode WRITE setVersionCode READ versionCode)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
-    Q_PROPERTY(QString filePath READ filePath)
+    Q_PROPERTY(QStringList filePaths READ filePaths)
 
 private:
     GooglePlayApi* m_playApi = nullptr;
     QString m_packageName;
     qint32 m_versionCode;
     QMutex fileMutex;
-    QScopedPointer<QTemporaryFile> file;
+    std::vector<std::shared_ptr<QTemporaryFile>> files;
     std::atomic_bool m_active;
 
     void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd);
 
     static bool curlDoZlibInflate(z_stream& zs, int file, char* data, size_t len, int flags);
 
+    template<class T, class U> void downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> error);
 public:
     explicit GoogleApkDownloadTask(QObject *parent = nullptr);
 
@@ -42,7 +43,7 @@ public:
     qint32 versionCode() const { return m_versionCode; }
     void setVersionCode(qint32 versionCode) { m_versionCode = versionCode; }
 
-    QString filePath();
+    QStringList filePaths();
 
 signals:
     void progress(qreal progress);

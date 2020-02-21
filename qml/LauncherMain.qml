@@ -253,7 +253,7 @@ ColumnLayout {
             playDownloadError.open()
         }
         onFinished: {
-            apkExtractionTask.source = filePath
+            apkExtractionTask.sources = filePaths
             apkExtractionTask.start()
         }
     }

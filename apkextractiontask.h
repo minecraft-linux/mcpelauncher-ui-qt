@@ -10,11 +10,11 @@ class VersionManager;
 class ApkExtractionTask : public QThread {
     Q_OBJECT
     Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
-    Q_PROPERTY(QString source READ source WRITE setSource)
+    Q_PROPERTY(QStringList sources READ sources WRITE setSources)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
 
     QMutex mutex;
-    QString m_source;
+    QStringList m_sources;
     VersionManager* m_versionManager;
 
     void run() override;
@@ -32,14 +32,14 @@ public:
 
     bool active() const { return isRunning(); }
 
-    QString source() {
+    QStringList sources() {
         QMutexLocker locker(&mutex);
-        return m_source;
+        return m_sources;
     }
 
-    void setSource(QString const& value) {
+    void setSources(QStringList const& value) {
         QMutexLocker locker(&mutex);
-        m_source = value;
+        m_sources = value;
     }
 
     VersionManager* versionManager() {
@@ -52,7 +52,7 @@ public:
         m_versionManager = value;
     }
 public slots:
-    bool setSourceUrl(QUrl const& url);
+    bool setSourceUrls(QList<QUrl> const& urls);
 
 signals:
     void progress(qreal progress);

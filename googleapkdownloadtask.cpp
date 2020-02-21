@@ -10,9 +10,13 @@ void GoogleApkDownloadTask::setPlayApi(GooglePlayApi *value) {
     m_playApi = value;
 }
 
-QString GoogleApkDownloadTask::filePath() {
+QStringList GoogleApkDownloadTask::filePaths() {
     QMutexLocker l (&fileMutex);
-    return file->fileName();
+    QStringList list;
+    for(auto&& file : files) {
+        list.append(file->fileName());
+    }
+    return list;
 }
 
 void GoogleApkDownloadTask::start() {
@@ -53,16 +57,14 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
     return true;
 }
 
-void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
-    QMutexLocker l (&fileMutex);
-    if (!file)
-        file.reset(new QTemporaryFile);
+template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error) {
+    auto file = std::make_shared<QTemporaryFile>();
+    files.emplace_back(file);
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
     if (isGzipped)
         req.set_encoding("gzip,deflate");
     req.add_header("Accept-Encoding", "identity");
-    auto cookie = dd.downloadauthcookie(0);
     req.add_header("Cookie", cookie.name() + "=" + cookie.value());
     auto& device = m_playApi->getLogin()->getDevice();
     req.set_user_agent("AndroidDownloadManager/" + device.build_version_string + " (Linux; U; Android " +
@@ -99,36 +101,60 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
             emit progress((float) dlnow / dltotal);
     });
     emit progress(0.f);
-    req.perform([this, zs, fd, isGzipped](playapi::http_response resp) {
-        QMutexLocker l (&fileMutex);
+    req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs);
         }
         file->close();
-        l.unlock();
 
-        if (resp)
-            emit finished();
-        else
+        if (resp) {
+            success();
+        }
+        else {
             emit error("CURL error");
-        m_active.store(false);
-        emit activeChanged();
-    }, [this, zs, fd, isGzipped](std::exception_ptr e) {
-        QMutexLocker l (&fileMutex);
+            _error();
+        }
+    }, [this, file, zs, fd, isGzipped, _error](std::exception_ptr e) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs);
         }
         file->close();
-        l.unlock();
 
         try {
             std::rethrow_exception(e);
         } catch(std::exception& e) {
             emit error(e.what());
         }
+        _error();
+    });
+}
+
+void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
+    fileMutex.lock();
+    auto cookie = dd.downloadauthcookie(0);
+    auto cleanup = [this]() {
+        fileMutex.unlock();
         m_active.store(false);
         emit activeChanged();
-    });
+    };
+    auto success = [this, cleanup, dd, cookie]() {
+        downloadFile(dd, cookie, [this, cleanup]() {
+            cleanup();
+            emit finished();
+        }, cleanup);
+    };
+    for(auto && data : dd.splitdeliverydata()) {
+#ifdef __arm__
+#define ARCH "armeabi_v7a"
+#else
+#define ARCH "x86"
+#endif
+        if(data.id() == "config." ARCH) {
+            downloadFile(data, cookie, success, cleanup);
+            return;
+        }
+    }
+    success();
 }
