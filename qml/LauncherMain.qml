@@ -267,7 +267,10 @@ ColumnLayout {
         id: apkExtractionTask
         versionManager: rowLayout.versionManager
         onProgress: downloadProgress.value = progress
-        onError: console.log("Extraction failed: " + err)
+        onError: function(err) {
+            playDownloadError.text = "Error while extracting the downloaded file(s): " + err
+            playDownloadError.open()
+        }
         onFinished: function() {
             launchGame()
         }
