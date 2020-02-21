@@ -35,6 +35,7 @@ void ApkExtractionTask::run() {
             std::string arch = "x86";
     #endif
         ApkInfo apkInfo;
+        apkInfo.versionCode = 0;
         for (auto && source : sources()) {
             ZipExtractor extractor (source.toStdString());
             {
