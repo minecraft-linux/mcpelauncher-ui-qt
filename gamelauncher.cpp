@@ -41,8 +41,10 @@ void GameLauncher::start() {
     connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
-    process->start(QString::fromStdString(findLauncher()), args);
     m_crashed = false;
+    process->start(QString::fromStdString(findLauncher()), args);
+    if(m_crashed)
+        process.reset();
     emit logCleared();
     emit stateChanged();
 }
@@ -66,8 +68,10 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
 }
 
 void GameLauncher::handleError(QProcess::ProcessError error) {
-    if (error == QProcess::FailedToStart)
+    if (error == QProcess::FailedToStart) {
+        m_crashed = true;
         launchFailed();
+    }
 }
 
 void GameLauncher::kill() {
