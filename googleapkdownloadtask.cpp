@@ -57,11 +57,19 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
     return true;
 }
 
-template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error) {
+template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error, std::shared_ptr<DownloadProgress> _progress, size_t id) {
     auto file = std::make_shared<QTemporaryFile>();
-    files.emplace_back(file);
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
+    if(_progress->downloadsize != -1) {
+        auto size = isGzipped ? dd.gzippeddownloadsize() : dd.downloadsize();
+        if(size > 0) {
+            _progress->downloadsize += size;
+            _progress->progress[id] = 0;
+        } else {
+            _progress->downloadsize = -1;
+        }
+    }
     if (isGzipped)
         req.set_encoding("gzip,deflate");
     req.add_header("Accept-Encoding", "identity");
@@ -75,13 +83,13 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     if (!file->open())
         throw std::runtime_error("Failed to open file");
     int fd = file->handle();
-    z_stream* zs;
+    std::shared_ptr<z_stream> zs;
     if (isGzipped) {
-        zs = new z_stream;
+        zs = std::make_shared<z_stream>();
         zs->zalloc = Z_NULL;
         zs->zfree = Z_NULL;
         zs->opaque = Z_NULL;
-        int ret = inflateInit2(zs, 31);
+        int ret = inflateInit2(zs.get(), 31);
         if (ret != Z_OK)
             throw std::runtime_error("Failed to init zlib");
 
@@ -96,19 +104,25 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         });
     }
 
-    req.set_progress_callback([this](curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow) {
-        if (dltotal > 0)
-            emit progress((float) dlnow / dltotal);
+    req.set_progress_callback([this, _progress, id](curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow) {
+        std::lock_guard<std::mutex> guard(_progress->mtx);
+        if(_progress->downloadsize > 0) {
+            _progress->progress[id] = dlnow;
+            emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
+        }
     });
     emit progress(0.f);
     req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
-            inflateEnd(zs);
+            inflateEnd(zs.get());
         }
         file->close();
-
         if (resp) {
+            {
+                QMutexLocker l (&fileMutex);
+                files.push_back(file);
+            }
             success();
         }
         else {
@@ -118,7 +132,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     }, [this, file, zs, fd, isGzipped, _error](std::exception_ptr e) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
-            inflateEnd(zs);
+            inflateEnd(zs.get());
         }
         file->close();
 
@@ -132,29 +146,35 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
 }
 
 void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
-    fileMutex.lock();
     auto cookie = dd.downloadauthcookie(0);
-    auto cleanup = [this]() {
-        fileMutex.unlock();
-        m_active.store(false);
-        emit activeChanged();
-    };
-    auto success = [this, cleanup, dd, cookie]() {
-        downloadFile(dd, cookie, [this, cleanup]() {
-            cleanup();
-            emit finished();
-        }, cleanup);
-    };
-    for(auto && data : dd.splitdeliverydata()) {
-#ifdef __arm__
-#define ARCH "armeabi_v7a"
-#else
-#define ARCH "x86"
-#endif
-        if(data.id() == "config." ARCH) {
-            downloadFile(data, cookie, success, cleanup);
-            return;
+    auto progress = std::make_shared<DownloadProgress>();
+    std::lock_guard<std::mutex> guard(progress->mtx);
+    progress->downloads = 1 + dd.splitdeliverydata().Capacity();
+    progress->progress.resize(progress->downloads);
+    progress->downloadsize = 0;
+    auto cleanup = [this, progress]() {
+        std::lock_guard<std::mutex> guard(progress->mtx);
+        if(!--progress->downloads) {
+            m_active.store(false);
+            emit activeChanged();
         }
+    };
+    auto success = [this, cleanup, dd, cookie, progress]() {
+        std::lock_guard<std::mutex> guard(progress->mtx);
+        if(!--progress->downloads) {
+            m_active.store(false);
+            emit activeChanged();
+            emit finished();
+        }
+    };
+    {
+        QMutexLocker l (&fileMutex);
+        files.clear();
     }
-    success();
+    size_t id = 0;
+    downloadFile(dd, cookie, success, cleanup, progress, id++);
+    for(auto && data : dd.splitdeliverydata()) {
+        downloadFile(data, cookie, success, cleanup, progress, id++);
+    }
+    progress->downloads = id;
 }
