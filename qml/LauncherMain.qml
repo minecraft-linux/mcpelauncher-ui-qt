@@ -227,6 +227,12 @@ ColumnLayout {
         id: playApi
         login: googleLoginHelper
 
+        onInitError: function(err) {
+            playDownloadError.text = err + "\nPlease login again";
+            playDownloadError.open()
+            googleLoginHelper.signOut();
+        }
+
         onAppInfoReceived: function(pkg, versionStr, versionCode) {
             console.log("Got app info " + versionStr + " " + versionCode)
         }
@@ -316,7 +322,7 @@ ColumnLayout {
         id: gameLauncher
         onLaunchFailed: {
             exited();
-            showLaunchError("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
+            showLaunchError("Could not find or execute the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program and you need 32bit support (macOS Catalina (10.15+) is unsupported, it lacks 32bit support)).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
         }
         onStateChanged: {
             if (!running)

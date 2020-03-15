@@ -68,53 +68,58 @@ void GooglePlayApi::saveApiInfo() {
 
 void GooglePlayApi::handleCheckinAndTos() {
     QtConcurrent::run([this]() {
-        QMutexLocker checkinMutexLocker (&checkinMutex);
-        loadCheckinInfo();
-        if (checkinResult.android_id == 0 && loginHelper->account() != nullptr) {
-            playapi::checkin_api checkin(loginHelper->getDevice());
-            checkin.add_auth(loginHelper->getLoginApi())->call();
-            checkinResult = checkin.perform_checkin()->call();
-            saveCheckinInfo();
-        }
-        api->set_checkin_data(checkinResult);
-        checkinMutexLocker.unlock();
-        api->set_auth(loginHelper->getLoginApi())->call();
+        try {
+            QMutexLocker checkinMutexLocker (&checkinMutex);
+            loadCheckinInfo();
+            if (checkinResult.android_id == 0 && loginHelper->account() != nullptr) {
+                playapi::checkin_api checkin(loginHelper->getDevice());
+                checkin.add_auth(loginHelper->getLoginApi())->call();
+                checkinResult = checkin.perform_checkin()->call();
+                saveCheckinInfo();
+            }
+            api->set_checkin_data(checkinResult);
+            checkinMutexLocker.unlock();
+            api->set_auth(loginHelper->getLoginApi())->call();
 
-        loadApiInfo();
-        api->info_mutex.lock();
-        bool needsAcceptTos = api->toc_cookie.empty() || api->device_config_token.empty();
-        api->info_mutex.unlock();
-        if (needsAcceptTos) {
-            api->fetch_user_settings()->call();
-            auto toc = api->fetch_toc()->call();
-            if (toc.payload().tocresponse().has_cookie())
-                api->set_toc_cookie(toc.payload().tocresponse().cookie());
+            loadApiInfo();
+            api->info_mutex.lock();
+            bool needsAcceptTos = api->toc_cookie.empty() || api->device_config_token.empty();
+            api->info_mutex.unlock();
+            if (needsAcceptTos) {
+                api->fetch_user_settings()->call();
+                auto toc = api->fetch_toc()->call();
+                if (toc.payload().tocresponse().has_cookie())
+                    api->set_toc_cookie(toc.payload().tocresponse().cookie());
 
-            if (api->fetch_toc()->call().payload().tocresponse().requiresuploaddeviceconfig()) {
-                auto resp = api->upload_device_config()->call();
-                api->set_device_config_token(resp.payload().uploaddeviceconfigresponse().uploaddeviceconfigtoken());
+                if (api->fetch_toc()->call().payload().tocresponse().requiresuploaddeviceconfig()) {
+                    auto resp = api->upload_device_config()->call();
+                    api->set_device_config_token(resp.payload().uploaddeviceconfigresponse().uploaddeviceconfigtoken());
 
-                toc = api->fetch_toc()->call();
-                if (toc.payload().tocresponse().requiresuploaddeviceconfig() || !toc.payload().tocresponse().has_cookie())
-                    throw std::runtime_error("Invalid state");
-                api->set_toc_cookie(toc.payload().tocresponse().cookie());
-                if (toc.payload().tocresponse().has_toscontent() && toc.payload().tocresponse().has_tostoken()) {
-                    tosApprovalPromise = std::promise<std::pair<bool, bool>>();
-                    auto future = tosApprovalPromise.get_future();
-                    emit tosApprovalRequired(QString::fromStdString(toc.payload().tocresponse().toscontent()),
-                                             QString::fromStdString(toc.payload().tocresponse().toscheckboxtextmarketingemails()));
-                    auto state = future.get();
-                    if (!state.first)
-                        throw std::runtime_error("Rejected TOS");
-                    auto tos = api->accept_tos(toc.payload().tocresponse().tostoken(), state.second)->call();
-                    if (!tos.payload().has_accepttosresponse())
+                    toc = api->fetch_toc()->call();
+                    if (toc.payload().tocresponse().requiresuploaddeviceconfig() || !toc.payload().tocresponse().has_cookie())
                         throw std::runtime_error("Invalid state");
-                    saveApiInfo();
+                    api->set_toc_cookie(toc.payload().tocresponse().cookie());
+                    if (toc.payload().tocresponse().has_toscontent() && toc.payload().tocresponse().has_tostoken()) {
+                        tosApprovalPromise = std::promise<std::pair<bool, bool>>();
+                        auto future = tosApprovalPromise.get_future();
+                        emit tosApprovalRequired(QString::fromStdString(toc.payload().tocresponse().toscontent()),
+                                                QString::fromStdString(toc.payload().tocresponse().toscheckboxtextmarketingemails()));
+                        auto state = future.get();
+                        if (!state.first)
+                            throw std::runtime_error("Rejected TOS");
+                        auto tos = api->accept_tos(toc.payload().tocresponse().tostoken(), state.second)->call();
+                        if (!tos.payload().has_accepttosresponse())
+                            throw std::runtime_error("Invalid state");
+                        saveApiInfo();
+                    }
                 }
             }
-        }
 
-        emit ready();
+            emit ready();
+        } catch (const std::exception& ex) {
+            std::cout << ex.what() << "\n";
+            emit initError(ex.what());
+        }
     });
 }
 
