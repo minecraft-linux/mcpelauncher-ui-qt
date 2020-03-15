@@ -117,7 +117,6 @@ void GooglePlayApi::handleCheckinAndTos() {
 
             emit ready();
         } catch (const std::exception& ex) {
-            std::cout << ex.what() << "\n";
             emit initError(ex.what());
         }
     });
