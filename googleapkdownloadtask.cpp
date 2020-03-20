@@ -119,11 +119,16 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
         file->close();
         if (resp) {
-            {
-                QMutexLocker l (&fileMutex);
-                files.push_back(file);
+            if(resp.get_status_code() == 200) {
+                {
+                    QMutexLocker l (&fileMutex);
+                    files.push_back(file);
+                }
+                success();
+            } else {
+                emit error(QString::fromStdString("Downloading file failed: Status[" + std::to_string(resp.get_status_code()) + "] '" + resp.get_body() + "'"));
+                _error();
             }
-            success();
         }
         else {
             emit error("CURL error");
