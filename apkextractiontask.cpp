@@ -29,7 +29,7 @@ void ApkExtractionTask::run() {
     QTemporaryDir dir (versionManager()->getTempTemplate());
     try {
         std::string path = dir.path().toStdString();
-    #ifdef __arm__
+    #if defined(__arm__) && (!defined(FORCE_ARM) || FORCE_ARM == 1 )
             std::string arch = "armeabi-v7a";
     #else
             std::string arch = "x86";

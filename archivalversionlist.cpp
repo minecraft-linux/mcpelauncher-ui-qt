@@ -7,7 +7,7 @@
 #include <QDir>
 #include <QStandardPaths>
 
-#ifdef __arm__
+#if defined(__arm__) && (!defined(FORCE_ARM) || FORCE_ARM == 1 )
 #define branch "arm"
 #else
 #define branch "master"
