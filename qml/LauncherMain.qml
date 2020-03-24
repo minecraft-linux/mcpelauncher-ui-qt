@@ -282,12 +282,6 @@ ColumnLayout {
         }
     }
 
-    GoogleTosApprovalWindow {
-        id: googleTosApprovalWindow
-
-        onDone: playApi.setTosApproved(approved, marketing)
-    }
-
     EditProfileWindow {
         id: profileEditWindow
         versionManager: versionManagerInstance

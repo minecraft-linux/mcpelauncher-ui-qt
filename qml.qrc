@@ -14,7 +14,6 @@
         <file>qml/LauncherLogin.qml</file>
         <file>qml/CenteredRectangle.qml</file>
         <file>qml/ProfileComboBox.qml</file>
-        <file>qml/GoogleTosApprovalWindow.qml</file>
         <file>qml/EditProfileWindow.qml</file>
         <file>qml/LauncherSettingsWindow.qml</file>
         <file>qml/GameLogWindow.qml</file>
