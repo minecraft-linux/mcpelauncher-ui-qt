@@ -34,6 +34,7 @@ public:
     QList<QObject*> const& versions() const { return m_versions; }
 
 private slots:
+    void onListDownloaded32();
     void onListDownloaded();
 
 signals:
