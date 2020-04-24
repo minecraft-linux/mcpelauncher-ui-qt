@@ -28,7 +28,7 @@ private:
 public:
     explicit GameLauncher(QObject *parent = nullptr);
 
-    static std::string findLauncher();
+    static std::string findLauncher(bool is32 = false);
 
     QString const& gameDir() { return m_gameDir; }
 

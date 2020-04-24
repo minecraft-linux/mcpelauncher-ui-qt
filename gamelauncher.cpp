@@ -1,17 +1,23 @@
 #include "gamelauncher.h"
 #include "profilemanager.h"
 #include "EnvPathUtil.h"
+#include <QDir>
 
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
 
-std::string GameLauncher::findLauncher() {
+std::string GameLauncher::findLauncher(bool is32) {
     std::string path;
+    std::string name = "mcpelauncher-client";
+    if(is32) {
+        name += "32";
+    }
+
 #ifdef GAME_LAUNCHER_PATH
-    if (EnvPathUtil::findInPath("mcpelauncher-client", path, GAME_LAUNCHER_PATH, EnvPathUtil::getAppDir().c_str()))
+    if (EnvPathUtil::findInPath(name, path, GAME_LAUNCHER_PATH, EnvPathUtil::getAppDir().c_str()))
         return path;
 #endif
-    if (EnvPathUtil::findInPath("mcpelauncher-client", path))
+    if (EnvPathUtil::findInPath(name, path))
         return path;
     return std::string();
 }
@@ -42,7 +48,17 @@ void GameLauncher::start() {
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
-    process->start(QString::fromStdString(findLauncher()), args);
+    process->start(QString::fromStdString(findLauncher(!QDir(m_gameDir + "/lib/"
+#ifdef __x86_64__
+"x86_64"
+#elif defined(__aarch64__)
+"arm64-v8a"
+#elif defined(__i386__)
+"x86"
+#elif defined(__arm__)
+"armeabi-v7a"
+#endif
+"/libminecraftpe.so").exists())), args);
     if(m_crashed)
         process.reset();
     emit logCleared();

@@ -47,8 +47,8 @@ void ArchivalVersionList::onListDownloaded32() {
     qDebug() << "Version list loaded, entry count:" << m_versions.size();
     emit versionsChanged();
 #if defined(__x86_64__) || defined(__aarch64__)
-    QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(GET_LIST_URL(branch))));
-    connect(reply, &QNetworkReply::finished, this, &ArchivalVersionList::onListDownloaded);
+    QNetworkReply* reply2 = m_netManager->get(QNetworkRequest(QUrl(GET_LIST_URL(branch))));
+    connect(reply2, &QNetworkReply::finished, this, &ArchivalVersionList::onListDownloaded);
 #endif
 }
 
