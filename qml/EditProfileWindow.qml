@@ -186,19 +186,6 @@ Window {
                 Item {
                     Layout.preferredWidth: 10
                 }
-                MTextField {
-                    id: pixelScale
-                    enabled: windowSizeCheck.checked
-                    Layout.preferredWidth: 50
-                    validator: DoubleValidator {
-                        bottom: 0
-                        top: 16
-                    }
-                }
-                Text {
-                    text: "px scale"
-                    font.pointSize: 11
-                }
             }
         }
 
@@ -252,7 +239,6 @@ Window {
         windowSizeCheck.checked = false
         windowWidth.text = "720"
         windowHeight.text = "480"
-        pixelScale.text = "2"
     }
 
     function setProfile(p) {
@@ -302,7 +288,6 @@ Window {
         windowSizeCheck.checked = profile.windowCustomSize
         windowWidth.text = profile.windowWidth
         windowHeight.text = profile.windowHeight
-        pixelScale.text = profile.pixelScale
     }
 
     function saveProfile() {
@@ -338,7 +323,6 @@ Window {
         profile.dataDir = dataDirPath.text
         profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
         profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
-        profile.pixelScale = parseFloat(pixelScale.text) || profile.pixelScale
         profile.save()
     }
 
