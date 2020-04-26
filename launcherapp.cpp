@@ -1,6 +1,10 @@
 #include "launcherapp.h"
+#include <QIcon>
 
 LauncherApp::LauncherApp(int &argc, char **argv) : QApplication(argc, argv) {
+    auto appdir = getenv("APPDIR");
+    if(appdir != nullptr)
+        setWindowIcon(QIcon(QString::fromUtf8(appdir) + "/mcpelauncher-ui-qt.png"));
 }
 
 bool LauncherApp::event(QEvent *event) {
