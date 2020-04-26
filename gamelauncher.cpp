@@ -46,6 +46,17 @@ void GameLauncher::start() {
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
+    
+    if (QFile(m_gameDir + "/libs/libminecraftpe.so").exists()) {
+        QDir().rename(m_gameDir + "/libs", m_gameDir + "/lib/" +
+#if defined(__i386__) || defined(__x86_64__)
+            "x86"
+#elif defined(__arm__) || defined(__aarch64__)
+            "armeabi-v7a"
+#endif
+        );
+    }
+
     process->start(QString::fromStdString(findLauncher(!QFile(m_gameDir + "/lib/"
 #ifdef __x86_64__
 "x86_64"
