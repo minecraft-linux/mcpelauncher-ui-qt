@@ -286,6 +286,7 @@ ColumnLayout {
         id: profileEditWindow
         versionManager: versionManagerInstance
         profileManager: profileManagerInstance
+        playVerChannel: playVerChannel
         modality: Qt.WindowModal
 
         onClosing: {

@@ -11,6 +11,7 @@ Window {
 
     property VersionManager versionManager
     property ProfileManager profileManager
+    property GoogleVersionChannel playVerChannel
     property ProfileInfo profile: null
 
     width: 500
@@ -106,7 +107,8 @@ Window {
                 Layout.fillWidth: true
                 model: {
                     var ret = []
-                    ret.push("Latest version (Google Play)")
+                    var latest = playVerChannel.latestVersion
+                    ret.push("Latest " + (latest.length === 0 ? "version" : latest) + " (Google Play)")
                     for (var i = 0; i < versions.length; i++)
                         ret.push(versions[i].versionName + " (installed)")
                     for (i = 0; i < archivalVersions.length; i++)
