@@ -1,7 +1,7 @@
 #include "gamelauncher.h"
 #include "profilemanager.h"
 #include "EnvPathUtil.h"
-#include <QDir>
+#include <QFile>
 
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
@@ -39,8 +39,6 @@ void GameLauncher::start() {
             args.append(QString::number(m_profile->windowWidth));
             args.append("-wh");
             args.append(QString::number(m_profile->windowHeight));
-            args.append("-s");
-            args.append(QString::number(m_profile->pixelScale));
         }
     }
     process->setProcessChannelMode(QProcess::MergedChannels);
@@ -48,7 +46,7 @@ void GameLauncher::start() {
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
-    process->start(QString::fromStdString(findLauncher(!QDir(m_gameDir + "/lib/"
+    process->start(QString::fromStdString(findLauncher(!QFile(m_gameDir + "/lib/"
 #ifdef __x86_64__
 "x86_64"
 #elif defined(__aarch64__)
