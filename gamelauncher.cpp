@@ -2,6 +2,7 @@
 #include "profilemanager.h"
 #include "EnvPathUtil.h"
 #include <QFile>
+#include <QDir>
 
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
@@ -42,7 +43,8 @@ void GameLauncher::start() {
         }
     }
     process->setProcessChannelMode(QProcess::MergedChannels);
-    connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    if (m_gamelogopen)
+        logAttached();
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
@@ -86,7 +88,9 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
     } else {
         msg = "Process exited normally\n";
     }
-    m_crashed = (exitCode != 0);
+    if (m_crashed = (exitCode != 0)) {
+        logAttached();
+    }
     process.reset();
     emit logAppended(msg);
     emit stateChanged();
@@ -95,11 +99,28 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
 void GameLauncher::handleError(QProcess::ProcessError error) {
     if (error == QProcess::FailedToStart) {
         m_crashed = true;
+        logAttached();
         launchFailed();
     }
 }
 
 void GameLauncher::kill() {
-    if (process)
+    if (process) {
         process->kill();
+        process->waitForFinished();
+    }
+}
+
+void GameLauncher::logAttached() {
+    m_gamelogopen = true;
+    if (process) {
+        connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    }
+}
+
+void GameLauncher::logDetached() {
+    m_gamelogopen = false;
+    if (process) {
+        disconnect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    }
 }

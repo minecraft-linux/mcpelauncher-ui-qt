@@ -13,6 +13,7 @@ ColumnLayout {
     property ProfileManager profileManager
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
+    property bool ignoregameisrunning: false
 
     id: rowLayout
     spacing: 0
@@ -194,28 +195,33 @@ ColumnLayout {
 
             PlayButton {
                 Layout.alignment: Qt.AlignHCenter
-                text: (needsDownload() ? (googleLoginHelper.account !== null ? "Download and play" : "Sign in or import .apk") : "Play").toUpperCase()
-                subText: getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait..."
+                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? "Download and play" : "Sign in or import .apk") : "Play")).toUpperCase()
+                subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 6
                 onClicked: {
-                    if (needsDownload()) {
-                        if (googleLoginHelper.account === null) {
-                            launcherSettingsWindow.show();
+                    if(gameLauncher.running) {
+                        gameLogWindow.show();
+                        gameLauncher.logAttached();
+                    } else {
+                        if (needsDownload()) {
+                            if (googleLoginHelper.account === null) {
+                                launcherSettingsWindow.show();
+                                return;
+                            }
+                            playDownloadTask.versionCode = getDownloadVersionCode()
+                            if (playDownloadTask.versionCode === 0)
+                                return;
+
+                            downloadProgress.value = 0
+                            playDownloadTask.start()
                             return;
                         }
-                        playDownloadTask.versionCode = getDownloadVersionCode()
-                        if (playDownloadTask.versionCode === 0)
-                            return;
-
-                        downloadProgress.value = 0
-                        playDownloadTask.start()
-                        return;
+                        launchGame()
                     }
-                    launchGame()
                 }
             }
 
@@ -317,7 +323,7 @@ ColumnLayout {
         id: gameLauncher
         onLaunchFailed: {
             exited();
-            showLaunchError("Could not find or execute the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program and you need 32bit support (macOS Catalina (10.15+) is unsupported, it lacks 32bit support)).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
+            showLaunchError("Could not find or execute the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program and you need 32bit support for running older 32bit versions (macOS Catalina (10.15+) is unsupported, it lacks 32bit support)).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
         }
         onStateChanged: {
             if (!running)
@@ -337,12 +343,21 @@ ColumnLayout {
         id: closeRunningDialog
         title: "Game is running"
         text: "Minecraft is currently running. Would you like to forcibly close it?"
-        standardButtons: StandardButton.Yes | StandardButton.No
+        standardButtons: StandardButton.Ignore | StandardButton.Yes | StandardButton.No
         modality: Qt.ApplicationModal
 
         onYes: {
             gameLauncher.kill()
             application.quit()
+        }
+
+        onAccepted: {
+            ignoregameisrunning = true;
+            if(window.visible) {
+                window.close();
+            } else if(gameLogWindow.visible) {
+                gameLogWindow.close();
+            }
         }
     }
 
@@ -365,12 +380,38 @@ ColumnLayout {
 
     Connections {
         target: window
-        onClosing: onWindowClose(window)
+        onClosing:
+        {
+            if(!ignoregameisrunning) {
+                if (!gameLogWindow.visible && gameLauncher.running) {
+                    close.accepted = false
+                    closeRunningDialog.open()
+                } else if (!gameLauncher.running && !gameLogWindow.visible) {
+                    application.quit();
+                }
+            } else {
+                ignoregameisrunning = false;
+            }
+        }
     }
 
     Connections {
         target: gameLogWindow
-        onClosing: onWindowClose(gameLogWindow)
+        onClosing: {
+            if(!ignoregameisrunning) {
+                if (!window.visible && gameLauncher.running) {
+                    close.accepted = false
+                    closeRunningDialog.open()
+                } else if (!gameLauncher.running && !window.visible) {
+                    application.quit();
+                } else {
+                    gameLauncher.logDetached();
+                }
+            } else {
+                ignoregameisrunning = false;
+                gameLauncher.logDetached();
+            }
+        }
     }
 
     Connections {
@@ -473,18 +514,13 @@ ColumnLayout {
         gameLauncher.gameDir = gameDir
         if (launcherSettings.startHideLauncher)
             window.hide();
-        if (launcherSettings.startOpenLog)
+        if (launcherSettings.startOpenLog) {
             gameLogWindow.show();
+            gameLauncher.logAttached();
+        }
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
         gameLauncher.start();
-    }
-
-    function onWindowClose(target) {
-        if (!gameLauncher.running &&
-                (target !== this || !this.visible) &&
-                (target !== gameLogWindow && !gameLogWindow.visible))
-            application.quit();
     }
 
 }

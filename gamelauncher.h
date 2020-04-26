@@ -18,6 +18,7 @@ private:
     QString m_gameDir;
     ProfileInfo* m_profile;
     bool m_crashed = false;
+    bool m_gamelogopen = false;
 
     void handleStdOutAvailable();
 
@@ -46,6 +47,10 @@ public slots:
     void start();
 
     void kill();
+
+    void logAttached();
+
+    void logDetached();
 
 signals:
     void logCleared();
