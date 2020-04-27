@@ -7,15 +7,15 @@
 #include <QDir>
 #include <QStandardPaths>
 
-#if defined(__arm__) && (!defined(FORCE_ARM) || FORCE_ARM == 1 )
-#define branch32 "arm"
-#define branch "arm64"
+#if (defined(__arm__) || defined(__aarch64__)) && (!defined(FORCE_ARM) || FORCE_ARM == 1 )
+#define branch32 "armeabi-v7a"
+#define branch "arm64-v8a"
 #else
-#define branch32 "master"
+#define branch32 "x86"
 #define branch "x86_64"
 #endif
 
-#define GET_LIST_URL(b) "https://raw.githubusercontent.com/ChristopherHX/mcpelauncher-versiondb/" b "/versions.json.min"
+#define GET_LIST_URL(b) "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/versions." b ".json.min"
 
 ArchivalVersionList::ArchivalVersionList() {
     m_netManager = new QNetworkAccessManager(this);
