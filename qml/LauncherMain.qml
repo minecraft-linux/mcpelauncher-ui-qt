@@ -425,7 +425,8 @@ ColumnLayout {
     }
 
     Component.onCompleted: {
-        updateChecker.sendRequest()
+        if(launcherSettings.checkForUpdates)
+            updateChecker.sendRequest()
         playApi.handleCheckinAndTos()
     }
 
@@ -520,7 +521,7 @@ ColumnLayout {
         }
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
-        gameLauncher.start();
+        gameLauncher.start(launcherSettings.disableGameLog);
     }
 
 }

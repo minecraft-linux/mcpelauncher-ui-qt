@@ -60,11 +60,46 @@ GridLayout {
         onCheckedChanged: launcherSettings.startHideLauncher = checked
     }
 
+    MCheckBox {
+        id: disableGameLog
+        text: "Enable the GameLog"
+        font.pointSize: parent.labelFontSize
+        Layout.columnSpan: 2
+        Component.onCompleted: checked = launcherSettings.disableGameLog
+        onCheckedChanged: launcherSettings.disableGameLog = checked
+    }
+
+    MCheckBox {
+        id: checkForUpdates
+        text: "Enable checking for updates"
+        font.pointSize: parent.labelFontSize
+        Layout.columnSpan: 2
+        Component.onCompleted: checked = launcherSettings.checkForUpdates
+        onCheckedChanged: launcherSettings.checkForUpdates = checked
+    }
+
+    MCheckBox {
+        id: downloadVersionsList
+        text: "Enable downloading the versionsdb"
+        font.pointSize: parent.labelFontSize
+        Layout.columnSpan: 2
+        Component.onCompleted: checked = launcherSettings.downloadVersionsList
+        onCheckedChanged: launcherSettings.downloadVersionsList = checked
+    }
+
     MButton {
         Layout.topMargin: 20
         id: runTroubleshooter
         text: "Run troubleshooter"
-        Layout.columnSpan: 2
+        Layout.columnSpan: 1
         onClicked: troubleshooterWindow.findIssuesAndShow()
+    }
+
+    MButton {
+        Layout.topMargin: 20
+        id: openGameData
+        text: "Open GameData Folder"
+        Layout.columnSpan: 1
+        onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
     }
 }

@@ -23,7 +23,7 @@ std::string GameLauncher::findLauncher(bool is32) {
     return std::string();
 }
 
-void GameLauncher::start() {
+void GameLauncher::start(bool disableGameLog) {
     process.reset(new QProcess);
     QStringList args;
     if (m_gameDir.length() > 0) {
@@ -42,7 +42,16 @@ void GameLauncher::start() {
             args.append(QString::number(m_profile->windowHeight));
         }
     }
-    process->setProcessChannelMode(QProcess::MergedChannels);
+    if (disableGameLog) {
+        #ifdef _WIN32
+            process->setStandardOutputFile("nul");
+        #else
+            process->setStandardOutputFile("/dev/null");
+        #endif
+    } else {
+        process->setProcessChannelMode(QProcess::MergedChannels);
+    }
+    
     if (m_gamelogopen)
         logAttached();
     connect(process.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &GameLauncher::handleFinished);
