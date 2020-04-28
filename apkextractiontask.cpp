@@ -29,11 +29,6 @@ void ApkExtractionTask::run() {
     QTemporaryDir dir (versionManager()->getTempTemplate());
     try {
         std::string path = dir.path().toStdString();
-    #if defined(__arm__) && (!defined(FORCE_ARM) || FORCE_ARM == 1 )
-            std::string arch = "armeabi-v7a";
-    #else
-            std::string arch = "x86_64";
-    #endif
         ApkInfo apkInfo;
         apkInfo.versionCode = 0;
         for (auto && source : sources()) {
@@ -54,10 +49,14 @@ void ApkExtractionTask::run() {
             qDebug() << "Apk info: versionCode=" << apkInfo.versionCode
                     << " versionName=" << QString::fromStdString(apkInfo.versionName);
 
-            extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path, arch),
+            extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path),
                     [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
                 emit progress((float)  current / max);
             });
+        }
+
+        if (!MinecraftExtractUtils::checkMinecraftLibFile(path)) {
+            emit error("The specified file is not compatible with the launcher\nYou may imported an arm (smartphone) apk on a non arm based PC");
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
