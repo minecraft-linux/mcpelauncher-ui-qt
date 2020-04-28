@@ -16,6 +16,7 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
         currentAccount.setAccountUserId(settings.value("userId").toString());
         currentAccount.setAccountToken(settings.value("token").toString());
         login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
+        loadDeviceState();
         hasAccount = true;
     }
     settings.endGroup();
@@ -31,6 +32,16 @@ void GoogleLoginHelper::loadDeviceState() {
     device.generated_meid = settings.value("generated_meid").toString().toStdString();
     device.generated_serial_number = settings.value("generated_serial_number").toString().toStdString();
     device.random_logging_id = settings.value("generated_serial_number").toLongLong();
+    int size = settings.beginReadArray("logins");
+    if(size) {
+        device.config_native_platforms.clear();
+        for (int i = 0; i < size; ++i) {
+            settings.setArrayIndex(i);
+            device.config_native_platforms.emplace_back(settings.value("platform").toString().toStdString());
+        }
+        settings.endArray();
+        settings.beginReadArray("logins");
+    }
     settings.endGroup();
 }
 
@@ -40,6 +51,12 @@ void GoogleLoginHelper::saveDeviceState() {
     settings.setValue("generated_meid", QString::fromStdString(device.generated_meid));
     settings.setValue("generated_serial_number", QString::fromStdString(device.generated_serial_number));
     settings.setValue("random_logging_id", device.random_logging_id);
+    settings.beginWriteArray("native_platforms", device.config_native_platforms.size());
+    for (int i = 0; i < device.config_native_platforms.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("platform", QString::fromStdString(device.config_native_platforms[i]));
+    }
+    settings.endArray();
     settings.endGroup();
 }
 
@@ -57,6 +74,20 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 
 void GoogleLoginHelper::onLoginFinished(int code) {
     if (code == QDialog::Accepted) {
+        device.config_native_platforms = {
+#ifdef __x86_64__
+        "x86_64",
+#endif
+#if defined(__i386__) || defined(__x86_64__)
+        "x86",
+#endif
+#ifdef __aarch64__
+        "arm64-v8a",
+#endif
+#if defined(__arm__) || defined(__aarch64__)
+        "armeabi-v7a",
+#endif
+        };
         login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
         currentAccount.setAccountIdentifier(window->accountIdentifier());
         currentAccount.setAccountUserId(window->accountUserId());
@@ -66,6 +97,7 @@ void GoogleLoginHelper::onLoginFinished(int code) {
         settings.setValue("userId", currentAccount.accountUserId());
         settings.setValue("token", currentAccount.accountToken());
         settings.endGroup();
+        saveDeviceState();
         hasAccount = true;
         accountAcquireFinished(&currentAccount);
     } else {
