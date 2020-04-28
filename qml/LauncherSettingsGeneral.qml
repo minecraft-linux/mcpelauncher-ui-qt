@@ -78,15 +78,6 @@ GridLayout {
         onCheckedChanged: launcherSettings.checkForUpdates = checked
     }
 
-    MCheckBox {
-        id: downloadVersionsList
-        text: "Enable downloading the versionsdb"
-        font.pointSize: parent.labelFontSize
-        Layout.columnSpan: 2
-        Component.onCompleted: checked = launcherSettings.downloadVersionsList
-        onCheckedChanged: launcherSettings.downloadVersionsList = checked
-    }
-
     MButton {
         Layout.topMargin: 20
         id: runTroubleshooter
