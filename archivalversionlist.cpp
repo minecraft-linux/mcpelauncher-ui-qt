@@ -15,7 +15,7 @@
 #define branch "x86_64"
 #endif
 
-#define GET_LIST_URL(b) "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/versions." b ".json.min"
+#define GET_LIST_URL(b) "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." b ".json.min"
 
 ArchivalVersionList::ArchivalVersionList() {
     m_netManager = new QNetworkAccessManager(this);
