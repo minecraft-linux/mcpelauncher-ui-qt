@@ -19,6 +19,7 @@ private:
     ProfileInfo* m_profile;
     bool m_crashed = false;
     bool m_gamelogopen = false;
+    bool m_disableGameLog = false;
 
     void handleStdOutAvailable();
 

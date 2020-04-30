@@ -62,7 +62,7 @@ GridLayout {
 
     MCheckBox {
         id: disableGameLog
-        text: "Enable the GameLog"
+        text: "Disable the GameLog"
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.disableGameLog

@@ -24,6 +24,7 @@ std::string GameLauncher::findLauncher(bool is32) {
 }
 
 void GameLauncher::start(bool disableGameLog) {
+    m_disableGameLog = disableGameLog;
     process.reset(new QProcess);
     QStringList args;
     if (m_gameDir.length() > 0) {
@@ -42,14 +43,13 @@ void GameLauncher::start(bool disableGameLog) {
             args.append(QString::number(m_profile->windowHeight));
         }
     }
-    if (disableGameLog) {
+    process->setProcessChannelMode(QProcess::MergedChannels);
+    if (m_disableGameLog) {
         #ifdef _WIN32
             process->setStandardOutputFile("nul");
         #else
             process->setStandardOutputFile("/dev/null");
         #endif
-    } else {
-        process->setProcessChannelMode(QProcess::MergedChannels);
     }
     
     if (m_gamelogopen)
@@ -90,7 +90,9 @@ void GameLauncher::handleStdOutAvailable() {
 }
 
 void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus) {
-    handleStdOutAvailable();
+    if(!m_disableGameLog) {
+        handleStdOutAvailable();
+    }
     QString msg;
     if (exitCode != 0) {
         msg = "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
@@ -121,15 +123,19 @@ void GameLauncher::kill() {
 }
 
 void GameLauncher::logAttached() {
-    m_gamelogopen = true;
-    if (process) {
-        connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    if(!m_disableGameLog) {
+        m_gamelogopen = true;
+        if (process) {
+            connect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+        }
     }
 }
 
 void GameLauncher::logDetached() {
-    m_gamelogopen = false;
-    if (process) {
-        disconnect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+    if(!m_disableGameLog) {
+        m_gamelogopen = false;
+        if (process) {
+            disconnect(process.data(), &QProcess::readyReadStandardOutput, this, &GameLauncher::handleStdOutAvailable);
+        }
     }
 }
