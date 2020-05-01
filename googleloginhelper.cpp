@@ -39,9 +39,8 @@ void GoogleLoginHelper::loadDeviceState() {
             settings.setArrayIndex(i);
             device.config_native_platforms.emplace_back(settings.value("platform").toString().toStdString());
         }
-        settings.endArray();
-        settings.beginReadArray("logins");
     }
+    settings.endArray();
     settings.endGroup();
 }
 
