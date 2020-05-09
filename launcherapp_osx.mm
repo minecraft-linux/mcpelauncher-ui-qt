@@ -10,6 +10,9 @@ void LauncherApp::setVisibleInDock(bool visible) {
 }
 
 #ifdef SPARKLE_FEED
+#include <Cocoa/Cocoa.h>
+#include <Sparkle/Sparkle.h>
+
 class SparkleUpdater {
     NSAutoreleasePool* pool;
     SUUpdater * updater;
@@ -23,7 +26,7 @@ class SparkleUpdater {
 	    [updater setFeedURL: url];
         [updater checkForUpdatesInBackground];
     }
-    SparkleUpdater() {
+    ~SparkleUpdater() {
         [updater release];
         [pool release];
     }
