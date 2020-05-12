@@ -14,6 +14,9 @@ public:
     void initSparkleUpdater() {
         updater = [SUUpdater sharedUpdater];
 	    [updater retain];
+        NSURL* url = [NSURL URLWithString:
+			[NSString stringWithUTF8String: SPARKLE_UPDATE_CHECK_URL]];
+	    [updater setFeedURL: url];
         [updater checkForUpdatesInBackground];
     }
     ~SparkleUpdater() {
