@@ -4,14 +4,40 @@
 
 UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
     connect(&netAccessManager, &QNetworkAccessManager::finished, this, &UpdateChecker::onRequestFinished);
+    m_active = false;
 }
 
+#ifndef SPARKLE_UPDATE_CHECK
 void UpdateChecker::sendRequest() {
-#ifdef UPDATE_CHECK
+#ifdef APPIMAGE_UPDATE_CHECK
+    updatethread = std::thread([this] {
+        char * appimage = getenv("APPIMAGE");
+        if(appimage) {
+            updater = std::make_shared<appimage::update::Updater>(appimage, true);
+        } else {
+            printf("Appimage cannot be updated\n");
+            return;
+        }
+        bool _updateAvailable;
+
+        if (!updater->checkForChanges(_updateAvailable)) {
+            std::string nextMessage;
+            while (updater->nextStatusMessage(nextMessage)) {
+                printf("appimage update error %s\n", nextMessage.data());
+            }
+            return;
+        }
+
+        if (_updateAvailable) {
+            emit updateAvailable("");
+        }
+    });
+#elif defined(UPDATE_CHECK)
     QNetworkRequest request(QStringLiteral(UPDATE_CHECK_URL));
     netAccessManager.get(request);
 #endif
 }
+#endif
 
 void UpdateChecker::onRequestFinished(QNetworkReply* reply) {
 #ifdef UPDATE_CHECK
@@ -36,3 +62,57 @@ void UpdateChecker::onRequestFinished(QNetworkReply* reply) {
         emit updateAvailable(props["download_url"]);
 #endif
 }
+
+void UpdateChecker::startUpdate() {
+#ifdef APPIMAGE_UPDATE_CHECK
+    if (updater) {
+        if (updatethread.joinable()) {
+            updatethread.join();
+        }
+        updatethread = std::thread([this] {
+            m_active = true;
+            emit activeChanged();
+            updater->start();
+
+            while (!updater->isDone()) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+                double _progress;
+                if (!updater->progress(_progress)) {
+                    printf("appimage startUpdate Call to progress() failed\n");
+                    m_active = false;
+                    emit activeChanged();
+                    return;
+                }
+
+                emit progress(_progress);
+
+                // fetch all status messages
+                // this is basically the same as before
+                std::string nextMessage;
+                while (updater->nextStatusMessage(nextMessage)) {
+                    printf("appimage startUpdate %s\n", nextMessage.data());
+                }
+            }
+
+            if (updater->hasError()) {
+                printf("Error occurred. See previous messages for details.\n");
+            } else {
+                updater->copyPermissionsToNewFile();
+            }
+
+            m_active = false;
+            emit activeChanged();
+            emit requestRestart();
+        });
+    }
+    #endif
+}
+
+#ifdef APPIMAGE_UPDATE_CHECK
+UpdateChecker::~UpdateChecker() {
+    if (updatethread.joinable()) {
+        updatethread.join();
+    }
+}
+#endif

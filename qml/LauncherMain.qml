@@ -89,7 +89,13 @@ ColumnLayout {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: Qt.openUrlExternally(updateDownloadUrl)
+            onClicked: {
+                if (updateDownloadUrl.length == 0) {
+                    updateChecker.startUpdate()
+                } else {
+                    Qt.openUrlExternally(updateDownloadUrl)
+                }
+            }
         }
     }
 
@@ -100,7 +106,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: childrenRect.height + 2 * 5
         color: "#fff"
-        visible: playDownloadTask.active || apkExtractionTask.active
+        visible: playDownloadTask.active || apkExtractionTask.active || updateChecker.active
 
         Item {
             y: 5
@@ -361,6 +367,12 @@ ColumnLayout {
         }
     }
 
+    MessageDialog {
+        id: restartDialog
+        title: "Please restart"
+        text: "Update finished, please restart the AppImage"
+    }
+
     UpdateChecker {
         id: updateChecker
 
@@ -368,7 +380,12 @@ ColumnLayout {
             hasUpdate = true
             updateDownloadUrl = downloadUrl
         }
+        onProgress: downloadProgress.value = progress
+        onRequestRestart: {
+            restartDialog.open()
+        }
     }
+
 
     Connections {
         target: googleLoginHelper
