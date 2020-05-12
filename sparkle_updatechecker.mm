@@ -11,13 +11,13 @@ public:
         pool = [[NSAutoreleasePool alloc] init];
         updater = nil;
     }
-    initSparkleUpdater() {
+    void initSparkleUpdater() {
         updater = [SUUpdater sharedUpdater];
 	    [updater retain];
         [updater checkForUpdatesInBackground];
     }
     ~SparkleUpdater() {
-        if (release) {
+        if (updater) {
             [updater release];
         }
         [pool release];
