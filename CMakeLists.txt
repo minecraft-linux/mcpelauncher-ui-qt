@@ -14,7 +14,10 @@ option(ENABLE_UPDATE_CHECK "Enables update checking with a remote server")
 set(UPDATE_CHECK_URL "" CACHE STRING "Specify the URL for the server to check for updates on")
 set(UPDATE_CHECK_BUILD_ID "" CACHE STRING "Specify the numeral version number for the current build")
 
-add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h troubleshooter.cpp troubleshooter.h updatechecker.cpp updatechecker.h qml.qrc)
+find_package(Qt5QuickCompiler)
+qtquick_compiler_add_resources(RESOURCES qml.qrc)
+
+add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h troubleshooter.cpp troubleshooter.h updatechecker.cpp updatechecker.h ${RESOURCES})
 if (ENABLE_UPDATE_CHECK)
     target_compile_definitions(${PROJECT_NAME} PUBLIC UPDATE_CHECK UPDATE_CHECK_BUILD_ID=${UPDATE_CHECK_BUILD_ID} UPDATE_CHECK_URL="${UPDATE_CHECK_URL}")
 endif()
