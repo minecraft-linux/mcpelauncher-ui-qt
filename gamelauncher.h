@@ -61,6 +61,8 @@ signals:
     void stateChanged();
 
     void launchFailed();
+
+    void corruptedInstall();
 };
 
 #endif // GAMELAUNCHER_H

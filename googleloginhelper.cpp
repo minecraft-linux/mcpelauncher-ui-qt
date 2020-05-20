@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QWindow>
+#include "supportedandroidabis.h"
 
 std::string GoogleLoginHelper::getTokenCachePath() {
     return QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)).filePath("playapi_token_cache.conf").toStdString();
@@ -42,6 +43,13 @@ void GoogleLoginHelper::loadDeviceState() {
     }
     settings.endArray();
     settings.endGroup();
+    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    for (auto&& abi : device.config_native_platforms) {
+        if(std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
+            emit warnUnsupportedABI();
+            break;
+        }
+    }
 }
 
 void GoogleLoginHelper::saveDeviceState() {
@@ -60,6 +68,9 @@ void GoogleLoginHelper::saveDeviceState() {
 }
 
 void GoogleLoginHelper::acquireAccount(QWindow *parent) {
+    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    if (supportedabis.empty())
+        emit warnUnsupportedABI();
     if (window)
         return;
     window = new GoogleLoginWindow();
@@ -73,20 +84,7 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 
 void GoogleLoginHelper::onLoginFinished(int code) {
     if (code == QDialog::Accepted) {
-        device.config_native_platforms = {
-#ifdef __x86_64__
-        "x86_64",
-#endif
-#if defined(__i386__) || defined(__x86_64__)
-        "x86",
-#endif
-#ifdef __aarch64__
-        "arm64-v8a",
-#endif
-#if defined(__arm__) || defined(__aarch64__)
-        "armeabi-v7a",
-#endif
-        };
+        device.config_native_platforms = SupportedAndroidAbis::getSupportedAbis();
         login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
         currentAccount.setAccountIdentifier(window->accountIdentifier());
         currentAccount.setAccountUserId(window->accountUserId());

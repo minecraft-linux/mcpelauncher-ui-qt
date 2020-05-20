@@ -70,13 +70,13 @@ void GameLauncher::start(bool disableGameLog) {
     }
 
     process->start(QString::fromStdString(findLauncher(!QFile(m_gameDir + "/lib/"
-#ifdef __x86_64__
+#if defined(__x86_64__) && !defined(PREFER_32BIT) && !defined(DISABLE_64BIT)
 "x86_64"
-#elif defined(__aarch64__)
+#elif defined(__aarch64__) && !defined(PREFER_32BIT) && !defined(DISABLE_64BIT)
 "arm64-v8a"
-#elif defined(__i386__)
+#elif defined(__i386__) || defined(__x86_64__)
 "x86"
-#elif defined(__arm__)
+#elif defined(__arm__) ||  defined(__aarch64__)
 "armeabi-v7a"
 #endif
 "/libminecraftpe.so").exists())), args);
@@ -95,13 +95,22 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
         handleStdOutAvailable();
     }
     QString msg;
-    if (exitCode != 0) {
-        msg = "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
-    } else {
-        msg = "Process exited normally\n";
-    }
-    if (m_crashed = (exitCode != 0)) {
-        logAttached();
+    switch (exitCode)
+    {
+    case 51: // Failed to load Minecraft lib
+        msg = "Corrupted Minecraft install from previous launcher, please delete in settings and redownload\n";
+        emit corruptedInstall();
+        break;
+    default:
+        if (exitCode != 0) {
+            msg = "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
+        } else {
+            msg = "Process exited normally\n";
+        }
+        if (m_crashed = (exitCode != 0)) {
+            logAttached();
+        }
+        break;
     }
     process.reset();
     emit logAppended(msg);

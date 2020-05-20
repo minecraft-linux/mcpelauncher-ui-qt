@@ -53,6 +53,7 @@ signals:
 
     void accountInfoChanged();
 
+    void warnUnsupportedABI();
 };
 
 #endif // GOOGLELOGINHELPER_H

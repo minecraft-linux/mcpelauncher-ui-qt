@@ -325,6 +325,12 @@ ColumnLayout {
         id: troubleshooterWindow
     }
 
+    MessageDialog {
+        id: corruptedInstallDialog
+        title: "Please reinstall"
+        text: "Your previously downloaded Minecraft Version is corrupted, please delete it in Settings then download it again via the updated Launcher"
+    }
+
     GameLauncher {
         id: gameLauncher
         onLaunchFailed: {
@@ -338,6 +344,9 @@ ColumnLayout {
                 application.setVisibleInDock(true);
                 gameLogWindow.show()
             }
+        }
+        onCorruptedInstall: {
+            corruptedInstallDialog.show()
         }
         function exited() {
             application.setVisibleInDock(true);
@@ -386,12 +395,20 @@ ColumnLayout {
         }
     }
 
+    MessageDialog {
+        id: warnUnsupportedABIDialog
+    }
 
     Connections {
         target: googleLoginHelper
         onAccountInfoChanged: {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
+        }
+        onWarnUnsupportedABI: {
+            warnUnsupportedABIDialog.title = "Please change device settings"
+            warnUnsupportedABIDialog.text = "Your device isn't compatible with the currently device settings of your current google login\nPlease switch Android ABI (architecture) in Settings and login again"
+            warnUnsupportedABIDialog.show()
         }
     }
 
