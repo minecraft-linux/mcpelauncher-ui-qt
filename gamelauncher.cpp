@@ -59,7 +59,8 @@ void GameLauncher::start(bool disableGameLog) {
     m_crashed = false;
     
     if (QDir(m_gameDir + "/libs").exists()) {
-        QDir().rename(m_gameDir + "/libs", m_gameDir + "/lib/" +
+        QDir().mkpath(m_gameDir + "/lib/");
+        QDir(m_gameDir + "/libs").rename(m_gameDir + "/libs", m_gameDir + "/lib/" +
 #if defined(__i386__) || defined(__x86_64__)
             "x86"
 #elif defined(__arm__) || defined(__aarch64__)
