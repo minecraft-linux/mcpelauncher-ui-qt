@@ -58,7 +58,7 @@ void GameLauncher::start(bool disableGameLog) {
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
     
-    if (QFile(m_gameDir + "/libs/libminecraftpe.so").exists()) {
+    if (QDir(m_gameDir + "/libs").exists()) {
         QDir().rename(m_gameDir + "/libs", m_gameDir + "/lib/" +
 #if defined(__i386__) || defined(__x86_64__)
             "x86"
