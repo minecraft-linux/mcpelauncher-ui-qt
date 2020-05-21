@@ -346,7 +346,7 @@ ColumnLayout {
             }
         }
         onCorruptedInstall: {
-            corruptedInstallDialog.show()
+            corruptedInstallDialog.open()
         }
         function exited() {
             application.setVisibleInDock(true);
@@ -408,7 +408,7 @@ ColumnLayout {
         onWarnUnsupportedABI: {
             warnUnsupportedABIDialog.title = "Please change device settings"
             warnUnsupportedABIDialog.text = "Your device isn't compatible with the currently device settings of your current google login\nPlease switch Android ABI (architecture) in Settings and login again"
-            warnUnsupportedABIDialog.show()
+            warnUnsupportedABIDialog.open()
         }
     }
 
