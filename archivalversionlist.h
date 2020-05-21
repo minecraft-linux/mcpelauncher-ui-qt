@@ -35,7 +35,7 @@ public:
 
     QList<QObject*> const& versions() const { return m_versions; }
 
-    void downloadLists(std::vector<QString> abis);
+    void downloadLists(QStringList abis);
 
 signals:
     void versionsChanged();

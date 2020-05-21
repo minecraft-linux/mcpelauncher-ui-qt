@@ -108,7 +108,7 @@ public slots:
 
     void removeVersion(VersionInfo* version);
 
-    void downloadLists(std::vector<QString> abis) {
+    void downloadLists(QStringList abis) {
         m_archival.downloadLists(abis);
     }
 

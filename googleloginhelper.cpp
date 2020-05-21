@@ -117,10 +117,10 @@ void GoogleLoginHelper::signOut() {
     emit accountInfoChanged();
 }
 
-std::vector<QString> GoogleLoginHelper::getDeviceStateABIs() {
-    std::vector<QString> abis;
+QStringList GoogleLoginHelper::getDeviceStateABIs() {
+    QStringList abis;
     for (auto&& abi : device.config_native_platforms) {
-        abis.emplace_back(QString::fromStdString(abi));
+        abis.append(QString::fromStdString(abi));
     }
     return abis;
 }

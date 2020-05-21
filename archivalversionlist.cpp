@@ -14,7 +14,7 @@ ArchivalVersionList::ArchivalVersionList() {
     m_netManager->setCache(cache);
 }
 
-void ArchivalVersionList::downloadLists(std::vector<QString> abis) {
+void ArchivalVersionList::downloadLists(QStringList abis) {
     m_versions.clear();
     for (auto &&abi : abis) {
         QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abi + ".json.min")));
