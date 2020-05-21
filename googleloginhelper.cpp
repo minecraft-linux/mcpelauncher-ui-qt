@@ -116,3 +116,11 @@ void GoogleLoginHelper::signOut() {
     loginCache.clear();
     emit accountInfoChanged();
 }
+
+std::vector<QString> GoogleLoginHelper::getDeviceStateABIs() {
+    std::vector<QString> abis;
+    for (auto&& abi : device.config_native_platforms) {
+        abis.emplace_back(QString::fromStdString(abi));
+    }
+    return abis;
+}

@@ -112,7 +112,7 @@ Window {
                     for (var i = 0; i < versions.length; i++)
                         ret.push(versions[i].versionName + " (installed)")
                     for (i = 0; i < archivalVersions.length; i++)
-                        ret.push(archivalVersions[i].versionName + (archivalVersions[i].isBeta ? " (beta)" : ""))
+                        ret.push(archivalVersions[i].versionName + " (" + archivalVersions[i].abi + ((archivalVersions[i].isBeta ? ", beta" : "") +  ")"))
                     if (extraVersionName != null) {
                         ret.push(extraVersionName)
                     }

@@ -8,11 +8,13 @@ class ArchivalVersionInfo : public QObject {
     Q_PROPERTY(QString versionName MEMBER versionName CONSTANT)
     Q_PROPERTY(int versionCode MEMBER versionCode CONSTANT)
     Q_PROPERTY(bool isBeta MEMBER isBeta CONSTANT)
+    Q_PROPERTY(QString abi MEMBER abi CONSTANT)
 
 public:
     QString versionName;
     int versionCode;
     bool isBeta;
+    QString abi;
 
     ArchivalVersionInfo(QObject* parent = nullptr) : QObject(parent) {}
 
@@ -26,16 +28,14 @@ private:
     QNetworkAccessManager* m_netManager;
     QList<QObject*> m_versions;
 
-    void downloadList();
+    void onListDownloaded(QNetworkReply* reply, QString abi);
 
 public:
     ArchivalVersionList();
 
     QList<QObject*> const& versions() const { return m_versions; }
 
-private slots:
-    void onListDownloaded32();
-    void onListDownloaded();
+    void downloadLists(std::vector<QString> abis);
 
 signals:
     void versionsChanged();

@@ -113,7 +113,7 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
         break;
     }
     process.reset();
-    emit logAppended(msg);
+    emit logAppended("\n" + msg);
     emit stateChanged();
 }
 

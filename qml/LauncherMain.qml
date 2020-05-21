@@ -404,6 +404,7 @@ ColumnLayout {
         onAccountInfoChanged: {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
+            versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
         }
         onWarnUnsupportedABI: {
             warnUnsupportedABIDialog.title = "Please change device settings"
@@ -462,6 +463,7 @@ ColumnLayout {
         if(launcherSettings.checkForUpdates)
             updateChecker.sendRequest()
         playApi.handleCheckinAndTos()
+        versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
     }
 
 
@@ -490,7 +492,7 @@ ColumnLayout {
     function getDisplayedNameForCode(code) {
         var archiveInfo = findArchivalVersion(code);
         if (archiveInfo !== null)
-            return archiveInfo.versionName + (archiveInfo.isBeta ? " (beta)" : "");
+            return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         if (code === playVerChannel.latestVersionCode)
             return playVerChannel.latestVersion;
         return "Unknown";

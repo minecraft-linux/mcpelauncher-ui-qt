@@ -48,6 +48,7 @@ public slots:
 
     void signOut();
 
+    std::vector<QString> getDeviceStateABIs();
 signals:
     void accountAcquireFinished(GoogleAccount* account);
 
