@@ -93,4 +93,11 @@ GridLayout {
         Layout.columnSpan: 1
         onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
     }
+
+    MButton {
+        id: checkForUpdatesbtn
+        text: "Check for Updates"
+        Layout.columnSpan: 2
+        onClicked: updateChecker.checkForUpdates()
+    }
 }

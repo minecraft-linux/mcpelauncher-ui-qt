@@ -39,6 +39,7 @@ signals:
 
 public slots:
     void sendRequest();
+    void checkForUpdates();
     void startUpdate();
 };
 

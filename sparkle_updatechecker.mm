@@ -19,6 +19,12 @@ public:
 	    [updater setFeedURL: url];
         [updater checkForUpdatesInBackground];
     }
+    void checkForUpdates() {
+        if (!updater) {
+            initSparkleUpdater();
+        }
+        [updater checkForUpdates];
+    }
     ~SparkleUpdater() {
         if (updater) {
             [updater release];
@@ -31,4 +37,8 @@ static SparkleUpdater sparkleUpdater;
 
 void UpdateChecker::sendRequest() {
     sparkleUpdater.initSparkleUpdater();
+}
+
+void UpdateChecker::checkForUpdates() {
+    sparkleUpdater.checkForUpdates();
 }

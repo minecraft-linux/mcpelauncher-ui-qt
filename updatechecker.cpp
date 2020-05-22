@@ -37,6 +37,10 @@ void UpdateChecker::sendRequest() {
     netAccessManager.get(request);
 #endif
 }
+
+void UpdateChecker::checkForUpdates() {
+    sendRequest();
+}
 #endif
 
 void UpdateChecker::onRequestFinished(QNetworkReply* reply) {
