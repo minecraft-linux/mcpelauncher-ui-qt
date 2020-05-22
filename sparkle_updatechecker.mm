@@ -1,4 +1,6 @@
 #include <Cocoa/Cocoa.h>
+#include <Foundation/Foundation.h>
+#include <Foundation/NSProcessInfo.h>
 #include <Sparkle/Sparkle.h>
 #include "updatechecker.h"
 
@@ -23,7 +25,7 @@ public:
         if (!updater) {
             initSparkleUpdater();
         }
-        [updater checkForUpdates];
+        [updater checkForUpdates:nil];
     }
     ~SparkleUpdater() {
         if (updater) {
