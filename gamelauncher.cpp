@@ -10,9 +10,11 @@ GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 std::string GameLauncher::findLauncher(bool is32) {
     std::string path;
     std::string name = "mcpelauncher-client";
+#if (defined(__x86_64__) || defined(__aarch64__)) && !defined(DISABLE_64BIT)
     if(is32) {
         name += "32";
     }
+#endif
 
 #ifdef GAME_LAUNCHER_PATH
     if (EnvPathUtil::findInPath(name, path, GAME_LAUNCHER_PATH, EnvPathUtil::getAppDir().c_str()))
