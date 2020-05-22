@@ -54,7 +54,7 @@ signals:
 
     void accountInfoChanged();
 
-    void warnUnsupportedABI();
+    void warnUnsupportedABI(QStringList unsupportedabis, bool unsupported);
 };
 
 #endif // GOOGLELOGINHELPER_H

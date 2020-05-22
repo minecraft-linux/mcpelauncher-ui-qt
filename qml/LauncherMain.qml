@@ -406,9 +406,9 @@ ColumnLayout {
                 playApi.handleCheckinAndTos()
             versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
         }
-        onWarnUnsupportedABI: {
-            warnUnsupportedABIDialog.title = "Please change device settings"
-            warnUnsupportedABIDialog.text = "Your device isn't compatible with the currently device settings of your current google login\nPlease switch Android ABI (architecture) in Settings and login again"
+        onWarnUnsupportedABI: function(abis, unsupported) {
+            warnUnsupportedABIDialog.title = unsupported ? "Minecraft Android cannot run on your PC" : "Please change device settings"
+            warnUnsupportedABIDialog.text = unsupported ? "Your Device isn't capable of running Android Software with this Launcher": "Your device or launcher isn't compatible with the currently device settings of your current google login\nPlease switch the Android ABI (architecture) in Settings and login again\nUnsupported Android ABI's for this device are " + abis.join(", ")
             warnUnsupportedABIDialog.open()
         }
     }
