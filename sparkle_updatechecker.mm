@@ -1,6 +1,4 @@
 #include <Cocoa/Cocoa.h>
-#include <Foundation/Foundation.h>
-#include <Foundation/NSProcessInfo.h>
 #include <Sparkle/Sparkle.h>
 #include "updatechecker.h"
 

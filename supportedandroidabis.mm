@@ -1,3 +1,4 @@
+#include <Foundation/NSProcessInfo.h>
 #include "supportedandroidabis.h"
 #include "cpuid.h"
 
