@@ -11,14 +11,13 @@ UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
 void UpdateChecker::sendRequest() {
 #ifdef APPIMAGE_UPDATE_CHECK
     if (!updatethread.joinable()) {
-        updatethread = std::thread([QScopedPointer<UpdateChecker> checker = this, updater = this->updater] {
+        auto updater = this->updater;
+        updatethread = std::thread([this, updater]() mutable  {
             if (!updater) {
                 char * appimage = getenv("APPIMAGE");
                 if (appimage) {
                     printf("Appimage create updater\n");
-                    updater = std::make_shared<appimage::update::Updater>(appimage, true);
-                    printf("Appimage save instance\n");
-                    this->updater = updater;
+                    this->updater = updater = std::make_shared<appimage::update::Updater>(appimage, true);
                 } else {
                     printf("Appimage cannot be updated\n");
                     return;
