@@ -10,28 +10,36 @@ UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
 #ifndef SPARKLE_UPDATE_CHECK
 void UpdateChecker::sendRequest() {
 #ifdef APPIMAGE_UPDATE_CHECK
-    updatethread = std::thread([this] {
-        char * appimage = getenv("APPIMAGE");
-        if(appimage) {
-            updater = std::make_shared<appimage::update::Updater>(appimage, true);
-        } else {
-            printf("Appimage cannot be updated\n");
-            return;
-        }
-        bool _updateAvailable;
-
-        if (!updater->checkForChanges(_updateAvailable)) {
-            std::string nextMessage;
-            while (updater->nextStatusMessage(nextMessage)) {
-                printf("appimage update error %s\n", nextMessage.data());
+    if (!updatethread.joinable()) {
+        updatethread = std::thread([QScopedPointer<UpdateChecker> checker = this, updater = this->updater] {
+            if (!updater) {
+                char * appimage = getenv("APPIMAGE");
+                if (appimage) {
+                    printf("Appimage create updater\n");
+                    updater = std::make_shared<appimage::update::Updater>(appimage, true);
+                    printf("Appimage save instance\n");
+                    this->updater = updater;
+                } else {
+                    printf("Appimage cannot be updated\n");
+                    return;
+                }
             }
-            return;
-        }
+            bool _updateAvailable;
+            printf("Appimage check for changes\n");
+            if (!updater->checkForChanges(_updateAvailable)) {
+                std::string nextMessage;
+                while (updater->nextStatusMessage(nextMessage)) {
+                    printf("appimage update error %s\n", nextMessage.data());
+                }
+                return;
+            }
+            printf("Appimage Found Update? %d\n", (int)_updateAvailable);
 
-        if (_updateAvailable) {
-            emit updateAvailable("");
-        }
-    });
+            if (_updateAvailable) {
+                emit updateAvailable("");
+            }
+        });
+    }
 #elif defined(UPDATE_CHECK)
     QNetworkRequest request(QStringLiteral(UPDATE_CHECK_URL));
     netAccessManager.get(request);
