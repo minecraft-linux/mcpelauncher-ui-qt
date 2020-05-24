@@ -29,7 +29,6 @@ void UpdateChecker::sendRequest() {
                 }
             }
             bool _updateAvailable = false;
-            std::this_thread::sleep_for(std::chrono::seconds(4));
             printf("Appimage check for changes\n");
             if (!updater->checkForChanges(_updateAvailable)) {
                 printf("Appimage Error\n");
