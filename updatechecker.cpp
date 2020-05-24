@@ -29,15 +29,16 @@ void UpdateChecker::sendRequest() {
                 }
             }
             bool _updateAvailable = false;
+            std::this_thread::sleep_for(std::chrono::seconds(4));
             printf("Appimage check for changes\n");
-            /*
             if (!updater->checkForChanges(_updateAvailable)) {
+                printf("Appimage Error\n");
                 std::string nextMessage;
                 while (updater->nextStatusMessage(nextMessage)) {
                     printf("appimage update error %s\n", nextMessage.data());
                 }
                 return;
-            }*/
+            }
             printf("Appimage Found Update? %d\n", (int)_updateAvailable);
 
             if (_updateAvailable) {
