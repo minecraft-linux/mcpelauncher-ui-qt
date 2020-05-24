@@ -15,9 +15,11 @@
 #include "launcherapp.h"
 #include "troubleshooter.h"
 #include "updatechecker.h"
+#include <curl/curl.h>
 
 int main(int argc, char *argv[])
 {
+    curl_global_init(CURL_GLOBAL_ALL);
     Q_INIT_RESOURCE(googlesigninui);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setOrganizationName("Minecraft Linux Launcher");
