@@ -43,6 +43,8 @@ void UpdateChecker::sendRequest() {
             if (_updateAvailable) {
                 emit updateAvailable("");
             }
+        } catch (...) {
+            
         }
     });
 #elif defined(UPDATE_CHECK)
