@@ -14,32 +14,35 @@ void UpdateChecker::sendRequest() {
     auto oldthread = std::make_shared<std::thread>();
     std::swap(*oldthread, updatethread);
     updatethread = std::thread([this, updater, oldthread]() mutable  {
-        if (oldthread->joinable()) {
-            oldthread->join();
-        }
-        if (!updater) {
-            char * appimage = getenv("APPIMAGE");
-            if (appimage) {
-                printf("Appimage create updater\n");
-                this->updater = updater = std::make_shared<appimage::update::Updater>(appimage, true);
-            } else {
-                printf("Appimage cannot be updated\n");
+        try {
+            if (oldthread->joinable()) {
+                oldthread->join();
+            }
+            if (!updater) {
+                char * appimage = getenv("APPIMAGE");
+                if (appimage) {
+                    printf("Appimage create updater\n");
+                    this->updater = updater = std::make_shared<appimage::update::Updater>(appimage, true);
+                } else {
+                    printf("Appimage cannot be updated\n");
+                    return;
+                }
+            }
+            bool _updateAvailable = false;
+            printf("Appimage check for changes\n");
+            /*
+            if (!updater->checkForChanges(_updateAvailable)) {
+                std::string nextMessage;
+                while (updater->nextStatusMessage(nextMessage)) {
+                    printf("appimage update error %s\n", nextMessage.data());
+                }
                 return;
-            }
-        }
-        bool _updateAvailable;
-        printf("Appimage check for changes\n");
-        if (!updater->checkForChanges(_updateAvailable)) {
-            std::string nextMessage;
-            while (updater->nextStatusMessage(nextMessage)) {
-                printf("appimage update error %s\n", nextMessage.data());
-            }
-            return;
-        }
-        printf("Appimage Found Update? %d\n", (int)_updateAvailable);
+            }*/
+            printf("Appimage Found Update? %d\n", (int)_updateAvailable);
 
-        if (_updateAvailable) {
-            emit updateAvailable("");
+            if (_updateAvailable) {
+                emit updateAvailable("");
+            }
         }
     });
 #elif defined(UPDATE_CHECK)
