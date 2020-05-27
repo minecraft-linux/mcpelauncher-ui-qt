@@ -70,7 +70,7 @@ void GooglePlayApi::handleCheckinAndTos() {
             QMutexLocker checkinMutexLocker (&checkinMutex);
             loadCheckinInfo();
             if (checkinResult.android_id == 0) {
-                if (loginHelper->account() == nullptr) {
+                if (!loginHelper || loginHelper->account() == nullptr) {
                     return;
                 }
                 playapi::checkin_api checkin(loginHelper->getDevice());
