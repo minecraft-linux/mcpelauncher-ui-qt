@@ -31,6 +31,8 @@ private:
 
     void onLoginFinished(int code);
 
+    void checkDeviceStateABI(bool checkdevicesupport = false);
+
 public:
     GoogleLoginHelper();
 
@@ -49,10 +51,14 @@ public slots:
     void signOut();
 
     QStringList getDeviceStateABIs();
+
+    QStringList getAbis();
 signals:
     void accountAcquireFinished(GoogleAccount* account);
 
     void accountInfoChanged();
+
+    void loginError(QString error);
 
     void warnUnsupportedABI(QStringList unsupportedabis, bool unsupported);
 };

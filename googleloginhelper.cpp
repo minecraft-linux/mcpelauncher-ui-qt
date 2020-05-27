@@ -22,6 +22,8 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
         hasAccount = true;
     } else {
         settings.endGroup();
+        // Check if the device can use the launcher
+        checkDeviceStateABI(true);
     }
 }
 
@@ -47,9 +49,11 @@ void GoogleLoginHelper::loadDeviceState() {
     }
     settings.endArray();
     settings.endGroup();
+    checkDeviceStateABI();
 }
 
 void GoogleLoginHelper::saveDeviceState() {
+    checkDeviceStateABI();
     settings.beginGroup("device_state");
     settings.setValue("generated_mac_addr", QString::fromStdString(device.generated_mac_addr));
     settings.setValue("generated_meid", QString::fromStdString(device.generated_meid));
@@ -78,24 +82,48 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 
 void GoogleLoginHelper::onLoginFinished(int code) {
     if (code == QDialog::Accepted) {
-        device.config_native_platforms = SupportedAndroidAbis::getSupportedAbis();
-        login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
-        currentAccount.setAccountIdentifier(window->accountIdentifier());
-        currentAccount.setAccountUserId(window->accountUserId());
-        currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
-        settings.beginGroup("googlelogin");
-        settings.setValue("identifier", currentAccount.accountIdentifier());
-        settings.setValue("userId", currentAccount.accountUserId());
-        settings.setValue("token", currentAccount.accountToken());
-        settings.endGroup();
-        saveDeviceState();
-        hasAccount = true;
-        accountAcquireFinished(&currentAccount);
+        try {
+            device.config_native_platforms = SupportedAndroidAbis::getSupportedAbis();
+            login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
+            currentAccount.setAccountIdentifier(window->accountIdentifier());
+            currentAccount.setAccountUserId(window->accountUserId());
+            currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
+            settings.beginGroup("googlelogin");
+            settings.setValue("identifier", currentAccount.accountIdentifier());
+            settings.setValue("userId", currentAccount.accountUserId());
+            settings.setValue("token", currentAccount.accountToken());
+            settings.endGroup();
+            saveDeviceState();
+            hasAccount = true;
+            accountAcquireFinished(&currentAccount);
+        } catch (const std::exception& ex) {
+            loginError(ex.what());
+            accountAcquireFinished(nullptr);
+        }
     } else {
         accountAcquireFinished(nullptr);
     }
     emit accountInfoChanged();
     window = nullptr;
+}
+
+void GoogleLoginHelper::checkDeviceStateABI(bool checkdevicesupport) {
+    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    if (checkdevicesupport) {
+        if (supportedabis.empty()) {
+            emit warnUnsupportedABI({}, true);
+        }
+    } else {
+        QStringList unsupportedabis;
+        for (auto&& abi : device.config_native_platforms) {
+            if (std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
+                unsupportedabis.append(QString::fromStdString(abi));
+            }
+        }
+        if ((unsupportedabis.size() || supportedabis.empty())) {
+            emit warnUnsupportedABI(unsupportedabis, supportedabis.empty());
+        }
+    }
 }
 
 void GoogleLoginHelper::signOut() {
@@ -112,17 +140,22 @@ void GoogleLoginHelper::signOut() {
 }
 
 QStringList GoogleLoginHelper::getDeviceStateABIs() {
-    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
-    QStringList abis;
-    QStringList unsupportedabis;
-    for (auto&& abi : device.config_native_platforms) {
-        abis.append(QString::fromStdString(abi));
-        if(std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
-            unsupportedabis.append(QString::fromStdString(abi));
+    if (hasAccount) {
+        auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+        QStringList abis;
+        for (auto&& abi : device.config_native_platforms) {
+            abis.append(QString::fromStdString(abi));
         }
+        return abis;
+    } else {
+        return {};
     }
-    if (unsupportedabis.size() || supportedabis.empty()) {
-        emit warnUnsupportedABI(unsupportedabis, supportedabis.empty());
+}
+
+QStringList GoogleLoginHelper::getAbis() {
+    QStringList abis;
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        abis.append(QString::fromStdString(abi));
     }
     return abis;
 }
