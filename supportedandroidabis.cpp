@@ -17,15 +17,19 @@ std::vector<std::string> SupportedAndroidAbis::getSupportedAbis() {
         abis.emplace_back("x86_64");
     }
 #endif
+#if !defined(DISABLE_32BIT)
     if (hasssse3) {
         abis.emplace_back("x86");
     }
+#endif
 #endif
 #if defined(__arm__) || defined(__aarch64__)
 #if defined(__aarch64__) && !defined(DISABLE_64BIT)
     abis.emplace_back("arm64-v8a");
 #endif
+#if !defined(DISABLE_32BIT)
     abis.emplace_back("armeabi-v7a");
+#endif
 #endif
 #ifdef PREFER_32BIT
     std::reverse(abis.begin(), abis.end()); 
