@@ -14,6 +14,8 @@ Window {
     id: gameLogWindow
     width: 500
     height: 400
+    minimumWidth: 500
+    minimumHeight: 400
     flags: Qt.Dialog
     title: "Game Log"
 

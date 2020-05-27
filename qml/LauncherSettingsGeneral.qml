@@ -71,7 +71,7 @@ GridLayout {
 
     MCheckBox {
         id: checkForUpdates
-        text: "Enable checking for updates"
+        text: "Enable checking for updates (startup)"
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.checkForUpdates

@@ -150,7 +150,10 @@ ColumnLayout {
         RowLayout {
             anchors.fill: parent
 
+            Layout.minimumWidth: profilesettingsbox.leftMargin + profilesettingsbox.implicitWidth + pbutton.minimumWidth
+
             ColumnLayout {
+                id: profilesettingsbox
                 Layout.leftMargin: 20
 
                 Text {
@@ -200,6 +203,7 @@ ColumnLayout {
             }
 
             PlayButton {
+                id: pbutton
                 Layout.alignment: Qt.AlignHCenter
                 text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? "Download and play" : "Sign in or import .apk") : "Play")).toUpperCase()
                 subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
@@ -208,6 +212,9 @@ ColumnLayout {
                 Layout.preferredHeight: 70
                 Layout.leftMargin: width / 6
                 Layout.rightMargin: width / 6
+                Layout.minimumWidth: implicitWidth
+                Layout.minimumHeight: implicitHeight
+
                 onClicked: {
                     if(gameLauncher.running) {
                         gameLogWindow.show();
@@ -242,7 +249,6 @@ ColumnLayout {
         onInitError: function(err) {
             playDownloadError.text = err + "\nPlease login again";
             playDownloadError.open()
-            googleLoginHelper.signOut();
         }
 
         onAppInfoReceived: function(pkg, versionStr, versionCode) {
@@ -405,6 +411,10 @@ ColumnLayout {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
             versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
+        }
+        onLoginError: function(err) {
+            playDownloadError.text = err + "\nPlease login again";
+            playDownloadError.open()
         }
         onWarnUnsupportedABI: function(abis, unsupported) {
             warnUnsupportedABIDialog.title = unsupported ? "Minecraft Android cannot run on your PC" : "Please change device settings"

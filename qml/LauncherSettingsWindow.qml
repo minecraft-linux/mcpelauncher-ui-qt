@@ -11,6 +11,8 @@ Window {
 
     width: 500
     height: layout.implicitHeight
+    minimumWidth: 500
+    minimumHeight: layout.implicitHeight
     flags: Qt.Dialog
     title: "Launcher Settings"
 

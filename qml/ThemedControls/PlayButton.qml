@@ -29,8 +29,8 @@ T.Button {
     }
 
     contentItem: Item {
-        implicitWidth: childrenRect.width
-        implicitHeight: content.height
+        implicitWidth: content.implicitWidth
+        implicitHeight: content.implicitHeight
         ColumnLayout {
             id: content
             spacing: 3
