@@ -110,7 +110,6 @@ void GoogleLoginHelper::onLoginFinished(int code) {
 
 void GoogleLoginHelper::checkDeviceStateABI(bool checkdevicesupport) {
     QtConcurrent::run([=]() {
-        emit warnUnsupportedABI({}, true);
         auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
         if (checkdevicesupport) {
             if (supportedabis.empty()) {
