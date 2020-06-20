@@ -91,6 +91,7 @@ Window {
                 property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
                 property var extraVersionName: null
                 property int extraVersionIndex: 1 + versions.length + archivalVersions.length
+                property var hideLatest: googleLoginHelper.hideLatest()
 
                 function excludeInstalledVersions(arr) {
                     var ret = []
@@ -98,7 +99,7 @@ Window {
                     for (var i = 0; i < versions.length; i++)
                         installed[versions[i].versionName] = true
                     for (i = 0; i < arr.length; i++) {
-                        if (arr[i].versionName in installed)
+                        if (arr[i].versionName in installed || arr[i].isBeta && !launcherSettings.showBetaVersions)
                             continue;
                         ret.push(arr[i])
                     }
@@ -109,8 +110,10 @@ Window {
                 Layout.fillWidth: true
                 model: {
                     var ret = []
-                    var latest = playVerChannel.latestVersion
-                    ret.push("Latest " + (latest.length === 0 ? "version" : latest) + " (Google Play)")
+                    if (!hideLatest) {
+                        var latest = playVerChannel.latestVersion
+                        ret.push("Latest " + (latest.length === 0 ? "version" : latest) + " (Google Play)")
+                    }
                     for (var i = 0; i < versions.length; i++)
                         ret.push(versions[i].versionName + " (installed)")
                     for (i = 0; i < archivalVersions.length; i++)
@@ -255,13 +258,13 @@ Window {
             var index = -1
             for (var i = 0; i < profileVersion.versions.length; i++) {
                 if (profileVersion.versions[i].versionCode === profile.versionCode) {
-                    index = 1 + i
+                    index = (profileVersion.hideLatest ? 0 : 1) + i
                     break
                 }
             }
             for (var i = 0; i < profileVersion.archivalVersions.length; i++) {
                 if (profileVersion.archivalVersions[i].versionCode === profile.versionCode) {
-                    index = 1 + profileVersion.versions.length + i
+                    index = (profileVersion.hideLatest ? 0 : 1) + profileVersion.versions.length + i
                     break
                 }
             }
@@ -283,7 +286,7 @@ Window {
                 profileVersion.extraVersionName = profile.versionDirName
                 profileVersion.currentIndex = profileVersion.extraVersionIndex
             } else {
-                profileVersion.currentIndex = index + 1
+                profileVersion.currentIndex = index + (profileVersion.hideLatest ? 0 : 1)
             }
         }
 
@@ -312,14 +315,14 @@ Window {
             else
                 profile.setName(profileName.text)
         }
-        if (profileVersion.currentIndex == 0) {
+        if (!profileVersion.hideLatest && profileVersion.currentIndex == 0) {
             profile.versionType = ProfileInfo.LATEST_GOOGLE_PLAY
-        } else if (profileVersion.currentIndex >= 1 && profileVersion.currentIndex < 1 + profileVersion.versions.length) {
+        } else if (profileVersion.currentIndex >= (profileVersion.hideLatest ? 0 : 1) && profileVersion.currentIndex < (profileVersion.hideLatest ? 0 : 1) + profileVersion.versions.length) {
             profile.versionType = ProfileInfo.LOCKED_NAME
-            profile.versionDirName = profileVersion.versions[profileVersion.currentIndex - 1].directory
-        } else if (profileVersion.currentIndex >= 1 + profileVersion.versions.length && profileVersion.currentIndex < 1 + profileVersion.versions.length + profileVersion.archivalVersions.length) {
+            profile.versionDirName = profileVersion.versions[profileVersion.currentIndex - (profileVersion.hideLatest ? 0 : 1)].directory
+        } else if (profileVersion.currentIndex >= (profileVersion.hideLatest ? 0 : 1) + profileVersion.versions.length && profileVersion.currentIndex < (profileVersion.hideLatest ? 0 : 1) + profileVersion.versions.length + profileVersion.archivalVersions.length) {
             profile.versionType = ProfileInfo.LOCKED_CODE
-            profile.versionCode = profileVersion.archivalVersions[profileVersion.currentIndex - 1 - profileVersion.versions.length].versionCode
+            profile.versionCode = profileVersion.archivalVersions[profileVersion.currentIndex - (profileVersion.hideLatest ? 0 : 1) - profileVersion.versions.length].versionCode
         }
 
         profile.windowCustomSize = windowSizeCheck.checked

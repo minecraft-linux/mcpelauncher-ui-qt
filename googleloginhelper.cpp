@@ -142,11 +142,14 @@ void GoogleLoginHelper::signOut() {
     emit accountInfoChanged();
 }
 
-QStringList GoogleLoginHelper::getDeviceStateABIs() {
+QStringList GoogleLoginHelper::getDeviceStateABIs(bool showUnsupported) {
     if (hasAccount) {
         auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
         QStringList abis;
         for (auto&& abi : device.config_native_platforms) {
+            if (!showUnsupported && std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
+                continue;
+            }
             abis.append(QString::fromStdString(abi));
         }
         return abis;
@@ -161,4 +164,12 @@ QStringList GoogleLoginHelper::getAbis() {
         abis.append(QString::fromStdString(abi));
     }
     return abis;
+}
+
+bool GoogleLoginHelper::hideLatest() {
+    if (!hasAccount || device.config_native_platforms.empty()) {
+        return true;
+    }
+    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    return std::find(supportedabis.begin(), supportedabis.end(), device.config_native_platforms[0]) == supportedabis.end();
 }

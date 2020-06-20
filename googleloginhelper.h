@@ -50,9 +50,11 @@ public slots:
 
     void signOut();
 
-    QStringList getDeviceStateABIs();
+    QStringList getDeviceStateABIs(bool showUnsupported);
 
     QStringList getAbis();
+
+    bool hideLatest();
 signals:
     void accountAcquireFinished(GoogleAccount* account);
 

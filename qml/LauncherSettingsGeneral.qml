@@ -78,6 +78,22 @@ GridLayout {
         onCheckedChanged: launcherSettings.checkForUpdates = checked
     }
 
+    MCheckBox {
+        text: "Show incompatible versions"
+        font.pointSize: parent.labelFontSize
+        Layout.columnSpan: 2
+        Component.onCompleted: checked = launcherSettings.showUnsupported
+        onCheckedChanged: launcherSettings.showUnsupported = checked
+    }
+
+    MCheckBox {
+        text: "Show Beta Versions"
+        font.pointSize: parent.labelFontSize
+        Layout.columnSpan: 2
+        Component.onCompleted: checked = launcherSettings.showBetaVersions
+        onCheckedChanged: launcherSettings.showBetaVersions = checked
+    }
+
     MButton {
         Layout.topMargin: 20
         id: runTroubleshooter

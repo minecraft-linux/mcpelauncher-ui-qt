@@ -419,7 +419,7 @@ ColumnLayout {
         onAccountInfoChanged: {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
-            versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
+            versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
         }
         onLoginError: function(err) {
             playDownloadError.text = err + "\nPlease login again";
@@ -485,7 +485,7 @@ ColumnLayout {
         if(launcherSettings.checkForUpdates)
             updateChecker.sendRequest()
         playApi.handleCheckinAndTos()
-        versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs())
+        versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
     }
 
 
