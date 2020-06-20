@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QWindow>
+#include <QtConcurrent>
 #include "supportedandroidabis.h"
 
 std::string GoogleLoginHelper::getTokenCachePath() {
@@ -108,22 +109,25 @@ void GoogleLoginHelper::onLoginFinished(int code) {
 }
 
 void GoogleLoginHelper::checkDeviceStateABI(bool checkdevicesupport) {
-    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
-    if (checkdevicesupport) {
-        if (supportedabis.empty()) {
-            emit warnUnsupportedABI({}, true);
-        }
-    } else {
-        QStringList unsupportedabis;
-        for (auto&& abi : device.config_native_platforms) {
-            if (std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
-                unsupportedabis.append(QString::fromStdString(abi));
+    QtConcurrent::run([=]() {
+        emit warnUnsupportedABI({}, true);
+        auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+        if (checkdevicesupport) {
+            if (supportedabis.empty()) {
+                emit warnUnsupportedABI({}, true);
+            }
+        } else {
+            QStringList unsupportedabis;
+            for (auto&& abi : device.config_native_platforms) {
+                if (std::find(supportedabis.begin(), supportedabis.end(), abi) == supportedabis.end()) {
+                    unsupportedabis.append(QString::fromStdString(abi));
+                }
+            }
+            if ((unsupportedabis.size() || supportedabis.empty())) {
+                emit warnUnsupportedABI(unsupportedabis, supportedabis.empty());
             }
         }
-        if ((unsupportedabis.size() || supportedabis.empty())) {
-            emit warnUnsupportedABI(unsupportedabis, supportedabis.empty());
-        }
-    }
+    });
 }
 
 void GoogleLoginHelper::signOut() {
