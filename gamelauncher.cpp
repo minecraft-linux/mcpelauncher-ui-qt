@@ -77,27 +77,27 @@ void GameLauncher::start(bool disableGameLog) {
     m_crashed = false;
     
     auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
-    #ifdef __ANRABI32BIT__
+#ifdef __ANRABI32BIT__
     if (QDir(m_gameDir + "/libs").exists()) {
         QDir().mkpath(m_gameDir + "/lib/");
         QDir(m_gameDir + "/libs").rename(m_gameDir + "/libs", m_gameDir + "/lib/" __ANRABI32BIT__);
     }
-    #endif
+#endif
     bool use32bitsuffix = false;
     std::string launcherpath;
-    #ifdef __ANRABI64BIT__
+#ifdef __ANRABI64BIT__
     bool support64 = std::find(supportedabis.begin(), supportedabis.end(), __ANRABI64BIT__) != supportedabis.end();
     bool lib64 = QFile(m_gameDir + "/lib/" __ANRABI64BIT__ "/libminecraftpe.so").exists();
     bool launcher64 = !(launcherpath = findLauncher(use32bitsuffix)).empty();
     if (!support64 || !lib64 || !launcher64) {
         use32bitsuffix = true;
-    #endif
-    #ifdef __ANRABI32BIT__
+#endif
+#ifdef __ANRABI32BIT__
         bool support32 = std::find(supportedabis.begin(), supportedabis.end(), __ANRABI32BIT__) != supportedabis.end();
         bool lib32 = QFile(m_gameDir + "/lib/" __ANRABI32BIT__ "/libminecraftpe.so").exists();
         bool launcher32 = !(launcherpath = findLauncher(use32bitsuffix)).empty();
         if (!support32 || !lib32 || !launcher32) {
-    #endif
+#endif
             std::stringstream errormsg;
 #ifdef __ANRABI64BIT__
             errormsg << "Minecraft (" << __ANRABI64BIT__  << "):\n";
@@ -133,10 +133,12 @@ void GameLauncher::start(bool disableGameLog) {
             emit logAppended(QString::fromStdString(errormsg.str()));
             emit stateChanged();
             return;
+#ifdef __ANRABI32BIT__
         }
-    #ifdef __ANRABI64BIT__
+#endif
+#ifdef __ANRABI64BIT__
     }
-    #endif
+#endif
 
     process->start(QString::fromStdString(launcherpath), args);
     emit logCleared();
