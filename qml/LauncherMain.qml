@@ -359,8 +359,13 @@ ColumnLayout {
             corruptedInstallDialog.open()
         }
         function exited() {
-            application.setVisibleInDock(true);
-            window.show();
+            if (gameLauncher.running) {
+                console.log("still running or not?");
+            } else {
+                console.log("showing again");
+                application.setVisibleInDock(true);
+                window.show();
+            }
         }
     }
 
