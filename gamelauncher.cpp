@@ -77,10 +77,12 @@ void GameLauncher::start(bool disableGameLog) {
     m_crashed = false;
     
     auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    #ifdef __ANRABI32BIT__
     if (QDir(m_gameDir + "/libs").exists()) {
         QDir().mkpath(m_gameDir + "/lib/");
         QDir(m_gameDir + "/libs").rename(m_gameDir + "/libs", m_gameDir + "/lib/" __ANRABI32BIT__);
     }
+    #endif
     bool use32bitsuffix = false;
     std::string launcherpath;
     #ifdef __ANRABI64BIT__
