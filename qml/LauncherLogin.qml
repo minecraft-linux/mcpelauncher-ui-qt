@@ -174,4 +174,10 @@ Item {
         }
     }
 
+    Connections {
+        target: window
+        onClosing: {
+            application.quit();
+        }
+    }
 }

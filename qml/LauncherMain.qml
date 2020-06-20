@@ -425,17 +425,18 @@ ColumnLayout {
 
     Connections {
         target: window
-        onClosing:
-        {
-            if(!ignoregameisrunning) {
-                if (!gameLogWindow.visible && gameLauncher.running) {
-                    close.accepted = false
-                    closeRunningDialog.open()
-                } else if (!gameLauncher.running && !gameLogWindow.visible) {
-                    application.quit();
+        onClosing: {
+            if(!gameLogWindow.visible) {
+                if(!ignoregameisrunning) {
+                    if (gameLauncher.running) {
+                        close.accepted = false
+                        closeRunningDialog.open()
+                    } else {
+                        application.quit();
+                    }
+                } else {
+                    ignoregameisrunning = false;
                 }
-            } else {
-                ignoregameisrunning = false;
             }
         }
     }
@@ -443,17 +444,19 @@ ColumnLayout {
     Connections {
         target: gameLogWindow
         onClosing: {
-            if(!ignoregameisrunning) {
-                if (!window.visible && gameLauncher.running) {
-                    close.accepted = false
-                    closeRunningDialog.open()
-                } else if (!gameLauncher.running && !window.visible) {
-                    application.quit();
+            if(!window.visible) {
+                if(!ignoregameisrunning) {
+                    if (gameLauncher.running) {
+                        close.accepted = false
+                        closeRunningDialog.open()
+                    } else {
+                        application.quit();
+                    }
                 } else {
+                    ignoregameisrunning = false;
                     gameLauncher.logDetached();
                 }
             } else {
-                ignoregameisrunning = false;
                 gameLauncher.logDetached();
             }
         }
@@ -462,10 +465,10 @@ ColumnLayout {
     Connections {
         target: application
         onClosing: {
-            if (gameLauncher.running) {
+            /*if (gameLauncher.running) {
                 close.accepted = false
                 closeRunningDialog.open()
-            }
+            }*/
         }
     }
 
