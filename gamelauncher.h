@@ -40,7 +40,7 @@ public:
 
     void setProfile(ProfileInfo* value) { m_profile = value; }
 
-    bool running() const { return !process.isNull(); }
+    bool running() const { return !process.isNull() && !m_crashed; }
 
     bool crashed() const { return m_crashed; }
 
