@@ -182,6 +182,8 @@ ColumnLayout {
                             if (loaded && currentProfile !== null)
                                 profileManager.activeProfile = currentProfile
                         }
+
+                        enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
                     }
 
                     MButton {
@@ -191,6 +193,7 @@ ColumnLayout {
                             source: "qrc:/Resources/icon-edit.png"
                             smooth: false
                         }
+                        enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
                         onClicked: {
                             profileEditWindow.setProfile(profileComboBox.getProfile())
@@ -214,6 +217,7 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 Layout.minimumWidth: implicitWidth
                 Layout.minimumHeight: implicitHeight
+                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active) && (gameLauncher.running || getDisplayedVersionName())
 
                 onClicked: {
                     if(gameLauncher.running) {
