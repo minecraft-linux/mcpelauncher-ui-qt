@@ -22,6 +22,11 @@ Window {
 
     GoogleLoginHelper {
         id: googleLoginHelperInstance
+        onWarnUnsupportedABI: function(abis, unsupported) {
+            warnUnsupportedABIDialog.title = unsupported ? "Minecraft Android cannot run on your PC" : "Please login again"
+            warnUnsupportedABIDialog.text = unsupported ? "Sorry your Device cannot run Minecraft with this Launcher, your Computer is likely too old": "Please logout and login again (in Settings) to fix this problem\nFurther Information: Unsupported android architectures for this device or launcher are " + abis.join(", ")
+            warnUnsupportedABIDialog.open()
+        }
     }
 
     VersionManager {

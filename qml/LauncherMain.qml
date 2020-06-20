@@ -333,15 +333,15 @@ ColumnLayout {
 
     MessageDialog {
         id: corruptedInstallDialog
-        title: "Please reinstall"
-        text: "Your previously downloaded Minecraft Version is corrupted, please delete it in Settings then download it again via the updated Launcher"
+        title: "Unsupported Minecraft Version"
+        text: "Your previously downloaded Minecraft Version might be unsupported or just corrupted.<br/><b>if you wanted to play a Beta or a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b><br/>otherwise if you have updated the Launcher recently.<br/>e.g. a crash please delete it in Settings,<br/>then download it again via the updated Launcher."
     }
 
     GameLauncher {
         id: gameLauncher
         onLaunchFailed: {
             exited();
-            showLaunchError("Could not find or execute the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program and you need 32bit support for running older 32bit versions (macOS Catalina (10.15+) is unsupported, it lacks 32bit support)).<br><a href=\"https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher\">Click here for help and additional information.</a>")
+            showLaunchError("Could not execute the game launcher. Please make sure it's dependencies are properly installed.<br><a href=\"https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/appimage\">Click here for more information Linux (Description)</a><br>This means for macOS you cannot use this launcher")
         }
         onStateChanged: {
             if (!running)
