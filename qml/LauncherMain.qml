@@ -434,12 +434,17 @@ ColumnLayout {
         }
     }
 
+    Timer {
+        id: hidetimer
+        interval: 100; running: true; repeat: false
+        onTriggered: if(window.visible && hidden) { window.hide() }
+    }
+
     Connections {
         target: window
         onVisibleChanged: {
             // Takle auto showing bug
-            if (visible && hidden)
-                window.hide()
+            hidetimer.restart()
         }
         onClosing: {
             if(!gameLogWindow.visible) {
