@@ -13,7 +13,7 @@ ColumnLayout {
     property ProfileManager profileManager
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
-    property bool ignoregameisrunning: false
+    property bool hidden: false
 
     id: rowLayout
     spacing: 0
@@ -364,6 +364,7 @@ ColumnLayout {
             } else {
                 console.log("showing again");
                 application.setVisibleInDock(true);
+                hidden = false
                 window.show();
             }
         }
@@ -382,11 +383,12 @@ ColumnLayout {
         }
 
         onAccepted: {
-            ignoregameisrunning = true;
+            hidden = true
             if(window.visible) {
-                window.close();
-            } else if(gameLogWindow.visible) {
-                gameLogWindow.close();
+                window.hide();
+            }
+            if(gameLogWindow.visible) {
+                gameLogWindow.hide();
             }
         }
     }
@@ -434,17 +436,18 @@ ColumnLayout {
 
     Connections {
         target: window
+        onVisibleChanged: {
+            // Takle auto showing bug
+            if (visible && hidden)
+                window.hide()
+        }
         onClosing: {
             if(!gameLogWindow.visible) {
-                if(!ignoregameisrunning) {
-                    if (gameLauncher.running) {
-                        close.accepted = false
-                        closeRunningDialog.open()
-                    } else {
-                        application.quit();
-                    }
+                if (gameLauncher.running) {
+                    close.accepted = false
+                    closeRunningDialog.open()
                 } else {
-                    ignoregameisrunning = false;
+                    application.quit();
                 }
             }
         }
@@ -454,16 +457,11 @@ ColumnLayout {
         target: gameLogWindow
         onClosing: {
             if(!window.visible) {
-                if(!ignoregameisrunning) {
-                    if (gameLauncher.running) {
-                        close.accepted = false
-                        closeRunningDialog.open()
-                    } else {
-                        application.quit();
-                    }
+                if (gameLauncher.running) {
+                    close.accepted = false
+                    closeRunningDialog.open()
                 } else {
-                    ignoregameisrunning = false;
-                    gameLauncher.logDetached();
+                    application.quit();
                 }
             } else {
                 gameLauncher.logDetached();
@@ -571,6 +569,7 @@ ColumnLayout {
             return;
         }
         gameLauncher.gameDir = gameDir
+        hidden = launcherSettings.startHideLauncher
         if (launcherSettings.startHideLauncher)
             window.hide();
         if (launcherSettings.startOpenLog) {
