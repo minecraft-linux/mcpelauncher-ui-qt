@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(0));
 #endif
-#ifdef LAUNCHER_VERSION_LOG
+#ifdef LAUNCHER_CHANGE_LOG
     engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(LAUNCHER_CHANGE_LOG));
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(""));
