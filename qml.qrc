@@ -15,6 +15,9 @@
         <file>qml/CenteredRectangle.qml</file>
         <file>qml/ProfileComboBox.qml</file>
         <file>qml/EditProfileWindow.qml</file>
+        <file>qml/LauncherUnsupported.qml</file>
+        <file>qml/LauncherSettingsAbout.qml</file>
+        <file>qml/LauncherChangeLog.qml</file>
         <file>qml/LauncherSettingsWindow.qml</file>
         <file>qml/GameLogWindow.qml</file>
         <file>Resources/noise.png</file>

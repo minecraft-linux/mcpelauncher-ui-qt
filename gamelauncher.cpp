@@ -76,7 +76,7 @@ void GameLauncher::start(bool disableGameLog) {
     connect(process.data(), &QProcess::errorOccurred, this, &GameLauncher::handleError);
     m_crashed = false;
     
-    auto supportedabis = SupportedAndroidAbis::getSupportedAbis();
+    auto supportedabis = SupportedAndroidAbis::getAbis();
 #ifdef __ANRABI32BIT__
     if (QDir(m_gameDir + "/libs").exists()) {
         QDir().mkpath(m_gameDir + "/lib/");
@@ -84,16 +84,16 @@ void GameLauncher::start(bool disableGameLog) {
     }
 #endif
     bool use32bitsuffix = false;
-    std::string launcherpath;
+    std::string launcherpath = "mcpelauncher-client";
 #ifdef __ANRABI64BIT__
-    bool support64 = std::find(supportedabis.begin(), supportedabis.end(), __ANRABI64BIT__) != supportedabis.end();
+    bool support64 = supportedabis.find(__ANRABI64BIT__) != supportedabis.end();
     bool lib64 = QFile(m_gameDir + "/lib/" __ANRABI64BIT__ "/libminecraftpe.so").exists();
     bool launcher64 = !(launcherpath = findLauncher(use32bitsuffix)).empty();
     if (!support64 || !lib64 || !launcher64) {
         use32bitsuffix = true;
 #endif
 #ifdef __ANRABI32BIT__
-        bool support32 = std::find(supportedabis.begin(), supportedabis.end(), __ANRABI32BIT__) != supportedabis.end();
+        bool support32 = supportedabis.find(__ANRABI32BIT__) != supportedabis.end();
         bool lib32 = QFile(m_gameDir + "/lib/" __ANRABI32BIT__ "/libminecraftpe.so").exists();
         bool launcher32 = !(launcherpath = findLauncher(use32bitsuffix)).empty();
         if (!support32 || !lib32 || !launcher32) {
@@ -113,18 +113,18 @@ void GameLauncher::start(bool disableGameLog) {
 #endif
             for (auto&& abi : SupportedAndroidAbis::getAbis()) {
 #ifdef __ANRABI64BIT__
-                if (abi == __ANRABI64BIT__) {
+                if (abi.first == __ANRABI64BIT__) {
                     continue;
                 }
 #endif
 #ifdef __ANRABI32BIT__
-                if (abi == __ANRABI32BIT__) {
+                if (abi.first == __ANRABI32BIT__) {
                     continue;
                 }
 #endif
-                errormsg << "Minecraft (" << abi << "):\n";
+                errormsg << "Minecraft (" << abi.first << "):\n";
                 errormsg << "  Supported on your Device? N/A\n";
-                errormsg << "  Game Installed? " << (QFile(m_gameDir + "/lib/" + QString::fromStdString(abi) + "/libminecraftpe.so").exists() ? "Yes" : "No") << "\n";
+                errormsg << "  Game Installed? " << (QFile(m_gameDir + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists() ? "Yes" : "No") << "\n";
                 errormsg << "  Launcher Installed? " << "No" << "\n";
             }
             process.reset();

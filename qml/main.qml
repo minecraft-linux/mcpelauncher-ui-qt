@@ -22,11 +22,6 @@ Window {
 
     GoogleLoginHelper {
         id: googleLoginHelperInstance
-        onWarnUnsupportedABI: function(abis, unsupported) {
-            warnUnsupportedABIDialog.title = unsupported ? "Minecraft Android cannot run on your PC" : "Please login again"
-            warnUnsupportedABIDialog.text = unsupported ? "Sorry your Device cannot run Minecraft with this Launcher, your Computer is likely too old": "Please logout and login again (in Settings) to fix this problem\nFurther Information: Unsupported android architectures for this device or launcher are " + abis.join(", ")
-            warnUnsupportedABIDialog.open()
-        }
     }
 
     VersionManager {
@@ -57,6 +52,35 @@ Window {
         }
     }
 
+    Component {
+        id: panelError
+
+        LauncherUnsupported {
+            googleLoginHelper: googleLoginHelperInstance
+            versionManager: versionManagerInstance
+            onFinished: {
+                if (needsToLogIn()) {
+                    stackView.push(panelLogin);
+                } else {
+                    stackView.push(panelMain);
+                }
+            }
+        }
+    }
+
+    Component {
+        id: panelChangelog
+
+        LauncherChangeLog {
+            googleLoginHelper: googleLoginHelperInstance
+            versionManager: versionManagerInstance
+            onFinished: {
+                launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
+                next()
+            }
+        }
+    }
+
     LauncherSettings {
         id: launcherSettings
     }
@@ -66,6 +90,22 @@ Window {
     }
 
     Component.onCompleted: {
+        if(LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
+            stackView.push(panelChangelog);
+        } else {
+            next();
+        }
+    }
+
+    function next() {
+        if (!googleLoginHelperInstance.isSupported()) {
+            stackView.push(panelError);
+        } else {
+            defaultnext();
+        }
+    }
+
+    function defaultnext() {
         if (needsToLogIn()) {
             stackView.push(panelLogin);
         } else {

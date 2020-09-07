@@ -90,8 +90,8 @@ Window {
                 property var versions: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
                 property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
                 property var extraVersionName: null
-                property int extraVersionIndex: 1 + versions.length + archivalVersions.length
-                property var hideLatest: googleLoginHelper.hideLatest()
+                property var hideLatest: googleLoginHelper.hideLatest
+                property int extraVersionIndex: (hideLatest ? 0 : 1) + versions.length + archivalVersions.length
 
                 function excludeInstalledVersions(arr) {
                     var ret = []
@@ -115,7 +115,7 @@ Window {
                         ret.push("Latest " + (latest.length === 0 ? "version" : latest) + " (Google Play)")
                     }
                     for (var i = 0; i < versions.length; i++)
-                        ret.push(versions[i].versionName + " (installed)")
+                        ret.push(versions[i].versionName + " (installed, " + versions[i].archs.join(", ") + ")")
                     for (i = 0; i < archivalVersions.length; i++)
                         ret.push(archivalVersions[i].versionName + " (" + archivalVersions[i].abi + ((archivalVersions[i].isBeta ? ", beta" : "") +  ")"))
                     if (extraVersionName != null) {
@@ -218,6 +218,7 @@ Window {
                 PlayButton {
                     Layout.preferredWidth: 150
                     text: "Save"
+                    enabled: !profileName.enabled || profileName.text.length > 0
                     onClicked: {
                         saveProfile()
                         close()
@@ -269,7 +270,7 @@ Window {
                 }
             }
             if (index === -1) {
-                profileVersion.extraVersionName = "Archival (" + profile.versionDirName + ")"
+                profileVersion.extraVersionName = "Archival (" + (profile.versionDirName.length ? profile.versionDirName : profile.versionCode) + ")"
                 profileVersion.currentIndex = profileVersion.extraVersionIndex
             } else {
                 profileVersion.currentIndex = index

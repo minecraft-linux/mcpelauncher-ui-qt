@@ -14,6 +14,7 @@ class GoogleLoginWindow;
 class GoogleLoginHelper : public QObject {
     Q_OBJECT
     Q_PROPERTY(GoogleAccount* account READ account NOTIFY accountInfoChanged)
+    Q_PROPERTY(bool hideLatest READ hideLatest NOTIFY accountInfoChanged)
 
 private:
     QSettings settings;
@@ -31,8 +32,6 @@ private:
 
     void onLoginFinished(int code);
 
-    void checkDeviceStateABI(bool checkdevicesupport = false);
-
 public:
     GoogleLoginHelper();
 
@@ -45,6 +44,7 @@ public:
     playapi::device_info& getDevice() { return device; }
     playapi::login_api& getLoginApi() { return login; }
 
+    bool hideLatest();
 public slots:
     void acquireAccount(QWindow *parent);
 
@@ -54,15 +54,16 @@ public slots:
 
     QStringList getAbis();
 
-    bool hideLatest();
+    QString GetSupportReport();
+
+    bool isSupported();
+
 signals:
     void accountAcquireFinished(GoogleAccount* account);
 
     void accountInfoChanged();
 
     void loginError(QString error);
-
-    void warnUnsupportedABI(QStringList unsupportedabis, bool unsupported);
 };
 
 #endif // GOOGLELOGINHELPER_H

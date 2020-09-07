@@ -19,6 +19,9 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef LAUNCHER_INIT_PATCH
+    LAUNCHER_INIT_PATCH
+#endif
     curl_global_init(CURL_GLOBAL_ALL);
     Q_INIT_RESOURCE(googlesigninui);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -49,6 +52,21 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("application", &app);
+#ifdef LAUNCHER_VERSION_NAME
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant(LAUNCHER_VERSION_NAME));
+#else
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant("Unknown OpenSource Build"));
+#endif
+#ifdef LAUNCHER_VERSION_CODE
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(LAUNCHER_VERSION_CODE));
+#else
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(0));
+#endif
+#ifdef LAUNCHER_VERSION_LOG
+    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(LAUNCHER_CHANGE_LOG));
+#else
+    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(""));
+#endif
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

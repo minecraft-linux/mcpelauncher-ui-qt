@@ -9,6 +9,7 @@ import io.mrarm.mcpelauncher 1.0
 
 Window {
 
+    id:window
     width: 500
     height: layout.implicitHeight
     minimumWidth: 500
@@ -70,6 +71,10 @@ Window {
                         text: "Versions"
                         width: implicitWidth
                     }
+                    MTabButton {
+                        text: "About"
+                        width: implicitWidth
+                    }
                 }
             }
         }
@@ -85,6 +90,10 @@ Window {
             }
 
             LauncherSettingsVersions {
+            }
+
+            LauncherSettingsAbout {
+                maximumWidth: window.width - 20
             }
         }
 
@@ -105,7 +114,7 @@ Window {
 
                 PlayButton {
                     Layout.preferredWidth: 150
-                    text: "Save"
+                    text: "Close"
                     onClicked: close()
                 }
 

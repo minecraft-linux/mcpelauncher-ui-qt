@@ -156,6 +156,14 @@ ColumnLayout {
                 id: profilesettingsbox
                 Layout.leftMargin: 20
 
+                property var createProfileEditWindow: function () {
+                    var component = Qt.createComponent("EditProfileWindow.qml")
+                    var obj = component.createObject(rowLayout, {versionManager: rowLayout.versionManager, profileManager: rowLayout.profileManager, playVerChannel: playVerChannel, modality: Qt.WindowModal})
+                    obj.closing.connect(function() {
+                        profileComboBox.onAddProfileResult(obj.profile)
+                    })
+                    return obj;
+                }
                 Text {
                     text: "Profile"
                     color: "#fff"
@@ -171,8 +179,9 @@ ColumnLayout {
                         id: profileComboBox
                         Layout.preferredWidth: 200
                         onAddProfileSelected: {
-                            profileEditWindow.reset()
-                            profileEditWindow.show()
+                            var window = profilesettingsbox.createProfileEditWindow()
+                            window.reset()
+                            window.show()
                         }
                         Component.onCompleted: {
                             setProfile(profileManager.activeProfile)
@@ -196,8 +205,9 @@ ColumnLayout {
                         enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
                         onClicked: {
-                            profileEditWindow.setProfile(profileComboBox.getProfile())
-                            profileEditWindow.show()
+                            var window = profilesettingsbox.createProfileEditWindow()
+                            window.setProfile(profileComboBox.getProfile())
+                            window.show()
                         }
                     }
 
@@ -208,7 +218,7 @@ ColumnLayout {
             PlayButton {
                 id: pbutton
                 Layout.alignment: Qt.AlignHCenter
-                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? "Download and play" : "Sign in or import .apk") : "Play")).toUpperCase()
+                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : "Download and play") : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
                 subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
@@ -217,7 +227,7 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 Layout.minimumWidth: implicitWidth
                 Layout.minimumHeight: implicitHeight
-                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active) && (gameLauncher.running || getDisplayedVersionName())
+                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || (needsDownload() ? googleLoginHelper.account !== null && profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest : !checkSupport())) && (gameLauncher.running || getDisplayedVersionName())
 
                 onClicked: {
                     if(gameLauncher.running) {
@@ -302,19 +312,6 @@ ColumnLayout {
         onFinished: function() {
             launchGame()
         }
-    }
-
-    EditProfileWindow {
-        id: profileEditWindow
-        versionManager: versionManagerInstance
-        profileManager: profileManagerInstance
-        playVerChannel: playVerChannel
-        modality: Qt.WindowModal
-
-        onClosing: {
-            profileComboBox.onAddProfileResult(profileEditWindow.profile)
-        }
-
     }
 
     LauncherSettingsWindow {
@@ -427,11 +424,6 @@ ColumnLayout {
             playDownloadError.text = err + "\nPlease login again";
             playDownloadError.open()
         }
-        onWarnUnsupportedABI: function(abis, unsupported) {
-            warnUnsupportedABIDialog.title = unsupported ? "Minecraft Android cannot run on your PC" : "Please change device settings"
-            warnUnsupportedABIDialog.text = unsupported ? "Your Device isn't capable of running Android Software with this Launcher": "Your device or launcher isn't compatible with the currently device settings of your current google login\nPlease switch the Android ABI (architecture) in Settings and login again\nUnsupported Android ABI's for this device are " + abis.join(", ")
-            warnUnsupportedABIDialog.open()
-        }
     }
 
     Timer {
@@ -520,7 +512,7 @@ ColumnLayout {
             return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         if (code === playVerChannel.latestVersionCode)
             return playVerChannel.latestVersion;
-        return "Unknown";
+        return "Unknown (" + code + ")";
     }
 
     function getDisplayedVersionName() {
@@ -554,6 +546,21 @@ ColumnLayout {
         return null;
     }
 
+    function checkSupport() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return versionManager.checkSupport(versionManager.versions.get(playVerChannel.latestVersionCode));
+        if (profile.versionType === ProfileInfo.LOCKED_CODE) {
+            console.log(profile.versionCode)
+            return versionManager.checkSupport(versionManager.versions.get(profile.versionCode));
+        }
+        if (profile.versionType === ProfileInfo.LOCKED_NAME) {
+            console.log(profile.versionDirName)
+            return versionManager.checkSupport(profile.versionDirName);
+        }
+        console.log("Failed")
+        return false;
+    }
 
     function showLaunchError(message) {
         errorDialog.text = message
@@ -585,5 +592,5 @@ ColumnLayout {
             application.setVisibleInDock(false);
         gameLauncher.start(launcherSettings.disableGameLog);
     }
-
+    
 }

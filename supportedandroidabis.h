@@ -1,9 +1,8 @@
 #pragma once
-#include <vector>
+#include <unordered_map>
 #include <string>
 
 class SupportedAndroidAbis {
 public:
-    static std::vector<std::string> getSupportedAbis();
-    static std::vector<std::string> getAbis();
+    static std::unordered_map<std::string, std::string> getAbis();
 };

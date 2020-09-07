@@ -27,8 +27,10 @@ MComboBox {
     function onAddProfileResult(newProfile) {
         if (newProfile !== null && setProfile(newProfile))
             return;
-        if (!setProfile(currentProfile))
+        if (!setProfile(currentProfile)) {
             currentIndex = 0
+            currentProfile = profiles[0]
+        }
     }
 
     id: control

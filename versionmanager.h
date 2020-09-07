@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QMap>
+#include <QStringList>
 #include "archivalversionlist.h"
 
 class VersionInfo : public QObject {
@@ -11,10 +12,12 @@ class VersionInfo : public QObject {
     Q_PROPERTY(QString directory MEMBER directory CONSTANT)
     Q_PROPERTY(QString versionName MEMBER versionName CONSTANT)
     Q_PROPERTY(int versionCode MEMBER versionCode CONSTANT)
+    Q_PROPERTY(QStringList archs MEMBER archs CONSTANT)
 public:
     QString directory;
     QString versionName;
     int versionCode;
+    QStringList archs;
 
     VersionInfo(QObject* parent = nullptr) : QObject(parent) {}
     VersionInfo(VersionInfo const& v) : directory(v.directory), versionName(v.versionName), versionCode(v.versionCode) {}
@@ -111,6 +114,10 @@ public slots:
     void downloadLists(QStringList abis) {
         m_archival.downloadLists(abis);
     }
+
+    bool checkSupport(QString const& versionName);
+
+    bool checkSupport(VersionInfo *version);
 
 signals:
     void versionListChanged();

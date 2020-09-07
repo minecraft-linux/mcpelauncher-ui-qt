@@ -1,6 +1,8 @@
-import QtQuick 2.0
-
+import QtQuick 2.9
+import QtQuick.Window 2.2
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.2
+import QtQuick.Controls 2.2
 import "ThemedControls"
 
 GridLayout {
@@ -113,7 +115,66 @@ GridLayout {
     MButton {
         id: checkForUpdatesbtn
         text: "Check for Updates"
-        Layout.columnSpan: 2
+        Layout.columnSpan: 1
         onClicked: updateChecker.checkForUpdates()
+    }
+
+    MButton {
+        text: "Reset Launcher Settings"
+        Layout.columnSpan: 1
+        onClicked: {
+            launcherSettings.resetSettings()
+            launcherreset.open()
+        }
+    }
+
+    MessageDialog {
+        id: launcherreset
+        title: "Settings cleared"
+        text: "Please reopen the Launcher to see the changes"
+    }
+
+    property var updateUrl: "";
+
+    Connections {
+        target: updateChecker
+        onUpdateError: function(error) {
+            if(window.active) {
+                updateError.text = error
+                updateError.open()
+            }
+        }
+        onUpdateAvailable: function(url) {
+            updateUrl = url;
+        }
+        onUpdateCheck: function(available) {
+            if(window.active) {
+                if(available) {
+                    updateInfo.text = "An Update of the Launcher is available for download<br/>" + (updateUrl.length !== 0 ? "You can download the new Update here: " + updateUrl + "<br/>" : "") + "Do you want to update now?";
+                    updateInfo.standardButtons = StandardButton.Yes | StandardButton.No
+                } else {
+                    updateInfo.standardButtons = StandardButton.Ok
+                    updateInfo.text = "You installed Launcher Version " + LAUNCHER_VERSION_NAME + " (build " + LAUNCHER_VERSION_CODE + ") seems uptodate"
+                }
+                updateInfo.open()
+            }
+        }
+    }
+
+    MessageDialog {
+        id: updateError
+        title: "Update failed"
+    }
+
+    MessageDialog {
+        id: updateInfo
+        title: "Update Information"
+        onYes: {
+            if (updateUrl.length !== 0) {
+                Qt.openUrlExternally(updateUrl)
+            } else {
+                updateChecker.startUpdate()
+            }
+        }
     }
 }

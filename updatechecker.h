@@ -33,9 +33,11 @@ public:
 
 signals:
     void updateAvailable(QString downloadUrl);
+    void updateCheck(bool update);
     void progress(qreal progress);
     void activeChanged();
     void requestRestart();
+    void updateError(QString error);
 
 public slots:
     void sendRequest();

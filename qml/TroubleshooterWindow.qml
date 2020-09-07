@@ -87,6 +87,23 @@ Window {
                        acceptedButtons: Qt.NoButton
                    }
                }
+               Text {
+                   Layout.fillWidth: true
+                   wrapMode: Text.WordWrap
+                   text: "<b>Android App Compatibility Report:</b><br/>" + googleLoginHelper.GetSupportReport()
+               }
+               Text {
+                   Layout.fillWidth: true
+                   wrapMode: Text.WordWrap
+                   text: "<b>I cannot select / see the latest Version of the Game?</b><br/>" + (googleLoginHelper.account === null ? "You need to sign in with a Google Account owning the Game" : "You need to sign in again and / or restart the launcher to fix it.")
+                   visible: googleLoginHelper.hideLatest
+               }
+               Text {
+                   Layout.fillWidth: true
+                   wrapMode: Text.WordWrap
+                   text: "<b>I cannot select / see older Versions of the Game?</b><br/>" + (googleLoginHelper.account === null ? "You need to sign in with a Google Account owning the Game" : ("You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it." + (googleLoginHelper.getDeviceStateABIs(true).length === 0 ? "<br/>Enable \"Show incompatible Versions\" would show more, but they won't launch on your PC see the compatibility report of the TroubleShooter for more Information" : "")))
+                   visible: googleLoginHelper.account === null || googleLoginHelper.getDeviceStateABIs(false).length === 0
+               }
             }
             ScrollBar.vertical: ScrollBar {}
         }

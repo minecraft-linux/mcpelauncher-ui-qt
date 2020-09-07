@@ -56,7 +56,7 @@ void ApkExtractionTask::run() {
         }
 
         if (!MinecraftExtractUtils::checkMinecraftLibFile(path)) {
-            emit error("The specified file is not compatible with the launcher\nYou may imported an arm (smartphone) apk on a non arm based PC");
+            throw std::runtime_error("The specified file is not compatible with the launcher\nYou may imported an arm (smartphone) apk on a non arm based PC");
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
