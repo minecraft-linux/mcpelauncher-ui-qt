@@ -99,12 +99,18 @@ ColumnLayout {
         }
     }
 
-    TextEdit {
-        textFormat: TextEdit.RichText
-        text: "Welcome to the new Minecraft Linux Launcher Update<br/>" + LAUNCHER_CHANGE_LOG
-        readOnly: true
-        wrapMode: Text.WordWrap
-        selectByMouse: true
+    ScrollView {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        clip: true
+        TextEdit {
+            textFormat: TextEdit.RichText
+            text: "Welcome to the new Minecraft Linux Launcher Update<br/>" + LAUNCHER_CHANGE_LOG
+            readOnly: true
+            anchors.fill: parent
+            wrapMode: Text.WordWrap
+            selectByMouse: true
+        }
     }
 
     Rectangle {
