@@ -87,8 +87,15 @@ Window {
                     wrapMode: Text.WordWrap
                     linkColor: "#593b00"
                     onLinkActivated: Qt.openUrlExternally(link)
+                    visible: !launcherSettings.disableGameLog
                 }
+                Text {
+                    text: "Please reenable Gamelog in Settings and reopen the Game to report an error"
+                    Layout.fillWidth: true
+                    wrapMode: Text.WordWrap
+                    visible: launcherSettings.disableGameLog
             }
+        }
         }
 
         ScrollView {
