@@ -1,6 +1,7 @@
 #include "googleplayapi.h"
 
 #include "googleloginhelper.h"
+#include "supportedandroidabis.h"
 #include <QtConcurrent>
 
 GooglePlayApi::GooglePlayApi(QObject *parent) : QObject(parent) {
@@ -24,9 +25,25 @@ void GooglePlayApi::requestAppInfo(const QString &packageName) {
     });
 }
 
+static QString CheckinInfoGroup() {
+    std::stringstream ss;
+    ss << "checkin";
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if(abi.second.empty()) {
+            ss << "_" << abi.first;
+        }
+    }
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if(!abi.second.empty()) {
+            ss << "_" << abi.first;
+        }
+    }
+    return QString::fromStdString(ss.str());
+}
+
 void GooglePlayApi::loadCheckinInfo() {
     QSettings settings;
-    settings.beginGroup("checkin");
+    settings.beginGroup(CheckinInfoGroup());
     checkinResult.time = settings.value("time").toLongLong();
     checkinResult.android_id = settings.value("android_id").toULongLong();
     checkinResult.security_token = settings.value("security_token").toULongLong();
@@ -36,7 +53,7 @@ void GooglePlayApi::loadCheckinInfo() {
 
 void GooglePlayApi::saveCheckinInfo() {
     QSettings settings;
-    settings.beginGroup("checkin");
+    settings.beginGroup(CheckinInfoGroup());
     settings.setValue("time", checkinResult.time);
     settings.setValue("android_id", checkinResult.android_id);
     settings.setValue("security_token", checkinResult.security_token);

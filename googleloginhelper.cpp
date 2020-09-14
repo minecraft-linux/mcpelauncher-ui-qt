@@ -19,12 +19,21 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
         currentAccount.setAccountToken(settings.value("token").toString());
         login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
         settings.endGroup();
-        loadDeviceState();
         hasAccount = true;
-    } else {
-        settings.endGroup();
     }
-    
+    settings.endGroup();
+    loadDeviceState();
+    device.config_native_platforms = {};
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if(abi.second.empty()) {
+            device.config_native_platforms.push_back(abi.first);
+        }
+    }
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if(!abi.second.empty()) {
+            device.config_native_platforms.push_back(abi.first);
+        }
+    }
 }
 
 GoogleLoginHelper::~GoogleLoginHelper() {
@@ -37,17 +46,6 @@ void GoogleLoginHelper::loadDeviceState() {
     device.generated_meid = settings.value("generated_meid").toString().toStdString();
     device.generated_serial_number = settings.value("generated_serial_number").toString().toStdString();
     device.random_logging_id = settings.value("generated_serial_number").toLongLong();
-    int size = settings.beginReadArray("native_platforms");
-    if(size) {
-        device.config_native_platforms.clear();
-        for (int i = 0; i < size; ++i) {
-            settings.setArrayIndex(i);
-            device.config_native_platforms.emplace_back(settings.value("platform").toString().toStdString());
-        }
-    } else {
-        device.config_native_platforms = { "x86" };
-    }
-    settings.endArray();
     settings.endGroup();
 }
 
@@ -57,6 +55,7 @@ void GoogleLoginHelper::saveDeviceState() {
     settings.setValue("generated_meid", QString::fromStdString(device.generated_meid));
     settings.setValue("generated_serial_number", QString::fromStdString(device.generated_serial_number));
     settings.setValue("random_logging_id", device.random_logging_id);
+    // Continue to write it for backward compatibility
     settings.beginWriteArray("native_platforms", device.config_native_platforms.size());
     for (int i = 0; i < device.config_native_platforms.size(); ++i) {
         settings.setArrayIndex(i);
@@ -81,12 +80,6 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 void GoogleLoginHelper::onLoginFinished(int code) {
     if (code == QDialog::Accepted) {
         try {
-            device.config_native_platforms = {};
-            for (auto&& e : SupportedAndroidAbis::getAbis()) {
-                if(e.second.empty()) {
-                    device.config_native_platforms.push_back(e.first);
-                }
-            }
             login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
             currentAccount.setAccountIdentifier(window->accountIdentifier());
             currentAccount.setAccountUserId(window->accountUserId());
