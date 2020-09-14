@@ -8,8 +8,10 @@ T.Button {
     property string subText: ""
 
     padding: 8
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
+    implicitWidth: 10 / 9 * contentItem.implicitWidth + leftPadding + rightPadding
+    implicitHeight: 10 / 9 * contentItem.implicitHeight + topPadding + bottomPadding
+    Layout.minimumWidth: implicitHeight
+    Layout.minimumHeight: implicitHeight
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
     background: BorderImage {
@@ -19,6 +21,7 @@ T.Button {
         border { left: 5; top: 5; right: 5; bottom: 5 }
         horizontalTileMode: BorderImage.Stretch
         verticalTileMode: BorderImage.Stretch
+        scale: 0.9
 
         Rectangle {
             id: buttonBackgroundOverlay
@@ -34,8 +37,9 @@ T.Button {
         ColumnLayout {
             id: content
             spacing: 3
-            width: Math.max(parent.width, Math.max(textItem.implicitWidth, subTextItem.implicitWidth))
-            y: parent.height / 2 - height / 2
+            x: width * (0.05)
+            width: parent.width * 0.9
+            y: parent.height * 0.9 / 2 - height / 2
             Text {
                 id: textItem
                 text: control.text
@@ -45,6 +49,7 @@ T.Button {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.fillWidth: true
+                elide: Text.ElideRight
             }
             Text {
                 id: subTextItem
@@ -56,6 +61,7 @@ T.Button {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.fillWidth: true
+                elide: Text.ElideRight
             }
         }
     }
@@ -70,7 +76,7 @@ T.Button {
             when: control.hovered
             PropertyChanges {
                 target: buttonBackground
-                scale: 1.1
+                scale: 1.0
             }
             PropertyChanges {
                 target: buttonBackgroundOverlay
