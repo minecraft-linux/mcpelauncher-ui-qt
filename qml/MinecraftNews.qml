@@ -29,12 +29,7 @@ Item {
                 height: parent.height
                 fillMode: Image.PreserveAspectFit
                 source: modelData.image
-
-                onStatusChanged: function() {
-                    if (status == Image.Ready)
-                        show();
                 }
-            }
 
             Rectangle {
                 x: newsImage.x + newsImage.width / 2 - width / 2
