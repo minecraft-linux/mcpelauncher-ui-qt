@@ -1,4 +1,31 @@
 #include "supportedandroidabis.h"
+
+bool AndroidAbiComparer::operator()(const std::string &a, const std::string &b) const {
+    return
+#if defined(__i386__) || defined(__x86_64__)
+    a.length() && a.at(0) == 'x' && b.length() && b.at(0) != 'x'
+#elif defined(__arm__) || defined(__aarch64__)
+    a.length() && a.at(0) == 'a' && b.length() && b.at(0) != 'a'
+#endif
+    || a.find("64")
+#ifdef PREFER_32BIT
+    ==
+#else
+    !=
+#endif
+    std::string::npos && b.find("64")
+#ifdef PREFER_32BIT
+    !=
+#else
+    ==
+#endif
+    std::string::npos;
+}
+
+std::size_t AndroidAbiComparer::operator()(const std::string &a) const {
+    return std::hash<std::string>()(a);
+}
+
 #ifndef __APPLE__
 #if defined(__i386__) || defined(__x86_64__)
 #include "cpuid.h"
@@ -6,8 +33,8 @@
 #include <sstream>
 #include <vector>
 
-std::unordered_map<std::string, std::string> SupportedAndroidAbis::getAbis() {
-    std::unordered_map<std::string, std::string> abis = { };
+std::map<std::string, std::string, AndroidAbiComparer> SupportedAndroidAbis::getAbis() {
+    std::map<std::string, std::string, AndroidAbiComparer> abis = { };
 #if defined(__i386__) || defined(__x86_64__)
     CpuId cpuid;
     bool hasssse3 = cpuid.queryFeatureFlag(CpuId::FeatureFlag::SSSE3);
@@ -94,9 +121,6 @@ std::unordered_map<std::string, std::string> SupportedAndroidAbis::getAbis() {
 #else
         abis["armeabi-v7a"] = "Disabled in this Launcher Release, please download a different distribution";
 #endif
-#endif
-#ifdef PREFER_32BIT
-    std::reverse(abis.begin(), abis.end()); 
 #endif
     return abis;
 }

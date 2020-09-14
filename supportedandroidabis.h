@@ -1,8 +1,13 @@
 #pragma once
-#include <unordered_map>
+#include <map>
 #include <string>
+
+struct AndroidAbiComparer {
+    bool operator()(const std::string& a, const std::string& b) const;
+    std::size_t operator()(const std::string& a) const;
+};
 
 class SupportedAndroidAbis {
 public:
-    static std::unordered_map<std::string, std::string> getAbis();
+    static std::map<std::string, std::string, AndroidAbiComparer> getAbis();
 };

@@ -4,8 +4,8 @@
 #include <vector>
 #include <sstream>
 
-std::unordered_map<std::string, std::string> SupportedAndroidAbis::getAbis() {
-    std::unordered_map<std::string, std::string> abis = { };
+std::map<std::string, std::string, AndroidAbiComparer> SupportedAndroidAbis::getAbis() {
+    std::map<std::string, std::string, AndroidAbiComparer> abis = { };
 #if defined(__i386__) || defined(__x86_64__)
     CpuId cpuid;
     bool hasssse3 = cpuid.queryFeatureFlag(CpuId::FeatureFlag::SSSE3);
