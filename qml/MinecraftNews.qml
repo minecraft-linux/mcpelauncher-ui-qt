@@ -8,7 +8,6 @@ Item {
     Layout.alignment: Qt.AlignCenter
     Layout.fillWidth: true
     Layout.fillHeight: true
-    Layout.margins: 16
 
     property int selectedEntry: 0
 
@@ -29,20 +28,23 @@ Item {
                 height: parent.height
                 fillMode: Image.PreserveAspectFit
                 source: modelData.image
-                }
+            }
 
             Rectangle {
                 x: newsImage.x + newsImage.width / 2 - width / 2
                 y: newsImage.height - height
-                width: newsImage.paintedWidth
-                height: childrenRect.height
+                width: Math.min(newsContainer.width, Math.max(newsImage.paintedWidth, newsText.implicitWidth))
+                height: Math.min(childrenRect.height, parent.height)
                 color: "#A0000000"
 
                 Text {
+                    width: Math.min(newsContainer.width, Math.max(newsImage.paintedWidth, newsText.implicitWidth))
+                    id: newsText
                     font.weight: Font.Bold
                     text: modelData.name
                     color: "white"
                     padding: 8
+                    elide: Text.ElideRight
                 }
             }
 
