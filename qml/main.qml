@@ -9,8 +9,6 @@ Window {
     visible: true
     width: 640
     height: 480
-    minimumWidth: 640
-    minimumHeight: 480
     title: qsTr("Linux Minecraft Launcher")
     flags: Qt.Dialog
 
