@@ -13,7 +13,6 @@ ColumnLayout {
     property ProfileManager profileManager
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
-    property bool hidden: false
 
     id: rowLayout
     spacing: 0
@@ -362,7 +361,6 @@ ColumnLayout {
             } else {
                 console.log("showing again");
                 application.setVisibleInDock(true);
-                hidden = false
                 window.show();
             }
         }
@@ -381,7 +379,6 @@ ColumnLayout {
         }
 
         onAccepted: {
-            hidden = true
             if(window.visible) {
                 window.hide();
             }
@@ -427,18 +424,9 @@ ColumnLayout {
         }
     }
 
-    Timer {
-        id: hidetimer
-        interval: 100; running: true; repeat: false
-        onTriggered: if(window.visible && hidden) { window.hide() }
-    }
 
     Connections {
         target: window
-        onVisibleChanged: {
-            // Takle auto showing bug
-            hidetimer.restart()
-        }
         onClosing: {
             if(!gameLogWindow.visible) {
                 if (gameLauncher.running) {
@@ -582,7 +570,6 @@ ColumnLayout {
             return;
         }
         gameLauncher.gameDir = gameDir
-        hidden = launcherSettings.startHideLauncher
         if (launcherSettings.startHideLauncher)
             window.hide();
         if (launcherSettings.startOpenLog) {
