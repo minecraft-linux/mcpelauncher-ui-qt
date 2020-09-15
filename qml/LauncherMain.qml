@@ -201,6 +201,7 @@ ColumnLayout {
                             anchors.centerIn: parent
                             source: "qrc:/Resources/icon-edit.png"
                             smooth: false
+                            opacity: enabled ? 1.0 : 0.3
                         }
                         enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
