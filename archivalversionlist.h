@@ -28,7 +28,7 @@ private:
     QNetworkAccessManager* m_netManager;
     QList<QObject*> m_versions;
 
-    void onListDownloaded(QNetworkReply* reply, QString abi);
+    void onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis);
 
 public:
     ArchivalVersionList();

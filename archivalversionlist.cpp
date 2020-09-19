@@ -16,16 +16,18 @@ ArchivalVersionList::ArchivalVersionList() {
 
 void ArchivalVersionList::downloadLists(QStringList abis) {
     m_versions.clear();
-    std::reverse(abis.begin(), abis.end());
-    for (auto &&abi : abis) {
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abi + ".json.min")));
-        connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abi));
+    if (abis.size()) {
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abis.at(abis.size() - 1) + ".json.min")));
+        connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(abis.size() - 1), abis));
     }
 }
 
-void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi) {
-    if (reply->error() != QNetworkReply::NoError)
+void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis) {
+    if (reply->error() != QNetworkReply::NoError) {
+        qDebug() << "Version list failed to load, entry count:" << m_versions.size();
+        emit versionsChanged();
         return;
+    }
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     for (QJsonValue const& el : doc.array()) {
         QJsonArray ela = el.toArray();
@@ -36,6 +38,12 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi) {
         info->abi = abi;
         m_versions.push_front(info);
     }
-    qDebug() << abi << " Version list loaded, entry count:" << m_versions.size();
-    emit versionsChanged();
+    auto i = abis.indexOf(abi);
+    if(i == 0) {          
+        qDebug() << "Version list loaded, entry count:" << m_versions.size();
+        emit versionsChanged();
+    } else {
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abis.at(i - 1) + ".json.min")));
+        connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
+    }
 }
