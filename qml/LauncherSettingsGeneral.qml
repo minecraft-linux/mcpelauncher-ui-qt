@@ -85,7 +85,10 @@ GridLayout {
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showUnsupported
-        onCheckedChanged: launcherSettings.showUnsupported = checked
+        onCheckedChanged: {
+            launcherSettings.showUnsupported = checked
+            versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
+        }
     }
 
     MCheckBox {
