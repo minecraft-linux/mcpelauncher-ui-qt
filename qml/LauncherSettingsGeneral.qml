@@ -81,17 +81,15 @@ GridLayout {
     }
 
     MCheckBox {
-        property bool initialized: false
         text: "Show incompatible versions"
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showUnsupported
         onCheckedChanged: {
+            var changed = launcherSettings.showUnsupported != checked
             launcherSettings.showUnsupported = checked
-            if(initialized) {
+            if(changed) {
                 versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
-            } else {
-                initialized = true
             }
         }
     }
