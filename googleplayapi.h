@@ -43,7 +43,7 @@ signals:
 
     void tosApprovalRequired(QString const& tosText, QString const& marketingText);
 
-    void appInfoReceived(QString const& packageName, QString const& version, int versionCode);
+    void appInfoReceived(QString const& packageName, QString const& version, int versionCode, bool isBeta);
 
 public slots:
     void handleCheckinAndTos();

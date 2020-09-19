@@ -501,7 +501,7 @@ ColumnLayout {
         if (archiveInfo !== null)
             return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         if (code === playVerChannel.latestVersionCode)
-            return playVerChannel.latestVersion;
+            return playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
         return "Unknown (" + code + ")";
     }
 
