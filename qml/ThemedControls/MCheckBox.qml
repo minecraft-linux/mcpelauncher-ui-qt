@@ -32,6 +32,7 @@ T.CheckBox {
             source: "qrc:/Resources/check.png"
             smooth: false
             visible: control.checked
+            opacity: enabled ? 1.0 : 0.3
         }
     }
 
