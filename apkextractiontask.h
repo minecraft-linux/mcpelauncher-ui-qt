@@ -12,10 +12,12 @@ class ApkExtractionTask : public QThread {
     Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
     Q_PROPERTY(QStringList sources READ sources WRITE setSources)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
+    Q_PROPERTY(bool allowIncompatible READ allowIncompatible WRITE SetAllowIncompatible)
 
     QMutex mutex;
     QStringList m_sources;
     VersionManager* m_versionManager;
+    bool m_allowIncompatible;
 
     void run() override;
 
@@ -47,12 +49,19 @@ public:
         return m_versionManager;
     }
 
+    bool allowIncompatible() {
+        return m_allowIncompatible;
+    }
+
     void setVersionManager(VersionManager* value) {
         QMutexLocker locker(&mutex);
         m_versionManager = value;
     }
 public slots:
     bool setSourceUrls(QList<QUrl> const& urls);
+    void SetAllowIncompatible(bool c) {
+        m_allowIncompatible = c;
+    }
 
 signals:
     void progress(qreal progress);

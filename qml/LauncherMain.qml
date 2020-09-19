@@ -305,6 +305,7 @@ ColumnLayout {
         id: apkExtractionTask
         versionManager: rowLayout.versionManager
         onProgress: downloadProgress.value = progress
+        allowIncompatible: launcherSettings.showUnsupported
         onError: function(err) {
             playDownloadError.text = "Error while extracting the downloaded file(s): " + err
             playDownloadError.open()

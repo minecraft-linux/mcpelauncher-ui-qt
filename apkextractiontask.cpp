@@ -55,8 +55,8 @@ void ApkExtractionTask::run() {
             });
         }
 
-        if (!MinecraftExtractUtils::checkMinecraftLibFile(path)) {
-            throw std::runtime_error("The specified file is not compatible with the launcher\nYou may imported an arm (smartphone) apk on a non arm based PC");
+        if (!m_allowIncompatible && !MinecraftExtractUtils::checkMinecraftLibFile(path)) {
+            throw std::runtime_error("The specified file is not compatible with the launcher\nWon't expect random apk's to work");
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
