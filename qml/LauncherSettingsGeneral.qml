@@ -94,6 +94,7 @@ GridLayout {
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showBetaVersions
         onCheckedChanged: launcherSettings.showBetaVersions = checked
+        enabled: playVerChannel.latestVersionIsBeta
     }
 
     MButton {

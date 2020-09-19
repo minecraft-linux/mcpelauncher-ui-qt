@@ -99,7 +99,7 @@ Window {
                     for (var i = 0; i < versions.length; i++)
                         installed[versions[i].versionName] = true
                     for (i = 0; i < arr.length; i++) {
-                        if (arr[i].versionName in installed || arr[i].isBeta && !launcherSettings.showBetaVersions)
+                        if (arr[i].versionName in installed || arr[i].isBeta && (!playVerChannel.latestVersionIsBeta || !launcherSettings.showBetaVersions))
                             continue;
                         ret.push(arr[i])
                     }
