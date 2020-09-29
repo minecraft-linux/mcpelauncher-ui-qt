@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2
 import "ThemedControls"
 
 ColumnLayout {
-
+    Keys.forwardTo: children[1].children[0]
     RowLayout {
 
         MButton {

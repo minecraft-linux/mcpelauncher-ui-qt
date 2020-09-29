@@ -76,6 +76,8 @@ Window {
                         width: implicitWidth
                     }
                 }
+                Keys.forwardTo: [content]
+                
             }
         }
 
@@ -95,6 +97,7 @@ Window {
             LauncherSettingsAbout {
                 maximumWidth: window.width - 20
             }
+            Keys.forwardTo: children[tabs.currentIndex]
         }
 
         Image {
