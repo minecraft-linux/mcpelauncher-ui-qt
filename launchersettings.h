@@ -41,7 +41,7 @@ public:
     bool showBetaVersions() const { return settings.value("showBetaVersions", false).toBool(); }
     void setShowBetaVersions(bool value) { settings.setValue("showBetaVersions", value); emit settingsChanged(); }
 
-    int lastVersion() const { return settings.value("lastVersion", 0).toBool(); }
+    int lastVersion() const { return settings.value("lastVersion", 0).toInt(); }
     void setLastVersion(int value) { settings.setValue("lastVersion", value); emit settingsChanged(); }
 
     QUrl gameDataDir() {
