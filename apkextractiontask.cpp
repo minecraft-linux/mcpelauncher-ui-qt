@@ -5,7 +5,9 @@
 #include <mcpelauncher/zip_extractor.h>
 #include <mcpelauncher/minecraft_extract_utils.h>
 #include <mcpelauncher/apkinfo.h>
+#include <sstream>
 #include "versionmanager.h"
+#include "supportedandroidabis.h"
 
 ApkExtractionTask::ApkExtractionTask(QObject *parent) : QThread(parent) {
     connect(this, &QThread::started, this, &ApkExtractionTask::emitActiveChanged);
@@ -55,8 +57,43 @@ void ApkExtractionTask::run() {
             });
         }
 
-        if (!m_allowIncompatible && !MinecraftExtractUtils::checkMinecraftLibFile(path)) {
-            throw std::runtime_error("The specified file is not compatible with the launcher\nWon't expect random apk's to work");
+        bool supported = false;
+        bool invalidapk = true;
+        std::stringstream errormsg;
+        for (auto &&abi : SupportedAndroidAbis::getAbis()) {
+            if (QFile(dir.path() + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+                invalidapk = false;
+                if (!abi.second.compatible) {
+                    errormsg << abi.second.details << "<br/>";
+                } else {
+                    supported = true;
+                }
+            }
+        }
+        if (!m_allowIncompatible && !supported) {
+            if (invalidapk) {
+                if (sources().size() == 1) {
+                    errormsg << "The specified file is not a valid Minecraft apk, it doesn't contain libminecraftpe.so";
+                } else {
+                    errormsg << "The specified files are not a valid collection of Minecraft apks, they don't contain libminecraftpe.so";
+                }
+            }
+            int i = 0;
+            for (auto &&abi : SupportedAndroidAbis::getAbis()) {
+                if (abi.second.compatible) {
+                    if (i++) {
+                        errormsg << ", ";
+                    } else {
+                        errormsg << "<br/>Valid Minecraft apk CPU architectures for this pc / launcher are ";
+                    }
+                    errormsg << abi.first;
+                }
+            }
+            if (!i) {
+                errormsg << "<br/>No Minecraft apk's are valid for this pc / launcher";
+            }
+            errormsg << "<br/>";
+            throw std::runtime_error("The specified file is not compatible with the launcher<br/>Won't expect random apk's to work<br/>Details:<br/>" + errormsg.str());
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
