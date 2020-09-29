@@ -311,9 +311,7 @@ ColumnLayout {
             playDownloadError.open()
         }
         onFinished: function() {
-            if(!launcherSettings.showUnsupported) {
-                launchGame()
-            }
+            launchGame()
         }
     }
 
