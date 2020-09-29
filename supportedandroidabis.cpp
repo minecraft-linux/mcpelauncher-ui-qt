@@ -1,13 +1,13 @@
 #include "supportedandroidabis.h"
 
 bool AndroidAbiComparer::operator()(const std::string &a, const std::string &b) const {
-    return
+    return (
 #if defined(__i386__) || defined(__x86_64__)
     a.length() && a.at(0) == 'x' && b.length() && b.at(0) != 'x'
 #elif defined(__arm__) || defined(__aarch64__)
     a.length() && a.at(0) == 'a' && b.length() && b.at(0) != 'a'
 #endif
-    || a.find("64")
+    ) || (a.find("64")
 #ifdef PREFER_32BIT
     ==
 #else
@@ -19,7 +19,7 @@ bool AndroidAbiComparer::operator()(const std::string &a, const std::string &b) 
 #else
     ==
 #endif
-    std::string::npos;
+    std::string::npos);
 }
 
 std::size_t AndroidAbiComparer::operator()(const std::string &a) const {
