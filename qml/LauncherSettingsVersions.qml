@@ -50,7 +50,7 @@ ColumnLayout {
                 width: parent.width - 8
                 height: 32
                 font.pointSize: 11
-                text: modelData.versionName
+                text: modelData.versionName + " (" + modelData.archs.join(", ") + ")"
                 onClicked: versions.currentIndex = index
                 highlighted: ListView.isCurrentItem
                 background: Rectangle {
