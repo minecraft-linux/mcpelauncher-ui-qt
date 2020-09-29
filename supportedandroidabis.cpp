@@ -51,7 +51,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 #if !defined(DISABLE_64BIT) && !defined(__i386__)
         abis["x86_64"] = { .compatible = true, .launchername = "mcpelauncher-client" };
 #else
-        abis["x86_64"] = { .compatible = false, .details "Disabled in this Launcher Release, please download a different distribution" };
+        abis["x86_64"] = { .compatible = false, .details = "Disabled in this Launcher Release, please download a different distribution" };
 #endif
     } else {
         std::stringstream error;
