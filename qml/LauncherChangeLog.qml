@@ -166,6 +166,7 @@ ColumnLayout {
                 Layout.minimumWidth: implicitWidth
                 Layout.minimumHeight: implicitHeight
                 onClicked: {
+                    launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
                     rowLayout.finished()
                 }
             }
