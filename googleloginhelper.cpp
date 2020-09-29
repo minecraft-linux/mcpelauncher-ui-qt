@@ -18,7 +18,6 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
         currentAccount.setAccountUserId(settings.value("userId").toString());
         currentAccount.setAccountToken(settings.value("token").toString());
         login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
-        settings.endGroup();
         hasAccount = true;
     }
     settings.endGroup();
