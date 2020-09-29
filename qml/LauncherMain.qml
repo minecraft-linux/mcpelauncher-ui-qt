@@ -227,7 +227,7 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 Layout.minimumWidth: implicitWidth
                 Layout.minimumHeight: implicitHeight
-                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || (needsDownload() ? googleLoginHelper.account !== null && profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest : !checkSupport())) && (gameLauncher.running || getDisplayedVersionName())
+                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || (needsDownload() ? googleLoginHelper.account !== null && (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest || !checkSupport()) : !checkSupport())) && (gameLauncher.running || getDisplayedVersionName())
 
                 onClicked: {
                     if(gameLauncher.running) {
@@ -311,7 +311,9 @@ ColumnLayout {
             playDownloadError.open()
         }
         onFinished: function() {
-            launchGame()
+            if(!launcherSettings.showUnsupported) {
+                launchGame()
+            }
         }
     }
 
@@ -351,6 +353,7 @@ ColumnLayout {
             if (crashed) {
                 application.setVisibleInDock(true);
                 gameLogWindow.show()
+                gameLogWindow.requestActivate()
             }
         }
         onCorruptedInstall: {
@@ -412,7 +415,6 @@ ColumnLayout {
         onAccountInfoChanged: {
             if (googleLoginHelper.account !== null)
                 playApi.handleCheckinAndTos()
-            versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
         }
         onLoginError: function(err) {
             playDownloadError.text = err + "\nPlease login again";
@@ -465,7 +467,7 @@ ColumnLayout {
         if(launcherSettings.checkForUpdates)
             updateChecker.sendRequest()
         playApi.handleCheckinAndTos()
-        versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
+        versionManager.downloadLists(googleLoginHelper.getAbis())
     }
 
 
@@ -532,15 +534,31 @@ ColumnLayout {
     }
 
     function checkSupport() {
+        if(launcherSettings.showUnsupported) {
+            return true;
+        }
         var profile = profileManager.activeProfile;
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
             return versionManager.checkSupport(versionManager.versions.get(playVerChannel.latestVersionCode));
         if (profile.versionType === ProfileInfo.LOCKED_CODE) {
-            console.log(profile.versionCode)
-            return versionManager.checkSupport(versionManager.versions.get(profile.versionCode));
+            if (versionManager.versions.get(profile.versionCode)) {
+                return versionManager.checkSupport(versionManager.versions.get(profile.versionCode))
+            } else {
+                var abis = googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported)
+                for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
+                    var ver = versionManager.archivalVersions.versions[i]
+                    if (ver.versionCode === profile.versionCode) {
+                        for (var j = 0; j < abis.length; j++) {
+                            if (ver.abi === abis[j]) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return launcherSettings.showUnsupported;
+            }
         }
         if (profile.versionType === ProfileInfo.LOCKED_NAME) {
-            console.log(profile.versionDirName)
             return versionManager.checkSupport(profile.versionDirName);
         }
         console.log("Failed")

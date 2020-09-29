@@ -31,6 +31,7 @@ ColumnLayout {
     BorderImage {
         Layout.fillWidth: true
         Layout.fillHeight: true
+        Layout.rightMargin: 20
         source: "qrc:/Resources/dropdown-bg.png"
         smooth: false
         border { left: 4; top: 4; right: 4; bottom: 4 }
@@ -46,7 +47,7 @@ ColumnLayout {
             model: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
             delegate: ItemDelegate {
                 id: control
-                width: parent.width
+                width: parent.width - 8
                 height: 32
                 font.pointSize: 11
                 text: modelData.versionName

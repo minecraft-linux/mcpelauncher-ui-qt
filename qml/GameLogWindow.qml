@@ -16,7 +16,6 @@ Window {
     height: 400
     minimumWidth: 500
     minimumHeight: 400
-    flags: Qt.Dialog
     title: "Game Log"
 
     ColumnLayout {
@@ -76,26 +75,32 @@ Window {
                 width: parent.width - rectangle.horizontalPadding * 2
 
                 Text {
-                    text: "It seems that Minecraft has crashed"
+                    text: "It seems that Minecraft or the Launcher has crashed"
                     Layout.fillWidth: true
                     font.weight: Font.Bold
                     wrapMode: Text.WordWrap
                 }
                 Text {
-                    text: "Minecraft has exited with a non-zero error code.<br><a href=\"https://github.com/minecraft-linux/mcpelauncher-manifest/issues\">Please click here if you would like to open an issue.</a>"
+                    id: tpanel
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     linkColor: "#593b00"
                     onLinkActivated: Qt.openUrlExternally(link)
-                    visible: !launcherSettings.disableGameLog
+                    visible: !launcherSettings.disableGameLog && !launcherSettings.showUnsupported
                 }
                 Text {
-                    text: "Please reenable Gamelog in Settings and reopen the Game to report an error"
+                    text: "Please don't report this error. Reenable Gamelog in Settings and reopen the Game to report an error"
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     visible: launcherSettings.disableGameLog
+                }
+                Text {
+                    text: "Please don't report this error. Disable show incompatible Versions and reopen the Game to report an error, because you may ran an incompatible version"
+                    Layout.fillWidth: true
+                    wrapMode: Text.WordWrap
+                    visible: launcherSettings.showUnsupported
+                }
             }
-        }
         }
 
         ScrollView {
@@ -119,8 +124,13 @@ Window {
                 selectByMouse: true
                 readOnly: true
                 selectionColor: "#f57c00"
+                text: "Hello World\nTests\nfdffsd\nsddfggrg()"
 
-                onTextChanged: logScrollView.scrollToBottom()
+                onTextChanged: {
+                    logScrollView.scrollToBottom()
+                    if (launcher.crashed && !launcherSettings.disableGameLog && !launcherSettings.showUnsupported)
+                        tpanel.text = "The Launcher has exited with a non-zero error code.<br><a href=\"https://github.com/ChristopherHX/mcpelauncher-manifest/issues/new?title=Launcher%20Crashed&body=Did%20older%20Launcher%20Versions%20work%20on%20this%20PC?%0A```%0A" + encodeURIComponent(gameLog.text).replace(/'/g, "%27") + "%0A```%0A%23%20Disclaimer%0AIf%20you%20don%27t%20answer%20these%20questions%20your%20issue%20will%20be%20closed\">Please click here if you would like to open an issue.</a>" 
+                }
             }
 
             onWidthChanged: scrollToBottom()

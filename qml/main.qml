@@ -10,7 +10,6 @@ Window {
     width: 640
     height: 480
     title: qsTr("Linux Minecraft Launcher")
-    flags: Qt.Dialog
 
     StackView {
         id: stackView

@@ -86,13 +86,7 @@ GridLayout {
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showUnsupported
-        onCheckedChanged: {
-            var changed = launcherSettings.showUnsupported != checked
-            launcherSettings.showUnsupported = checked
-            if(changed) {
-                versionManager.downloadLists(googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported))
-            }
-        }
+        onCheckedChanged: launcherSettings.showUnsupported = checked
     }
 
     MCheckBox {
@@ -114,14 +108,12 @@ GridLayout {
 
     MButton {
         Layout.topMargin: 20
-        id: openGameData
         text: "Open GameData Folder"
         Layout.columnSpan: 1
         onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
     }
 
     MButton {
-        id: checkForUpdatesbtn
         text: "Check for Updates"
         Layout.columnSpan: 1
         onClicked: updateChecker.checkForUpdates()
