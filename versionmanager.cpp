@@ -25,7 +25,7 @@ void VersionManager::loadVersions() {
         ver->versionName = settings.value("versionName").toString();
         ver->versionCode = versionCode;
         for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-            if (QFile(getDirectoryFor(ver->versionName) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+            if (QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
                 ver->archs.append(QString::fromStdString(abi.first));
             }
         }
@@ -50,18 +50,18 @@ QString VersionManager::getTempTemplate() {
     return QDir(getBaseDir()).filePath("temp-XXXXXX");
 }
 
-QString VersionManager::getDirectoryFor(QString const& versionName) {
-    return QDir(getBaseDir()).filePath(versionName);
+QString VersionManager::getDirectoryFor(QString const& directory) {
+    return QDir(getBaseDir()).filePath(directory);
 }
 
-QString VersionManager::getDirectoryFor(std::string const& versionName) {
-    return getDirectoryFor(QString::fromStdString(versionName));
+QString VersionManager::getDirectoryFor(std::string const& directory) {
+    return getDirectoryFor(QString::fromStdString(directory));
 }
 
 QString VersionManager::getDirectoryFor(VersionInfo *version) {
     if (version == nullptr)
         return QString();
-    return getDirectoryFor(version->versionName);
+    return getDirectoryFor(version->directory);
 }
 
 void VersionManager::addVersion(QString directory, QString versionName, int versionCode) {
@@ -71,6 +71,11 @@ void VersionManager::addVersion(QString directory, QString versionName, int vers
     ver->directory = directory;
     ver->versionName = versionName;
     ver->versionCode = versionCode;
+    for (auto &&abi : SupportedAndroidAbis::getAbis()) {
+        if (QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+            ver->archs.append(QString::fromStdString(abi.first));
+        }
+    }
     saveVersions();
     emit versionListChanged();
 }
@@ -87,12 +92,12 @@ void VersionManager::removeVersion(VersionInfo* version) {
 
 bool VersionManager::checkSupport(VersionInfo* version) {
     if(!version) return false;
-    return checkSupport(version->versionName);
+    return checkSupport(version->directory);
 }
 
-bool VersionManager::checkSupport(QString const& versionName) {
+bool VersionManager::checkSupport(QString const& directory) {
     for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-        if (abi.second.empty() && QFile(getDirectoryFor(versionName) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+        if (abi.second.compatible && QFile(getDirectoryFor(directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
             return true;
         }
     }

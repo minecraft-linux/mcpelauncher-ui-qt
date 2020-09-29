@@ -25,12 +25,12 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
     loadDeviceState();
     device.config_native_platforms = {};
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(abi.second.empty()) {
+        if(abi.second.compatible) {
             device.config_native_platforms.push_back(abi.first);
         }
     }
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(!abi.second.empty()) {
+        if(!abi.second.compatible) {
             device.config_native_platforms.push_back(abi.first);
         }
     }
@@ -123,7 +123,7 @@ QStringList GoogleLoginHelper::getDeviceStateABIs(bool showUnsupported) {
         for (auto&& abi : device.config_native_platforms) {
             if (!showUnsupported) {
                 auto res = supportedabis.find(abi);
-                if(res == supportedabis.end() || !res->second.empty()) {
+                if(res == supportedabis.end() || !res->second.compatible) {
                     continue;
                 }
             }
@@ -146,7 +146,7 @@ QStringList GoogleLoginHelper::getAbis() {
 QString GoogleLoginHelper::GetSupportReport() {
     QString report;
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        report.append("<b>" + QString::fromStdString(abi.first) + "</b> is " + (abi.second.empty() ? "<b><font color=\"#00cc00\">Supported</font></b><br/>" : "<b><font color=\"#FF0000\">Unsupported</font></b>:<br/>" + QString::fromStdString(abi.second) + "<br/>"));
+        report.append("<b>" + QString::fromStdString(abi.first) + "</b> is " + (abi.second.compatible ? "<b><font color=\"#00cc00\">Compatible</font></b><br/>" : "<b><font color=\"#FF0000\">Incompatible</font></b><br/>") + QString::fromStdString(abi.second.details) + "<br/>");
     }
     return report;
 }
@@ -157,12 +157,12 @@ bool GoogleLoginHelper::hideLatest() {
     }
     auto supportedabis = SupportedAndroidAbis::getAbis();
     auto res = supportedabis.find(device.config_native_platforms[0]);
-    return res == supportedabis.end() || !res->second.empty();
+    return res == supportedabis.end() || !res->second.compatible;
 }
 
 bool GoogleLoginHelper::isSupported() {
     for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-        if (abi.second.empty()) {
+        if (abi.second.compatible) {
             return true;
         }
     }

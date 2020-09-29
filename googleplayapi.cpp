@@ -29,12 +29,12 @@ static QString CheckinInfoGroup() {
     std::stringstream ss;
     ss << "checkin";
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(abi.second.empty()) {
+        if(abi.second.compatible) {
             ss << "_" << abi.first;
         }
     }
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(!abi.second.empty()) {
+        if(!abi.second.compatible) {
             ss << "_" << abi.first;
         }
     }

@@ -20,7 +20,7 @@ QList<QObject*> Troubleshooter::findIssues() {
 }
 
 void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
-    auto path = GameLauncher::findLauncher();
+    auto path = GameLauncher::findLauncher("mcpelauncher-client");
     if (path.empty()) {
         ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NOT_FOUND, "Game launcher not found", "Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program)."))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher"));
