@@ -32,6 +32,7 @@ GridLayout {
             }
             MButton {
                 Layout.alignment: Qt.AlignRight
+                Layout.rightMargin: 20
                 text: googleLoginHelper.account !== null ? "Sign out" : "Sign in"
                 onClicked: {
                     if (googleLoginHelper.account !== null)
