@@ -157,7 +157,7 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
     switch (exitCode)
     {
     case 51: // Failed to load Minecraft lib
-        msg = "Incompatible Minecraft installation, please select a different or older Version\nThis Launcher is a free Open Source Software which usually fell behind official updates from Google Play\nIn some cases there are missing game files,\nmissing Symbols to be provided by this Launcher via updates\n or otherwise broke the Launcher";
+        msg = "Incompatible Minecraft installation, please select a different or older Version\nThis Launcher is a free Open Source Software which usually fell behind official updates from Google Play\nIn some cases there are missing game files,\nmissing Symbols expected to be provided by this Launcher via updates\n or otherwise broke the Launcher";
         emit corruptedInstall();
         break;
     case 127: // Failed to load launcher dependencies (GNU/Linux)
