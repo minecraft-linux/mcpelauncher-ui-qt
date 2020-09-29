@@ -17,6 +17,7 @@ Window {
     flags: Qt.Dialog
     title: "Minecraft .apk import"
     visible: apkImportHelper.extractingApk
+    property var allowIncompatible: false
 
     onClosing: function() {
         close.accepted = false
@@ -45,6 +46,7 @@ Window {
         id: apkImportHelper
         versionManager: root.versionManager
         progressBar: apkExtractionProgressBar
+        allowIncompatible: root.allowIncompatible
     }
 
     function pickFile() {

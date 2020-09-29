@@ -17,6 +17,7 @@ Item {
     property bool extractingApk: false
     property var progressBar: null
     property alias task: apkExtractionTask
+    property var allowIncompatible: false
 
     id: root
 
@@ -59,6 +60,8 @@ Item {
             extractingApk = false
             root.error()
         }
+
+        allowIncompatible: root.allowIncompatible
     }
 
     MessageDialog {

@@ -66,6 +66,7 @@ ColumnLayout {
     ApkImportWindow {
         id: apkImportWindow
         versionManager: versionManagerInstance
+        allowIncompatible: launcherSettings.showUnsupported
     }
 
 }
