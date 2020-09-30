@@ -335,7 +335,7 @@ Window {
             else
                 profile.setName(profileName.text)
         }
-        if (versionsmodel.get(profileVersion.currentIndex).obj) {
+        if (versionsmodel.get(profileVersion.currentIndex).obj || versionsmodel.get(profileVersion.currentIndex).versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profile.versionType = versionsmodel.get(profileVersion.currentIndex).versionType
             // fails if it is a extraversion
             if (profile.versionType == ProfileInfo.LOCKED_NAME)
