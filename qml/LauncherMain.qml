@@ -218,7 +218,7 @@ ColumnLayout {
             PlayButton {
                 id: pbutton
                 Layout.alignment: Qt.AlignHCenter
-                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : "Download and play") : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
+                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : (checkSupport() ? "Download and play" : "Unsupported Version")) : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
                 subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
@@ -497,17 +497,16 @@ ColumnLayout {
             return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         if (code === playVerChannel.latestVersionCode)
             return playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
-        return "Unknown (" + code + ")";
     }
 
     function getDisplayedVersionName() {
         var profile = profileManager.activeProfile;
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
-            return getDisplayedNameForCode(playVerChannel.latestVersionCode);
+            return getDisplayedNameForCode(playVerChannel.latestVersionCode) || ("Unknown (" + playVerChannel.latestVersionCode + ")");
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
-            return getDisplayedNameForCode(profile.versionCode);
+            return getDisplayedNameForCode(profile.versionCode) || ((profile.versionDirName ? profile.versionDirName : "Unknown") + " (" + profile.versionCode + ")");
         if (profile.versionType === ProfileInfo.LOCKED_NAME)
-            return profile.versionDirName;
+            return profile.versionDirName || "Unknown Version";
         return "Unknown";
     }
 
@@ -536,24 +535,28 @@ ColumnLayout {
             return true;
         }
         var profile = profileManager.activeProfile;
-        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
+            if(versionManager.versions.get(playVerChannel.latestVersionCode)) {
             return versionManager.checkSupport(versionManager.versions.get(playVerChannel.latestVersionCode));
+            } else {
+                return findArchivalVersion(playVerChannel.latestVersionCode) != null;
+            }
+            return false;
+        }
         if (profile.versionType === ProfileInfo.LOCKED_CODE) {
             if (versionManager.versions.get(profile.versionCode)) {
                 return versionManager.checkSupport(versionManager.versions.get(profile.versionCode))
             } else {
                 var abis = googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported)
-                for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-                    var ver = versionManager.archivalVersions.versions[i]
-                    if (ver.versionCode === profile.versionCode) {
+                var ver = findArchivalVersion(profile.versionCode)
+                if (ver !== null) {
                         for (var j = 0; j < abis.length; j++) {
                             if (ver.abi === abis[j]) {
                                 return true;
                             }
                         }
                     }
-                }
-                return launcherSettings.showUnsupported;
+                return false;
             }
         }
         if (profile.versionType === ProfileInfo.LOCKED_NAME) {
