@@ -23,6 +23,9 @@ public:
     void setAccountUserId(QString const& value) { m_accountUserId = value; }
     void setAccountToken(QString const& value) { m_accountToken = value; }
 
+    bool isValid() {
+        return m_accountIdentifier.size() > 0 && m_accountUserId.size()> 0 && m_accountToken.size() > 0;
+    }
 };
 
 #endif // GOOGLEACCOUNT_H

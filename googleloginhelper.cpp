@@ -17,8 +17,10 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
         currentAccount.setAccountIdentifier(settings.value("identifier").toString());
         currentAccount.setAccountUserId(settings.value("userId").toString());
         currentAccount.setAccountToken(settings.value("token").toString());
-        login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
-        hasAccount = true;
+        hasAccount = currentAccount.isValid();
+        if (hasAccount) {
+            login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
+        }
     }
     settings.endGroup();
     loadDeviceState();
@@ -83,14 +85,19 @@ void GoogleLoginHelper::onLoginFinished(int code) {
             currentAccount.setAccountIdentifier(window->accountIdentifier());
             currentAccount.setAccountUserId(window->accountUserId());
             currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
-            settings.beginGroup("googlelogin");
-            settings.setValue("identifier", currentAccount.accountIdentifier());
-            settings.setValue("userId", currentAccount.accountUserId());
-            settings.setValue("token", currentAccount.accountToken());
-            settings.endGroup();
-            saveDeviceState();
-            hasAccount = true;
-            accountAcquireFinished(&currentAccount);
+            hasAccount = currentAccount.isValid();
+            if (hasAccount) {
+                settings.beginGroup("googlelogin");
+                settings.setValue("identifier", currentAccount.accountIdentifier());
+                settings.setValue("userId", currentAccount.accountUserId());
+                settings.setValue("token", currentAccount.accountToken());
+                settings.endGroup();
+                saveDeviceState();
+                accountAcquireFinished(&currentAccount);
+            } else {
+                loginError("Login failed");
+                accountAcquireFinished(nullptr);
+            }
         } catch (const std::exception& ex) {
             loginError(ex.what());
             accountAcquireFinished(nullptr);
