@@ -218,7 +218,7 @@ ColumnLayout {
             PlayButton {
                 id: pbutton
                 Layout.alignment: Qt.AlignHCenter
-                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : (checkSupport() ? "Download and play" : "Unsupported Version")) : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
+                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : "Download and play") : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
                 subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
@@ -227,7 +227,7 @@ ColumnLayout {
                 Layout.rightMargin: width / 6
                 Layout.minimumWidth: implicitWidth
                 Layout.minimumHeight: implicitHeight
-                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || (needsDownload() ? googleLoginHelper.account !== null && (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest || !checkSupport()) : !checkSupport())) && (gameLauncher.running || getDisplayedVersionName())
+                enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || (needsDownload() ? googleLoginHelper.account !== null && (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest) : !checkSupport())) && (gameLauncher.running || getDisplayedVersionName())
 
                 onClicked: {
                     if(gameLauncher.running) {
@@ -471,10 +471,27 @@ ColumnLayout {
 
     /* utility functions */
 
+    function launcherLatestVersion() {
+        for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
+            if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !versionManager.archivalVersions.versions[i].isBeta) {
+                return versionManager.archivalVersions.versions[i];
+            }
+        }
+    }
+
+    function launcherLatestVersionscode() {
+        if (checkGooglePlayLatestSupport()) {
+            return playVerChannel.latestVersionCode;
+        } else {
+            var ver = launcherLatestVersion();
+            return ver ? ver.versionCode : 0;
+        }
+    }
+
     function needsDownload() {
         var profile = profileManager.activeProfile;
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
-            return !versionManager.versions.contains(playVerChannel.latestVersionCode);
+            return !versionManager.versions.contains(launcherLatestVersionscode());
         if (profile.versionType == ProfileInfo.LOCKED_CODE)
             return !versionManager.versions.contains(profile.versionCode);
         if (profile.versionType == ProfileInfo.LOCKED_NAME)
@@ -502,7 +519,7 @@ ColumnLayout {
     function getDisplayedVersionName() {
         var profile = profileManager.activeProfile;
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
-            return getDisplayedNameForCode(playVerChannel.latestVersionCode) || ("Unknown (" + playVerChannel.latestVersionCode + ")");
+            return getDisplayedNameForCode(launcherLatestVersionscode()) || ("Unknown (" + launcherLatestVersionscode() + ")");
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return getDisplayedNameForCode(profile.versionCode) || ((profile.versionDirName ? profile.versionDirName : "Unknown") + " (" + profile.versionCode + ")");
         if (profile.versionType === ProfileInfo.LOCKED_NAME)
@@ -512,8 +529,9 @@ ColumnLayout {
 
     function getDownloadVersionCode() {
         var profile = profileManager.activeProfile;
-        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
-            return playVerChannel.latestVersionCode;
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
+            return launcherLatestVersionscode();
+        }
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return profile.versionCode;
         return null;
@@ -521,13 +539,37 @@ ColumnLayout {
 
     function getCurrentGameDir() {
         var profile = profileManager.activeProfile;
-        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
-            return versionManager.getDirectoryFor(versionManager.versions.get(playVerChannel.latestVersionCode));
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
+            return versionManager.getDirectoryFor(versionManager.versions.get(launcherLatestVersionscode()));
+        }
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return versionManager.getDirectoryFor(versionManager.versions.get(profile.versionCode));
         if (profile.versionType === ProfileInfo.LOCKED_NAME)
             return versionManager.getDirectoryFor(profile.versionDirName);
         return null;
+    }
+
+    // Tests if it really works
+    function checkLauncherLatestSupport() {
+        if(versionManager.versions.get(launcherLatestVersionscode())) {
+            return versionManager.checkSupport(versionManager.versions.get(launcherLatestVersionscode()));
+        } else {
+            return findArchivalVersion(launcherLatestVersionscode()) != null;
+        }
+        return false;
+    }
+
+    // Tests for raw Google Play latest (previous default, allways true)
+    function checkGooglePlayLatestSupport() {
+        if (launcherSettings.showUnsupported) {
+            return true;
+        }
+        // Handle latest is beta, beta isn't enabled
+        if (playVerChannel.latestVersionIsBeta && !launcherSettings.showBetaVersions) {
+            return false;
+        }
+        var iver = versionManager.versions.get(playVerChannel.latestVersionCode)
+        return versionManager.checkSupport(iver ? iver : findArchivalVersion(playVerChannel.latestVersionCode))
     }
 
     function checkSupport() {
@@ -536,12 +578,7 @@ ColumnLayout {
         }
         var profile = profileManager.activeProfile;
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
-            if(versionManager.versions.get(playVerChannel.latestVersionCode)) {
-            return versionManager.checkSupport(versionManager.versions.get(playVerChannel.latestVersionCode));
-            } else {
-                return findArchivalVersion(playVerChannel.latestVersionCode) != null;
-            }
-            return false;
+            return checkLauncherLatestSupport();
         }
         if (profile.versionType === ProfileInfo.LOCKED_CODE) {
             if (versionManager.versions.get(profile.versionCode)) {

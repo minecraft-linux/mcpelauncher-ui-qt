@@ -102,7 +102,8 @@ Window {
                     for (var i = 0; i < versions.length; i++)
                         installed[versions[i].versionName] = true
                     for (i = 0; i < arr.length; i++) {
-                        if (arr[i].versionName in installed || arr[i].isBeta && (!playVerChannel.latestVersionIsBeta || !launcherSettings.showBetaVersions))
+                        // Show Beta in versionslist if in Beta program and allow showUnsupported or allow Beta
+                        if (arr[i].versionName in installed || arr[i].isBeta && (!playVerChannel.latestVersionIsBeta || !(launcherSettings.showUnsupported || launcherSettings.showBetaVersions)))
                             continue;
                         ret.push(arr[i])
                     }
@@ -118,8 +119,9 @@ Window {
                 Component.onCompleted: {
                     var abis = googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported)
                     if (!hideLatest) {
-                        var latest = playVerChannel.latestVersion
-                        versionsmodel.append({name: "Latest " + (latest.length === 0 ? "version" : latest) + " (Google Play)", versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
+                        var support = checkGooglePlayLatestSupport()
+                        var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
+                        versionsmodel.append({name: "Latest " + (latest.length === 0 ? "version" : latest) + " (" + (support ? "Google Play" : "compatible") + ")", versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
                     }
                     for (var i = 0; i < versions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
