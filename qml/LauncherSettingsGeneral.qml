@@ -13,7 +13,7 @@ GridLayout {
     property int labelFontSize: 12
 
     Text {
-        text: "Google Account"
+        text: qsTr("Google Account")
         font.pointSize: parent.labelFontSize
     }
     Item {
@@ -33,7 +33,7 @@ GridLayout {
             MButton {
                 Layout.alignment: Qt.AlignRight
                 Layout.rightMargin: 20
-                text: googleLoginHelper.account !== null ? "Sign out" : "Sign in"
+                text: googleLoginHelper.account !== null ? qsTr("Sign out") : qsTr("Sign in")
                 onClicked: {
                     if (googleLoginHelper.account !== null)
                         googleLoginHelper.signOut()
@@ -47,7 +47,7 @@ GridLayout {
     MCheckBox {
         Layout.topMargin: 20
         id: autoShowGameLog
-        text: "Show log when starting the game"
+        text: qsTr("Show log when starting the game")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.startOpenLog
@@ -56,7 +56,7 @@ GridLayout {
 
     MCheckBox {
         id: hideLauncher
-        text: "Hide the launcher when starting the game"
+        text: qsTr("Hide the launcher when starting the game")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.startHideLauncher
@@ -65,7 +65,7 @@ GridLayout {
 
     MCheckBox {
         id: disableGameLog
-        text: "Disable the GameLog"
+        text: qsTr("Disable the GameLog")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.disableGameLog
@@ -74,7 +74,7 @@ GridLayout {
 
     MCheckBox {
         id: checkForUpdates
-        text: "Enable checking for updates (startup)"
+        text: qsTr("Enable checking for updates (startup)")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.checkForUpdates
@@ -82,7 +82,7 @@ GridLayout {
     }
 
     MCheckBox {
-        text: "Show incompatible versions"
+        text: qsTr("Show incompatible versions")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showUnsupported
@@ -90,7 +90,7 @@ GridLayout {
     }
 
     MCheckBox {
-        text: "Show Beta Versions"
+        text: qsTr("Show Beta Versions")
         font.pointSize: parent.labelFontSize
         Layout.columnSpan: 2
         Component.onCompleted: checked = launcherSettings.showBetaVersions
@@ -101,26 +101,26 @@ GridLayout {
     MButton {
         Layout.topMargin: 20
         id: runTroubleshooter
-        text: "Run troubleshooter"
+        text: qsTr("Run troubleshooter")
         Layout.columnSpan: 1
         onClicked: troubleshooterWindow.findIssuesAndShow()
     }
 
     MButton {
         Layout.topMargin: 20
-        text: "Open GameData Folder"
+        text: qsTr("Open GameData Folder")
         Layout.columnSpan: 1
         onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
     }
 
     MButton {
-        text: "Check for Updates"
+        text: qsTr("Check for Updates")
         Layout.columnSpan: 1
         onClicked: updateChecker.checkForUpdates()
     }
 
     MButton {
-        text: "Reset Launcher Settings"
+        text: qsTr("Reset Launcher Settings")
         Layout.columnSpan: 1
         onClicked: {
             launcherSettings.resetSettings()
@@ -131,7 +131,7 @@ GridLayout {
     MessageDialog {
         id: launcherreset
         title: "Settings cleared"
-        text: "Please reopen the Launcher to see the changes"
+        text: qsTr("Please reopen the Launcher to see the changes")
     }
 
     property var updateUrl: "";
@@ -150,11 +150,11 @@ GridLayout {
         onUpdateCheck: function(available) {
             if(window.active) {
                 if(available) {
-                    updateInfo.text = "An Update of the Launcher is available for download<br/>" + (updateUrl.length !== 0 ? "You can download the new Update here: " + updateUrl + "<br/>" : "") + "Do you want to update now?";
+                    updateInfo.text = qsTr("An Update of the Launcher is available for download") + "<br/>" + (updateUrl.length !== 0 ? qsTr("You can download the new Update here: %1").arg(updateUrl) + "<br/>" : "") + qsTr("Do you want to update now?");
                     updateInfo.standardButtons = StandardButton.Yes | StandardButton.No
                 } else {
                     updateInfo.standardButtons = StandardButton.Ok
-                    updateInfo.text = "You installed Launcher Version " + LAUNCHER_VERSION_NAME + " (build " + LAUNCHER_VERSION_CODE + ") seems uptodate"
+                    updateInfo.text = qsTr("Your installed Launcher Version %1 (build %2) seems uptodate").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
                 }
                 updateInfo.open()
             }
@@ -163,12 +163,12 @@ GridLayout {
 
     MessageDialog {
         id: updateError
-        title: "Update failed"
+        title: qsTr("Update failed")
     }
 
     MessageDialog {
         id: updateInfo
-        title: "Update Information"
+        title: qsTr("Update Information")
         onYes: {
             if (updateUrl.length !== 0) {
                 Qt.openUrlExternally(updateUrl)
