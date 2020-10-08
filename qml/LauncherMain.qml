@@ -218,8 +218,8 @@ ColumnLayout {
             PlayButton {
                 id: pbutton
                 Layout.alignment: Qt.AlignHCenter
-                text: (gameLauncher.running ? "Open log" : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? "Please sign in again" : "Download and play") : "Sign in or import .apk") : checkSupport() ? "Play" : "Unsupported Version")).toUpperCase()
-                subText: gameLauncher.running ? "Game is running" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : "Please wait...")
+                text: (gameLauncher.running ? qsTr("Open log") : (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in or import .apk")) : checkSupport() ? qsTr("Play") : qsTr("Unsupported Version"))).toUpperCase()
+                subText: gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))
                 Layout.maximumWidth: 400
                 Layout.fillWidth: true
                 Layout.preferredHeight: 70

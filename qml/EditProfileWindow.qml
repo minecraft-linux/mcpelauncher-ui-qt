@@ -49,7 +49,7 @@ Window {
                 }
 
                 MButton {
-                    text: "Delete profile"
+                    text: qsTr("Delete profile")
                     Layout.rightMargin: 20
                     visible: profile !== null && profile !== profileManager.defaultProfile
                     onClicked: {
@@ -121,13 +121,13 @@ Window {
                     if (!hideLatest) {
                         var support = checkGooglePlayLatestSupport()
                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
-                        versionsmodel.append({name: "Latest " + (latest.length === 0 ? "version" : latest) + " (" + (support ? "Google Play" : "compatible") + ")", versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
+                        versionsmodel.append({name: qsTr("Latest") + " " + (latest.length === 0 ? "version" : latest) + " (" + (support ? "Google Play" : qsTr("compatible")) + ")", versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
                     }
                     for (var i = 0; i < versions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
                             for (var k = 0; k < versions[i].archs.length; k++) {
                                 if (versions[i].archs[k] == abis[j]) {
-                                    versionsmodel.append({name: versions[i].versionName + " (installed, " + versions[i].archs.join(", ") + ")", versionType: ProfileInfo.LOCKED_CODE, obj: versions[i]})
+                                    versionsmodel.append({name: versions[i].versionName + " (" + qsTr("installed") + ", " + versions[i].archs.join(", ") + ")", versionType: ProfileInfo.LOCKED_CODE, obj: versions[i]})
                                     break;
                                 }
                             }
