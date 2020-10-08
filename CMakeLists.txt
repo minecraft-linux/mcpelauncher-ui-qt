@@ -8,17 +8,24 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Quick Concurrent Svg REQUIRED)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Qt5 COMPONENTS Core Quick Concurrent Svg LinguistTools REQUIRED)
 
 option(ENABLE_UPDATE_CHECK "Enables update checking with a remote server")
 set(UPDATE_CHECK_URL "" CACHE STRING "Specify the URL for the server to check for updates on")
 set(UPDATE_CHECK_BUILD_ID "" CACHE STRING "Specify the numeral version number for the current build")
 
+qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} mcpelauncher_en.ts mcpelauncher_de.ts)
+configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
 find_package(Qt5QuickCompiler)
 if (Qt5QuickCompiler_FOUND)
-    qtquick_compiler_add_resources(RESOURCES qml.qrc)
+    qtquick_compiler_add_resources(RESOURCES qml.qrc ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc ${QM_FILES})
 else ()
-    set(RESOURCES qml.qrc)
+    set(RESOURCES qml.qrc ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc ${QM_FILES})
 endif ()
 
 add_executable(${PROJECT_NAME} main.cpp launcherapp.cpp launcherapp.h googleloginhelper.cpp googleloginhelper.h googleaccount.h versionmanager.cpp versionmanager.h apkextractiontask.cpp apkextractiontask.h googleplayapi.cpp googleplayapi.h googleversionchannel.cpp googleversionchannel.h googleapkdownloadtask.cpp googleapkdownloadtask.h gamelauncher.cpp gamelauncher.h profilemanager.cpp profilemanager.h qmlurlutils.h archivalversionlist.cpp archivalversionlist.h launchersettings.h troubleshooter.cpp troubleshooter.h updatechecker.cpp updatechecker.h supportedandroidabis.cpp supportedandroidabis.h cpuid.cpp cpuid.h ${RESOURCES})

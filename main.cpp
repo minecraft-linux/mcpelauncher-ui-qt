@@ -15,6 +15,8 @@
 #include "launcherapp.h"
 #include "troubleshooter.h"
 #include "updatechecker.h"
+
+#include <QTranslator>
 #include <curl/curl.h>
 
 int main(int argc, char *argv[])
@@ -30,6 +32,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
 
     LauncherApp app(argc, argv);
+    QTranslator translator;
+    if (translator.load(QLocale(), QLatin1String("mcpelauncher"), QLatin1String("_"), QLatin1String(":/translations"))) {
+        app.installTranslator(&translator);
+    } else {
+        qDebug() << "cannot load translator " << QLocale().name() << " check content of translations.qrc";
+    }
 
     app.setQuitOnLastWindowClosed(false);
     qmlRegisterType<QEvent>();
