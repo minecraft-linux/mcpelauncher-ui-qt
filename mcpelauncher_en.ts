@@ -86,6 +86,109 @@
     </message>
 </context>
 <context>
+    <name>LauncherSettingsGeneral</name>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="16"/>
+        <source>Google Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="36"/>
+        <source>Sign out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="36"/>
+        <source>Sign in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="50"/>
+        <source>Show log when starting the game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="59"/>
+        <source>Hide the launcher when starting the game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="68"/>
+        <source>Disable the GameLog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="77"/>
+        <source>Enable checking for updates (startup)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="85"/>
+        <source>Show incompatible versions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="93"/>
+        <source>Show Beta Versions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="104"/>
+        <source>Run troubleshooter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="111"/>
+        <source>Open GameData Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="117"/>
+        <source>Check for Updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="123"/>
+        <source>Reset Launcher Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="134"/>
+        <source>Please reopen the Launcher to see the changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="153"/>
+        <source>An Update of the Launcher is available for download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="153"/>
+        <source>You can download the new Update here: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="153"/>
+        <source>Do you want to update now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="157"/>
+        <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="166"/>
+        <source>Update failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="171"/>
+        <source>Update Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LauncherSettingsWindow</name>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="42"/>
