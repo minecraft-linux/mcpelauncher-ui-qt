@@ -74,7 +74,7 @@ Window {
             property int labelFontSize: 11
 
             Text {
-                text: "Profile Name"
+                text: qsTr("Profile Name")
                 font.pointSize: parent.labelFontSize
             }
             MTextField {
@@ -83,7 +83,7 @@ Window {
             }
 
             Text {
-                text: "Version"
+                text: qsTr("Version")
                 font.pointSize: parent.labelFontSize
             }
             MComboBox {
@@ -154,7 +154,7 @@ Window {
 
             MCheckBox {
                 id: dataDirCheck
-                text: "Data directory"
+                text: qsTr("Data directory")
                 font.pointSize: parent.labelFontSize
             }
             RowLayout {
@@ -185,7 +185,7 @@ Window {
 
             MCheckBox {
                 id: windowSizeCheck
-                text: "Window size"
+                text: qsTr("Window size")
                 font.pointSize: parent.labelFontSize
             }
             RowLayout {
@@ -239,7 +239,7 @@ Window {
 
                 PlayButton {
                     Layout.preferredWidth: 150
-                    text: "Save"
+                    text: qsTr("Save")
                     enabled: !profileName.enabled || profileName.text.length > 0
                     onClicked: {
                         saveProfile()
@@ -249,7 +249,7 @@ Window {
 
                 PlayButton {
                     Layout.preferredWidth: 150
-                    text: "Cancel"
+                    text: qsTr("Cancel")
                     onClicked: close()
                 }
 
@@ -356,14 +356,14 @@ Window {
 
     MessageDialog {
         id: profileNameConflictDialog
-        text: "A profile with the specified name already exists"
-        title: "Profile Edit Error"
+        text: qsTr("A profile with the specified name already exists")
+        title: qsTr("Profile Edit Error")
     }
 
     MessageDialog {
         id: profileInvalidNameDialog
-        text: "The specified profile name is not valid"
-        title: "Profile Edit Error"
+        text: qsTr("The specified profile name is not valid")
+        title: qsTr("Profile Edit Error")
     }
 
 }

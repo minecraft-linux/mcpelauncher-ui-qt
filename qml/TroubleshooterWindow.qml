@@ -19,7 +19,7 @@ Window {
     minimumWidth: 500
     minimumHeight: 400
     flags: Qt.Dialog
-    title: "Troubleshooting"
+    title: qsTr("Troubleshooting")
 
     ColumnLayout {
         id: layout

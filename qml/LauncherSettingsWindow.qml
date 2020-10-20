@@ -15,7 +15,7 @@ Window {
     minimumWidth: 500
     minimumHeight: layout.implicitHeight
     flags: Qt.Dialog
-    title: "Launcher Settings"
+    title: qsTr("Launcher Settings")
 
     ColumnLayout {
         id: layout
@@ -64,15 +64,15 @@ Window {
                     background: null
 
                     MTabButton {
-                        text: "General"
+                        text: qsTr("General")
                         width: implicitWidth
                     }
                     MTabButton {
-                        text: "Versions"
+                        text: qsTr("Versions")
                         width: implicitWidth
                     }
                     MTabButton {
-                        text: "About"
+                        text: qsTr("About")
                         width: implicitWidth
                     }
                 }
@@ -117,7 +117,7 @@ Window {
 
                 PlayButton {
                     Layout.preferredWidth: 150
-                    text: "Close"
+                    text: qsTr("Close")
                     onClicked: close()
                 }
 

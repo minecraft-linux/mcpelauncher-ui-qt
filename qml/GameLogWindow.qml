@@ -16,7 +16,7 @@ Window {
     height: 400
     minimumWidth: 500
     minimumHeight: 400
-    title: "Game Log"
+    title: qsTr("Game Log")
 
     ColumnLayout {
         id: layout
@@ -75,7 +75,7 @@ Window {
                 width: parent.width - rectangle.horizontalPadding * 2
 
                 Text {
-                    text: "It seems that Minecraft or the Launcher has crashed"
+                    text: qsTr("It seems that Minecraft or the Launcher has crashed")
                     Layout.fillWidth: true
                     font.weight: Font.Bold
                     wrapMode: Text.WordWrap
@@ -89,13 +89,13 @@ Window {
                     visible: !launcherSettings.disableGameLog && !launcherSettings.showUnsupported
                 }
                 Text {
-                    text: "Please don't report this error. Reenable Gamelog in Settings and reopen the Game to report an error"
+                    text: qsTr("Please don't report this error. Reenable Gamelog in Settings and reopen the Game to report an error")
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     visible: launcherSettings.disableGameLog
                 }
                 Text {
-                    text: "Please don't report this error. Disable show incompatible Versions and reopen the Game to report an error, because you may ran an incompatible version"
+                    text: qsTr("Please don't report this error. Disable show incompatible Versions and reopen the Game to report an error, because you may ran an incompatible version")
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     visible: launcherSettings.showUnsupported

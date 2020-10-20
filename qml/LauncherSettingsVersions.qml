@@ -9,7 +9,7 @@ ColumnLayout {
     RowLayout {
 
         MButton {
-            text: "Delete selected"
+            text: qsTr("Delete selected")
             onClicked: {
                 if (versions.currentIndex == -1)
                     return;
@@ -18,7 +18,7 @@ ColumnLayout {
         }
 
         MButton {
-            text: "Import .apk"
+            text: qsTr("Import .apk")
             onClicked: apkImportWindow.pickFile()
         }
 
