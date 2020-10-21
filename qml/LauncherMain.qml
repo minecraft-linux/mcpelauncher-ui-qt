@@ -11,6 +11,7 @@ ColumnLayout {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property ProfileManager profileManager
+    property GooglePlayApi playApi
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
 
@@ -256,34 +257,8 @@ ColumnLayout {
 
     }
 
-    GooglePlayApi {
-        id: playApi
-        login: googleLoginHelper
-
-        onInitError: function(err) {
-            playDownloadError.text = err + "\nPlease login again";
-            playDownloadError.open()
-        }
-
-        onAppInfoReceived: function(pkg, versionStr, versionCode) {
-            console.log("Got app info " + versionStr + " " + versionCode)
-        }
-
-        onTosApprovalRequired: function(tos, marketing) {
-            googleTosApprovalWindow.tosText = tos
-            googleTosApprovalWindow.marketingText = marketing
-            googleTosApprovalWindow.show()
-        }
-    }
-
-    GoogleVersionChannel {
-        id: playVerChannel
-        playApi: playApi
-    }
-
     GoogleApkDownloadTask {
         id: playDownloadTask
-        playApi: playApi
         packageName: "com.mojang.minecraftpe"
         onProgress: downloadProgress.value = progress
         onError: function(err) {
@@ -293,6 +268,9 @@ ColumnLayout {
         onFinished: {
             apkExtractionTask.sources = filePaths
             apkExtractionTask.start()
+        }
+        Component.onCompleted: {
+            playDownloadTask.setPlayApi(playApi)
         }
     }
 
@@ -314,160 +292,6 @@ ColumnLayout {
             launchGame()
         }
     }
-
-    LauncherSettingsWindow {
-        id: launcherSettingsWindow
-    }
-
-    GameLogWindow {
-        id: gameLogWindow
-        launcher: gameLauncher
-
-        MessageDialog {
-            id: errorDialog
-            title: "Launcher Error"
-        }
-    }
-
-    TroubleshooterWindow {
-        id: troubleshooterWindow
-    }
-
-    MessageDialog {
-        id: corruptedInstallDialog
-        title: "Unsupported Minecraft Version"
-        text: "Your previously downloaded Minecraft Version might be unsupported or just corrupted.<br/><b>if you wanted to play a Beta or a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b><br/>otherwise if you have updated the Launcher recently.<br/>e.g. a crash please delete it in Settings,<br/>then download it again via the updated Launcher."
-    }
-
-    GameLauncher {
-        id: gameLauncher
-        onLaunchFailed: {
-            exited();
-            showLaunchError("Could not execute the game launcher. Please make sure it's dependencies are properly installed.<br><a href=\"https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/appimage\">Click here for more information Linux (Description)</a><br>This means for macOS you cannot use this launcher")
-        }
-        onStateChanged: {
-            if (!running)
-                exited();
-            if (crashed) {
-                application.setVisibleInDock(true);
-                gameLogWindow.show()
-                gameLogWindow.requestActivate()
-            }
-        }
-        onCorruptedInstall: {
-            corruptedInstallDialog.open()
-        }
-        function exited() {
-            application.setVisibleInDock(true);
-            window.show();
-        }
-    }
-
-    MessageDialog {
-        id: closeRunningDialog
-        title: "Game is running"
-        text: "Minecraft is currently running. Would you like to forcibly close it?"
-        standardButtons: StandardButton.Ignore | StandardButton.Yes | StandardButton.No
-        modality: Qt.ApplicationModal
-
-        onYes: {
-            gameLauncher.kill()
-            application.quit()
-        }
-
-        onAccepted: {
-            if(window.visible) {
-                window.hide();
-            }
-            if(gameLogWindow.visible) {
-                gameLogWindow.hide();
-            }
-        }
-    }
-
-    MessageDialog {
-        id: restartDialog
-        title: "Please restart"
-        text: "Update finished, please restart the AppImage"
-    }
-
-    UpdateChecker {
-        id: updateChecker
-
-        onUpdateAvailable: {
-            hasUpdate = true
-            updateDownloadUrl = downloadUrl
-        }
-        onProgress: downloadProgress.value = progress
-        onRequestRestart: {
-            restartDialog.open()
-        }
-    }
-
-    MessageDialog {
-        id: warnUnsupportedABIDialog
-    }
-
-    Connections {
-        target: googleLoginHelper
-        onAccountInfoChanged: {
-            if (googleLoginHelper.account !== null)
-                playApi.handleCheckinAndTos()
-        }
-        onLoginError: function(err) {
-            playDownloadError.text = err + "\nPlease login again";
-            playDownloadError.open()
-        }
-    }
-
-
-    Connections {
-        target: window
-        onClosing: {
-            if(!gameLogWindow.visible) {
-                if (gameLauncher.running) {
-                    close.accepted = false
-                    closeRunningDialog.open()
-                } else {
-                    application.quit();
-                }
-            }
-        }
-    }
-
-    Connections {
-        target: gameLogWindow
-        onClosing: {
-            if(!window.visible) {
-                if (gameLauncher.running) {
-                    close.accepted = false
-                    closeRunningDialog.open()
-                } else {
-                    application.quit();
-                }
-            } else {
-                gameLauncher.logDetached();
-            }
-        }
-    }
-
-    Connections {
-        target: application
-        onClosing: {
-            /*if (gameLauncher.running) {
-                close.accepted = false
-                closeRunningDialog.open()
-            }*/
-        }
-    }
-
-    Component.onCompleted: {
-        if(launcherSettings.checkForUpdates)
-            updateChecker.sendRequest()
-        playApi.handleCheckinAndTos()
-        versionManager.downloadLists(googleLoginHelper.getAbis())
-    }
-
 
     /* utility functions */
 
@@ -514,6 +338,10 @@ ColumnLayout {
             return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         if (code === playVerChannel.latestVersionCode)
             return playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
+        var ver = versionManager.versions.get(code)
+        if (ver !== null) {
+            return ver.versionName + " (" + code + ", " + ver.archs.join(", ") + ")";
+        }
     }
 
     function getDisplayedVersionName() {
