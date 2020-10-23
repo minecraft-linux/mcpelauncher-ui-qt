@@ -137,7 +137,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
         else {
             auto len = strlen(errorbuf->errormsg);
-            emit error(tr("CURL Network error: %1").arg(len ? errorbuf->errormsg : QObject::tr("Unknown error")));
+            emit error(QObject::tr("CURL Network error: %1").arg(len ? errorbuf->errormsg : QObject::tr("Unknown error")));
             _error();
         }
     }, [this, file, zs, fd, isGzipped, _error, errorbuf](std::exception_ptr e) {
