@@ -15,6 +15,7 @@ struct SupportReport
 };
 
 bool Supports32Bit();
+bool ProcessIsTranslated();
 
 class SupportedAndroidAbis {
 public:

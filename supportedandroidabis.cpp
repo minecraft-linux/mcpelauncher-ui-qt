@@ -1,20 +1,28 @@
 #include "supportedandroidabis.h"
+#include <QObject>
+#ifdef __APPLE__
+#include <sys/sysctl.h>
+#endif
 
 bool AndroidAbiComparer::operator()(const std::string &a, const std::string &b) const {
-    return (
+    // Swap arm / x86 order for arm64 macbook running x86_64 GUI
+    auto native = ProcessIsTranslated() ? 
 #if defined(__i386__) || defined(__x86_64__)
-    a.length() && a.at(0) == 'x' && b.length() && b.at(0) != 'x'
+'x' : 'a'
 #elif defined(__arm__) || defined(__aarch64__)
-    a.length() && a.at(0) == 'a' && b.length() && b.at(0) != 'a'
+'a' : 'x'
+#else
+#error "Unsupported Platform"
 #endif
-    ) || (a.find("64")
-#ifdef PREFER_32BIT
+;
+return (a.length() && a.at(0) == native && b.length() && b.at(0) != native) || (a.find("64")
+#if defined(PREFER_32BIT) || defined(__i386__) || defined(__arm__) || defined(DISABLE_64BIT)
     ==
 #else
     !=
 #endif
     std::string::npos && b.find("64")
-#ifdef PREFER_32BIT
+#if defined(PREFER_32BIT) || defined(__i386__) || defined(__arm__) || defined(DISABLE_64BIT)
     !=
 #else
     ==
@@ -51,15 +59,15 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 #if !defined(DISABLE_64BIT) && !defined(__i386__)
         abis["x86_64"] = { .compatible = true, .launchername = "mcpelauncher-client" };
 #else
-        abis["x86_64"] = { .compatible = false, .details = "Disabled in this Launcher Release, please download a different distribution" };
+        abis["x86_64"] = { .compatible = false, .details = QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString() };
 #endif
     } else {
         std::stringstream error;
-        error << "Your Computer is to old for running Android x86_64 64bit Games<br/>";
+        error << QObject::tr("Your Computer is to old for running Android x86_64 64bit Games").toStdString() << "<br/>";
 #if defined(DISABLE_64BIT) || defined(__i386__)
-        error << "Disabled in this Launcher Release, please download a different distribution<br/>";
+        error << QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString() << "<br/>";
 #endif
-        error << "Android expect the following unavailable Instruction Sets to be available:<br/>";
+        error << QObject::tr("Android expect the following unavailable Instruction Sets to be available:").toStdString() << "<br/>";
         std::vector<std::string> missing;
         if (!hasssse3) {
             missing.push_back("SSSE3");
@@ -92,26 +100,26 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
         x86.compatible = true;
 #else
         x86.compatible = false;
-        x86.details = "Disabled in this Launcher Release, please download a different distribution";
+        x86.details = QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString();
 #endif
     } else {
         std::stringstream error;
         if (!Supports32Bit()) {
-            x86.details = "Your Operating System doesn't support (old) x86 32bit games<br/>";
+            x86.details = QObject::tr("Your Operating System doesn't support (old) x86 32bit games").toStdString();
         }
         if(!hasssse3) {
-            error << "Your Computer is to old for running Android x86 32bit Games<br/>";
+            error << QObject::tr("Your Computer is to old for running Android x86 32bit Games").toStdString() << "<br/>";
 #ifdef DISABLE_32BIT
             error << "Disabled in this Launcher Release, please download a different distribution<br/>";
 #endif
-            error << "Android expect the following unavailable Instruction Sets to be available:<br/>";
+            error << QObject::tr("Android expect the following unavailable Instruction Sets to be available:").toStdString() << "<br/>";
             error << "SSSE3<br/>";
         }
         x86.compatible = false;
         x86.details = error.str();
     }
-    abis["armeabi-v7a"] = { .compatible = false, .launchername = "mcpelauncher-client-armeabi-v7a", .details ="Not an armv7 System"};
-    abis["arm64-v8a"] = { .compatible = false, .launchername = "mcpelauncher-client-arm64-v8a", .details = "Not an aarch64 System"};
+    abis["armeabi-v7a"] = { .compatible = false, .launchername = "mcpelauncher-client-armeabi-v7a", .details = QObject::tr("Not an armv7 System").toStdString() };
+    abis["arm64-v8a"] = { .compatible = ProcessIsTranslated() /* Should work on arm64 macbook, while using rosetta */, .launchername = "mcpelauncher-client-arm64-v8a", .details = QObject::tr("Not an aarch64 System").toStdString() };
 #elif defined(__arm__) || defined(__aarch64__)
     auto&& arm = abis["armeabi-v7a"];
     arm.launchername = "mcpelauncher-client"
@@ -121,24 +129,38 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
     ;
 #if defined(__aarch64__)
 #if !defined(DISABLE_64BIT)
+        abis["arm64-v8a"] = "mcpelauncher-client";
         abis["arm64-v8a"].compatible = true;
 #else
+        abis["arm64-v8a"] = "mcpelauncher-client-arm64-v8a";
         abis["arm64-v8a"].compatible = false;
-        abis["arm64-v8a"].details = "Disabled in this Launcher Release, not supported yet";
+        abis["arm64-v8a"].details = QObject::tr("Disabled in this Launcher Release").toStdString();
 #endif
-    abis["x86"] = { .compatible = false, .launchername = "mcpelauncher-client-x86", .details ="Not a x86 System"};
-    abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = "Not a x86_64 System"};
+    abis["x86"] = { .compatible = false, .launchername = "mcpelauncher-client-x86", .details = QObject::tr("Not a x86 System").toStdString() };
+    abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = QObject::tr("Not a x86_64 System").toStdString() };
 #else
-    abis["arm64-v8a"] = { .compatible = false, .launchername = "mcpelauncher-client-arm64-v8a", .details = "Not an aarch64 System"};
-    abis["x86"] = { .compatible = false, .launchername = "mcpelauncher-client-x86", .details ="Not a x86 System"};
-    abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = "Not a x86_64 System"};
+    abis["arm64-v8a"] = { .compatible = false, .launchername = "mcpelauncher-client-arm64-v8a", .details = QObject::tr("Not an aarch64 System").toStdString() };
+    abis["x86"] = { .compatible = false, .launchername = "mcpelauncher-client-x86", .details = QObject::tr("Not a x86 System").toStdString() };
+    abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = QObject::tr("Not a x86_64 System").toStdString() };
 #endif
 #if !defined(DISABLE_32BIT)
         arm.compatible = true;
 #else
         arm.compatible = false;
-        arm.details = "Disabled in this Launcher Release, please download a different distribution";
+        arm.details = QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString();
 #endif
 #endif
     return abis;
+}
+
+bool ProcessIsTranslated() {
+#ifdef __APPLE__
+// Reference https://developer.apple.com/documentation/apple_silicon/about_the_rosetta_translation_environment
+// Returns true if x86_64 version runs under arm64 macbook
+    int ret = 0;
+    size_t size = sizeof(ret);
+    return sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) != -1 && ret;
+#else
+    return 0;
+#endif
 }
