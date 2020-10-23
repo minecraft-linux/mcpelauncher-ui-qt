@@ -12,7 +12,7 @@ QList<QObject*> Troubleshooter::findIssues() {
     findLauncherIssues(ret);
 #ifndef __APPLE__
     if (!QFileInfo("/usr/bin/zenity").exists()) {
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_ZENITY_NOT_FOUND, "Zenity utility not found", "You may be unable to pick files in the launcher."))
+        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_ZENITY_NOT_FOUND, tr("Zenity utility not found"), tr("You may be unable to pick files in the launcher.")))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#file-picking-doesn-t-work-or-crashes"));
     }
 #endif
@@ -22,14 +22,14 @@ QList<QObject*> Troubleshooter::findIssues() {
 void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
     auto path = GameLauncher::findLauncher("mcpelauncher-client");
     if (path.empty()) {
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NOT_FOUND, "Game launcher not found", "Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program)."))
+        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NOT_FOUND, tr("Game launcher not found"), tr("Could not find the game launcher. Please make sure it's properly installed (it must exist in the PATH variable used when starting this program).")))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#could-not-find-the-game-launcher"));
         return;
     }
     QProcess process;
     process.start(path.c_str(), {"-v"});
     if (!process.waitForFinished()) {
-        ret.append(new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_VERSION_QUERY_FAILED, "Failed to query game launcher version information", "An error occurred while trying to run `mcpelauncher-client -v`: " + process.errorString()));
+        ret.append(new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_VERSION_QUERY_FAILED, tr("Failed to query game launcher version information"), tr("An error occurred while trying to run `mcpelauncher-client -v`: %1").arg(process.errorString())));
         return;
     }
     QStringList lines = QString::fromUtf8(process.readAll()).split("\n");
@@ -45,12 +45,14 @@ void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
             break;
         versionInfo[line.left(iof)] = line.mid(iof + 2).trimmed();
     }
+#if defined(__x86_64__) || defined(__i386__)
     if (versionInfo["SSSE3 support"] != "YES")
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NO_SSSE3_SUPPORT, "No CPU SSSE3 support", "Your CPU may be unsupported and the game may crash on startup.")));
+        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NO_SSSE3_SUPPORT, tr("No CPU SSSE3 support"), tr("Your CPU may be unsupported and the game may crash on startup."))));
+#endif
     if (versionInfo["GL Renderer"].count("llvmpipe") > 0)
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_SOFTWARE_RENDERER, "Software rendering", "The game is using the software (CPU) rendering. This will negatively impact performance."))
+        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_SOFTWARE_RENDERER, tr("Software rendering"), ("The game is using the software (CPU) rendering. This will negatively impact performance.")))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#graphics-performance-issues-software-rendering"));
     if (versionInfo["MSA daemon path"].isEmpty())
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_MSA_NOT_FOUND, "MSA daemon could not be found", "The MSA component has not been installed properly. Xbox Live login may not work."))
+        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_MSA_NOT_FOUND, tr("MSA daemon could not be found"), tr("The MSA component has not been installed properly. Xbox Live login may not work.")))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#msa-daemon-could-not-be-found"));
 }
