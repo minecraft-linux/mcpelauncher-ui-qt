@@ -27,7 +27,7 @@
         <location filename="qml/EditProfileWindow.qml" line="124"/>
         <source>Latest %1 (%2)</source>
         <oldsource>Latest</oldsource>
-        <translation type="unfinished">Neuste</translation>
+        <translation type="unfinished">Aktuelle %1 (%2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="124"/>
@@ -48,7 +48,7 @@
         <location filename="qml/EditProfileWindow.qml" line="130"/>
         <source>%1 (installed, %2)</source>
         <oldsource>installed</oldsource>
-        <translation type="unfinished">installiert</translation>
+        <translation type="unfinished">%1 (installiert, %2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="139"/>
@@ -489,6 +489,11 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="googleapkdownloadtask.cpp" line="140"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="supportedandroidabis.cpp" line="62"/>
         <location filename="supportedandroidabis.cpp" line="68"/>
         <location filename="supportedandroidabis.cpp" line="103"/>
@@ -682,6 +687,16 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="110"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/TroubleshooterWindow.qml" line="113"/>
+        <source>No issues found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/TroubleshooterWindow.qml" line="113"/>
+        <source>No launcher installation issues were found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

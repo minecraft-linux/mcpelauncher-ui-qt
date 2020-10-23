@@ -557,6 +557,11 @@ missing Symbols expected to be provided by this Launcher via updates
         <source>Downloading file failed: Status[%1] &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="googleapkdownloadtask.cpp" line="140"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Troubleshooter</name>
@@ -667,6 +672,16 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="110"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/TroubleshooterWindow.qml" line="113"/>
+        <source>No issues found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/TroubleshooterWindow.qml" line="113"/>
+        <source>No launcher installation issues were found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
