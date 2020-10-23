@@ -3,5 +3,6 @@
   <qresource prefix="/translations">
     <file>mcpelauncher_en.qm</file>
     <file>mcpelauncher_de.qm</file>
+    <file>mcpelauncher_fr.qm</file>
   </qresource>
 </RCC>

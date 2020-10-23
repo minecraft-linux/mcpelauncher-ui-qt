@@ -20,7 +20,7 @@ set(UPDATE_CHECK_BUILD_ID "" CACHE STRING "Specify the numeral version number fo
 
 set(LAUNCHER_LINUIST_RESOURCES "")
 if (Qt5LinguistTools_FOUND)
-    qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} mcpelauncher_en.ts mcpelauncher_de.ts)
+    qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} mcpelauncher_en.ts mcpelauncher_de.ts mcpelauncher_fr.ts)
     configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
     set(LAUNCHER_LINUIST_RESOURCES ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc ${QM_FILES})
 endif()
