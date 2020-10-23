@@ -90,6 +90,18 @@ void VersionManager::removeVersion(VersionInfo* version) {
     emit versionListChanged();
 }
 
+void VersionManager::removeVersion(VersionInfo* version, QStringList abis) {
+    auto val = m_versions.find(version->versionCode);
+    if (val.value() != version)
+        return;
+    for (auto&& abi : abis) {
+        QDir(getDirectoryFor(version) + "/lib/" + abi).removeRecursively();;
+    }
+    m_versions.erase(val);
+    saveVersions();
+    emit versionListChanged();
+}
+
 bool VersionManager::checkSupport(VersionInfo* version) {
     if(!version) return false;
     return checkSupport(version->directory);

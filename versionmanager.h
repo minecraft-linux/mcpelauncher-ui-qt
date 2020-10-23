@@ -111,6 +111,8 @@ public slots:
 
     void removeVersion(VersionInfo* version);
 
+    void removeVersion(VersionInfo* version, QStringList abis);
+
     void downloadLists(QStringList abis) {
         m_archival.downloadLists(abis);
     }
