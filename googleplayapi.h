@@ -45,6 +45,8 @@ signals:
 
     void appInfoReceived(QString const& packageName, QString const& version, int versionCode, bool isBeta);
 
+    void appInfoFailed(QString errorMessage);
+
 public slots:
     void handleCheckinAndTos();
 

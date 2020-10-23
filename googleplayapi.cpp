@@ -20,8 +20,12 @@ void GooglePlayApi::requestAppInfo(const QString &packageName) {
     api->details(packageName.toStdString())->call([this, packageName](playapi::proto::finsky::response::ResponseWrapper&& resp) {
         auto details = resp.payload().detailsresponse().docv2();
         emit appInfoReceived(packageName, QString::fromStdString(details.details().appdetails().versionstring()), details.details().appdetails().versioncode(), details.details().appdetails().testingprograminfo().subscribed() || details.details().appdetails().testingprograminfo().subscribed1() );
-    }, [](std::exception_ptr e) {
-        //
+    }, [this](std::exception_ptr e) {
+        try {
+            std::rethrow_exception(e);
+        } catch (std::exception&ex) {
+            emit appInfoFailed(ex.what());
+        }
     });
 }
 
