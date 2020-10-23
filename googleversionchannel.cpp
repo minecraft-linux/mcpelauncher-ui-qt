@@ -13,9 +13,11 @@ void GoogleVersionChannel::setPlayApi(GooglePlayApi *value) {
     m_playApi = value;
     connect(value, &GooglePlayApi::ready, this, &GoogleVersionChannel::onApiReady);
     connect(value, &GooglePlayApi::appInfoReceived, this, &GoogleVersionChannel::onAppInfoReceived);
+    connect(value, &GooglePlayApi::appInfoFailed, this, &GoogleVersionChannel::onAppInfoFailed);
 }
 
 void GoogleVersionChannel::onApiReady() {
+    setStatus(GoogleVersionChannelStatus::PENDING);
     m_playApi->requestAppInfo("com.mojang.minecraftpe");
 }
 
@@ -28,5 +30,10 @@ void GoogleVersionChannel::onAppInfoReceived(const QString &packageName, const Q
         m_settings.setValue("latest_version_code", m_latestVersionCode);
         m_settings.setValue("latest_version_isbeta", m_latestVersionIsBeta);
         emit latestVersionChanged();
+        setStatus(GoogleVersionChannelStatus::SUCCEDED);
     }
+}
+
+void GoogleVersionChannel::onAppInfoFailed(const QString &errorMessage) {
+    setStatus(GoogleVersionChannelStatus::FAILED);
 }
