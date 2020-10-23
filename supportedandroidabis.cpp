@@ -59,7 +59,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 #if !defined(DISABLE_64BIT) && !defined(__i386__)
         abis["x86_64"] = { .compatible = true, .launchername = "mcpelauncher-client" };
 #else
-        abis["x86_64"] = { .compatible = false, .details = QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString() };
+        abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = QObject::tr("Disabled in this Launcher Release, please download a different distribution").toStdString() };
 #endif
     } else {
         std::stringstream error;
@@ -129,10 +129,10 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
     ;
 #if defined(__aarch64__)
 #if !defined(DISABLE_64BIT)
-        abis["arm64-v8a"] = "mcpelauncher-client";
+        abis["arm64-v8a"].launchername = "mcpelauncher-client";
         abis["arm64-v8a"].compatible = true;
 #else
-        abis["arm64-v8a"] = "mcpelauncher-client-arm64-v8a";
+        abis["arm64-v8a"].launchername = "mcpelauncher-client-arm64-v8a";
         abis["arm64-v8a"].compatible = false;
         abis["arm64-v8a"].details = QObject::tr("Disabled in this Launcher Release").toStdString();
 #endif
