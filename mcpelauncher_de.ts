@@ -191,6 +191,16 @@ missing Symbols expected to be provided by this Launcher via updates
         <source>Unofficial Linux Launcher</source>
         <translation type="unfinished">Inoffizieller Linux und macOS Launcher</translation>
     </message>
+    <message>
+        <location filename="qml/LauncherBase.qml" line="83"/>
+        <source>A new version of the launcher is available. Click to download the update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherBase.qml" line="137"/>
+        <source>Please wait...</source>
+        <translation type="unfinished">Bitte warten...</translation>
+    </message>
 </context>
 <context>
     <name>LauncherChangeLog</name>
@@ -246,9 +256,20 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation>Spiel läuft</translation>
     </message>
     <message>
+        <location filename="qml/LauncherMain.qml" line="21"/>
         <location filename="qml/LauncherMain.qml" line="102"/>
         <source>Please wait...</source>
         <translation>Bitte warten...</translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherMain.qml" line="18"/>
+        <source>Downloading Minecraft...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/LauncherMain.qml" line="20"/>
+        <source>Extracting Minecraft...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="222"/>
@@ -277,97 +298,97 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation>Google Konto</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="40"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="41"/>
         <source>Sign out</source>
         <translation>Abmelden</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="40"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="41"/>
         <source>Sign in</source>
         <translation>Anmelden</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="54"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="55"/>
         <source>Show log when starting the game</source>
         <translation>Öffne den Launcher Log beim starten des Spiels</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="63"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="64"/>
         <source>Hide the launcher when starting the game</source>
         <translation>Verstecke den Launcher beim starten des Spiels</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="72"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="73"/>
         <source>Disable the GameLog</source>
         <translation>Launcher Log deaktivieren</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="81"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="82"/>
         <source>Enable checking for updates (startup)</source>
         <translation>Aktiviere automatische Suche nach Aktualisierungen beim öffnen des Launchers</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="89"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="90"/>
         <source>Show incompatible versions</source>
         <translation>Erlaube das herunterladen von nicht unterstützten Versionen</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="97"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="98"/>
         <source>Show Beta Versions</source>
         <translation>Zeige Beta Version</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="108"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="109"/>
         <source>Run troubleshooter</source>
         <translation>Fehlerdiagnose</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="115"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="116"/>
         <source>Open GameData Folder</source>
         <translation>Öffne den Minecraft ordner</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="121"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="122"/>
         <source>Check for Updates</source>
         <translation>Prüfe nach Aktualisierungen</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="130"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="131"/>
         <source>Reset Launcher Settings</source>
         <translation>Setze den Launcher zurück</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="141"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="142"/>
         <source>Please reopen the Launcher to see the changes</source>
         <translation>Bitte den Launcher erneut öffnen, um den unterschied zu sehen</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="161"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="162"/>
         <source>An Update of the Launcher is available for download</source>
         <translation>Es ist ein Update verfügbar</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="161"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="162"/>
         <source>You can download the new Update here: %1</source>
         <translation>Du kannst es hier %1 herunterladen</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="161"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="162"/>
         <source>Do you want to update now?</source>
         <translation>Möchtest du jetzt das Update herunterladen und installieren?</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="165"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="166"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
         <translation>Deine installierte Launcher Version %1 (build %2) scheint aktuell zu sein</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="173"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="174"/>
         <source>Update failed</source>
         <translation>Update fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="qml/LauncherSettingsGeneral.qml" line="178"/>
+        <location filename="qml/LauncherSettingsGeneral.qml" line="179"/>
         <source>Update Information</source>
         <translation>Update Information</translation>
     </message>
