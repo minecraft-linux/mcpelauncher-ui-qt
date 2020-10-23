@@ -69,8 +69,7 @@ void GameLauncher::start(bool disableGameLog) {
                 emit stateChanged();
                 return;
             } else {
-                errormsg << "Could not find the gamelauncher for Minecraft (" << abi.first << ")\n";
-                errormsg << "Please add the launcher '" << abi.second.launchername << "' to your 'PATH' (environmentvariable) and restart the launcher\n";
+                errormsg << tr("Could not find the gamelauncher for Minecraft (%1)\nPlease add the launcher '%2' to your 'PATH' (environmentvariable) and restart the launcher\n").arg(QString::fromStdString(abi.first)).arg(QString::fromStdString(abi.second.launchername)).toStdString();
             }
         }
     }
@@ -93,18 +92,18 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
     switch (exitCode)
     {
     case 51: // Failed to load Minecraft lib
-        msg = "Incompatible Minecraft installation, please select a different or older Version\nThis Launcher is a free Open Source Software which usually fell behind official updates from Google Play\nIn some cases there are missing game files,\nmissing Symbols expected to be provided by this Launcher via updates\n or otherwise broke the Launcher";
+        msg = tr("Incompatible Minecraft installation, please select a different or older Version\nThis Launcher is a free Open Source Software which usually fell behind official updates from Google Play\nIn some cases there are missing game files,\nmissing Symbols expected to be provided by this Launcher via updates\n or otherwise broke the Launcher");
         emit corruptedInstall();
         break;
     case 127: // Failed to load launcher dependencies (GNU/Linux)
-        msg = "Missing launcher dependencies, please install all missing libraries in their right version";
+        msg = tr("Missing launcher dependencies, please install all missing libraries in their right version");
         emit launchFailed();
         break;
     default:
         if (exitCode != 0) {
-            msg = "Process exited with unexpected exit code: " + QString::number(exitCode) + "\n";
+            msg = tr("Process exited with unexpected exit code: %1\n").arg(exitCode);
         } else {
-            msg = "Process exited normally\n";
+            msg = tr("Process exited normally\n");
         }
         if (m_crashed = (exitCode != 0)) {
             logAttached();
@@ -121,7 +120,7 @@ void GameLauncher::handleError(QProcess::ProcessError error) {
     if (error == QProcess::FailedToStart) {
         m_crashed = true;
         logAttached();
-        emit logAppended("Your system is unable to execute the launcher");
+        emit logAppended(tr("Your system is unable to execute the launcher"));
         emit stateChanged();
         launchFailed();
     }
