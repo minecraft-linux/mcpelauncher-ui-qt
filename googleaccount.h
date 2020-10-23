@@ -5,9 +5,9 @@
 
 class GoogleAccount : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString accountIdentifier READ accountIdentifier WRITE setAccountIdentifier)
-    Q_PROPERTY(QString accountUserId READ accountUserId WRITE setAccountUserId)
-    Q_PROPERTY(QString accountToken READ accountToken WRITE setAccountToken)
+    Q_PROPERTY(QString accountIdentifier READ accountIdentifier WRITE setAccountIdentifier NOTIFY stateChanged)
+    Q_PROPERTY(QString accountUserId READ accountUserId WRITE setAccountUserId NOTIFY stateChanged)
+    Q_PROPERTY(QString accountToken READ accountToken WRITE setAccountToken NOTIFY stateChanged)
 
 private:
     QString m_accountIdentifier;
@@ -19,13 +19,16 @@ public:
     QString const& accountUserId() const { return m_accountUserId; }
     QString const& accountToken() const { return m_accountToken; }
 
-    void setAccountIdentifier(QString const& value) { m_accountIdentifier = value; }
-    void setAccountUserId(QString const& value) { m_accountUserId = value; }
-    void setAccountToken(QString const& value) { m_accountToken = value; }
+    void setAccountIdentifier(QString const& value) { m_accountIdentifier = value; stateChanged(); }
+    void setAccountUserId(QString const& value) { m_accountUserId = value; stateChanged(); }
+    void setAccountToken(QString const& value) { m_accountToken = value; stateChanged(); }
 
     bool isValid() {
         return m_accountIdentifier.size() > 0 && m_accountUserId.size()> 0 && m_accountToken.size() > 0;
     }
+
+signals:
+    void stateChanged();
 };
 
 #endif // GOOGLEACCOUNT_H

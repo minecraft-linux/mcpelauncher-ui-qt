@@ -117,17 +117,17 @@ Window {
                 model: versionsmodel
 
                 Component.onCompleted: {
-                    var abis = googleLoginHelper.getDeviceStateABIs(launcherSettings.showUnsupported)
+                    var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
                     if (!hideLatest) {
                         var support = checkGooglePlayLatestSupport()
                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
-                        versionsmodel.append({name: qsTr("Latest") + " " + (latest.length === 0 ? "version" : latest) + " (" + (support ? "Google Play" : qsTr("compatible")) + ")", versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
+                        versionsmodel.append({name: qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))), versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
                     }
                     for (var i = 0; i < versions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
                             for (var k = 0; k < versions[i].archs.length; k++) {
                                 if (versions[i].archs[k] == abis[j]) {
-                                    versionsmodel.append({name: versions[i].versionName + " (" + qsTr("installed") + ", " + versions[i].archs.join(", ") + ")", versionType: ProfileInfo.LOCKED_CODE, obj: versions[i]})
+                                    versionsmodel.append({name: qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs.join(", ")), versionType: ProfileInfo.LOCKED_CODE, obj: versions[i]})
                                     break;
                                 }
                             }
@@ -136,7 +136,7 @@ Window {
                     for (i = 0; i < archivalVersions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
                             if (archivalVersions[i].abi == abis[j]) {
-                                versionsmodel.append({name: archivalVersions[i].versionName + " (" + archivalVersions[i].abi + ((archivalVersions[i].isBeta ? ", beta" : "") +  ")"), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i]})
+                                versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i]})
                                 break;
                             }
                         }

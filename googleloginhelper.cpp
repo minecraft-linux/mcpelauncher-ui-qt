@@ -122,28 +122,12 @@ void GoogleLoginHelper::signOut() {
     emit accountInfoChanged();
 }
 
-QStringList GoogleLoginHelper::getDeviceStateABIs(bool showUnsupported) {
-    if (hasAccount) {
-        auto supportedabis = SupportedAndroidAbis::getAbis();
-        QStringList abis;
-        for (auto&& abi : device.config_native_platforms) {
-            if (!showUnsupported) {
-                auto res = supportedabis.find(abi);
-                if(res == supportedabis.end() || !res->second.compatible) {
-                    continue;
-                }
-            }
-            abis.append(QString::fromStdString(abi));
-        }
-        return abis;
-    } else {
-        return {};
-    }
-}
-
-QStringList GoogleLoginHelper::getAbis() {
+QStringList GoogleLoginHelper::getAbis(bool includeIncompatible) {
     QStringList abis;
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if (!includeIncompatible && !abi.second.compatible) {
+            continue;
+        }
         abis.append(QString::fromStdString(abi.first));
     }
     return abis;
@@ -152,7 +136,7 @@ QStringList GoogleLoginHelper::getAbis() {
 QString GoogleLoginHelper::GetSupportReport() {
     QString report;
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        report.append("<b>" + QString::fromStdString(abi.first) + "</b> is " + (abi.second.compatible ? "<b><font color=\"#00cc00\">Compatible</font></b><br/>" : "<b><font color=\"#FF0000\">Incompatible</font></b><br/>") + QString::fromStdString(abi.second.details) + "<br/>");
+        report.append(tr("<b>%1</b> is %2%3<br/>").arg(QString::fromStdString(abi.first)).arg(abi.second.compatible ? "<b><font color=\"#00cc00\">" + tr("Compatible") + "</font></b>" : "<b><font color=\"#FF0000\">" + tr("Incompatible") + "</font></b>").arg(abi.second.details.length() ? "<br/>" + QString::fromStdString(abi.second.details) : ""));
     }
     return report;
 }

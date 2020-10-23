@@ -20,6 +20,7 @@ Window {
     minimumHeight: 400
     flags: Qt.Dialog
     title: qsTr("Troubleshooting")
+    property GoogleLoginHelper googleLoginHelper
 
     ColumnLayout {
         id: layout
@@ -75,7 +76,7 @@ Window {
                    linkColor: "#2962FF"
                }
                Text {
-                   text: "<a href=\"" + modelData.wikiUrl + "\">Go to wiki</a>"
+                   text: qsTr("<a href=\"%1\">Go to wiki</a>").arg(modelData.wikiUrl)
                    Layout.fillWidth: true
                    wrapMode: Text.WordWrap
                    linkColor: "#2962FF"
@@ -86,23 +87,6 @@ Window {
                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                        acceptedButtons: Qt.NoButton
                    }
-               }
-               Text {
-                   Layout.fillWidth: true
-                   wrapMode: Text.WordWrap
-                   text: "<b>Android App Compatibility Report:</b><br/>" + googleLoginHelper.GetSupportReport()
-               }
-               Text {
-                   Layout.fillWidth: true
-                   wrapMode: Text.WordWrap
-                   text: "<b>I cannot select / see the latest Version of the Game?</b><br/>" + (googleLoginHelper.account === null ? "You need to sign in with a Google Account owning the Game" : "You need to sign in again and / or restart the launcher to fix it.")
-                   visible: googleLoginHelper.hideLatest
-               }
-               Text {
-                   Layout.fillWidth: true
-                   wrapMode: Text.WordWrap
-                   text: "<b>I cannot select / see older Versions of the Game?</b><br/>" + (googleLoginHelper.account === null ? "You need to sign in with a Google Account owning the Game" : ("You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it." + (googleLoginHelper.getDeviceStateABIs(true).length === 0 ? "<br/>Enable \"Show incompatible Versions\" would show more, but they won't launch on your PC see the compatibility report of the TroubleShooter for more Information" : "")))
-                   visible: googleLoginHelper.account === null || googleLoginHelper.getDeviceStateABIs(false).length === 0
                }
             }
             ScrollBar.vertical: ScrollBar {}
@@ -116,9 +100,18 @@ Window {
     }
 
     function findIssuesAndShow() {
-        issues = troubleshooter.findIssues()
-        if (issues.length == 0)
-            issues = [{shortDesc: "No issues found", longDesc: "No launcher installation issues were found.", wikiUrl: ""}]
+        var qmlissues =  troubleshooter.findIssues()
+        if (googleLoginHelper.hideLatest) {
+            qmlissues.push({shortDesc: qsTr("I cannot select / see the latest Version of the Game?"), longDesc: googleLoginHelper.account === null ? qsTr("You need to sign in with a Google Account owning the Game") : qsTr("You need to sign in again and / or restart the launcher to fix it."), wikiUrl: ""})
+        }
+        if (googleLoginHelper.account === null || googleLoginHelper.getAbis(false).length === 0) {
+            qmlissues.push({shortDesc: qsTr("I cannot select / see older Versions of the Game?"), longDesc: googleLoginHelper.account === null ? qsTr("You need to sign in with a Google Account owning the Game") : qsTr("You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1").arg(googleLoginHelper.getAbis(true).length === 0 ? qsTr("<br/>Enable \"Show incompatible Versions\" would show more, but they won't launch on your PC see the compatibility report of the TroubleShooter for more Information") : ""), wikiUrl: ""})
+        }
+        qmlissues.push({shortDesc: qsTr("Why is the play button disabled for some versions?"), longDesc: qsTr("This launcher doesn't use an emulator and needs a specfic Android App version<br/><Android App Compatibility Report:<br/>If you see one <b><font color=\"#00cc00\">Compatible</font></b> cpu architecture in the following list, then you should be able to use this Launcher<br/>%1").arg(googleLoginHelper.GetSupportReport()), wikiUrl: ""})
+
+        if (qmlissues.length == 0)
+            qmlissues.push({shortDesc: qsTr("No issues found"), longDesc: qsTr("No launcher installation issues were found."), wikiUrl: ""})
+        issues = qmlissues
         show()
     }
 

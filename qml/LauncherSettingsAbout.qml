@@ -8,12 +8,12 @@ ColumnLayout {
     id: columnlayout
     property var maximumWidth: 100
     MButton {
-        text: "Show Changelog"
+        text: qsTr("Show Changelog")
         onClicked: stackView.push(panelChangelog)
     }
     TextEdit {
         textFormat: TextEdit.RichText
-        text: "This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version " + LAUNCHER_VERSION_NAME + " (build " + LAUNCHER_VERSION_CODE + ")<br/> © Copyright 2018-2020, MrARM & contributors"
+        text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version %1 (build %2)<br/> © Copyright 2018-2020, MrARM & contributors").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
         readOnly: true
         wrapMode: Text.WordWrap
         selectByMouse: true

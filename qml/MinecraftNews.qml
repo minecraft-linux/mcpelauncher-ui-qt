@@ -119,7 +119,6 @@ Item {
     }
 
     function loadNews() {
-        console.log("Load news");
         var req = new XMLHttpRequest();
         req.open("GET", "https://www.minecraft.net/content/minecraft-net/_jcr_content.articles.grid?tileselection=auto&tagsPath=minecraft:article/culture,minecraft:article/insider,minecraft:article/merch,minecraft:article/news&propResPath=/content/minecraft-net/language-masters/en-us/jcr:content/root/generic-container/par/grid&count=2000&pageSize=20&tag=News&lang=/content/minecraft-net/language-masters/en-us", true);
         req.onerror = function() {
@@ -145,7 +144,6 @@ Item {
             entries.push({"name": t.title || t.text, "image": "https://www.minecraft.net/" + t.image.imageURL, "url": "https://minecraft.net/" + e.article_url.substr(1)});
         }
         repeater.model = entries;
-        console.log("Loaded " + entries.length + " items");
         sliderTimer.start()
     }
 

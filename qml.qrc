@@ -11,6 +11,7 @@
         <file>qml/ThemedControls/MCheckBox.qml</file>
         <file>qml/MinecraftNews.qml</file>
         <file>qml/LauncherMain.qml</file>
+        <file>qml/LauncherBase.qml</file>
         <file>qml/LauncherLogin.qml</file>
         <file>qml/CenteredRectangle.qml</file>
         <file>qml/ProfileComboBox.qml</file>

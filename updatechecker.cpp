@@ -2,6 +2,7 @@
 
 #include <QNetworkReply>
 #include <sstream>
+#include <QObject>
 
 UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
     connect(&netAccessManager, &QNetworkAccessManager::finished, this, &UpdateChecker::onRequestFinished);
@@ -9,7 +10,7 @@ UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
 }
 
 #ifndef SPARKLE_UPDATE_CHECK
-void UpdateChecker::sendRequest() {
+void UpdateChecker::checkForUpdates() {
 #ifdef APPIMAGE_UPDATE_CHECK
     auto updater = this->updater;
     auto oldthread = std::make_shared<std::thread>();
@@ -30,7 +31,7 @@ void UpdateChecker::sendRequest() {
 #ifndef NDEBUG
                     printf("Appimage cannot be updated\n");
 #endif
-                    emit updateError("Appimage cannot be updated<br/>Expected Environmentvariable 'APPIMAGE' to be set to the path of the AppImage");
+                    emit updateError(QObject::tr("Appimage cannot be updated<br/>Expected Environmentvariable 'APPIMAGE' to be set to the path of the AppImage"));
                     return;
                 }
             }
@@ -50,7 +51,7 @@ void UpdateChecker::sendRequest() {
 #endif
                     errorstream << nextMessage << "<br/>";
                 }
-                emit updateError("Appimage cannot be updated<br/>" + QString::fromStdString(errorstream.str()));
+                emit updateError(QObject::tr("Appimage cannot be updated") + "<br/>" + QString::fromStdString(errorstream.str()));
                 return;
             }
 #ifndef NDEBUG
@@ -62,26 +63,23 @@ void UpdateChecker::sendRequest() {
             }
             emit updateCheck(_updateAvailable);
         } catch (...) {
-            emit updateError("Appimage cannot be updated<br/>Unknown Error");
+            emit updateError(QObject::tr("Appimage cannot be updated<br/>Unknown Error"));
         }
     });
 #elif defined(UPDATE_CHECK)
     QNetworkRequest request(QStringLiteral(UPDATE_CHECK_URL));
     netAccessManager.get(request);
 #else
-        emit updateError("Launcher cannot be updated<br/>You have to check your packagemanager for updates or recompile your Open Source build with newer sources");
+        emit updateError(QObject::tr("Launcher cannot be updated<br/>You have to check your packagemanager for updates or recompile your Open Source build with newer sources"));
 #endif
 }
 
-void UpdateChecker::checkForUpdates() {
-    sendRequest();
-}
 #endif
 
 void UpdateChecker::onRequestFinished(QNetworkReply* reply) {
 #ifdef UPDATE_CHECK
     if (reply->error() != QNetworkReply::NoError) {
-        emit updateError("Failed to check for update<br/>Failed to connect to update server");
+        emit updateError(QObject::tr("Failed to check for update<br/>Failed to connect to update server"));
         return;
     }
     auto redirect = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
@@ -154,7 +152,7 @@ void UpdateChecker::startUpdate() {
 #ifndef NDEBUG
                 printf("Error occurred. See previous messages for details.\n");
 #endif
-                emit updateError("Appimage cannot be updated<br/>" + QString::fromStdString(errorstream.str()));
+                emit updateError(QObject::tr("Appimage cannot be updated") + "<br/>" + QString::fromStdString(errorstream.str()));
             } else {
                 updater->copyPermissionsToNewFile();
                 emit requestRestart();

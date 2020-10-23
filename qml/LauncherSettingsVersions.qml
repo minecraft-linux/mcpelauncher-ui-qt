@@ -22,6 +22,35 @@ ColumnLayout {
             onClicked: apkImportWindow.pickFile()
         }
 
+        MButton {
+            text: qsTr("Remove Incompatible Versions")
+            onClicked: {
+                var abis = googleLoginHelper.getAbis(false)
+                for (var i = 0; i < versions.model.length; ++i) {
+                    var foundcompatible = false
+                    var incompatible = []
+                    for (var j = 0; j < versions.model[i].archs.length; ++j) {
+                        var found = false
+                        for (var k = 0; k < abis.length; ++k) {
+                            if (found = versions.model[i].archs[j] === abis[k]) {
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            incompatible.push(versions.model[i].archs[j])
+                        } else {
+                            foundcompatible = true
+                        }
+                    }
+                    if (!foundcompatible) {
+                        versionManager.removeVersion(versions.model[i])
+                    } else if (incompatible.length){
+                        versionManager.removeVersion(versions.model[i], incompatible)
+                    }
+                }
+            }
+        }
+
         Item {
             Layout.fillWidth: true
         }

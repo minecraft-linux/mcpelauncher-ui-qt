@@ -40,7 +40,6 @@ signals:
     void updateError(QString error);
 
 public slots:
-    void sendRequest();
     void checkForUpdates();
     void startUpdate();
 };

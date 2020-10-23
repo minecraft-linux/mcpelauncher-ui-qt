@@ -13,9 +13,11 @@ Window {
     width: 500
     height: layout.implicitHeight
     minimumWidth: 500
-    minimumHeight: layout.implicitHeight
+    minimumHeight: 300
     flags: Qt.Dialog
     title: qsTr("Launcher Settings")
+    property GoogleLoginHelper googleLoginHelper
+    property VersionManager versionManager
 
     ColumnLayout {
         id: layout

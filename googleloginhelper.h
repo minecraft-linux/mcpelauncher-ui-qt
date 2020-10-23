@@ -50,9 +50,7 @@ public slots:
 
     void signOut();
 
-    QStringList getDeviceStateABIs(bool showUnsupported);
-
-    QStringList getAbis();
+    QStringList getAbis(bool includeIncompatible);
 
     QString GetSupportReport();
 
