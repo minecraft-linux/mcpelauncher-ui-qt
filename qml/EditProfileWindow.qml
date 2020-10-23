@@ -136,7 +136,7 @@ Window {
                     for (i = 0; i < archivalVersions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
                             if (archivalVersions[i].abi == abis[j]) {
-                                versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i]})
+                                versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i]})
                                 break;
                             }
                         }
