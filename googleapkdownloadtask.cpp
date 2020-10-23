@@ -25,7 +25,7 @@ void GoogleApkDownloadTask::start() {
     m_playApi->getApi()->delivery(m_packageName.toStdString(), m_versionCode, std::string())->call([this](playapi::proto::finsky::response::ResponseWrapper&& resp) {
         auto dd = resp.payload().deliveryresponse().appdeliverydata();
         if((dd.has_gzippeddownloadurl() ? dd.gzippeddownloadurl() : dd.downloadurl()) == "") {
-            throw std::runtime_error("To use the download feature, <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe\">Minecraft: Bedrock Edition has to be purchased on the Google Play Store</a>.<br>If you are trying to download a beta version, please make sure you are in the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play.</a> and then try again after a while (joining the program might take a while).");
+            throw std::runtime_error(QObject::tr("To use the download feature, <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe\">Minecraft: Bedrock Edition has to be purchased on the Google Play Store</a>.<br>If you are trying to download a beta version, please make sure you are in the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play.</a> and then try again after a while (joining the program might take a while).").toStdString());
         }
         startDownload(dd);
     }, [this](std::exception_ptr e) {
@@ -112,7 +112,12 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
     });
     emit progress(0.f);
-    req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
+    struct ErrorBuffer {
+        CURL * handle;
+        char errormsg[CURL_ERROR_SIZE];
+    };
+    auto errorbuf = std::make_shared<ErrorBuffer>();
+    errorbuf->handle = req.perform([this, file, zs, fd, isGzipped, success, _error, errorbuf](playapi::http_response resp) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs.get());
@@ -126,15 +131,16 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
                 }
                 success();
             } else {
-                emit error(QString::fromStdString("Downloading file failed: Status[" + std::to_string(resp.get_status_code()) + "] '" + resp.get_body() + "'"));
+                emit error(QObject::tr("Downloading file failed: Status[%1] '%2'").arg(QString::fromStdString(std::to_string(resp.get_status_code()))).arg(QString::fromStdString(resp.get_body())));
                 _error();
             }
         }
         else {
-            emit error("CURL error");
+            auto len = strlen(errorbuf->errormsg);
+            emit error(tr("CURL Network error: %1").arg(len ? errorbuf->errormsg : QObject::tr("Unknown error")));
             _error();
         }
-    }, [this, file, zs, fd, isGzipped, _error](std::exception_ptr e) {
+    }, [this, file, zs, fd, isGzipped, _error, errorbuf](std::exception_ptr e) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs.get());
@@ -148,6 +154,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
         _error();
     });
+    curl_easy_setopt(errorbuf->handle, CURLOPT_ERRORBUFFER, errorbuf->errormsg);
 }
 
 void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
