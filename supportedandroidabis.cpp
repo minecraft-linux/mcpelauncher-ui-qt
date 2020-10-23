@@ -6,7 +6,7 @@
 
 bool AndroidAbiComparer::operator()(const std::string &a, const std::string &b) const {
     // Swap arm / x86 order for arm64 macbook running x86_64 GUI
-    auto native = ProcessIsTranslated() ? 
+    auto native = !ProcessIsTranslated() ? 
 #if defined(__i386__) || defined(__x86_64__)
 'x' : 'a'
 #elif defined(__arm__) || defined(__aarch64__)
