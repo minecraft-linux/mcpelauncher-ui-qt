@@ -15,10 +15,10 @@ LauncherBase {
     progressbarVisible: playDownloadTask.active || apkExtractionTask.active
     progressbarText: {
         if (playDownloadTask.active)
-            return "Downloading Minecraft..."
+            return qsTr("Downloading Minecraft...")
         if (apkExtractionTask.active)
-            return "Extracting Minecraft..."
-        return "Please wait..."
+            return qsTr("Extracting Minecraft...")
+        return qsTr("Please wait...")
     }
 
     id: rowLayout

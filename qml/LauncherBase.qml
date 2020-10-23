@@ -80,7 +80,7 @@ ColumnLayout {
         Text {
             width: parent.width
             height: parent.height
-            text: "A new version of the launcher is available. Click to download the update."
+            text: qsTr("A new version of the launcher is available. Click to download the update.")
             color: "#0D47A1"
             font.pointSize: 9
             font.bold: true
@@ -134,7 +134,7 @@ ColumnLayout {
                 text: {
                     if (progressbarVisible)
                         return progressbarText
-                    return "Please wait..."
+                    return qsTr("Please wait...")
                 }
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
