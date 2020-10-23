@@ -24,10 +24,10 @@ ScrollView {
             id: item1
             Layout.fillWidth: true
             height: childrenRect.height
+            Layout.minimumWidth: googleAccountIdLabel.implicitWidth + googlesigninbtn.implicitWidth + 5
 
             RowLayout {
                 anchors.right: parent.right
-                spacing: 20
                 Text {
                     text: googleLoginHelper.account !== null ? googleLoginHelper.account.accountIdentifier : ""
                     id: googleAccountIdLabel
@@ -35,6 +35,7 @@ ScrollView {
                     font.pointSize: 11
                 }
                 MButton {
+                    id: googlesigninbtn
                     Layout.alignment: Qt.AlignRight
                     Layout.rightMargin: 20
                     text: googleLoginHelper.account !== null ? qsTr("Sign out") : qsTr("Sign in")
