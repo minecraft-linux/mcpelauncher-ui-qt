@@ -43,7 +43,7 @@ void ApkExtractionTask::run() {
                 if (!apkInfo.versionCode) {
                     apkInfo = capkInfo;
                 } else if(apkInfo.versionCode != capkInfo.versionCode) {
-                    throw std::runtime_error("Trying to extract multiple apks with different versionsCodes is forbidden");
+                    throw std::runtime_error(QObject::tr("Trying to extract multiple apks with different versionsCodes is forbidden").toStdString());
                 } else if(apkInfo.versionName.empty()) {
                     apkInfo.versionName = capkInfo.versionName;
                 }
@@ -73,9 +73,9 @@ void ApkExtractionTask::run() {
         if (!m_allowIncompatible && !supported) {
             if (invalidapk) {
                 if (sources().size() == 1) {
-                    errormsg << "The specified file is not a valid Minecraft apk, it doesn't contain libminecraftpe.so";
+                    errormsg << QObject::tr("The specified file is not a valid Minecraft apk, it doesn't contain libminecraftpe.so").toStdString();
                 } else {
-                    errormsg << "The specified files are not a valid collection of Minecraft apks, they don't contain libminecraftpe.so";
+                    errormsg << QObject::tr("The specified files are not a valid collection of Minecraft apks, they don't contain libminecraftpe.so").toStdString();
                 }
             }
             int i = 0;
@@ -84,23 +84,23 @@ void ApkExtractionTask::run() {
                     if (i++) {
                         errormsg << ", ";
                     } else {
-                        errormsg << "<br/>Valid Minecraft apk CPU architectures for this pc / launcher are ";
+                        errormsg << "<br/>" << QObject::tr("Valid Minecraft apk CPU architectures for this pc / launcher are ").toStdString();
                     }
                     errormsg << abi.first;
                 }
             }
             if (!i) {
-                errormsg << "<br/>No Minecraft apk's are valid for this pc / launcher";
+                errormsg << "<br/>" << QObject::tr("No Minecraft apk's are valid for this pc / launcher").toStdString();
             }
             errormsg << "<br/>";
-            throw std::runtime_error("The specified file is not compatible with the launcher<br/>Won't expect random apk's to work<br/>Details:<br/>" + errormsg.str());
+            throw std::runtime_error(QObject::tr("The specified file is not compatible with the launcher<br/>Won't expect random apk's to work<br/>Details:").toStdString() + "<br/>" + errormsg.str());
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
         qDebug() << "Moving " << dir.path() << " to " << targetDir;
         QDir(targetDir).removeRecursively();
         if (!QDir().rename(dir.path(), targetDir))
-            throw std::runtime_error("rename failed");
+            throw std::runtime_error(QObject::tr("renaming versionsfolder failed").toStdString());
         dir.setAutoRemove(false);
         emit versionInformationObtained(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
     } catch (std::exception& e) {
