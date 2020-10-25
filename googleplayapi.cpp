@@ -10,16 +10,16 @@ GooglePlayApi::GooglePlayApi(QObject *parent) : QObject(parent) {
 void GooglePlayApi::setLogin(GoogleLoginHelper *helper) {
     if (loginHelper != helper) {
         setStatus(GooglePlayApiStatus::NOT_READY);
+        if (loginHelper) {
+            disconnect(loginHelper, &GoogleLoginHelper::accountInfoChanged, this, &GooglePlayApi::updateLogin);
+        }
         loginHelper = helper;
-        if (helper) {
-            api.reset(new playapi::api(helper->getDevice()));
+        if (loginHelper) {
+            api.reset(new playapi::api(loginHelper->getDevice()));
+            connect(loginHelper, &GoogleLoginHelper::accountInfoChanged, this, &GooglePlayApi::updateLogin);
             updateLogin();
         }
     }
-}
-
-void GooglePlayApi::updateLogin() {
-    handleCheckinAndTos();
 }
 
 void GooglePlayApi::requestAppInfo(const QString &packageName) {
@@ -95,40 +95,40 @@ void GooglePlayApi::saveApiInfo() {
     settings.endGroup();
 }
 
-void GooglePlayApi::handleCheckinAndTos() {
-    if (status == GooglePlayApiStatus::NOT_READY) {
-        setStatus(GooglePlayApiStatus::PENDING);
-        QtConcurrent::run([this]() {
-            try {
-                QMutexLocker checkinMutexLocker (&checkinMutex);
-                loadCheckinInfo();
-                if (checkinResult.android_id == 0) {
-                    if (!loginHelper || loginHelper->account() == nullptr) {
-                        setStatus(GooglePlayApiStatus::FAILED);
-                        emit initError(tr("<b>Please report this error</b><br>GooglePlayApi already in progress '!loginHelper'=%1, '!loginHelper || loginHelper->account() == nullptr'=%2").arg((bool)!loginHelper).arg((bool)(!loginHelper || loginHelper->account())));
-                        return;
-                    }
-                    playapi::checkin_api checkin(loginHelper->getDevice());
-                    checkin.add_auth(loginHelper->getLoginApi())->call();
-                    checkinResult = checkin.perform_checkin()->call();
-                    saveCheckinInfo();
-                }
-                api->set_checkin_data(checkinResult);
-                checkinMutexLocker.unlock();
-                api->set_auth(loginHelper->getLoginApi())->call();
-
-                loadApiInfo();
-                saveApiInfo();
-                setStatus(GooglePlayApiStatus::SUCCEDED);
-                emit ready();
-            } catch (const std::exception& ex) {
-                setStatus(GooglePlayApiStatus::FAILED);
-                emit initError(ex.what());
+void GooglePlayApi::updateLogin() {
+    QtConcurrent::run([this]() {
+        try {
+            QMutexLocker checkinMutexLocker (&checkinMutex);
+            if (status == GooglePlayApiStatus::PENDING) {
+                emit initError(tr("<b>Please report this error</b><br>GooglePlayApi already in progress status reporting not working status=%1").arg((int)status));
             }
-        });
-    } else {
-        setStatus(GooglePlayApiStatus::FAILED);
-        emit initError(tr("<b>Please report this error</b><br>GooglePlayApi already in progress status=%1").arg((int)status));
-    }
+            setStatus(GooglePlayApiStatus::PENDING);
+            loadCheckinInfo();
+            if (checkinResult.android_id == 0) {
+                if (!loginHelper) {
+                    setStatus(GooglePlayApiStatus::FAILED);
+                    emit initError(tr("<b>Please report this error</b><br>GooglePlayApi needs the loginHelper"));
+                    return;
+                } else if (loginHelper->account() == nullptr) {
+                    return;
+                }
+                playapi::checkin_api checkin(loginHelper->getDevice());
+                checkin.add_auth(loginHelper->getLoginApi())->call();
+                checkinResult = checkin.perform_checkin()->call();
+                saveCheckinInfo();
+            }
+            api->set_checkin_data(checkinResult);
+            checkinMutexLocker.unlock();
+            api->set_auth(loginHelper->getLoginApi())->call();
+
+            loadApiInfo();
+            saveApiInfo();
+            setStatus(GooglePlayApiStatus::SUCCEDED);
+            emit ready();
+        } catch (const std::exception& ex) {
+            setStatus(GooglePlayApiStatus::FAILED);
+            emit initError(ex.what());
+        }
+    });
 }
 

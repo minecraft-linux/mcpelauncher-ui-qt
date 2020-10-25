@@ -105,12 +105,6 @@ Window {
             playDownloadError.text = qsTr("Failed to obtain the gameversion, please check your internet connection and / or login again");
             playDownloadError.open()
         }
-
-        onTosApprovalRequired: function(tos, marketing) {
-            googleTosApprovalWindow.tosText = tos
-            googleTosApprovalWindow.marketingText = marketing
-            googleTosApprovalWindow.show()
-        }
     }
 
     GoogleVersionChannel {
@@ -212,10 +206,6 @@ Window {
 
     Connections {
         target: googleLoginHelperInstance
-        onAccountInfoChanged: {
-            if (googleLoginHelperInstance.account !== null)
-                playApi.handleCheckinAndTos()
-        }
         onLoginError: function(err) {
             playDownloadError.text = qsTr("The Launcher failed to sign you in\nPlease login again\n%1").arg(err);
             playDownloadError.open()
@@ -260,7 +250,6 @@ Window {
     Component.onCompleted: {
         if(launcherSettings.checkForUpdates)
             updateChecker.checkForUpdates()
-        playApi.handleCheckinAndTos()
         versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true))
         if(LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
             stackView.push(panelChangelog);
