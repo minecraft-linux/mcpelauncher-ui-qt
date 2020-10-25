@@ -97,7 +97,7 @@ Window {
         login: googleLoginHelperInstance
 
         onInitError: function(err) {
-            playDownloadError.text = qsTr("Please login again, Details:\n").arg(err);
+            playDownloadError.text = qsTr("Please login again, Details:<br/>%1").arg(err);
             playDownloadError.open()
         }
 
