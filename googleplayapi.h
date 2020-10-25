@@ -13,6 +13,13 @@ class GoogleLoginHelper;
 class GooglePlayApi : public QObject {
     Q_OBJECT
     Q_PROPERTY(GoogleLoginHelper* login WRITE setLogin)
+    Q_PROPERTY(GooglePlayApiStatus status READ getStatus NOTIFY statusChanged)
+
+public:
+    enum class GooglePlayApiStatus {
+        NOT_READY, PENDING, FAILED, SUCCEDED
+    };
+    Q_ENUM(GooglePlayApiStatus)
 
 private:
     QScopedPointer<playapi::api> api;
@@ -20,12 +27,20 @@ private:
     QMutex checkinMutex;
     playapi::checkin_result checkinResult;
     std::promise<std::pair<bool, bool>> tosApprovalPromise;
+    GooglePlayApiStatus status = GooglePlayApiStatus::NOT_READY;
 
     void loadCheckinInfo();
     void saveCheckinInfo();
 
     void loadApiInfo();
     void saveApiInfo();
+
+    void setStatus(GooglePlayApiStatus status) {
+        if (this->status != status) {
+            this->status = status;
+            statusChanged();
+        }
+    }
 
 public:
     explicit GooglePlayApi(QObject *parent = nullptr);
@@ -36,6 +51,8 @@ public:
 
     playapi::api* getApi() { return api.data(); }
 
+    GooglePlayApiStatus getStatus() const { return status; }
+
 signals:
     void ready();
 
@@ -45,7 +62,9 @@ signals:
 
     void appInfoReceived(QString const& packageName, QString const& version, int versionCode, bool isBeta);
 
-    void appInfoFailed(QString errorMessage);
+    void appInfoFailed(QString const& packageName, QString errorMessage);
+
+    void statusChanged();
 
 public slots:
     void handleCheckinAndTos();
