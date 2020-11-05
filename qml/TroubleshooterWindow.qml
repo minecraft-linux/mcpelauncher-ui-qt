@@ -74,6 +74,12 @@ Window {
                    Layout.fillWidth: true
                    wrapMode: Text.WordWrap
                    linkColor: "#2962FF"
+                   onLinkActivated: Qt.openUrlExternally(link)
+                   MouseArea {
+                       anchors.fill: parent
+                       cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                       acceptedButtons: Qt.NoButton
+                   }
                }
                Text {
                    text: qsTr("<a href=\"%1\">Go to wiki</a>").arg(modelData.wikiUrl)
