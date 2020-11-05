@@ -12,7 +12,7 @@ class GoogleLoginHelper;
 
 class GooglePlayApi : public QObject {
     Q_OBJECT
-    Q_PROPERTY(GoogleLoginHelper* login WRITE setLogin)
+    Q_PROPERTY(GoogleLoginHelper* login READ getLogin WRITE setLogin)
     Q_PROPERTY(GooglePlayApiStatus status READ getStatus NOTIFY statusChanged)
 
 public:
@@ -23,7 +23,7 @@ public:
 
 private:
     QScopedPointer<playapi::api> api;
-    GoogleLoginHelper* loginHelper;
+    GoogleLoginHelper* loginHelper = nullptr;
     QMutex checkinMutex;
     playapi::checkin_result checkinResult;
     GooglePlayApiStatus status = GooglePlayApiStatus::NOT_READY;
