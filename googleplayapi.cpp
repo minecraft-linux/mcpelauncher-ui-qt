@@ -39,18 +39,11 @@ void GooglePlayApi::requestAppInfo(const QString &packageName) {
     }
 }
 
-static QString CheckinInfoGroup() {
+QString GooglePlayApi::CheckinInfoGroup() {
     std::stringstream ss;
-    ss << "checkin";
-    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(abi.second.compatible) {
-            ss << "_" << abi.first;
-        }
-    }
-    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(!abi.second.compatible) {
-            ss << "_" << abi.first;
-        }
+    ss << "checkin_";
+    for (auto&& abi : loginHelper->getDevice().config_native_platforms) {
+        ss << "__" << abi;
     }
     return QString::fromStdString(ss.str());
 }

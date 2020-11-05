@@ -24,17 +24,8 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
     }
     settings.endGroup();
     loadDeviceState();
-    device.config_native_platforms = {};
-    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(abi.second.compatible) {
-            device.config_native_platforms.push_back(abi.first);
-        }
-    }
-    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(!abi.second.compatible) {
-            device.config_native_platforms.push_back(abi.first);
-        }
-    }
+    includeIncompatible = settings.value("showUnsupported", false).toBool();
+    updateDevice();
 }
 
 GoogleLoginHelper::~GoogleLoginHelper() {
@@ -107,6 +98,23 @@ void GoogleLoginHelper::onLoginFinished(int code) {
     }
     emit accountInfoChanged();
     window = nullptr;
+}
+
+void GoogleLoginHelper::updateDevice() {
+    device.config_native_platforms = {};
+    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+        if(abi.second.compatible) {
+            device.config_native_platforms.push_back(abi.first);
+        }
+    }
+    if (includeIncompatible) {
+        for (auto&& abi : SupportedAndroidAbis::getAbis()) {
+            if(!abi.second.compatible) {
+                device.config_native_platforms.push_back(abi.first);
+            }
+        }
+    }
+    emit accountInfoChanged();
 }
 
 void GoogleLoginHelper::signOut() {

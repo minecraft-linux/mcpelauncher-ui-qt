@@ -21,6 +21,7 @@ Window {
 
     GoogleLoginHelper {
         id: googleLoginHelperInstance
+        includeIncompatible: launcherSettings.showUnsupported
     }
 
     VersionManager {

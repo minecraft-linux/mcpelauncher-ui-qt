@@ -28,6 +28,7 @@ private:
     playapi::checkin_result checkinResult;
     GooglePlayApiStatus status = GooglePlayApiStatus::NOT_READY;
 
+    QString CheckinInfoGroup();
     void loadCheckinInfo();
     void saveCheckinInfo();
 

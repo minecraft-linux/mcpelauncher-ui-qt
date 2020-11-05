@@ -14,6 +14,7 @@ class GoogleLoginWindow;
 class GoogleLoginHelper : public QObject {
     Q_OBJECT
     Q_PROPERTY(GoogleAccount* account READ account NOTIFY accountInfoChanged)
+    Q_PROPERTY(bool includeIncompatible READ getIncludeIncompatible WRITE setIncludeIncompatible)
     Q_PROPERTY(bool hideLatest READ hideLatest NOTIFY accountInfoChanged)
 
 private:
@@ -24,6 +25,7 @@ private:
     playapi::file_login_cache loginCache;
     playapi::login_api login;
     bool hasAccount = false;
+    bool includeIncompatible = false;
 
     static std::string getTokenCachePath();
 
@@ -31,6 +33,19 @@ private:
     void saveDeviceState();
 
     void onLoginFinished(int code);
+
+    bool getIncludeIncompatible() {
+        return includeIncompatible;
+    }
+
+    void updateDevice();
+
+    void setIncludeIncompatible(bool includeIncompatible) {
+        if (this->includeIncompatible != includeIncompatible) {
+            this->includeIncompatible = includeIncompatible;
+            updateDevice();
+        }
+    }
 
 public:
     GoogleLoginHelper();
