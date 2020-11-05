@@ -74,6 +74,10 @@ Window {
                         width: implicitWidth
                     }
                     MTabButton {
+                        text: qsTr("Dev")
+                        width: implicitWidth
+                    }
+                    MTabButton {
                         text: qsTr("About")
                         width: implicitWidth
                     }
@@ -94,6 +98,9 @@ Window {
             }
 
             LauncherSettingsVersions {
+            }
+
+            LauncherSettingsDev {
             }
 
             LauncherSettingsAbout {

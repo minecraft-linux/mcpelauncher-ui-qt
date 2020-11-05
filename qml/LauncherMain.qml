@@ -258,17 +258,13 @@ LauncherBase {
 
     // Tests if it really works
     function checkLauncherLatestSupport() {
-        if(versionManager.versions.get(launcherLatestVersionscode())) {
-            return versionManager.checkSupport(versionManager.versions.get(launcherLatestVersionscode()));
-        } else {
-            return findArchivalVersion(launcherLatestVersionscode()) != null;
-        }
-        return false;
+        var ver = versionManager.versions.get(launcherLatestVersionscode())
+        return launcherSettings.showUnsupported || ((ver == null || versionManager.checkSupport(ver)) && (launcherSettings.showUnverified || findArchivalVersion(launcherLatestVersionscode()) != null));
     }
 
     // Tests for raw Google Play latest (previous default, allways true)
     function checkGooglePlayLatestSupport() {
-        if (launcherSettings.showUnsupported) {
+        if (launcherSettings.showUnsupported || launcherSettings.showUnverified) {
             return true;
         }
         // Handle latest is beta, beta isn't enabled
@@ -282,7 +278,7 @@ LauncherBase {
     function checkSupport() {
         var profile = profileManager.activeProfile;
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
-            return launcherSettings.showUnsupported || checkLauncherLatestSupport();
+            return checkLauncherLatestSupport();
         }
         if (profile.versionType === ProfileInfo.LOCKED_CODE) {
             var dver = versionManager.versions.get(profile.versionCode)

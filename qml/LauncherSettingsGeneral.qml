@@ -86,23 +86,6 @@ ScrollView {
             onCheckedChanged: launcherSettings.checkForUpdates = checked
         }
 
-        MCheckBox {
-            text: qsTr("Show incompatible versions")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.showUnsupported
-            onCheckedChanged: launcherSettings.showUnsupported = checked
-        }
-
-        MCheckBox {
-            text: qsTr("Show Beta Versions")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.showBetaVersions
-            onCheckedChanged: launcherSettings.showBetaVersions = checked
-            enabled: playVerChannel.latestVersionIsBeta
-        }
-
         MButton {
             Layout.topMargin: 20
             id: runTroubleshooter
@@ -116,75 +99,6 @@ ScrollView {
             text: qsTr("Open GameData Folder")
             Layout.columnSpan: 1
             onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
-        }
-
-        MButton {
-            text: qsTr("Check for Updates")
-            Layout.columnSpan: 1
-            onClicked: {
-                updateCheckerConnectorSettings.enabled = true
-                updateChecker.checkForUpdates()
-            }
-        }
-
-        MButton {
-            text: qsTr("Reset Launcher Settings")
-            Layout.columnSpan: 1
-            onClicked: {
-                launcherSettings.resetSettings()
-                launcherreset.open()
-            }
-        }
-
-        MessageDialog {
-            id: launcherreset
-            title: "Settings cleared"
-            text: qsTr("Please reopen the Launcher to see the changes")
-        }
-
-        property var updateUrl: "";
-
-        Connections {
-            id: updateCheckerConnectorSettings
-            target: updateChecker
-            enabled: false
-            onUpdateError: function(error) {
-                updateCheckerConnectorSettings.enabled = false
-                updateError.text = error
-                updateError.open()
-            }
-            onUpdateAvailable: function(url) {
-                gridLayout12.updateUrl = url;
-            }
-            onUpdateCheck: function(available) {
-                updateCheckerConnectorSettings.enabled = false
-                if (available) {
-                    updateInfo.text = qsTr("An Update of the Launcher is available for download") + "<br/>" + (gridLayout12.updateUrl.length !== 0 ? qsTr("You can download the new Update here: %1").arg(gridLayout12.updateUrl) + "<br/>" : "") + qsTr("Do you want to update now?");
-                    updateInfo.standardButtons = StandardButton.Yes | StandardButton.No
-                } else {
-                    updateInfo.standardButtons = StandardButton.Ok
-                    updateInfo.text = qsTr("Your installed Launcher Version %1 (build %2) seems uptodate").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
-                }
-                updateInfo.open()
-            }
-        }
-
-        MessageDialog {
-            id: updateError
-            title: qsTr("Update failed")
-        }
-
-        MessageDialog {
-            id: updateInfo
-            title: qsTr("Update Information")
-            onYes: {
-                if (gridLayout12.updateUrl.length !== 0) {
-                    Qt.openUrlExternally(gridLayout12.updateUrl)
-                } else {
-                    updateCheckerConnectorSettings.enabled = true
-                    updateChecker.startUpdate()
-                }
-            }
         }
     }
 }

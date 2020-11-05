@@ -12,6 +12,7 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool startOpenLog READ startOpenLog WRITE setStartOpenLog NOTIFY settingsChanged)
     Q_PROPERTY(bool disableGameLog READ disableGameLog WRITE setDisableGameLog NOTIFY settingsChanged)
     Q_PROPERTY(bool checkForUpdates READ checkForUpdates WRITE setCheckForUpdates NOTIFY settingsChanged)
+    Q_PROPERTY(bool showUnverified READ showUnverified WRITE setShowUnverified NOTIFY settingsChanged)
     Q_PROPERTY(bool showUnsupported READ showUnsupported WRITE setShowUnsupported NOTIFY settingsChanged)
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
     Q_PROPERTY(int lastVersion READ lastVersion WRITE setLastVersion NOTIFY settingsChanged)
@@ -34,6 +35,9 @@ public:
 
     bool checkForUpdates() const { return settings.value("checkForUpdates", true).toBool(); }
     void setCheckForUpdates(bool value) { settings.setValue("checkForUpdates", value); emit settingsChanged(); }
+
+    bool showUnverified() const { return settings.value("showUnverified", false).toBool(); }
+    void setShowUnverified(bool value) { settings.setValue("showUnverified", value); emit settingsChanged(); }
 
     bool showUnsupported() const { return settings.value("showUnsupported", false).toBool(); }
     void setShowUnsupported(bool value) { settings.setValue("showUnsupported", value); emit settingsChanged(); }
