@@ -116,6 +116,9 @@ Window {
         if (!playVerChannel.latestVersionIsBeta) {
             qmlissues.push({shortDesc: qsTr("\"Show Beta Versions\" is disabled or greyed out?"), longDesc: qsTr("You need to own the game and sign up for the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play</a>."), wikiUrl: ""})
         }
+        if (playApi.status < 3 /* GooglePlayApiStatus::SUCCEDED */) {
+            qmlissues.push({shortDesc: qsTr("Failed to initialize Google Play API"), longDesc: qsTr("Please check your internet connection and / or login to Google Play again<br/>Statuscode of playApi is %1").arg(playApi.status), wikiUrl: ""})
+        }
         if (playVerChannel.status < 3 /* GoogleVersionChannelStatus::SUCCEDED */) {
             qmlissues.push({shortDesc: qsTr("Failed to obtain the gameversion"), longDesc: qsTr("Please check your internet connection and / or login to Google Play again<br/>Statuscode of playVerChannel is %1").arg(playVerChannel.status), wikiUrl: ""})
         }
