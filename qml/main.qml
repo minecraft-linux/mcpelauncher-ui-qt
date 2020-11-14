@@ -101,11 +101,6 @@ Window {
             playDownloadError.text = qsTr("Please login again, Details:<br/>%1").arg(err);
             playDownloadError.open()
         }
-
-        onAppInfoFailed: function(error) {
-            playDownloadError.text = qsTr("Failed to obtain the gameversion, please check your internet connection and / or login again");
-            playDownloadError.open()
-        }
     }
 
     GoogleVersionChannel {

@@ -116,6 +116,9 @@ Window {
         if (!playVerChannel.latestVersionIsBeta) {
             qmlissues.push({shortDesc: qsTr("\"Show Beta Versions\" is disabled or greyed out?"), longDesc: qsTr("You need to own the game and sign up for the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play</a>."), wikiUrl: ""})
         }
+        if (playVerChannel.status < 3 /* GoogleVersionChannelStatus::SUCCEDED */) {
+            qmlissues.push({shortDesc: qsTr("Failed to obtain the gameversion"), longDesc: qsTr("Please check your internet connection and / or login to Google Play again<br/>Statuscode of playVerChannel is %1").arg(playVerChannel.status), wikiUrl: ""})
+        }
         qmlissues.push({shortDesc: qsTr("Why is the play button disabled for some versions?"), longDesc: qsTr("This launcher doesn't use an emulator and needs a specfic Android App version<br/><Android App Compatibility Report:<br/>If you see one <b><font color=\"#00cc00\">Compatible</font></b> cpu architecture in the following list, then you should be able to use this Launcher<br/>%1").arg(googleLoginHelper.GetSupportReport()), wikiUrl: ""})
 
         if (qmlissues.length == 0)
