@@ -55,7 +55,7 @@ Item {
         }
 
         onError: function(err) {
-            apkExtractionMessageDialog.text = "Error while extracting the file: " + err
+            apkExtractionMessageDialog.text = qsTr("The specified file is not compatible with the launcher<br/>Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft<br/>Details:<br/>%1").arg(err)
             apkExtractionMessageDialog.open()
             extractingApk = false
             root.error()

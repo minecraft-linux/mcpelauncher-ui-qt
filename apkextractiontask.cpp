@@ -64,7 +64,7 @@ void ApkExtractionTask::run() {
             if (QFile(dir.path() + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
                 invalidapk = false;
                 if (!abi.second.compatible) {
-                    errormsg << abi.second.details << "<br/>";
+                    errormsg << QObject::tr("This Launcher cannot load Minecraft (%1) on this PC:<br/>%2<br/>").arg(QString::fromStdString(abi.second.details)).arg(QString::fromStdString(abi.second.details)).toStdString();
                 } else {
                     supported = true;
                 }
@@ -93,7 +93,7 @@ void ApkExtractionTask::run() {
                 errormsg << "<br/>" << QObject::tr("No Minecraft apk's are valid for this pc / launcher").toStdString();
             }
             errormsg << "<br/>";
-            throw std::runtime_error(QObject::tr("The specified file is not compatible with the launcher<br/>Won't expect random apk's to work<br/>Details:").toStdString() + "<br/>" + errormsg.str());
+            throw std::runtime_error(errormsg.str());
         }
 
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);

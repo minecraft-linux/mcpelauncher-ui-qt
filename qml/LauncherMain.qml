@@ -154,7 +154,7 @@ LauncherBase {
 
     MessageDialog {
         id: playDownloadError
-        title: "Download failed"
+        title: qsTr("Download failed")
     }
 
     ApkExtractionTask {
@@ -163,7 +163,7 @@ LauncherBase {
         onProgress: setProgressbarValue(progress)
         allowIncompatible: launcherSettings.showUnsupported
         onError: function(err) {
-            playDownloadError.text = "Error while extracting the downloaded file(s): " + err
+            playDownloadError.text = qsTr("Error while extracting the downloaded file(s), <a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues\">please report this error</a>: %1").arg(err)
             playDownloadError.open()
         }
         onFinished: function() {
