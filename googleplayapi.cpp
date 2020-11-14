@@ -88,6 +88,15 @@ void GooglePlayApi::saveApiInfo() {
     settings.endGroup();
 }
 
+void GooglePlayApi::cleanupCheckins() {
+    QSettings settings;
+    for (auto && group : settings.childGroups()) {
+        if (group.startsWith("checkin")) {
+            settings.remove(group);
+        }
+    }
+}
+
 void GooglePlayApi::updateLogin() {
     QtConcurrent::run([this]() {
         try {
@@ -103,6 +112,8 @@ void GooglePlayApi::updateLogin() {
                     emit initError(tr("<b>Please report this error</b><br>GooglePlayApi needs the loginHelper"));
                     return;
                 } else if (loginHelper->account() == nullptr) {
+                    setStatus(GooglePlayApiStatus::NOT_READY);
+                    cleanupCheckins();
                     return;
                 }
                 playapi::checkin_api checkin(loginHelper->getDevice());
@@ -120,6 +131,7 @@ void GooglePlayApi::updateLogin() {
             emit ready();
         } catch (const std::exception& ex) {
             setStatus(GooglePlayApiStatus::FAILED);
+            cleanupCheckins();
             emit initError(ex.what());
         }
     });
