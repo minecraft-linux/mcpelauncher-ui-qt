@@ -7,26 +7,61 @@
 #include <QStringList>
 #include "archivalversionlist.h"
 
+class CodeInfo : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(int code MEMBER code CONSTANT)
+    Q_PROPERTY(QString arch MEMBER arch CONSTANT)
+public:
+    CodeInfo(int code, QString arch, QObject* parent = nullptr) : code(code), arch(arch), QObject(parent) {}
+    int code;
+    QString arch;
+};
+
 class VersionInfo : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString directory MEMBER directory CONSTANT)
     Q_PROPERTY(QString versionName MEMBER versionName CONSTANT)
-    Q_PROPERTY(int versionCode MEMBER versionCode CONSTANT)
-    Q_PROPERTY(QStringList archs MEMBER archs CONSTANT)
+    Q_PROPERTY(int versionCode READ versionCode CONSTANT)
+    Q_PROPERTY(QStringList archs READ archs CONSTANT)
+    Q_PROPERTY(QList<CodeInfo*> codes READ getCodes CONSTANT)
 public:
     QString directory;
     QString versionName;
-    int versionCode;
-    QStringList archs;
+    QHash<QString, int> codes;
 
     VersionInfo(QObject* parent = nullptr) : QObject(parent) {}
-    VersionInfo(VersionInfo const& v) : directory(v.directory), versionName(v.versionName), versionCode(v.versionCode) {}
+    VersionInfo(VersionInfo const& v) : directory(v.directory), versionName(v.versionName), codes(v.codes) {}
 
     VersionInfo& operator=(VersionInfo const& v) {
         directory = v.directory;
         versionName = v.versionName;
-        versionCode = v.versionCode;
+        codes = v.codes;
         return *this;
+    }
+
+    QStringList archs() {
+        QStringList archs;
+        for (auto && arch : codes.keys()) {
+            archs.append(arch);
+        }
+        return archs;
+    }
+
+    int versionCode() {
+        for (auto && code : codes) {
+            return code;
+        }
+        return -1;
+    }
+
+    QList<CodeInfo*> getCodes() {
+        QList<CodeInfo*> l;
+        QHash<QString, int>::const_iterator i = codes.constBegin();
+        while (i != codes.constEnd()) {
+            l.append(new CodeInfo(i.value(), i.key(), this));
+            ++i;
+        }
+        return l;
     }
 };
 
@@ -49,8 +84,13 @@ public slots:
     QList<QObject*> getAll() const {
         QList<QObject*> ret;
         ret.reserve(m_versions.size());
-        for (VersionInfo* v : m_versions)
-            ret.push_back(v);;
+        QMap<int, VersionInfo*>::const_iterator i = m_versions.constBegin();
+        while (i != m_versions.constEnd()) {
+            if (i.key() == i.value()->versionCode()) {
+                ret.push_back(i.value());;
+            }
+            ++i;
+        }
         return ret;
     }
 

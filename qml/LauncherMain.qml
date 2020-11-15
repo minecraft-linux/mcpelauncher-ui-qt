@@ -124,7 +124,12 @@ LauncherBase {
                             return;
 
                         setProgressbarValue(0)
-                        playDownloadTask.start()
+                        var rawname = getRawVersionsName()
+                        var partialDownload = !needsFullDownload(rawname)
+                        if (partialDownload) {
+                            apkExtractionTask.versionName = rawname
+                        }
+                        playDownloadTask.start(partialDownload)
                         return;
                     }
                     launchGame()
@@ -201,6 +206,32 @@ LauncherBase {
         return false;
     }
 
+    function getRawVersionsName() {
+        var profile = profileManager.activeProfile;
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
+            return playVerChannel.latestVersion;
+        }
+        if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+            var ver = findArchivalVersion(profile.versionCode);
+            if (ver != null) {
+                return ver.versionName;
+            }
+        }
+        return null;
+    }
+
+    /* Skip downloading assets, only download missing native libs */
+    function needsFullDownload(vername) {
+        if (vername != null) {
+            var versions = versionManager.versions.getAll();
+            for (var i = 0; i < versions.length; ++i) {
+                if (versions[i].versionName === vername)
+                    return false;
+            }
+        } 
+        return true;
+    }
+
     function findArchivalVersion(code) {
         var versions = versionManager.archivalVersions.versions;
         for (var i = versions.length - 1; i >= 0; --i) {
@@ -219,7 +250,8 @@ LauncherBase {
         if (code === playVerChannel.latestVersionCode)
             return playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
         if (ver !== null) {
-            return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(ver.archs.join(", "));
+            var profile = profileManager.activeProfile;
+            return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(profile.arch.length ? profile.arch : ver.archs.join(", "));
         }
     }
 
@@ -331,7 +363,8 @@ LauncherBase {
         }
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
-        gameLauncher.start(launcherSettings.disableGameLog);
+        var profile = profileManager.activeProfile;
+        gameLauncher.start(launcherSettings.disableGameLog, profile.arch);
     }
     
 }

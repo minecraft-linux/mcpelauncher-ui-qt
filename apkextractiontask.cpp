@@ -27,6 +27,31 @@ bool ApkExtractionTask::setSourceUrls(QList<QUrl> const& urls) {
     return true;
 }
 
+static bool mergeDirsRecusive(QString from, QString to) {
+    if (!QDir(to).exists()) {
+        qDebug() << "Moving " << from << " to " << to;
+        if (!QDir().rename(from, to))
+            throw std::runtime_error(QObject::tr("renaming versionsfolder failed").toStdString());
+        return true;
+    } else {
+        qDebug() << "Merging " << from << " to " << to;
+        for (auto&& item : QDir(from).entryList()) {
+            auto f = from + "/" + item;
+            auto t = to + "/" + item;
+            qDebug() << "Checking " << f << " to " << t << " Isdir=" << QDir(f).exists() << " IsFile=" << QFile(f).exists();
+            if (item == "." || item == "..") {
+                continue;
+            }
+            if (QDir(f).exists()) {
+                mergeDirsRecusive(f, t);
+            } else if (QFile(f).exists()) {
+                QFile().rename(f, t);
+            }
+        }
+        return false;
+    }
+}
+
 void ApkExtractionTask::run() {
     QTemporaryDir dir (versionManager()->getTempTemplate());
     try {
@@ -96,18 +121,28 @@ void ApkExtractionTask::run() {
             throw std::runtime_error(errormsg.str());
         }
 
+        if (!m_versionName.isEmpty()) {
+            if (!apkInfo.versionName.empty()) {
+                throw std::runtime_error(QObject::tr("unsupported, versionsname of the apk isn't empty, but property versionsName is set").toStdString());
+            }
+            apkInfo.versionName = m_versionName.toStdString();
+            m_versionName.clear();
+        }
+        if (apkInfo.versionName.empty()) {
+            throw std::runtime_error(QObject::tr("unsupported, versionsname of the apk is empty").toStdString());
+        }
         QString targetDir = versionManager()->getDirectoryFor(apkInfo.versionName);
-        qDebug() << "Moving " << dir.path() << " to " << targetDir;
-        QDir(targetDir).removeRecursively();
-        if (!QDir().rename(dir.path(), targetDir))
-            throw std::runtime_error(QObject::tr("renaming versionsfolder failed").toStdString());
-        dir.setAutoRemove(false);
+        if (mergeDirsRecusive(dir.path(), targetDir)) {
+            dir.setAutoRemove(false);
+        }
         emit versionInformationObtained(QDir(targetDir).dirName(), QString::fromStdString(apkInfo.versionName), apkInfo.versionCode);
     } catch (std::exception& e) {
+        m_versionName.clear();
         emit error(e.what());
         return;
     }
-
+    m_versionName.clear();
+    
     emit finished();
 }
 

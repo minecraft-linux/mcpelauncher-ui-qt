@@ -17,16 +17,35 @@ void VersionManager::loadVersions() {
     QSettings settings(QDir(baseDir).filePath("versions.ini"), QSettings::IniFormat);
     for (QString const& group : settings.childGroups()) {
         settings.beginGroup(group);
-        int versionCode = settings.value("versionCode").toInt();
-        auto& ver = m_versions[versionCode];
-        if (ver == nullptr)
-            ver = new VersionInfo(this);
-        ver->directory = group;
-        ver->versionName = settings.value("versionName").toString();
-        ver->versionCode = versionCode;
-        for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-            if (QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
-                ver->archs.append(QString::fromStdString(abi.first));
+        int size = settings.beginReadArray("codes");
+        if (size >= 1) {
+            auto ver = new VersionInfo(this);
+            int i = 0;
+            while (i < size) {
+                settings.setArrayIndex(i++);
+                auto versionCode = settings.value("code").toInt();
+                ver->codes.insert(settings.value("arch").toString(), versionCode);
+                m_versions[versionCode] = ver;
+            }
+            settings.endArray();
+            ver->directory = group;
+            ver->versionName = settings.value("versionName").toString();
+        } else {
+            settings.endArray();
+            // Migrate previous format
+            bool ok = false;
+            int versionCode = settings.value("versionCode").toInt(&ok);
+            if (ok) {
+                auto& ver = m_versions[versionCode];
+                if (ver == nullptr)
+                    ver = new VersionInfo(this);
+                ver->directory = group;
+                ver->versionName = settings.value("versionName").toString();
+                for (auto &&abi : SupportedAndroidAbis::getAbis()) {
+                    if (QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+                        ver->codes[QString::fromStdString(abi.first)] = versionCode;
+                    }
+                }
             }
         }
         
@@ -37,10 +56,22 @@ void VersionManager::loadVersions() {
 void VersionManager::saveVersions() {
     QSettings settings(QDir(baseDir).filePath("versions.ini"), QSettings::IniFormat);
     settings.clear();
+    // TODO skip writeing duplicates, e.g. one game version has multiple versionscode's
     for (auto const& ver : m_versions) {
         settings.beginGroup(ver->directory);
+        int i = 0;
         settings.setValue("versionName", ver->versionName);
-        settings.setValue("versionCode", ver->versionCode);
+        settings.setValue("versionCode", ver->versionCode());
+        auto size = ver->codes.size();
+        settings.beginWriteArray("codes", size);
+        QHash<QString, int>::const_iterator it = ver->codes.constBegin();
+        while (it != ver->codes.constEnd()) {
+            settings.setArrayIndex(i++);
+            settings.setValue("code", it.value());
+            settings.setValue("arch", it.key());
+            ++it;
+        }
+        settings.endArray();
         settings.endGroup();
     }
     settings.sync();
@@ -66,14 +97,25 @@ QString VersionManager::getDirectoryFor(VersionInfo *version) {
 
 void VersionManager::addVersion(QString directory, QString versionName, int versionCode) {
     auto& ver = m_versions[versionCode];
-    if (ver == nullptr)
-        ver = new VersionInfo(this);
+    if (ver == nullptr) {
+        for (auto const& ver2 : m_versions) {
+            // Find existing entry
+            if (ver2 && directory == ver2->directory) {
+                ver = ver2;
+                break;
+            }
+        }
+        // Fallback old behavior
+        if (ver == nullptr) {
+            ver = new VersionInfo(this);
+        }
+    }
     ver->directory = directory;
     ver->versionName = versionName;
-    ver->versionCode = versionCode;
     for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-        if (QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
-            ver->archs.append(QString::fromStdString(abi.first));
+        auto && it = ver->codes.constFind(QString::fromStdString(abi.first));
+        if (it == ver->codes.constEnd() && QFile(getDirectoryFor(ver->directory) + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+            ver->codes[QString::fromStdString(abi.first)] = versionCode;
         }
     }
     saveVersions();
@@ -81,23 +123,30 @@ void VersionManager::addVersion(QString directory, QString versionName, int vers
 }
 
 void VersionManager::removeVersion(VersionInfo* version) {
-    auto val = m_versions.find(version->versionCode);
-    if (val.value() != version)
-        return;
-    QDir(getDirectoryFor(version)).removeRecursively();
-    m_versions.erase(val);
+    if (!version) return;
+    for (auto && versionCode : version->codes) {
+        auto val = m_versions.find(versionCode);
+        if (val.value() != version)
+            return;
+        QDir(getDirectoryFor(version)).removeRecursively();
+        m_versions.erase(val);
+    }
     saveVersions();
     emit versionListChanged();
 }
 
 void VersionManager::removeVersion(VersionInfo* version, QStringList abis) {
-    auto val = m_versions.find(version->versionCode);
-    if (val.value() != version)
-        return;
+    if (!version) return;
     for (auto&& abi : abis) {
-        QDir(getDirectoryFor(version) + "/lib/" + abi).removeRecursively();;
+        auto && versionCode = version->codes.constFind(abi);
+        if (versionCode != version->codes.constEnd()) {
+            auto val = m_versions.find(versionCode.value());
+            if (val.value() != version)
+                continue;
+
+            m_versions.erase(val);
+        }
     }
-    m_versions.erase(val);
     saveVersions();
     emit versionListChanged();
 }

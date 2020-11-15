@@ -45,7 +45,7 @@ public:
     bool crashed() const { return m_crashed; }
 
 public slots:
-    void start(bool disableGameLog);
+    void start(bool disableGameLog, QString arch = "");
 
     void kill();
 

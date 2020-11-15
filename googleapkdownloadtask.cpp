@@ -19,15 +19,15 @@ QStringList GoogleApkDownloadTask::filePaths() {
     return list;
 }
 
-void GoogleApkDownloadTask::start() {
+void GoogleApkDownloadTask::start(bool skipMainApk) {
     m_active.store(true);
     emit activeChanged();
-    m_playApi->getApi()->delivery(m_packageName.toStdString(), m_versionCode, std::string())->call([this](playapi::proto::finsky::response::ResponseWrapper&& resp) {
+    m_playApi->getApi()->delivery(m_packageName.toStdString(), m_versionCode, std::string())->call([this, skipMainApk](playapi::proto::finsky::response::ResponseWrapper&& resp) {
         auto dd = resp.payload().deliveryresponse().appdeliverydata();
         if((dd.has_gzippeddownloadurl() ? dd.gzippeddownloadurl() : dd.downloadurl()) == "") {
             throw std::runtime_error(QObject::tr("To use the download feature, <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe\">Minecraft: Bedrock Edition has to be purchased on the Google Play Store</a>.<br>If you are trying to download a beta version, please make sure you are in the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play.</a> and then try again after a while (joining the program might take a while).").toStdString());
         }
-        startDownload(dd);
+        startDownload(dd, skipMainApk);
     }, [this](std::exception_ptr e) {
         try {
             std::rethrow_exception(e);
@@ -157,7 +157,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     curl_easy_setopt(errorbuf->handle, CURLOPT_ERRORBUFFER, errorbuf->errormsg);
 }
 
-void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd) {
+void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk) {
     auto cookie = dd.downloadauthcookie(0);
     auto progress = std::make_shared<DownloadProgress>();
     std::lock_guard<std::mutex> guard(progress->mtx);
@@ -184,7 +184,9 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
         files.clear();
     }
     size_t id = 0;
-    downloadFile(dd, cookie, success, cleanup, progress, id++);
+    if (!skipMainApk || dd.splitdeliverydata().empty() /* Old Minecraft versions < 1.15.y needs a full download */) {
+        downloadFile(dd, cookie, success, cleanup, progress, id++);
+    }
     for(auto && data : dd.splitdeliverydata()) {
         downloadFile(data, cookie, success, cleanup, progress, id++);
     }

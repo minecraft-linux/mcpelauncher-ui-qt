@@ -96,14 +96,23 @@ Window {
                     id: versionsmodel
                 }
 
+                function contains(arr, el) {
+                    for (var i = 0; i < arr.length; ++i) {
+                        if (arr[i] === el) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
                 function excludeInstalledVersions(arr) {
                     var ret = []
                     var installed = {}
                     for (var i = 0; i < versions.length; i++)
-                        installed[versions[i].versionName] = true
+                        installed[versions[i].versionName] = versions[i].archs
                     for (i = 0; i < arr.length; i++) {
                         // Show Beta in versionslist if in Beta program and allow showUnsupported or allow Beta
-                        if (arr[i].versionName in installed || arr[i].isBeta && (!playVerChannel.latestVersionIsBeta || !(launcherSettings.showUnsupported || launcherSettings.showBetaVersions)))
+                        if (arr[i].versionName in installed && contains(installed[arr[i].versionName], arr[i].abi) || arr[i].isBeta && (!playVerChannel.latestVersionIsBeta || !(launcherSettings.showUnsupported || launcherSettings.showBetaVersions)))
                             continue;
                         ret.push(arr[i])
                     }
@@ -127,7 +136,7 @@ Window {
                         for (var j = 0; j < abis.length; j++) {
                             for (var k = 0; k < versions[i].archs.length; k++) {
                                 if (versions[i].archs[k] == abis[j]) {
-                                    versionsmodel.append({name: qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs.join(", ")), versionType: ProfileInfo.LOCKED_CODE, obj: versions[i]})
+                                    versionsmodel.append({name: qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs[k]), versionType: ProfileInfo.LOCKED_CODE, obj: versions[i], arch: versions[i].archs[k] })
                                     break;
                                 }
                             }
@@ -137,7 +146,7 @@ Window {
                         for (i = 0; i < archivalVersions.length; i++) {
                             for (var j = 0; j < abis.length; j++) {
                                 if (archivalVersions[i].abi == abis[j]) {
-                                    versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i]})
+                                    versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i], arch: archivalVersions[i].abi})
                                     break;
                                 }
                             }
@@ -285,7 +294,7 @@ Window {
         } else if (profile.versionType == ProfileInfo.LOCKED_CODE) {
             var index = -1
             for (var i = 0; i < versionsmodel.count; i++) {
-                if (versionsmodel.get(i).obj && versionsmodel.get(i).obj.versionCode === profile.versionCode) {
+                if (versionsmodel.get(i).obj && versionsmodel.get(i).obj.versionCode === profile.versionCode && profile.arch === versionsmodel.get(i).arch) {
                     index = i
                     break
                 }
@@ -315,7 +324,7 @@ Window {
         }
 
         dataDirCheck.checked = profile.dataDirCustom
-        dataDirPath.text = profile.dataDir
+        dataDirPath.text = profile.dataDir.length ? profile.dataDir : QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = profile.windowCustomSize
         windowWidth.text = profile.windowWidth
         windowHeight.text = profile.windowHeight
@@ -344,8 +353,10 @@ Window {
             // fails if it is a extraversion
             if (profile.versionType == ProfileInfo.LOCKED_NAME)
                 profile.versionDirName = versionsmodel.get(profileVersion.currentIndex).obj.directory 
-            if (profile.versionType == ProfileInfo.LOCKED_CODE)
+            if (profile.versionType == ProfileInfo.LOCKED_CODE) {
                 profile.versionCode = versionsmodel.get(profileVersion.currentIndex).obj.versionCode
+                profile.arch = versionsmodel.get(profileVersion.currentIndex).arch || ""
+            }
         }
 
         profile.windowCustomSize = windowSizeCheck.checked

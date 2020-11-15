@@ -33,7 +33,7 @@ private:
     std::vector<std::shared_ptr<QTemporaryFile>> files;
     std::atomic_bool m_active;
 
-    void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd);
+    void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk = false);
 
     static bool curlDoZlibInflate(z_stream& zs, int file, char* data, size_t len, int flags);
 
@@ -63,7 +63,7 @@ signals:
     void activeChanged();
 
 public slots:
-    void start();
+    void start(bool skipMainApk = false);
 };
 
 #endif // GOOGLEAPKDOWNLOADTASK_H

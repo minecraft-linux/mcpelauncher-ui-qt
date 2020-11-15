@@ -21,7 +21,7 @@ std::string GameLauncher::findLauncher(std::string name) {
     return std::string();
 }
 
-void GameLauncher::start(bool disableGameLog) {
+void GameLauncher::start(bool disableGameLog, QString arch) {
     if (running()) {
         return;
     }
@@ -62,8 +62,9 @@ void GameLauncher::start(bool disableGameLog) {
     std::stringstream errormsg;
     auto abis = SupportedAndroidAbis::getAbis();
     std::string launcherpath;
+    auto _arch = arch.toStdString();
     for (auto&& abi : abis) {
-        if(QFile(m_gameDir + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
+        if((_arch.empty() || _arch == abi.first) && QFile(m_gameDir + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
             if(!(launcherpath = findLauncher(abi.second.launchername)).empty()) {
                 process->start(QString::fromStdString(launcherpath), args);
                 emit stateChanged();

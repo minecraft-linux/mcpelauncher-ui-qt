@@ -19,6 +19,7 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(bool windowCustomSize MEMBER windowCustomSize NOTIFY changed)
     Q_PROPERTY(int windowWidth MEMBER windowWidth NOTIFY changed)
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
+    Q_PROPERTY(QString arch MEMBER arch NOTIFY changed)
 
     ProfileManager* manager;
 
@@ -42,6 +43,8 @@ public:
     bool windowCustomSize = false;
     int windowWidth = 720;
     int windowHeight = 480;
+
+    QString arch;
 
 public slots:
     void setName(QString const& newName);
