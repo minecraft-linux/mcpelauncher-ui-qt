@@ -12,12 +12,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Quick Concurrent Svg REQUIRED OPTIONAL_COMPONENTS LinguistTools)
+find_package(Qt5 COMPONENTS Core Quick Concurrent Svg REQUIRED)
 
 option(ENABLE_UPDATE_CHECK "Enables update checking with a remote server")
 set(UPDATE_CHECK_URL "" CACHE STRING "Specify the URL for the server to check for updates on")
 set(UPDATE_CHECK_BUILD_ID "" CACHE STRING "Specify the numeral version number for the current build")
 
+find_package(Qt5LinguistTools)
 set(LAUNCHER_LINGUIST_RESOURCES "")
 if (Qt5LinguistTools_FOUND)
     qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} mcpelauncher_en.ts mcpelauncher_de.ts mcpelauncher_fr.ts)
