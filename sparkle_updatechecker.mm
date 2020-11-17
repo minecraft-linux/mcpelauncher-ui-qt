@@ -36,9 +36,5 @@ public:
 static SparkleUpdater sparkleUpdater;
 
 void UpdateChecker::checkForUpdates() {
-    sparkleUpdater.initSparkleUpdater();
-}
-
-void UpdateChecker::checkForUpdates() {
     sparkleUpdater.checkForUpdates();
 }
