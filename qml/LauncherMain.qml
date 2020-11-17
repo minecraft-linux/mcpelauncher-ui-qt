@@ -326,7 +326,7 @@ LauncherBase {
                         }
                     }
                 }
-                return false;
+                return launcherSettings.showUnverified || launcherSettings.showUnsupported;
             }
         }
         if (profile.versionType === ProfileInfo.LOCKED_NAME) {
