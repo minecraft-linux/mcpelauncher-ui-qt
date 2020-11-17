@@ -21,7 +21,7 @@ std::string GameLauncher::findLauncher(std::string name) {
     return std::string();
 }
 
-void GameLauncher::start(bool disableGameLog, QString arch) {
+void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLicense) {
     if (running()) {
         return;
     }
@@ -43,6 +43,9 @@ void GameLauncher::start(bool disableGameLog, QString arch) {
             args.append("-wh");
             args.append(QString::number(m_profile->windowHeight));
         }
+    }
+    if (!hasVerifiedLicense) {
+        args.append("-fguv");
     }
     process->setProcessChannelMode(QProcess::MergedChannels);
     if (m_disableGameLog) {

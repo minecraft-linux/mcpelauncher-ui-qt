@@ -13,6 +13,7 @@ class GoogleVersionChannel : public QObject {
     Q_PROPERTY(qint32 latestVersionCode READ latestVersionCode NOTIFY latestVersionChanged)
     Q_PROPERTY(bool latestVersionIsBeta READ latestVersionIsBeta NOTIFY latestVersionChanged)
     Q_PROPERTY(GoogleVersionChannelStatus status READ getStatus NOTIFY statusChanged)
+    Q_PROPERTY(bool hasVerifiedLicense MEMBER m_hasVerifiedLicense CONSTANT)
 
 public:
     enum class GoogleVersionChannelStatus {
@@ -25,6 +26,7 @@ private:
     QString m_latestVersion;
     qint32 m_latestVersionCode;
     qint32 m_latestVersionIsBeta;
+    bool m_hasVerifiedLicense = false;
     GoogleVersionChannelStatus status = GoogleVersionChannelStatus::NOT_READY;
 
     void onApiReady();

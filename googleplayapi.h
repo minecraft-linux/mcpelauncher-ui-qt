@@ -71,6 +71,7 @@ signals:
 public slots:
     void requestAppInfo(QString const& packageName);
 
+    void validateLicense(std::string packagename, int versionscode, std::function<void (bool)> callback);
 };
 
 #endif // GOOGLEPLAYAPI_H

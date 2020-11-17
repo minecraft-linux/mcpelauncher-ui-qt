@@ -137,3 +137,11 @@ void GooglePlayApi::updateLogin() {
     });
 }
 
+void GooglePlayApi::validateLicense(std::string packagename, int versionscode, std::function<void(bool)> callback) {
+    api->delivery(packagename, versionscode, std::string())->call([callback](playapi::proto::finsky::response::ResponseWrapper&& resp) {
+        auto dd = resp.payload().deliveryresponse().appdeliverydata();
+        callback((dd.has_gzippeddownloadurl() ? dd.gzippeddownloadurl() : dd.downloadurl()) != "");
+    }, [callback](std::exception_ptr e) {
+        callback(false);
+    });
+}
