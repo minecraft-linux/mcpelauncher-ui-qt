@@ -91,7 +91,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
     }
     auto&& x86 = abis["x86"];
     x86.launchername = "mcpelauncher-client"
-#if !defined(DISABLE_64BIT) || !defined(__i386__)
+#if !defined(DISABLE_64BIT) && !defined(__i386__)
         "32"
 #endif
     ;
@@ -123,7 +123,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 #elif defined(__arm__) || defined(__aarch64__)
     auto&& arm = abis["armeabi-v7a"];
     arm.launchername = "mcpelauncher-client"
-#if !defined(DISABLE_64BIT) || !defined(__arm__)
+#if !defined(DISABLE_64BIT) && !defined(__arm__)
         "32"
 #endif
     ;
