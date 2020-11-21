@@ -364,7 +364,7 @@ LauncherBase {
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
         var profile = profileManager.activeProfile;
-        gameLauncher.start(launcherSettings.disableGameLog, profile.arch);
+        gameLauncher.start(launcherSettings.disableGameLog, profile.arch, playVerChannel.hasVerifiedLicense);
     }
     
 }

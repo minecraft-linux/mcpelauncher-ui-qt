@@ -13,7 +13,7 @@ class GoogleVersionChannel : public QObject {
     Q_PROPERTY(qint32 latestVersionCode READ latestVersionCode NOTIFY latestVersionChanged)
     Q_PROPERTY(bool latestVersionIsBeta READ latestVersionIsBeta NOTIFY latestVersionChanged)
     Q_PROPERTY(GoogleVersionChannelStatus status READ getStatus NOTIFY statusChanged)
-    Q_PROPERTY(bool hasVerifiedLicense MEMBER m_hasVerifiedLicense CONSTANT)
+    Q_PROPERTY(bool hasVerifiedLicense MEMBER m_hasVerifiedLicense NOTIFY statusChanged)
 
 public:
     enum class GoogleVersionChannelStatus {
