@@ -6,7 +6,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="58"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die zu importierende Apk Datei ist nicht mit diesen Launcher Kompatibel&lt;br/&gt;Bitte melde dich mit deinen Google Play Konto an, welcher Minecraft beim Playstore besitzt.&lt;br/&gt;Dadurch erhälst zu zusätlich die möglichkeit ältere Minecraft PE versionen zu starten&lt;br/&gt;Weiter Informationen zu diesen Fehler:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="77"/>
         <source>Profile Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil Name</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="86"/>
@@ -35,7 +35,7 @@
         <location filename="qml/EditProfileWindow.qml" line="133"/>
         <source>Latest %1 (%2)</source>
         <oldsource>Latest</oldsource>
-        <translation type="unfinished">Aktuelle %1 (%2)</translation>
+        <translation>Neuste %1 (%2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="133"/>
@@ -56,7 +56,7 @@
         <location filename="qml/EditProfileWindow.qml" line="139"/>
         <source>%1 (installed, %2)</source>
         <oldsource>installed</oldsource>
-        <translation type="unfinished">%1 (installiert, %2)</translation>
+        <translation>%1 (installiert, %2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="149"/>
@@ -71,43 +71,43 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="149"/>
         <source>beta</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="168"/>
         <source>Data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Speicher Ordner</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="199"/>
         <source>Window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenstergröße</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="253"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="263"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="372"/>
         <source>A profile with the specified name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Profil mit diesen Namen existiert bereits</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="373"/>
         <location filename="qml/EditProfileWindow.qml" line="379"/>
         <source>Profile Edit Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim bearbeiten des Profils</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="378"/>
         <source>The specified profile name is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Name des Profils ist ungültig</translation>
     </message>
 </context>
 <context>
@@ -244,7 +244,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherMain.qml" line="47"/>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="101"/>
@@ -290,22 +290,22 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherMain.qml" line="18"/>
         <source>Downloading Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft wird heruntergeladen...</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="20"/>
         <source>Extracting Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Entpacke Minecraft...</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="162"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Herunterladen ist fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="171"/>
         <source>Error while extracting the downloaded file(s), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;please report this error&lt;/a&gt;: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim entpacken der heruntergeladenen Datei(en), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;Bitte Melde diesen Fehler auf github&lt;/a&gt;:%1</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="254"/>
@@ -318,57 +318,57 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="24"/>
         <source>Show Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige den Änderungsverlauf</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="29"/>
         <source>Check for Updates</source>
-        <translation type="unfinished">Prüfe nach Aktualisierungen</translation>
+        <translation>Nach Aktualisierungen Suchen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="38"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished">Setze den Launcher zurück</translation>
+        <translation>Setze den Launcher zurück</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="50"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished">Bitte den Launcher erneut öffnen, um den unterschied zu sehen</translation>
+        <translation>Bitte den Launcher erneut öffnen, damit die Änderungen wirksam werden</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="70"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished">Es ist ein Update verfügbar</translation>
+        <translation>Es ist ein Update bereit zum herunterladen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="70"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished">Du kannst es hier %1 herunterladen</translation>
+        <translation>Du kannst es hier %1 herunterladen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="70"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished">Möchtest du jetzt das Update herunterladen und installieren?</translation>
+        <translation>Möchtest du das Update herunterladen und installieren?</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="74"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished">Deine installierte Launcher Version %1 (build %2) scheint aktuell zu sein</translation>
+        <translation>Deine installierte Launcher Version %1 (build %2) scheint aktuell zu sein</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="82"/>
         <source>Update failed</source>
-        <translation type="unfinished">Update fehlgeschlagen</translation>
+        <translation>Update fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="87"/>
         <source>Update Information</source>
-        <translation type="unfinished">Update Information</translation>
+        <translation>Update Information</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="14"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt;Version %1 (build %2)&lt;br/&gt; © Copyright 2018-2020, MrARM &amp; contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Projekt erlaubt es Minecraft: Bedrock Edition auf Linux und macOS zu spielen.&lt;br/&gt;Version %1 (build %2)&lt;br/&gt; © Copyright 2018-2020, MrARM &amp; contributors</translation>
     </message>
 </context>
 <context>
@@ -376,17 +376,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherSettingsDev.qml" line="20"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige nicht überprüfte Minecraft Versionen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsDev.qml" line="28"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished">Erlaube das herunterladen von nicht unterstützten Versionen</translation>
+        <translation>Erlaube das herunterladen und starten von nicht unterstützten Versionen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsDev.qml" line="36"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished">Zeige Beta Version</translation>
+        <translation>Zeige Beta Versionen</translation>
     </message>
 </context>
 <context>
@@ -486,17 +486,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherSettingsVersions.qml" line="12"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewälte löschen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsVersions.qml" line="21"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Apk Importieren</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsVersions.qml" line="26"/>
         <source>Remove Incompatible Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche nicht unterstützte Minecraft Versionen</translation>
     </message>
 </context>
 <context>
@@ -510,27 +510,27 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="69"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Algemein</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="73"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Versionen</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="77"/>
         <source>Dev</source>
-        <translation type="unfinished"></translation>
+        <translation>Entwicker</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="81"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="129"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -542,17 +542,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherUnsupported.qml" line="17"/>
         <source>&lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;Sorry your Computer cannot run Minecraft with this Launcher&lt;/font&gt;&lt;/b&gt;, this CPU is too old.&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;Leider kann dein Computer Minecraft nicht mit diesen Launcher starten&lt;/font&gt;&lt;/b&gt;, der installierte Prozessor is zu alt und erfüllt nicht die mindestanforderungen an Android.&lt;br/&gt;Details:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/LauncherUnsupported.qml" line="31"/>
         <source>I know what I&apos;m doing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich weiß was ich tue</translation>
     </message>
     <message>
         <location filename="qml/LauncherUnsupported.qml" line="32"/>
         <source>I won&apos;t expect any support</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich erwarte kein support</translation>
     </message>
 </context>
 <context>
@@ -620,7 +620,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleapkdownloadtask.cpp" line="140"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CURL Netzwerk fehler: %1</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="62"/>
@@ -639,7 +639,7 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="supportedandroidabis.cpp" line="70"/>
         <location filename="supportedandroidabis.cpp" line="115"/>
         <source>Android expect the following unavailable Instruction Sets to be available:</source>
-        <translation type="unfinished"></translation>
+        <translation>Android erwartet folgende fehlenden Prozessor Erweiterungen:</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="108"/>
@@ -682,18 +682,18 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="updatechecker.cpp" line="34"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Um das AppImage zu aktualisieren wird die fehlende Umgebungsvariable APPIMAGE mit dem pfad zum AppImage erwartet</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="54"/>
         <location filename="updatechecker.cpp" line="155"/>
         <source>Appimage cannot be updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim aktualisieren des AppImages</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="66"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannter fehler beim aktualisieren des AppImages</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
