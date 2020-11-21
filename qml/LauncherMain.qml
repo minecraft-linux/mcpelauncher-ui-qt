@@ -103,9 +103,6 @@ LauncherBase {
             Layout.maximumWidth: 400
             Layout.fillWidth: true
             Layout.preferredHeight: 70
-            Layout.leftMargin: width / 6
-            Layout.rightMargin: width / 6
-            Layout.minimumWidth: implicitWidth
             Layout.minimumHeight: implicitHeight
             enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName())
 
