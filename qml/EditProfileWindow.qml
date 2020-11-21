@@ -19,7 +19,7 @@ Window {
     minimumWidth: 500
     minimumHeight: layout.implicitHeight
     flags: Qt.Dialog
-    title: "Edit profile"
+    title: qsTr("Edit profile")
 
     ColumnLayout {
         id: layout
