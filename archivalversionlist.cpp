@@ -23,11 +23,16 @@ void ArchivalVersionList::downloadLists(QStringList abis) {
 }
 
 void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis) {
+    QIODevice * result = reply;
     if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << "Version list failed to load, entry count:" << m_versions.size();
-        emit versionsChanged();
-        return;
+        result = m_netManager->cache()->data(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abi + ".json.min"));
+        if (!result) {
+            qDebug() << "Version list failed to load, entry count:" << m_versions.size();
+            emit versionsChanged();
+            return;
+        }
     }
+
     QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
     for (QJsonValue const& el : doc.array()) {
         QJsonArray ela = el.toArray();
@@ -45,5 +50,8 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
     } else {
         QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abis.at(i - 1) + ".json.min")));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
+    }
+    if (reply->error() != QNetworkReply::NoError) {
+        delete result;
     }
 }
