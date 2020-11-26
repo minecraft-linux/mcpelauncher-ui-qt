@@ -122,9 +122,6 @@ void ApkExtractionTask::run() {
         }
 
         if (!m_versionName.isEmpty()) {
-            if (!apkInfo.versionName.empty()) {
-                throw std::runtime_error(QObject::tr("unsupported, versionsname of the apk isn't empty, but property versionsName is set").toStdString());
-            }
             apkInfo.versionName = m_versionName.toStdString();
             m_versionName.clear();
         }
