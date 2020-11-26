@@ -348,11 +348,12 @@ Window {
             else
                 profile.setName(profileName.text)
         }
+        profile.arch = ""
         if (versionsmodel.get(profileVersion.currentIndex).obj || versionsmodel.get(profileVersion.currentIndex).versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profile.versionType = versionsmodel.get(profileVersion.currentIndex).versionType
             // fails if it is a extraversion
             if (profile.versionType == ProfileInfo.LOCKED_NAME)
-                profile.versionDirName = versionsmodel.get(profileVersion.currentIndex).obj.directory 
+                profile.versionDirName = versionsmodel.get(profileVersion.currentIndex).obj.directory
             if (profile.versionType == ProfileInfo.LOCKED_CODE) {
                 profile.versionCode = versionsmodel.get(profileVersion.currentIndex).obj.versionCode
                 profile.arch = versionsmodel.get(profileVersion.currentIndex).arch || ""

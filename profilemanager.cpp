@@ -69,16 +69,17 @@ void ProfileManager::loadProfiles() {
         } else if (version.startsWith("lock ")) {
             profile->versionType = ProfileInfo::VersionType::LOCKED_CODE;
             profile->versionCode = version.right(version.length() - 5).toInt();
+            profile->arch = settings.value("arch").toString();
         } else if (version.startsWith("dir ")) {
             profile->versionType = ProfileInfo::VersionType::LOCKED_NAME;
             profile->versionDirName = version.right(version.length() - 4);
+            profile->arch = settings.value("arch").toString();
         }
         profile->dataDirCustom = settings.value("dataDirCustom").toBool();
         profile->dataDir = settings.value("dataDir").toString();
         profile->windowCustomSize = settings.value("windowCustomSize").toBool();
         profile->windowWidth = settings.value("windowWidth").toInt();
         profile->windowHeight = settings.value("windowHeight").toInt();
-        profile->arch = settings.value("arch").toString();
         settings.endGroup();
     }
 }
