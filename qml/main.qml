@@ -270,4 +270,9 @@ Window {
         }
     }
 
+    function showLaunchError(message) {
+        errorDialog.text = message
+        errorDialog.open();
+    }
+
 }
