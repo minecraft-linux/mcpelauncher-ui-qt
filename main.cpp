@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
     }
 
     app.setQuitOnLastWindowClosed(false);
-    qmlRegisterType<QEvent>();
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
     qmlRegisterType<GooglePlayApi>("io.mrarm.mcpelauncher", 1, 0, "GooglePlayApi");
