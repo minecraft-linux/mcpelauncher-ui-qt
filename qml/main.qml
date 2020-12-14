@@ -67,8 +67,8 @@ Window {
                     stackView.push(panelMain);
                 }
             }
-            hasUpdate: hasUpdate
-            updateDownloadUrl: updateDownloadUrl
+            hasUpdate: window.hasUpdate
+            updateDownloadUrl: window.updateDownloadUrl
         }
     }
 
@@ -80,7 +80,8 @@ Window {
                 launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
                 next()
             }
-            hasUpdate: hasUpdate
+            hasUpdate: window.hasUpdate
+            updateDownloadUrl: window.updateDownloadUrl
         }
     }
 
@@ -203,10 +204,9 @@ Window {
         id: updateChecker
 
         onUpdateAvailable: {
-            hasUpdate = true
-            updateDownloadUrl = downloadUrl
+            window.hasUpdate = true
+            window.updateDownloadUrl = downloadUrl
         }
-        onProgress: downloadProgress.value = progress
         onRequestRestart: {
             restartDialog.open()
         }

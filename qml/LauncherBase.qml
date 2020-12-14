@@ -75,7 +75,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: children[0].implicitHeight + 20
         color: "#BBDEFB"
-        visible: hasUpdate
+        visible: hasUpdate && !(progressbarVisible || updateChecker.active)
 
         Text {
             width: parent.width
@@ -169,6 +169,7 @@ ColumnLayout {
             updateError.text = error
             updateError.open()
         }
+        onProgress: downloadProgress.value = progress
     }
     
 }
