@@ -293,7 +293,7 @@ LauncherBase {
 
     // Tests for raw Google Play latest (previous default, allways true)
     function checkGooglePlayLatestSupport() {
-        if (launcherSettings.showUnsupported || launcherSettings.showUnverified) {
+        if (launcherSettings.showUnsupported || launcherSettings.showUnverified || versionManager.archivalVersions.versions.length === 0) {
             return true;
         }
         // Handle latest is beta, beta isn't enabled
