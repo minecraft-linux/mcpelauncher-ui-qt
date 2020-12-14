@@ -165,16 +165,6 @@ bool VersionManager::checkSupport(QString const& directory) {
     return false;
 }
 
-bool VersionManager::checkSupport(ArchivalVersionInfo *version) {
-    if(!version) return false;
-    for (auto &&abi : SupportedAndroidAbis::getAbis()) {
-        if (abi.second.compatible && QString::fromStdString(abi.first) == version->abi) {
-            return true;
-        }
-    }
-    return false;
-}
-
 VersionInfo* VersionList::latestDownloadedVersion() const {
     if (m_versions.empty())
         return nullptr;

@@ -160,9 +160,7 @@ public slots:
     bool checkSupport(QString const& versionName);
 
     bool checkSupport(VersionInfo *version);
-
-    bool checkSupport(ArchivalVersionInfo *version);
-
+    
 signals:
     void versionListChanged();
 

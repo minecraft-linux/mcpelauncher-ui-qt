@@ -307,7 +307,14 @@ LauncherBase {
     
         var archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode);
         if (archiveInfo != null) {
-            return versionManager.checkSupport(archiveInfo)
+            var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
+            if (playVerChannel.latestVersionIsBeta && (launcherSettings.showBetaVersions || launcherSettings.showUnsupported) || !archiveInfo.isBeta) {
+                for (var j = 0; j < abis.length; j++) {
+                    if (archiveInfo.abi === abis[j]) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
