@@ -36,7 +36,7 @@ private:
     void loadApiInfo();
     void saveApiInfo();
 
-    void cleanupCheckins();
+    void cleanupLogin();
 
     void setStatus(GooglePlayApiStatus status) {
         if (this->status != status) {

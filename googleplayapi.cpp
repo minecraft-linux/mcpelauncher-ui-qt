@@ -90,8 +90,9 @@ void GooglePlayApi::saveApiInfo() {
     settings.endGroup();
 }
 
-void GooglePlayApi::cleanupCheckins() {
+void GooglePlayApi::cleanupLogin() {
     QSettings settings;
+    settings.remove("playapi");
     for (auto && group : settings.childGroups()) {
         if (group.startsWith("checkin")) {
             settings.remove(group);
@@ -108,16 +109,15 @@ void GooglePlayApi::updateLogin() {
             }
             setStatus(GooglePlayApiStatus::PENDING);
             loadCheckinInfo();
-            if (checkinResult.android_id == 0) {
-                if (!loginHelper) {
-                    setStatus(GooglePlayApiStatus::FAILED);
-                    emit initError(tr("<b>Please report this error</b><br>GooglePlayApi needs the loginHelper"));
-                    return;
-                } else if (loginHelper->account() == nullptr) {
-                    setStatus(GooglePlayApiStatus::NOT_READY);
-                    cleanupCheckins();
-                    return;
-                }
+            if (!loginHelper) {
+                setStatus(GooglePlayApiStatus::FAILED);
+                emit initError(tr("<b>Please report this error</b><br>GooglePlayApi needs the loginHelper"));
+                return;
+            } else if (loginHelper->account() == nullptr) {
+                setStatus(GooglePlayApiStatus::NOT_READY);
+                cleanupLogin();
+                return;
+            } else if (checkinResult.android_id == 0) {
                 playapi::checkin_api checkin(loginHelper->getDevice());
                 checkin.add_auth(loginHelper->getLoginApi())->call();
                 checkinResult = checkin.perform_checkin()->call();
@@ -166,7 +166,7 @@ void GooglePlayApi::updateLogin() {
             emit ready();
         } catch (const std::exception& ex) {
             setStatus(GooglePlayApiStatus::FAILED);
-            cleanupCheckins();
+            cleanupLogin();
             emit initError(ex.what());
         }
     });
