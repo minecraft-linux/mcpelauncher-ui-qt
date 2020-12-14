@@ -35,9 +35,12 @@ int main(int argc, char *argv[])
     QTranslator translator;
     if (translator.load(QLocale(), QLatin1String("mcpelauncher"), QLatin1String("_"), QLatin1String(":/translations"))) {
         app.installTranslator(&translator);
-    } else {
+    }
+#ifndef NDEBUG
+    else {
         qDebug() << "cannot load translator " << QLocale().name() << " check content of translations.qrc";
     }
+#endif
 
     app.setQuitOnLastWindowClosed(false);
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
