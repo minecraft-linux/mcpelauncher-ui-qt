@@ -178,17 +178,17 @@ missing Symbols expected to be provided by this Launcher via updates
 <context>
     <name>GoogleLoginHelper</name>
     <message>
-        <location filename="googleloginhelper.cpp" line="147"/>
+        <location filename="googleloginhelper.cpp" line="145"/>
         <source>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="googleloginhelper.cpp" line="147"/>
+        <location filename="googleloginhelper.cpp" line="145"/>
         <source>Compatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="googleloginhelper.cpp" line="147"/>
+        <location filename="googleloginhelper.cpp" line="145"/>
         <source>Incompatible</source>
         <translation type="unfinished"></translation>
     </message>
@@ -201,7 +201,7 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="googleplayapi.cpp" line="107"/>
+        <location filename="googleplayapi.cpp" line="108"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -557,28 +557,29 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="updatechecker.cpp" line="34"/>
+        <location filename="updatechecker.cpp" line="36"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="updatechecker.cpp" line="54"/>
-        <location filename="updatechecker.cpp" line="155"/>
+        <location filename="updatechecker.cpp" line="56"/>
+        <location filename="updatechecker.cpp" line="158"/>
         <source>Appimage cannot be updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="updatechecker.cpp" line="66"/>
+        <location filename="updatechecker.cpp" line="68"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="updatechecker.cpp" line="73"/>
+        <location filename="updatechecker.cpp" line="75"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="updatechecker.cpp" line="82"/>
+        <location filename="updatechecker.cpp" line="84"/>
+        <location filename="updatechecker.cpp" line="112"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
         <translation type="unfinished"></translation>
     </message>
@@ -803,33 +804,53 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="93"/>
+        <location filename="qml/main.qml" line="94"/>
         <source>Connecting to Google Play failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="101"/>
+        <location filename="qml/main.qml" line="102"/>
         <source>Please login again, Details:&lt;br/&gt;%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="176"/>
-        <source>Game is running</source>
+        <location filename="qml/main.qml" line="130"/>
+        <source>Launcher Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="147"/>
+        <source>Unsupported Minecraft Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="148"/>
+        <source>Your previously downloaded Minecraft Version might be unsupported or just corrupted.&lt;br/&gt;&lt;b&gt;if you wanted to play a Beta or a new Release please wait patiently for an update,&lt;br/&gt;please choose a compatible version from the profile Editor&lt;/b&gt;&lt;br/&gt;otherwise if you have updated the Launcher recently.&lt;br/&gt;e.g. a crash please delete it in Settings,&lt;br/&gt;then download it again via the updated Launcher.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="155"/>
+        <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/appimage&quot;&gt;Click here for more information Linux (Description)&lt;/a&gt;&lt;br&gt;This means for macOS you cannot use this launcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="177"/>
+        <source>Game is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="qml/main.qml" line="178"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="198"/>
+        <location filename="qml/main.qml" line="199"/>
         <source>Please restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="199"/>
+        <location filename="qml/main.qml" line="200"/>
         <source>Update finished, please restart the AppImage</source>
         <translation type="unfinished"></translation>
     </message>
