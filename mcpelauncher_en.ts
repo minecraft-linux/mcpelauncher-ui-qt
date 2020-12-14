@@ -12,6 +12,7 @@
 <context>
     <name>EditProfileWindow</name>
     <message>
+        <location filename="qml/EditProfileWindow.qml" line="22"/>
         <location filename="qml/EditProfileWindow.qml" line="46"/>
         <source>Edit profile</source>
         <translation type="unfinished"></translation>
@@ -94,18 +95,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/EditProfileWindow.qml" line="372"/>
+        <location filename="qml/EditProfileWindow.qml" line="373"/>
         <source>A profile with the specified name already exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/EditProfileWindow.qml" line="373"/>
-        <location filename="qml/EditProfileWindow.qml" line="379"/>
+        <location filename="qml/EditProfileWindow.qml" line="374"/>
+        <location filename="qml/EditProfileWindow.qml" line="380"/>
         <source>Profile Edit Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/EditProfileWindow.qml" line="378"/>
+        <location filename="qml/EditProfileWindow.qml" line="379"/>
         <source>The specified profile name is not valid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -200,12 +201,12 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="googleplayapi.cpp" line="105"/>
+        <location filename="googleplayapi.cpp" line="107"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="googleplayapi.cpp" line="112"/>
+        <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,17 +288,17 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/LauncherMain.qml" line="162"/>
+        <location filename="qml/LauncherMain.qml" line="159"/>
         <source>Download failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/LauncherMain.qml" line="171"/>
+        <location filename="qml/LauncherMain.qml" line="168"/>
         <source>Error while extracting the downloaded file(s), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;please report this error&lt;/a&gt;: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/LauncherMain.qml" line="254"/>
+        <location filename="qml/LauncherMain.qml" line="251"/>
         <source>%1  (%2, %3)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -612,12 +613,7 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="apkextractiontask.cpp" line="126"/>
-        <source>unsupported, versionsname of the apk isn&apos;t empty, but property versionsName is set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="apkextractiontask.cpp" line="132"/>
+        <location filename="apkextractiontask.cpp" line="129"/>
         <source>unsupported, versionsname of the apk is empty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -817,28 +813,28 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="164"/>
+        <location filename="qml/main.qml" line="176"/>
         <source>Game is running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="165"/>
+        <location filename="qml/main.qml" line="177"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="186"/>
+        <location filename="qml/main.qml" line="198"/>
         <source>Please restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="187"/>
+        <location filename="qml/main.qml" line="199"/>
         <source>Update finished, please restart the AppImage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="206"/>
+        <location filename="qml/main.qml" line="218"/>
         <source>The Launcher failed to sign you in
 Please login again
 %1</source>
