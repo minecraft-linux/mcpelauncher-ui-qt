@@ -74,6 +74,7 @@ void GooglePlayApi::loadApiInfo() {
     QSettings settings;
     settings.beginGroup("playapi");
     api->device_config_token = settings.value("device_config_token").toString().toStdString();
+    api->toc_cookie = settings.value("toc_cookie").toString().toStdString();
     api->experiments.set_targets(settings.value("experiments").toString().toStdString());
     settings.endGroup();
 }
@@ -84,6 +85,7 @@ void GooglePlayApi::saveApiInfo() {
     QSettings settings;
     settings.beginGroup("playapi");
     settings.setValue("device_config_token", QString::fromStdString(api->device_config_token));
+    settings.setValue("toc_cookie", QString::fromStdString(api->toc_cookie));
     settings.setValue("experiments", QString::fromStdString(api->experiments.get_comma_separated_target_list()));
     settings.endGroup();
 }
@@ -126,7 +128,40 @@ void GooglePlayApi::updateLogin() {
             api->set_auth(loginHelper->getLoginApi())->call();
 
             loadApiInfo();
-            saveApiInfo();
+
+            api->info_mutex.lock();
+            bool needsAcceptTos = api->toc_cookie.empty() || api->device_config_token.empty();
+            api->info_mutex.unlock();
+            if (needsAcceptTos) {
+                api->fetch_user_settings()->call();
+                auto toc = api->fetch_toc()->call();
+                if (toc.payload().tocresponse().has_cookie())
+                    api->set_toc_cookie(toc.payload().tocresponse().cookie());
+
+                if (api->fetch_toc()->call().payload().tocresponse().requiresuploaddeviceconfig()) {
+                    auto resp = api->upload_device_config()->call();
+                    api->set_device_config_token(resp.payload().uploaddeviceconfigresponse().uploaddeviceconfigtoken());
+
+                    toc = api->fetch_toc()->call();
+                    if (toc.payload().tocresponse().requiresuploaddeviceconfig() || !toc.payload().tocresponse().has_cookie())
+                        throw std::runtime_error("Invalid state");
+                    api->set_toc_cookie(toc.payload().tocresponse().cookie());
+                    if (toc.payload().tocresponse().has_toscontent() && toc.payload().tocresponse().has_tostoken()) {
+                        tosApprovalPromise = std::promise<std::pair<bool, bool>>();
+                        auto future = tosApprovalPromise.get_future();
+                        emit tosApprovalRequired(QString::fromStdString(toc.payload().tocresponse().toscontent()),
+                                                QString::fromStdString(toc.payload().tocresponse().toscheckboxtextmarketingemails()));
+                        auto state = future.get();
+                        if (!state.first)
+                            throw std::runtime_error("Rejected TOS");
+                        auto tos = api->accept_tos(toc.payload().tocresponse().tostoken(), state.second)->call();
+                        if (!tos.payload().has_accepttosresponse())
+                            throw std::runtime_error("Invalid state");
+                        saveApiInfo();
+                    }
+                }
+            }
+
             setStatus(GooglePlayApiStatus::SUCCEDED);
             emit ready();
         } catch (const std::exception& ex) {

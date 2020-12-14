@@ -101,6 +101,12 @@ Window {
             playDownloadError.text = qsTr("Please login again, Details:<br/>%1").arg(err);
             playDownloadError.open()
         }
+
+        onTosApprovalRequired: function(tos, marketing) {
+            googleTosApprovalWindow.tosText = tos
+            googleTosApprovalWindow.marketingText = marketing
+            googleTosApprovalWindow.show()
+        }
     }
 
     GoogleVersionChannel {
@@ -127,6 +133,12 @@ Window {
     TroubleshooterWindow {
         id: troubleshooterWindow
         googleLoginHelper: googleLoginHelperInstance
+    }
+
+    GoogleTosApprovalWindow {
+        id: googleTosApprovalWindow
+
+        onDone: playApi.setTosApproved(approved, marketing)
     }
 
     MessageDialog {

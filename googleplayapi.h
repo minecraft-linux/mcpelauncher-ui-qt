@@ -26,6 +26,7 @@ private:
     GoogleLoginHelper* loginHelper = nullptr;
     QMutex checkinMutex;
     playapi::checkin_result checkinResult;
+    std::promise<std::pair<bool, bool>> tosApprovalPromise;
     GooglePlayApiStatus status = GooglePlayApiStatus::NOT_READY;
 
     QString CheckinInfoGroup();
@@ -62,6 +63,8 @@ signals:
 
     void initError(QString const& text);
 
+    void tosApprovalRequired(QString const& tosText, QString const& marketingText);
+
     void appInfoReceived(QString const& packageName, QString const& version, int versionCode, bool isBeta);
 
     void appInfoFailed(QString const& packageName, QString errorMessage);
@@ -72,6 +75,11 @@ public slots:
     void requestAppInfo(QString const& packageName);
 
     void validateLicense(std::string packagename, int versionscode, std::function<void (bool)> callback);
+
+    void setTosApproved(bool approved, bool marketing) {
+        tosApprovalPromise.set_value({approved, marketing});
+    }
+
 };
 
 #endif // GOOGLEPLAYAPI_H
