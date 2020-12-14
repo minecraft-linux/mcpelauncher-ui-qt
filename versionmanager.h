@@ -161,6 +161,8 @@ public slots:
 
     bool checkSupport(VersionInfo *version);
 
+    bool checkSupport(ArchivalVersionInfo *version);
+
 signals:
     void versionListChanged();
 

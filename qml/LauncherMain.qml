@@ -301,7 +301,15 @@ LauncherBase {
             return false;
         }
         var iver = versionManager.versions.get(playVerChannel.latestVersionCode)
-        return versionManager.checkSupport(iver ? iver : findArchivalVersion(playVerChannel.latestVersionCode))
+        if (iver) {
+            return versionManager.checkSupport(iver);
+        }
+    
+        var archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode);
+        if (archiveInfo != null) {
+            return versionManager.checkSupport(archiveInfo)
+        }
+        return false;
     }
 
     function checkSupport() {
