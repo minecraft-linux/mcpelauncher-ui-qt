@@ -120,7 +120,7 @@ Item {
 
     function loadNews() {
         var req = new XMLHttpRequest();
-        req.open("GET", "https://www.minecraft.net/content/minecraft-net/_jcr_content.articles.grid?tileselection=auto&tagsPath=minecraft:article/culture,minecraft:article/insider,minecraft:article/merch,minecraft:article/news&propResPath=/content/minecraft-net/language-masters/en-us/jcr:content/root/generic-container/par/grid&count=2000&pageSize=20&tag=News&lang=/content/minecraft-net/language-masters/en-us", true);
+        req.open("GET", "https://www.minecraft.net/content/minecraft-net/_jcr_content.articles.grid?tileselection=auto&tagsPath=minecraft:article/news,minecraft:article/insider,minecraft:article/culture,minecraft:article/merch,minecraft:stockholm/news,minecraft:stockholm/guides,minecraft:stockholm/events,minecraft:stockholm/minecraft-builds,minecraft:stockholm/marketplace,minecraft:stockholm/deep-dives,minecraft:stockholm/merch,minecraft:stockholm/earth,minecraft:stockholm/dungeons,minecraft:stockholm/realms-plus,minecraft:stockholm/minecraft,minecraft:stockholm/realms-java,minecraft:stockholm/nether&propResPath=/content/minecraft-net/language-masters/en-us/jcr:content/root/generic-container/par/bleeding_page_sectio_1278766118/page-section-par/grid&count=2000&pageSize=20&lang=/content/minecraft-net/language-masters/en-us", true);
         req.onerror = function() {
             console.log("Failed to load news");
         };
