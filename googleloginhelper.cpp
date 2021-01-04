@@ -24,7 +24,13 @@ GoogleLoginHelper::GoogleLoginHelper() : loginCache(getTokenCachePath()), login(
     }
     settings.endGroup();
     loadDeviceState();
-    includeIncompatible = settings.value("showUnsupported", false).toBool();
+    includeIncompatible =
+#ifdef DISABLE_DEV_MODE
+    false
+#else
+    settings.value("showUnsupported", false).toBool()
+#endif
+;
     updateDevice();
 }
 

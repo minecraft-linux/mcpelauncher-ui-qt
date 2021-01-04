@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(""));
 #endif
+#ifdef DISABLE_DEV_MODE
+    engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(true));
+#endif
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

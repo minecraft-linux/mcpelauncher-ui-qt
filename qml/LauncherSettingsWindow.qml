@@ -74,8 +74,9 @@ Window {
                         width: implicitWidth
                     }
                     MTabButton {
+                        visible: !(DISABLE_DEV_MODE)
                         text: qsTr("Dev")
-                        width: implicitWidth
+                        width: !(DISABLE_DEV_MODE) ? implicitWidth : 0
                     }
                     MTabButton {
                         text: qsTr("About")
