@@ -17,7 +17,15 @@
 #include "updatechecker.h"
 
 #include <QTranslator>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 #include <curl/curl.h>
+
+#ifdef LAUNCHER_DISABLE_DEV_MODE
+bool LauncherSettings::disableDevMode = 1;
+#else
+bool LauncherSettings::disableDevMode = 0;
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -32,6 +40,15 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
 
     LauncherApp app(argc, argv);
+    QCommandLineParser parser;
+    parser.setApplicationDescription("Minecraft Linux Launcher Error Helper");
+    parser.addHelpOption();
+    QCommandLineOption devmodeOption(QStringList() << "d" << "enable-devmode", 
+        QCoreApplication::translate("main", "Developer Mode - Enable unsafe Launcher Settings"));
+    parser.addOption(devmodeOption);
+
+    parser.process(app);
+
     QTranslator translator;
     if (translator.load(QLocale(), QLatin1String("mcpelauncher"), QLatin1String("_"), QLatin1String(":/translations"))) {
         app.installTranslator(&translator);
@@ -77,9 +94,7 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(""));
 #endif
-#ifdef DISABLE_DEV_MODE
-    engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(true));
-#endif
+    engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(LauncherSettings::disableDevMode &= !parser.isSet(devmodeOption)));
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

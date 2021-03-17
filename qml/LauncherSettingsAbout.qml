@@ -11,7 +11,7 @@ ColumnLayout {
 
     TextEdit {
         textFormat: TextEdit.RichText
-        text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version %1 (build %2)<br/> © Copyright 2018-2020, MrARM & contributors").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
+        text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version %1 (build %2)<br/> © Copyright 2018-2021, MrARM & contributors").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
         readOnly: true
         wrapMode: Text.WordWrap
         selectByMouse: true
@@ -23,6 +23,7 @@ ColumnLayout {
         MButton {
             text: qsTr("Show Changelog")
             onClicked: stackView.push(panelChangelog)
+            visible: LAUNCHER_CHANGE_LOG.length !== 0
         }
 
         MButton {

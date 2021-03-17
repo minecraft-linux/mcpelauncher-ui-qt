@@ -44,9 +44,11 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             args.append(QString::number(m_profile->windowHeight));
         }
     }
+#ifdef LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
     if (!hasVerifiedLicense) {
         args.append("-fguv");
     }
+#endif
     process->setProcessChannelMode(QProcess::MergedChannels);
     if (m_disableGameLog) {
         #ifdef _WIN32

@@ -13,6 +13,8 @@ ColumnLayout {
     property string updateDownloadUrl: ""
     property bool progressbarVisible: false
     property string progressbarText: ""
+    property string warnMessage: ""
+    property string warnUrl: ""
     property var setProgressbarValue: function(value) {
         downloadProgress.value = value
     }
@@ -74,29 +76,34 @@ ColumnLayout {
         Layout.alignment: Qt.AlignTop
         Layout.fillWidth: true
         Layout.preferredHeight: children[0].implicitHeight + 20
-        color: "#BBDEFB"
-        visible: hasUpdate && !(progressbarVisible || updateChecker.active)
+        color: hasUpdate && !(progressbarVisible || updateChecker.active) ? "#BBDEFB" : "#EE0000"
+        visible: hasUpdate && !(progressbarVisible || updateChecker.active) || warnMessage.length > 0
 
         Text {
             width: parent.width
             height: parent.height
-            text: qsTr("A new version of the launcher is available. Click to download the update.")
-            color: "#0D47A1"
+            text: hasUpdate && !(progressbarVisible || updateChecker.active) ? qsTr("A new version of the launcher is available. Click to download the update.") : warnMessage
+            color: hasUpdate && !(progressbarVisible || updateChecker.active) ? "#0D47A1" : "#FFFFFF"
             font.pointSize: 9
             font.bold: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
         }
 
         MouseArea {
             anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: hasUpdate && !(progressbarVisible || updateChecker.active) || rowLayout.warnUrl.length > 0 ? Qt.PointingHandCursor : Qt.Pointer
             onClicked: {
-                if (updateDownloadUrl.length == 0) {
-                    updateCheckerConnectorBase.enabled = true
-                    updateChecker.startUpdate()
-                } else {
-                    Qt.openUrlExternally(updateDownloadUrl)
+                if(hasUpdate && !(progressbarVisible || updateChecker.active)) {
+                    if (updateDownloadUrl.length == 0) {
+                        updateCheckerConnectorBase.enabled = true
+                        updateChecker.startUpdate()
+                    } else {
+                        Qt.openUrlExternally(updateDownloadUrl)
+                    }
+                } else if(rowLayout.warnUrl.length > 0) {
+                    Qt.openUrlExternally(rowLayout.warnUrl)
                 }
             }
         }

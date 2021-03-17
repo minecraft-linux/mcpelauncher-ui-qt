@@ -7,6 +7,10 @@
 #include <QDir>
 #include <QStandardPaths>
 
+#ifndef LAUNCHER_VERSIONDB_URL
+#define LAUNCHER_VERSIONDB_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master"
+#endif
+
 ArchivalVersionList::ArchivalVersionList() {
     m_netManager = new QNetworkAccessManager(this);
     QNetworkDiskCache* cache = new QNetworkDiskCache(m_netManager);
@@ -15,25 +19,47 @@ ArchivalVersionList::ArchivalVersionList() {
 }
 
 void ArchivalVersionList::downloadLists(QStringList abis) {
-    m_versions.clear();
+    m_versionsnext.clear();
     if (abis.size()) {
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abis.at(abis.size() - 1) + ".json.min")));
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abis.at(abis.size() - 1) + ".json.min")));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(abis.size() - 1), abis));
+    } else {
+        m_versions = m_versionsnext;
+        emit versionsChanged();
     }
 }
 
 void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis) {
-    QIODevice * result = reply;
+    QByteArray data;
+    QIODevice * result;
     if (reply->error() != QNetworkReply::NoError) {
-        result = m_netManager->cache()->data(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abi + ".json.min"));
+        result = m_netManager->cache()->data(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abi + ".json.min"));
         if (!result) {
-            qDebug() << "Version list failed to load, entry count:" << m_versions.size();
-            emit versionsChanged();
-            return;
+            if(!result) {
+                QString fileName(":/archivalversionlist/" + abi);
+                QFile file(fileName);
+                if(!file.open(QIODevice::ReadOnly)) {
+                    m_versions = m_versionsnext;
+                    qDebug() << "Version list failed to load, entry count:" << m_versions.size();
+                    emit versionsChanged();
+                    return;
+                }
+                else
+                {
+                    qDebug() << "Version list failed to update use embedded version";
+                    data = file.readAll();
+                }
+                file.close();
+            }
+        } else {
+            data = result->readAll();
+            delete result;
         }
+    } else {
+        data = reply->readAll();
     }
 
-    QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+    QJsonDocument doc = QJsonDocument::fromJson(data);
     for (QJsonValue const& el : doc.array()) {
         QJsonArray ela = el.toArray();
         ArchivalVersionInfo* info = new ArchivalVersionInfo(this);
@@ -41,17 +67,15 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
         info->versionName = ela.at(1).toString();
         info->isBeta = ela.at(2).toInt() == 1;
         info->abi = abi;
-        m_versions.push_front(info);
+        m_versionsnext.push_front(info);
     }
     auto i = abis.indexOf(abi);
-    if(i == 0) {          
+    if(i == 0) {
+        m_versions = m_versionsnext;
         qDebug() << "Version list loaded, entry count:" << m_versions.size();
         emit versionsChanged();
     } else {
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl("https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master/versions." + abis.at(i - 1) + ".json.min")));
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abis.at(i - 1) + ".json.min")));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
-    }
-    if (reply->error() != QNetworkReply::NoError) {
-        delete result;
     }
 }

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/archivalversionlist">
+        <file alias="armeabi-v7a">versions.armeabi-v7a.json.min</file>
+        <file alias="x86">versions.x86.json.min</file>
+        <file alias="arm64-v8a">versions.arm64-v8a.json.min</file>
+        <file alias="x86_64">versions.x86_64.json.min</file>
+    </qresource>
+</RCC>

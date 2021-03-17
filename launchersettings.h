@@ -22,6 +22,8 @@ private:
     QSettings settings;
 
 public:
+    static bool disableDevMode;
+    
     explicit LauncherSettings(QObject *parent = nullptr) : QObject(parent), settings() {}
 
     bool startHideLauncher() const { return settings.value("startHideLauncher", true).toBool(); }
@@ -36,31 +38,13 @@ public:
     bool checkForUpdates() const { return settings.value("checkForUpdates", true).toBool(); }
     void setCheckForUpdates(bool value) { settings.setValue("checkForUpdates", value); emit settingsChanged(); }
 
-    bool showUnverified() const { return 
-#ifdef DISABLE_DEV_MODE
-false
-#else
-settings.value("showUnverified", false).toBool()
-#endif
-; }
+    bool showUnverified() const { return !disableDevMode && settings.value("showUnverified", false).toBool(); }
     void setShowUnverified(bool value) { settings.setValue("showUnverified", value); emit settingsChanged(); }
 
-    bool showUnsupported() const { return 
-#ifdef DISABLE_DEV_MODE
-false
-#else
-settings.value("showUnsupported", false).toBool()
-#endif
-; }
+    bool showUnsupported() const { return !disableDevMode && settings.value("showUnsupported", false).toBool(); }
     void setShowUnsupported(bool value) { settings.setValue("showUnsupported", value); emit settingsChanged(); }
 
-    bool showBetaVersions() const { return 
-#ifdef DISABLE_DEV_MODE
-false
-#else
-settings.value("showBetaVersions", false).toBool()
-#endif
-; }
+    bool showBetaVersions() const { return !disableDevMode && settings.value("showBetaVersions", false).toBool(); }
     void setShowBetaVersions(bool value) { settings.setValue("showBetaVersions", value); emit settingsChanged(); }
 
     int lastVersion() const { return settings.value("lastVersion", 0).toInt(); }

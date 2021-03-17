@@ -288,34 +288,43 @@ LauncherBase {
     // Tests if it really works
     function checkLauncherLatestSupport() {
         var ver = versionManager.versions.get(launcherLatestVersionscode())
-        return launcherSettings.showUnsupported || ((ver == null || versionManager.checkSupport(ver)) && (launcherSettings.showUnverified || findArchivalVersion(launcherLatestVersionscode()) != null));
+        return versionManager.archivalVersions.versions.length == 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(launcherLatestVersionscode()) != null);
     }
 
     // Tests for raw Google Play latest (previous default, allways true)
     function checkGooglePlayLatestSupport() {
-        if (launcherSettings.showUnsupported || launcherSettings.showUnverified || versionManager.archivalVersions.versions.length === 0) {
+        if(versionManager.archivalVersions.versions.length == 0) {
+            rowLayout.warnMessage = qsTr("No mcpelauncher-versiondb loaded cannot check support")
+            rowLayout.warnUrl = "";
+            return true;
+        }
+        if (launcherSettings.showUnsupported || versionManager.archivalVersions.versions.length === 0) {
             return true;
         }
         // Handle latest is beta, beta isn't enabled
         if (playVerChannel.latestVersionIsBeta && !launcherSettings.showBetaVersions) {
+            rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, but playing beta is disabled (Developer feature)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
+            rowLayout.warnUrl = "";
             return false;
         }
-        var iver = versionManager.versions.get(playVerChannel.latestVersionCode)
-        if (iver) {
-            return versionManager.checkSupport(iver);
+        if(launcherSettings.showUnverified) {
+            return true;
         }
-    
         var archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode);
         if (archiveInfo != null) {
             var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
             if (playVerChannel.latestVersionIsBeta && (launcherSettings.showBetaVersions || launcherSettings.showUnsupported) || !archiveInfo.isBeta) {
                 for (var j = 0; j < abis.length; j++) {
                     if (archiveInfo.abi === abis[j]) {
+                        rowLayout.warnMessage = ""
+                        rowLayout.warnUrl = "";
                         return true;
                     }
                 }
             }
         }
+        rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 isn't supported yet, supporting new Minecraft Versions isn't a Bug, it is a feature Request (Click here for more Information)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
+        rowLayout.warnUrl = "https://github.com/ChristopherHX/mcpelauncher-manifest/issues/48"
         return false;
     }
 
