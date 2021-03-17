@@ -24,6 +24,7 @@ set(LAUNCHER_VERSION_NAME "" CACHE STRING "Specify the version name shown in set
 set(LAUNCHER_VERSION_CODE "" CACHE STRING "Specify the version code (integer) shown in settings")
 option(LAUNCHER_DISABLE_DEV_MODE "Disables the dev tab by default")
 option(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK "Enables checking license of the Game")
+option(LAUNCHER_MACOS_HAVE_ARMLAUNCHER "Enables use of the arm launcher")
 
 find_package(Qt5LinguistTools)
 set(LAUNCHER_LINGUIST_RESOURCES "")
@@ -71,6 +72,9 @@ if(LAUNCHER_DISABLE_DEV_MODE)
 endif()
 if(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
     target_compile_definitions(${PROJECT_NAME} PUBLIC LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
+endif()
+if(LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
 endif()
 
 if (APPLE)

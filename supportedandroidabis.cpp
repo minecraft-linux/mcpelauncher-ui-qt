@@ -154,7 +154,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 }
 
 bool ProcessIsTranslated() {
-#ifdef __APPLE__
+#if defined(__APPLE__) && defined(LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
 // Reference https://developer.apple.com/documentation/apple_silicon/about_the_rosetta_translation_environment
 // Returns true if x86_64 version runs under arm64 macbook
     int ret = 0;
