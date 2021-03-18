@@ -12,6 +12,7 @@ LauncherBase {
     property VersionManager versionManager
     property ProfileManager profileManager
     property GooglePlayApi playApiInstance
+    property bool isVersionsInitialized: false
     progressbarVisible: playDownloadTask.active || apkExtractionTask.active
     progressbarText: {
         if (playDownloadTask.active)
@@ -98,13 +99,13 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in or import .apk")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase()
-            subText: gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))
+            text: isVersionsInitialized ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in or import .apk")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("Please wait...")
+            subText: isVersionsInitialized ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
             Layout.maximumWidth: 400
             Layout.fillWidth: true
             Layout.preferredHeight: 70
             Layout.minimumHeight: implicitHeight
-            enabled: !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName())
+            enabled: isVersionsInitialized && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName())
 
             onClicked: {
                 if(gameLauncher.running) {
@@ -196,8 +197,10 @@ LauncherBase {
         var profile = profileManager.activeProfile;
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
             return !versionManager.versions.contains(launcherLatestVersionscode());
-        if (profile.versionType == ProfileInfo.LOCKED_CODE)
-            return !versionManager.versions.contains(profile.versionCode);
+        if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+            var dver = versionManager.versions.get(profile.versionCode);
+            return !dver || !versionManager.checkSupport(dver);
+        }
         if (profile.versionType == ProfileInfo.LOCKED_NAME)
             return false;
         return false;
@@ -335,8 +338,8 @@ LauncherBase {
         }
         if (profile.versionType === ProfileInfo.LOCKED_CODE) {
             var dver = versionManager.versions.get(profile.versionCode)
-            if (dver) {
-                return dver.archs.length > 0 && launcherSettings.showUnsupported || versionManager.checkSupport(dver)
+            if (dver && dver.archs.length > 0 && launcherSettings.showUnsupported) {
+                return true;
             } else {
                 var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
                 var ver = findArchivalVersion(profile.versionCode)
@@ -351,7 +354,7 @@ LauncherBase {
             }
         }
         if (profile.versionType === ProfileInfo.LOCKED_NAME) {
-            return launcherSettings.showUnsupported || versionManager.checkSupport(profile.versionDirName);
+            return launcherSettings.showUnsupported || launcherSettings.showUnverified && versionManager.checkSupport(profile.versionDirName);
         }
         console.log("Failed")
         return false;

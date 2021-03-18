@@ -12,6 +12,7 @@ Window {
     title: qsTr("Linux Minecraft Launcher")
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
+    property bool isVersionsInitialized: false
 
     StackView {
         id: stackView
@@ -52,6 +53,7 @@ Window {
             playApiInstance: playApi
             hasUpdate: window.hasUpdate
             updateDownloadUrl: window.updateDownloadUrl
+            isVersionsInitialized: window.isVersionsInitialized
         }
     }
 
@@ -258,6 +260,10 @@ Window {
     Component.onCompleted: {
         if(launcherSettings.checkForUpdates)
             updateChecker.checkForUpdates()
+        versionManagerInstance.archivalVersions.versionsChanged.connect(function() {
+            isVersionsInitialized = true;
+            console.log("Versionslist initialized");
+        })
         versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true))
         if(LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
             stackView.push(panelChangelog);
