@@ -75,7 +75,7 @@ Window {
                 width: parent.width - rectangle.horizontalPadding * 2
 
                 Text {
-                    text: qsTr("It seems that Minecraft or the Launcher has crashed")
+                    text: qsTr("Minecraft stopped working")
                     Layout.fillWidth: true
                     font.weight: Font.Bold
                     wrapMode: Text.WordWrap
@@ -86,7 +86,7 @@ Window {
                     wrapMode: Text.WordWrap
                     linkColor: "#593b00"
                     onLinkActivated: Qt.openUrlExternally(link)
-                    visible: !launcherSettings.disableGameLog && !launcherSettings.showUnsupported
+                    visible: !launcherSettings.disableGameLog && !launcherSettings.showUnsupported && !launcherSettings.showUnverified && !launcherSettings.showBetaVersions
                 }
                 Text {
                     text: qsTr("Please don't report this error. Reenable Gamelog in Settings and reopen the Game to report an error")
@@ -99,6 +99,18 @@ Window {
                     Layout.fillWidth: true
                     wrapMode: Text.WordWrap
                     visible: launcherSettings.showUnsupported
+                }
+                Text {
+                    text: qsTr("Please don't report this error. Disable show unverified Versions and reopen the Game to report an error, because you may ran an incompatible version")
+                    Layout.fillWidth: true
+                    wrapMode: Text.WordWrap
+                    visible: launcherSettings.showUnverified
+                }
+                Text {
+                    text: qsTr("Please don't report this error. Disable show beta Versions and reopen the Game to report an error, because you may ran an incompatible version")
+                    Layout.fillWidth: true
+                    wrapMode: Text.WordWrap
+                    visible: launcherSettings.showBetaVersions
                 }
             }
         }
@@ -124,12 +136,12 @@ Window {
                 selectByMouse: true
                 readOnly: true
                 selectionColor: "#f57c00"
-                text: "Hello World\nTests\nfdffsd\nsddfggrg()"
+                text: ""
 
                 onTextChanged: {
                     logScrollView.scrollToBottom()
-                    if (launcher.crashed && !launcherSettings.disableGameLog && !launcherSettings.showUnsupported)
-                        tpanel.text = "The Launcher has exited with a non-zero error code.<br><a href=\"https://github.com/ChristopherHX/mcpelauncher-manifest/issues/new?title=Launcher%20Crashed&body=Did%20older%20Launcher%20Versions%20work%20on%20this%20PC?%0A```%0A" + encodeURIComponent(gameLog.text).replace(/'/g, "%27") + "%0A```%0A%23%20Disclaimer%0AIf%20you%20don%27t%20answer%20these%20questions%20your%20issue%20will%20be%20closed\">Please click here if you would like to open an issue.</a>" 
+                    if (launcher.crashed && !launcherSettings.disableGameLog && !launcherSettings.showUnsupported && !launcherSettings.showUnverified && !launcherSettings.showBetaVersions)
+                        tpanel.text = "The Launcher has exited with a non-zero error code.<br>This Launcher is instable, please retry starting the Game before open an issue. You minimally have to provide the crashlog, your Operating System name, version, CPU architecture, GPU drivers, Launcher version, you find it in Settings->About or the git commit's of your build, Game version inclusive architecture like 1.16.201.5 (x86_64), you find it in the big green Button and a guide how to reproduce your issue. Keep in mind, you have no right for support and most crash reports cannot be fixed at all. <a href=\"https://github.com/minecraft-linux/mcpelauncher-manifest/issues\">Please click here to search for existing similar issues, before open a new issue</a>" 
                 }
             }
 
