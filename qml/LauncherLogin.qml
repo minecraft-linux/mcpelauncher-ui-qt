@@ -73,7 +73,8 @@ Item {
                 property int buttonWidth: Math.max(children[0].implicitWidth, children[1].implicitWidth)
 
                 TransparentButton {
-                    text: "Use .apk".toUpperCase()
+                    enabled: !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
+                    text: LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK ? "Use .apk (Removed due to piracy)" : "Use .apk".toUpperCase()
                     textColor: "#0aa82f"
                     Layout.preferredWidth: alternativeOptions.buttonWidth
                     font.pointSize: 12
