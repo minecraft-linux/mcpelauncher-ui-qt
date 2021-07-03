@@ -65,11 +65,16 @@ LauncherBase {
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
+                        launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : null;
                         loaded = true
                     }
                     onCurrentProfileChanged: {
-                        if (loaded && currentProfile !== null)
-                            profileManager.activeProfile = currentProfile
+                        if (loaded && currentProfile !== null) {
+                            profileManager.activeProfile = currentProfile;
+                            launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : null;
+                        } else {
+                            launcherSettingsWindow.currentGameDataDir = null;
+                        }
                     }
 
                     enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
@@ -99,7 +104,7 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: isVersionsInitialized ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in or import .apk")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("Please wait...")
+            text: isVersionsInitialized ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("Please wait...")
             subText: isVersionsInitialized ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
             Layout.maximumWidth: 400
             Layout.fillWidth: true
@@ -185,9 +190,16 @@ LauncherBase {
     }
 
     function launcherLatestVersionscode() {
+        console.log("Query version");
+        if(!isVersionsInitialized) {
+            return 0;
+        }
         if (checkGooglePlayLatestSupport()) {
+            console.log("Use play version");
+
             return playVerChannel.latestVersionCode;
         } else {
+            console.log("Use compat version");
             var ver = launcherLatestVersion();
             return ver ? ver.versionCode : 0;
         }
@@ -209,7 +221,7 @@ LauncherBase {
     function getRawVersionsName() {
         var profile = profileManager.activeProfile;
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
-            return playVerChannel.latestVersion;
+            return getDisplayedNameForCode(launcherLatestVersionscode());
         }
         if (profile.versionType == ProfileInfo.LOCKED_CODE) {
             var ver = findArchivalVersion(profile.versionCode);
@@ -276,8 +288,7 @@ LauncherBase {
         return null;
     }
 
-    function getCurrentGameDir() {
-        var profile = profileManager.activeProfile;
+    function getCurrentGameDir(profile) {
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY) {
             return versionManager.getDirectoryFor(versionManager.versions.get(launcherLatestVersionscode()));
         }
@@ -297,11 +308,13 @@ LauncherBase {
     // Tests for raw Google Play latest (previous default, allways true)
     function checkGooglePlayLatestSupport() {
         if(versionManager.archivalVersions.versions.length == 0) {
+            console.log("Bug errata 1")
             rowLayout.warnMessage = qsTr("No mcpelauncher-versiondb loaded cannot check support")
             rowLayout.warnUrl = "";
             return true;
         }
         if (launcherSettings.showUnsupported || versionManager.archivalVersions.versions.length === 0) {
+            console.log("Bug errata 2")
             return true;
         }
         // Handle latest is beta, beta isn't enabled
@@ -311,6 +324,7 @@ LauncherBase {
             return false;
         }
         if(launcherSettings.showUnverified) {
+            console.log("Bug errata 3")
             return true;
         }
         var archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode);
@@ -361,7 +375,7 @@ LauncherBase {
     }
 
     function showLaunchError(message) {
-        errorDialog.text = message
+        errorDialog.text = message.toString()
         errorDialog.open();
     }
 
@@ -372,7 +386,7 @@ LauncherBase {
         }
 
         gameLauncher.profile = profileManager.activeProfile;
-        var gameDir = getCurrentGameDir();
+        var gameDir = getCurrentGameDir(profileManager.activeProfile);
         console.log("Game dir = " + gameDir);
         if (gameDir === null || gameDir.length <= 0) {
             showLaunchError("Could not find the game directory.")
@@ -388,7 +402,11 @@ LauncherBase {
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
         var profile = profileManager.activeProfile;
-        gameLauncher.start(launcherSettings.disableGameLog, profile.arch, playVerChannel.hasVerifiedLicense);
+        var verifiedLicense = playVerChannel.hasVerifiedLicense;
+        if(!verifiedLicense) {
+            showLaunchError("The Launcher has trouble to verify that you own the Game on Google Play. You may need to buy the Game. If you own the game on the Play Store on the signed in account try sign out, sign in again and accept the Tos Prompt. If you won't accept the Google Play Terms of Service Window inside the Launcher after sign in you cannot play the Game.");
+        }
+        gameLauncher.start(launcherSettings.disableGameLog, profile.arch, verifiedLicense);
     }
     
 }

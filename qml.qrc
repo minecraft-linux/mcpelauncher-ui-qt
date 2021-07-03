@@ -19,6 +19,7 @@
         <file>qml/EditProfileWindow.qml</file>
         <file>qml/LauncherUnsupported.qml</file>
         <file>qml/LauncherSettingsDev.qml</file>
+        <file>qml/LauncherSettingsStorage.qml</file>
         <file>qml/LauncherSettingsAbout.qml</file>
         <file>qml/LauncherChangeLog.qml</file>
         <file>qml/LauncherSettingsWindow.qml</file>

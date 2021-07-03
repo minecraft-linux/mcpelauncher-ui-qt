@@ -18,6 +18,7 @@ Window {
     title: qsTr("Launcher Settings")
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
+    property string currentGameDataDir
 
     ColumnLayout {
         id: layout
@@ -70,6 +71,10 @@ Window {
                         width: implicitWidth
                     }
                     MTabButton {
+                        text: qsTr("Storage")
+                        width: implicitWidth
+                    }
+                    MTabButton {
                         text: qsTr("Versions")
                         width: implicitWidth
                     }
@@ -98,6 +103,9 @@ Window {
             LauncherSettingsGeneral {
             }
 
+            LauncherSettingsStorage {
+            }
+
             LauncherSettingsVersions {
             }
 
@@ -105,7 +113,6 @@ Window {
             }
 
             LauncherSettingsAbout {
-                maximumWidth: window.width - 20
             }
             Keys.forwardTo: children[tabs.currentIndex]
         }
@@ -135,6 +142,13 @@ Window {
 
         }
 
+    }
+
+    function getCurrentGameDataDir() {
+        if(window.currentGameDataDir) {
+            return window.currentGameDataDir;
+        }
+        return launcherSettings.gameDataDir;
     }
 
 }

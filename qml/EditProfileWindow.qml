@@ -163,6 +163,33 @@ Window {
                 Layout.columnSpan: 2
             }
 
+            Text {
+                text: qsTr("Texture Patch")
+                font.pointSize: parent.labelFontSize
+            }
+            MComboBox {                
+                ListModel {
+                    id: texturePatchModel
+
+                    ListElement {
+                        name: "Auto"
+                    }
+                    ListElement {
+                        name: "Enable"
+                    }
+                    ListElement {
+                        name: "Disable"
+                    }
+                }
+
+
+                id: profileTexturePatch
+                Layout.fillWidth: true
+
+                textRole: "name"
+                model: texturePatchModel
+            }
+
             MCheckBox {
                 id: dataDirCheck
                 text: qsTr("Data directory")
@@ -275,6 +302,7 @@ Window {
         profileName.text = ""
         profileName.enabled = true
         profileVersion.currentIndex = 0
+        profileTexturePatch.currentIndex = 0
         dataDirCheck.checked = false
         dataDirPath.text = QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = false
@@ -323,6 +351,11 @@ Window {
             }
         }
 
+        profileTexturePatch.currentIndex = 0;
+        if(profile.texturePatch) {
+            profileTexturePatch.currentIndex = profile.texturePatch;
+        }
+
         dataDirCheck.checked = profile.dataDirCustom
         dataDirPath.text = profile.dataDir.length ? profile.dataDir : QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = profile.windowCustomSize
@@ -348,6 +381,7 @@ Window {
             else
                 profile.setName(profileName.text)
         }
+        profile.texturePatch = profileTexturePatch.currentIndex
         profile.arch = ""
         if (versionsmodel.get(profileVersion.currentIndex).obj || versionsmodel.get(profileVersion.currentIndex).versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profile.versionType = versionsmodel.get(profileVersion.currentIndex).versionType

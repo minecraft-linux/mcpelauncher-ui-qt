@@ -80,6 +80,7 @@ void ProfileManager::loadProfiles() {
         profile->windowCustomSize = settings.value("windowCustomSize").toBool();
         profile->windowWidth = settings.value("windowWidth").toInt();
         profile->windowHeight = settings.value("windowHeight").toInt();
+        profile->texturePatch = settings.value("texturePatch").toInt();
         settings.endGroup();
     }
 }
@@ -107,6 +108,7 @@ void ProfileInfo::save() {
     settings.setValue("windowWidth", windowWidth);
     settings.setValue("windowHeight", windowHeight);
     settings.setValue("arch", arch);
+    settings.setValue("texturePatch", texturePatch);
     settings.endGroup();
 }
 

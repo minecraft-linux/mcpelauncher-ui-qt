@@ -6,9 +6,11 @@ import "ThemedControls"
 
 ColumnLayout {
     Keys.forwardTo: children[1].children[0]
-    RowLayout {
+    Layout.fillWidth: true
+    ColumnLayout {
 
         MButton {
+            Layout.fillWidth: true
             text: qsTr("Delete selected")
             onClicked: {
                 if (versions.currentIndex == -1)
@@ -18,11 +20,14 @@ ColumnLayout {
         }
 
         MButton {
+            Layout.fillWidth: true
             text: qsTr("Import .apk")
             onClicked: apkImportWindow.pickFile()
+            enabled: !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK || googleLoginHelper.account !== null
         }
 
         MButton {
+            Layout.fillWidth: true
             text: qsTr("Remove Incompatible Versions")
             onClicked: {
                 var abis = googleLoginHelper.getAbis(false)
@@ -60,7 +65,6 @@ ColumnLayout {
     BorderImage {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.rightMargin: 20
         source: "qrc:/Resources/dropdown-bg.png"
         smooth: false
         border { left: 4; top: 4; right: 4; bottom: 4 }

@@ -20,6 +20,7 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(int windowWidth MEMBER windowWidth NOTIFY changed)
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
     Q_PROPERTY(QString arch MEMBER arch NOTIFY changed)
+    Q_PROPERTY(int texturePatch MEMBER texturePatch WRITE setTexturePatch NOTIFY changed)
 
     ProfileManager* manager;
 
@@ -46,10 +47,16 @@ public:
 
     QString arch;
 
+    int texturePatch;
+
 public slots:
     void setName(QString const& newName);
 
     void save();
+
+    void setTexturePatch(int val) {
+        texturePatch = val;
+    }
 
 signals:
     void changed();

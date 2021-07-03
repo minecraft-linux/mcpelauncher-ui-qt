@@ -43,6 +43,10 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             args.append("-wh");
             args.append(QString::number(m_profile->windowHeight));
         }
+        if (m_profile->texturePatch != 0) {
+            args.append("--texturePatch");
+            args.append(QString::number(m_profile->texturePatch == 1));
+        }
     }
 #ifdef LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
     if (!hasVerifiedLicense) {
