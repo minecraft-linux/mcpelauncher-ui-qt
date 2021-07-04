@@ -44,7 +44,7 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             args.append(QString::number(m_profile->windowHeight));
         }
         if (m_profile->texturePatch != 0) {
-            args.append("--texturePatch");
+            args.append("-tp");
             args.append(QString::number(m_profile->texturePatch == 1));
         }
     }
