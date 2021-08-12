@@ -182,11 +182,23 @@ LauncherBase {
     /* utility functions */
 
     function launcherLatestVersion() {
+        var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
         for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-            if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !versionManager.archivalVersions.versions[i].isBeta) {
-                return versionManager.archivalVersions.versions[i];
+            var ver = versionManager.archivalVersions.versions[i];
+            if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !ver.isBeta) {
+                for (var j = 0; j < abis.length; j++) {
+                    if (ver.abi === abis[j]) {
+                        return ver;
+                    }
+                }
             }
         }
+        if (abis.length == 0) {
+            console.log("Unsupported Device");
+        } else {
+            console.log("Bug: No version");
+        }
+        return null;
     }
 
     function launcherLatestVersionscode() {
