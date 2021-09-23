@@ -90,6 +90,7 @@ bool ProfileManager::validateName(QString const& name) {
 }
 
 ProfileInfo::ProfileInfo(ProfileManager* pm) : QObject(pm), manager(pm) {
+    texturePatch = 0;
 }
 
 void ProfileInfo::save() {
