@@ -104,7 +104,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         } pdata;
         pdata.id = id;
         pdata._progress = _progress.get();
-        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](void *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> {
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](void *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> int {
             auto pdata = (ProgressData*)clientp;
             auto id = pdata->id;
             auto _progress = pdata->_progress;
@@ -113,6 +113,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
                 _progress->progress[id] = dlnow;
                 emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
             }
+            return CURL_PROGRESSFUNC_CONTINUE;
         });
 
         curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, &pdata);
@@ -129,7 +130,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         file->close();
         if(res == CURLE_OK) {
             long response_code;
-            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+            curl_easy_getinfo(curl_handle, CURLINFO_RESPONSE_CODE, &response_code);
             if(response_code == 200) {
                 {
                     QMutexLocker l (&fileMutex);
