@@ -66,7 +66,6 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
 #ifdef GOOGLEPLAYDOWNLOADER_USECURL
     auto url = dd.downloadurl();
     {
-        std::lock_guard<std::mutex> guard(_progress->mtx);
         if(_progress->downloadsize != -1) {
             auto size = dd.downloadsize();
             if(size > 0) {
