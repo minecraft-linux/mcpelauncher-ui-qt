@@ -77,7 +77,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
             }
         }
     }
-    std::thread([this, success, _error, _progress, id]() {
+    std::thread([this, success, _error, _progress, id, url]() {
         auto file = std::make_shared<QTemporaryFile>();
         if (!file->open())
             throw std::runtime_error("Failed to open file");
