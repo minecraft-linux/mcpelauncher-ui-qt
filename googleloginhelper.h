@@ -27,8 +27,6 @@ private:
     bool hasAccount = false;
     bool includeIncompatible = false;
 
-    static std::string getTokenCachePath();
-
     void loadDeviceState();
     void saveDeviceState();
 
@@ -48,6 +46,8 @@ private:
     }
 
 public:
+    static std::string getTokenCachePath();
+
     GoogleLoginHelper();
 
     ~GoogleLoginHelper();
