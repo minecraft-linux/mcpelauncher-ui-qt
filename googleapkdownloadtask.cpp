@@ -4,6 +4,7 @@
 #ifdef GOOGLEPLAYDOWNLOADER_USECURL
 #include <curl/curl.h>
 #include <curl/easy.h>
+#include <functional>
 #endif
 
 GoogleApkDownloadTask::GoogleApkDownloadTask(QObject *parent) : QObject(parent), m_active(false) {
@@ -76,7 +77,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
             }
         }
     }
-    std::thread([=]() {
+    std::thread([this, success, _error, _progress, id]() {
         auto file = std::make_shared<QTemporaryFile>();
         if (!file->open())
             throw std::runtime_error("Failed to open file");
@@ -98,25 +99,19 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
 
         curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
 
-        struct ProgressData{
-            size_t id;
-            DownloadProgress*_progress;
-        } pdata;
-        pdata.id = id;
-        pdata._progress = _progress.get();
-        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](void *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> int {
-            auto pdata = (ProgressData*)clientp;
-            auto id = pdata->id;
-            auto _progress = pdata->_progress;
+        std::function<void(size_t)> progresscallback = [this, id, _progress](size_t dlnow) {
             std::lock_guard<std::mutex> guard(_progress->mtx);
             if(_progress->downloadsize > 0) {
                 _progress->progress[id] = dlnow;
                 emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
             }
+        };
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](void *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> int {
+            (*(std::function<void(size_t)>*)clientp)(dlnow);
             return CURL_PROGRESSFUNC_CONTINUE;
         });
 
-        curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, &pdata);
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, &progresscallback);
 
         /* write the page body to this file handle */
         curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, &fd);
