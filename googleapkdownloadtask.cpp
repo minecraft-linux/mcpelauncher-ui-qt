@@ -98,8 +98,16 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
 
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
+        struct ProgressData{
+            size_t id;
+            DownloadProgress*_progress;
+        } pdata;
+        pdata.id = id;
+        pdata._progress = _progress.get();
         curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](oid *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> {
-            auto _progress = (DownloadProgress*)clientp;
+            auto pdata = (ProgressData*)clientp;
+            auto id = pdata->id;
+            auto _progress = pdata->_progress;
             std::lock_guard<std::mutex> guard(_progress->mtx);
             if(_progress->downloadsize > 0) {
                 _progress->progress[id] = dlnow;
@@ -107,7 +115,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
             }
         });
 
-        curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, _progress.get());
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, &pdata);
 
         /* write the page body to this file handle */
         curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, fd);
