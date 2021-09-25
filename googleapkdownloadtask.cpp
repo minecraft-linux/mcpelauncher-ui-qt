@@ -1,6 +1,10 @@
 #include "googleapkdownloadtask.h"
 #include "googleplayapi.h"
 #include "googleloginhelper.h"
+#ifdef GOOGLEPLAYDOWNLOADER_USECURL
+#include <curl/curl.h>
+#include <curl/easy.h>
+#endif
 
 GoogleApkDownloadTask::GoogleApkDownloadTask(QObject *parent) : QObject(parent), m_active(false) {
 }
@@ -58,6 +62,86 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
 }
 
 template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error, std::shared_ptr<DownloadProgress> _progress, size_t id) {
+#ifdef GOOGLEPLAYDOWNLOADER_USECURL
+    auto url = dd.downloadurl();
+    {
+        std::lock_guard<std::mutex> guard(_progress->mtx);
+        if(_progress->downloadsize != -1) {
+            auto size = dd.downloadsize();
+            if(size > 0) {
+                _progress->downloadsize += size;
+                _progress->progress[id] = 0;
+            } else {
+                _progress->downloadsize = -1;
+            }
+        }
+    }
+    std::thread([=]() {
+        auto file = std::make_shared<QTemporaryFile>();
+        if (!file->open())
+            throw std::runtime_error("Failed to open file");
+        int fd = file->handle();
+
+        /* init the curl session */
+        curl_handle = curl_easy_init();
+        
+        /* set URL to get here */
+        curl_easy_setopt(curl_handle, CURLOPT_URL, url.data());
+        
+        /* enable progress meter, set to 1L to disable it */
+        curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 0L);
+        
+        /* send all data to this function  */
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, [](void *ptr, size_t size, size_t nmemb, void *stream) -> size_t {
+            return write((int)stream, ptr, size * nmemb);
+        });
+
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](oid *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> {
+            auto _progress = (DownloadProgress*)clientp;
+            std::lock_guard<std::mutex> guard(_progress->mtx);
+            if(_progress->downloadsize > 0) {
+                _progress->progress[id] = dlnow;
+                emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
+            }
+        });
+
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, _progress.get());
+
+        /* write the page body to this file handle */
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, fd);
+        
+        char errormsg[CURL_ERROR_SIZE];
+        curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errormsg);
+
+        /* get it! */
+        auto res = curl_easy_perform(curl_handle);
+
+        file->close();
+        if(res == CURLE_OK) {
+            long response_code;
+            curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+            if(response_code == 200) {
+                {
+                    QMutexLocker l (&fileMutex);
+                    files.push_back(file);
+                }
+                success();
+            } else {
+                emit error(QObject::tr("Downloading file failed: Status %1").arg(QString::fromStdString(std::to_string(response_code))));
+                _error();
+            }
+        } else {
+            auto len = strlen(errormsg);
+            emit error(QObject::tr("CURL Network error: %1").arg(len ? errormsg : QObject::tr("Unknown error")));
+            _error();
+        }
+
+        /* cleanup curl stuff */
+        curl_easy_cleanup(curl_handle);
+    }).detach();
+#else
     auto file = std::make_shared<QTemporaryFile>();
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
@@ -155,6 +239,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         _error();
     });
     curl_easy_setopt(errorbuf->handle, CURLOPT_ERRORBUFFER, errorbuf->errormsg);
+#endif
 }
 
 void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk) {
