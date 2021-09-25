@@ -83,7 +83,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         int fd = file->handle();
 
         /* init the curl session */
-        curl_handle = curl_easy_init();
+        auto curl_handle = curl_easy_init();
         
         /* set URL to get here */
         curl_easy_setopt(curl_handle, CURLOPT_URL, url.data());
@@ -93,10 +93,10 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         
         /* send all data to this function  */
         curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, [](void *ptr, size_t size, size_t nmemb, void *stream) -> size_t {
-            return write((int)stream, ptr, size * nmemb);
+            return write(*(int*)stream, ptr, size * nmemb);
         });
 
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);
 
         struct ProgressData{
             size_t id;
@@ -104,7 +104,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         } pdata;
         pdata.id = id;
         pdata._progress = _progress.get();
-        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](oid *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> {
+        curl_easy_setopt(curl_handle, CURLOPT_XFERINFOFUNCTION, [](void *clientp,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow) -> {
             auto pdata = (ProgressData*)clientp;
             auto id = pdata->id;
             auto _progress = pdata->_progress;
@@ -118,7 +118,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         curl_easy_setopt(curl_handle, CURLOPT_XFERINFODATA, &pdata);
 
         /* write the page body to this file handle */
-        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, fd);
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, &fd);
         
         char errormsg[CURL_ERROR_SIZE];
         curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errormsg);
