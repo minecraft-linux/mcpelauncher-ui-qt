@@ -145,7 +145,7 @@ Window {
     }
 
     function getCurrentGameDataDir() {
-        if(window.currentGameDataDir) {
+        if(window.currentGameDataDir && window.currentGameDataDir.length > 0) {
             return window.currentGameDataDir;
         }
         return launcherSettings.gameDataDir;

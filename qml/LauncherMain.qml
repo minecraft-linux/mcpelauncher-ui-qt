@@ -65,15 +65,15 @@ LauncherBase {
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
-                        launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : null;
+                        launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : "";
                         loaded = true
                     }
                     onCurrentProfileChanged: {
                         if (loaded && currentProfile !== null) {
                             profileManager.activeProfile = currentProfile;
-                            launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : null;
+                            launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : "";
                         } else {
-                            launcherSettingsWindow.currentGameDataDir = null;
+                            launcherSettingsWindow.currentGameDataDir = "";
                         }
                     }
 
