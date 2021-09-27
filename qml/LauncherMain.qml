@@ -104,13 +104,13 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: isVersionsInitialized ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("Please wait...")
+            text: isVersionsInitialized ? (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
             subText: isVersionsInitialized ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
             Layout.maximumWidth: 400
             Layout.fillWidth: true
             Layout.preferredHeight: 70
             Layout.minimumHeight: implicitHeight
-            enabled: isVersionsInitialized && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName())
+            enabled: isVersionsInitialized && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense
 
             onClicked: {
                 if(gameLauncher.running) {
