@@ -62,6 +62,8 @@ signals:
 
     void activeChanged();
 
+    void queueDownload(playapi::proto::finsky::download::AndroidAppDeliveryData dd, bool skipMainApk);
+
 public slots:
     void start(bool skipMainApk = false);
 };

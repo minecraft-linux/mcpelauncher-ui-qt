@@ -27,6 +27,10 @@ bool LauncherSettings::disableDevMode = 1;
 bool LauncherSettings::disableDevMode = 0;
 #endif
 
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+Q_DECLARE_METATYPE(playapi::proto::finsky::download::AndroidAppDeliveryData)
+#endif
+
 int main(int argc, char *argv[])
 {
 #ifdef LAUNCHER_INIT_PATCH
@@ -60,6 +64,9 @@ int main(int argc, char *argv[])
 #endif
 
     app.setQuitOnLastWindowClosed(false);
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+    qRegisterMetaType<playapi::proto::finsky::download::AndroidAppDeliveryData>();
+#endif
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
     qmlRegisterType<GooglePlayApi>("io.mrarm.mcpelauncher", 1, 0, "GooglePlayApi");

@@ -1,8 +1,17 @@
 #include "googleapkdownloadtask.h"
 #include "googleplayapi.h"
 #include "googleloginhelper.h"
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QtConcurrent>
+#endif
 
 GoogleApkDownloadTask::GoogleApkDownloadTask(QObject *parent) : QObject(parent), m_active(false) {
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+    connect(this, &GoogleApkDownloadTask::queueDownload, this, &GoogleApkDownloadTask::startDownload);
+#endif
 }
 
 void GoogleApkDownloadTask::setPlayApi(GooglePlayApi *value) {
@@ -27,7 +36,11 @@ void GoogleApkDownloadTask::start(bool skipMainApk) {
         if((dd.has_gzippeddownloadurl() ? dd.gzippeddownloadurl() : dd.downloadurl()) == "") {
             throw std::runtime_error(QObject::tr("To use the download feature, <a href=\"https://play.google.com/store/apps/details?id=com.mojang.minecraftpe\">Minecraft: Bedrock Edition has to be purchased on the Google Play Store</a>.<br>If you are trying to download a beta version, please make sure you are in the <a href=\"https://play.google.com/apps/testing/com.mojang.minecraftpe\">Minecraft beta program on Google Play.</a> and then try again after a while (joining the program might take a while).").toStdString());
         }
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+        emit queueDownload(dd, skipMainApk);
+#else
         startDownload(dd, skipMainApk);
+#endif
     }, [this](std::exception_ptr e) {
         try {
             std::rethrow_exception(e);
@@ -58,6 +71,52 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
 }
 
 template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error, std::shared_ptr<DownloadProgress> _progress, size_t id) {
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+    auto file = std::make_shared<QTemporaryFile>();
+    file->open();
+    auto url = dd.downloadurl();
+    {
+        if(_progress->downloadsize != -1) {
+            auto size = dd.downloadsize();
+            if(size > 0) {
+                _progress->downloadsize += size;
+                _progress->progress[id] = 0;
+            } else {
+                _progress->downloadsize = -1;
+            }
+        }
+    }
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    QNetworkRequest request;
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+    request.setUrl(QUrl(QString::fromStdString(url)));
+    connect(manager, &QNetworkAccessManager::finished, [file, this, manager, success, _error, url](QNetworkReply* reply) {
+        file->flush();
+        file->close();
+        if(!reply->error()) {
+            {
+                QMutexLocker l (&fileMutex);
+                files.push_back(file);
+            }
+            success();
+        } else {
+            emit error(QObject::tr("Downloading file failed %1").arg(QString::fromStdString(url)));
+            _error();
+        }
+        reply->deleteLater();
+        manager->deleteLater();
+    });
+    auto reply = manager->get(request);
+    connect(reply, &QNetworkReply::readyRead, [reply, file]() {
+        file->write(reply->readAll());
+    });
+    connect(reply, &QNetworkReply::downloadProgress, [_progress, id, this](qint64 dlnow, qint64 total) {
+        if(_progress->downloadsize > 0) {
+            _progress->progress[id] = dlnow;
+            emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
+        }
+    });
+#else
     auto file = std::make_shared<QTemporaryFile>();
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
@@ -155,6 +214,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         _error();
     });
     curl_easy_setopt(errorbuf->handle, CURLOPT_ERRORBUFFER, errorbuf->errormsg);
+#endif
 }
 
 void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk) {
