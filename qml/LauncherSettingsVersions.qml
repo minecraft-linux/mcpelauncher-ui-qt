@@ -21,9 +21,9 @@ ColumnLayout {
 
         MButton {
             Layout.fillWidth: true
-            text: qsTr("Import .apk")
+            text: googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense ? qsTr("Import .apk") : qsTr("<s>Import .apk</s> You haven't proven to own the game!")
             onClicked: apkImportWindow.pickFile()
-            enabled: !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK || googleLoginHelper.account !== null
+            enabled: googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense
         }
 
         MButton {
