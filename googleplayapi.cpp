@@ -147,14 +147,7 @@ void GooglePlayApi::updateLogin() {
                         throw std::runtime_error("Invalid state");
                     api->set_toc_cookie(toc.payload().tocresponse().cookie());
                     if (toc.payload().tocresponse().has_toscontent() && toc.payload().tocresponse().has_tostoken()) {
-                        tosApprovalPromise = std::promise<std::pair<bool, bool>>();
-                        auto future = tosApprovalPromise.get_future();
-                        emit tosApprovalRequired(QString::fromStdString(toc.payload().tocresponse().toscontent()),
-                                                QString::fromStdString(toc.payload().tocresponse().toscheckboxtextmarketingemails()));
-                        auto state = future.get();
-                        if (!state.first)
-                            throw std::runtime_error("Rejected TOS");
-                        auto tos = api->accept_tos(toc.payload().tocresponse().tostoken(), state.second)->call();
+                        auto tos = api->accept_tos(toc.payload().tocresponse().tostoken(), false)->call();
                         if (!tos.payload().has_accepttosresponse())
                             throw std::runtime_error("Invalid state");
                         saveApiInfo();
