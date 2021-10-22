@@ -65,15 +65,12 @@ LauncherBase {
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
-                        launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : "";
+                        launcherSettingsWindow.currentGameDataDir = Qt.binding(function() { return (profileManager.activeProfile && profileManager.activeProfile.dataDirCustom) ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : "" });
                         loaded = true
                     }
                     onCurrentProfileChanged: {
                         if (loaded && currentProfile !== null) {
                             profileManager.activeProfile = currentProfile;
-                            launcherSettingsWindow.currentGameDataDir = profileManager.activeProfile.dataDirCustom ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : "";
-                        } else {
-                            launcherSettingsWindow.currentGameDataDir = "";
                         }
                     }
 
@@ -104,13 +101,12 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: isVersionsInitialized ? (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
-            subText: isVersionsInitialized ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
-            Layout.maximumWidth: 400
+            text: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
+            subText: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
             Layout.fillWidth: true
             Layout.preferredHeight: 70
             Layout.minimumHeight: implicitHeight
-            enabled: isVersionsInitialized && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense
+            enabled: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense
 
             onClicked: {
                 if(gameLauncher.running) {
@@ -331,7 +327,7 @@ LauncherBase {
         }
         // Handle latest is beta, beta isn't enabled
         if (playVerChannel.latestVersionIsBeta && !launcherSettings.showBetaVersions) {
-            rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, but playing beta is disabled (Developer feature)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
+            rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, therefore not supported").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
             rowLayout.warnUrl = "";
             return false;
         }

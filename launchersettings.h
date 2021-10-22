@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QDir>
 #include <QStandardPaths>
+#include <QUrl>
 
 class LauncherSettings : public QObject {
     Q_OBJECT
@@ -17,6 +18,7 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
     Q_PROPERTY(int lastVersion READ lastVersion WRITE setLastVersion NOTIFY settingsChanged)
     Q_PROPERTY(QUrl gameDataDir READ gameDataDir)
+    Q_PROPERTY(bool allowLauncherExtensions READ allowLauncherExtensions WRITE setAllowLauncherExtensions NOTIFY settingsChanged)
 
 private:
     QSettings settings;
@@ -32,7 +34,7 @@ public:
     bool startOpenLog() const { return settings.value("startOpenLog", false).toBool(); }
     void setStartOpenLog(bool value) { settings.setValue("startOpenLog", value); emit settingsChanged(); }
 
-    bool disableGameLog() const { return settings.value("disableGameLog", false).toBool(); }
+    bool disableGameLog() const { return settings.value("disableGameLog", true).toBool(); }
     void setDisableGameLog(bool value) { settings.setValue("disableGameLog", value); emit settingsChanged(); }
 
     bool checkForUpdates() const { return settings.value("checkForUpdates", true).toBool(); }
@@ -49,6 +51,9 @@ public:
 
     int lastVersion() const { return settings.value("lastVersion", 0).toInt(); }
     void setLastVersion(int value) { settings.setValue("lastVersion", value); emit settingsChanged(); }
+
+    bool allowLauncherExtensions() const { return settings.value("allowLauncherExtensions", true).toBool(); }
+    void setAllowLauncherExtensions(bool value) { settings.setValue("allowLauncherExtensions", value); emit settingsChanged(); }
 
     QUrl gameDataDir() {
         return QUrl::fromLocalFile(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher"));

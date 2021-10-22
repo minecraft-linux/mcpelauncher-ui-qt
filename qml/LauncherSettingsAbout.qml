@@ -22,13 +22,6 @@ ColumnLayout {
         Layout.fillWidth: true
         MButton {
             Layout.fillWidth: true
-            text: qsTr("Show Changelog")
-            onClicked: stackView.push(panelChangelog)
-            visible: LAUNCHER_CHANGE_LOG.length !== 0
-        }
-
-        MButton {
-            Layout.fillWidth: true
             text: qsTr("Check for Updates")
             Layout.columnSpan: 1
             onClicked: {

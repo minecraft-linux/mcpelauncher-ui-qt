@@ -27,6 +27,7 @@ Window {
 
     VersionManager {
         id: versionManagerInstance
+        useext: launcherSettings.allowLauncherExtensions
     }
 
     ProfileManager {
@@ -78,6 +79,18 @@ Window {
         id: panelChangelog
 
         LauncherChangeLog {
+            onFinished: {
+                stackView.push(panelAgree);
+            }
+            hasUpdate: window.hasUpdate
+            updateDownloadUrl: window.updateDownloadUrl
+        }
+    }
+
+    Component {
+        id: panelAgree
+
+        LauncherAgree {
             onFinished: {
                 launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
                 next()
@@ -147,7 +160,7 @@ Window {
     MessageDialog {
         id: corruptedInstallDialog
         title: qsTr("Unsupported Minecraft Version")
-        text: qsTr("Your previously downloaded Minecraft Version might be unsupported or just corrupted.<br/><b>if you wanted to play a Beta or a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b><br/>otherwise if you have updated the Launcher recently.<br/>e.g. a crash please delete it in Settings,<br/>then download it again via the updated Launcher.")
+        text: qsTr("<p>Are you trying to play 1.17.40+ without an internet connection? Due to piracy is this functionality currently unavailable. Tracking issue https://github.com/minecraft-linux/mcpelauncher-updates-bin/issues/1</p>The Minecraft Version you are trying to run is unsupported.<br/><b>if you wanted to play a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b>")
     }
 
     GameLauncher {
@@ -267,6 +280,8 @@ Window {
         versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true))
         if(LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
             stackView.push(panelChangelog);
+        } else if(launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
+            stackView.push(panelAgree);
         } else {
             next();
         }

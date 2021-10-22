@@ -14,12 +14,17 @@ class GoogleVersionChannel : public QObject {
     Q_PROPERTY(bool latestVersionIsBeta READ latestVersionIsBeta NOTIFY latestVersionChanged)
     Q_PROPERTY(GoogleVersionChannelStatus status READ getStatus NOTIFY statusChanged)
     Q_PROPERTY(bool hasVerifiedLicense MEMBER m_hasVerifiedLicense NOTIFY statusChanged)
+    Q_PROPERTY(GoogleVersionChannelLicenceStatus licenseStatus READ getLicenseStatus NOTIFY statusChanged)
 
 public:
     enum class GoogleVersionChannelStatus {
         NOT_READY, PENDING, FAILED, SUCCEDED
     };
     Q_ENUM(GoogleVersionChannelStatus)
+    enum class GoogleVersionChannelLicenceStatus {
+        NOT_READY, PENDING, FAILED, SUCCEDED
+    };
+    Q_ENUM(GoogleVersionChannelLicenceStatus)
 private:
     QSettings m_settings;
     GooglePlayApi* m_playApi = nullptr;
@@ -28,6 +33,7 @@ private:
     qint32 m_latestVersionIsBeta;
     bool m_hasVerifiedLicense = false;
     GoogleVersionChannelStatus status = GoogleVersionChannelStatus::NOT_READY;
+    GoogleVersionChannelLicenceStatus licenseStatus = GoogleVersionChannelLicenceStatus::NOT_READY;
 
     void onApiReady();
 
@@ -49,6 +55,7 @@ public:
     qint32 latestVersionCode() const { return m_latestVersionCode; }
     bool latestVersionIsBeta() const { return m_latestVersionIsBeta; }
     GoogleVersionChannelStatus getStatus() const { return status; }
+    GoogleVersionChannelLicenceStatus getLicenseStatus() const { return licenseStatus; }
 
 public slots:
 

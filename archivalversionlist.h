@@ -28,11 +28,12 @@ private:
     QNetworkAccessManager* m_netManager;
     QList<QObject*> m_versions;
     QList<QObject*> m_versionsnext;
+    QString m_baseUrl;
 
     void onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis);
 
 public:
-    ArchivalVersionList();
+    ArchivalVersionList(QString baseUrl);
 
     QList<QObject*> const& versions() const { return m_versions; }
 

@@ -51,7 +51,6 @@ ScrollView {
 
         MCheckBox {
             Layout.topMargin: 20
-            id: autoShowGameLog
             text: qsTr("Show log when starting the game")
             font.pointSize: parent.labelFontSize
             Layout.columnSpan: 2
@@ -60,7 +59,6 @@ ScrollView {
         }
 
         MCheckBox {
-            id: hideLauncher
             text: qsTr("Hide the launcher when starting the game")
             font.pointSize: parent.labelFontSize
             Layout.columnSpan: 2
@@ -78,17 +76,23 @@ ScrollView {
         }
 
         MCheckBox {
-            id: checkForUpdates
-            text: qsTr("Enable checking for updates (startup)")
+            text: qsTr("Enable checking for updates (on opening)")
             font.pointSize: parent.labelFontSize
             Layout.columnSpan: 2
             Component.onCompleted: checked = launcherSettings.checkForUpdates
             onCheckedChanged: launcherSettings.checkForUpdates = checked
         }
 
+        MCheckBox {
+            text: qsTr("Allow proprietary Launcher Extensions")
+            font.pointSize: parent.labelFontSize
+            Layout.columnSpan: 2
+            Component.onCompleted: checked = launcherSettings.allowLauncherExtensions
+            onCheckedChanged: launcherSettings.allowLauncherExtensions = checked
+        }
+
         MButton {
             Layout.topMargin: 20
-            id: runTroubleshooter
             text: qsTr("Run troubleshooter")
             Layout.columnSpan: 1
             onClicked: troubleshooterWindow.findIssuesAndShow()

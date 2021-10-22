@@ -51,7 +51,15 @@ ColumnLayout {
                     font.pixelSize: 16
                 }
 
+                Text {
+                    color: "#ffffff"
+                    text: qsTr("Version %1 (build %2)").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    font.pixelSize: 12
+                }
+
             }
+            
 
         }
 

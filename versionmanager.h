@@ -115,13 +115,16 @@ public slots:
 class VersionManager : public QObject {
     Q_OBJECT
     Q_PROPERTY(VersionList* versions READ versionList NOTIFY versionListChanged)
-    Q_PROPERTY(ArchivalVersionList* archivalVersions READ archivalVersionList CONSTANT)
+    Q_PROPERTY(ArchivalVersionList* archivalVersions READ archivalVersionList NOTIFY archivalVersionListChanged)
+    Q_PROPERTY(bool useext READ useext WRITE setUseExt NOTIFY archivalVersionListChanged)
 
 private:
     QString baseDir;
     QMap<int, VersionInfo*> m_versions;
     VersionList m_versionList;
     ArchivalVersionList m_archival;
+    ArchivalVersionList m_archival_ext;
+    bool m_use_ext = false;
 
     void loadVersions();
     void saveVersions();
@@ -142,7 +145,16 @@ public:
 
     VersionList* versionList() { return &m_versionList; }
 
-    ArchivalVersionList* archivalVersionList() { return &m_archival; }
+    ArchivalVersionList* archivalVersionList() { return m_use_ext ? &m_archival_ext : &m_archival; }
+
+    void setUseExt(bool v) {
+        m_use_ext = v;
+        emit archivalVersionListChanged();
+    }
+
+    bool useext() {
+        return m_use_ext;
+    }
 
 public slots:
     QString getDirectoryFor(QString const& versionName);
@@ -155,6 +167,7 @@ public slots:
 
     void downloadLists(QStringList abis) {
         m_archival.downloadLists(abis);
+        m_archival_ext.downloadLists(abis);
     }
 
     bool checkSupport(QString const& versionName);
@@ -163,6 +176,8 @@ public slots:
     
 signals:
     void versionListChanged();
+
+    void archivalVersionListChanged();
 
 };
 

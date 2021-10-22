@@ -7,11 +7,8 @@
 #include <QDir>
 #include <QStandardPaths>
 
-#ifndef LAUNCHER_VERSIONDB_URL
-#define LAUNCHER_VERSIONDB_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master"
-#endif
-
-ArchivalVersionList::ArchivalVersionList() {
+ArchivalVersionList::ArchivalVersionList(QString baseUrl) {
+    m_baseUrl = baseUrl;
     m_netManager = new QNetworkAccessManager(this);
     QNetworkDiskCache* cache = new QNetworkDiskCache(m_netManager);
     cache->setCacheDirectory(QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)).filePath("versionCache"));
@@ -21,7 +18,7 @@ ArchivalVersionList::ArchivalVersionList() {
 void ArchivalVersionList::downloadLists(QStringList abis) {
     m_versionsnext.clear();
     if (abis.size()) {
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abis.at(abis.size() - 1) + ".json.min")));
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(m_baseUrl + "/versions." + abis.at(abis.size() - 1) + ".json.min")));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(abis.size() - 1), abis));
     } else {
         m_versions = m_versionsnext;
@@ -33,7 +30,7 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
     QByteArray data;
     QIODevice * result;
     if (reply->error() != QNetworkReply::NoError) {
-        result = m_netManager->cache()->data(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abi + ".json.min"));
+        result = m_netManager->cache()->data(QUrl(m_baseUrl + "/versions." + abi + ".json.min"));
         if (!result) {
             if(!result) {
                 QString fileName(":/archivalversionlist/" + abi);
@@ -75,7 +72,7 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
         qDebug() << "Version list loaded, entry count:" << m_versions.size();
         emit versionsChanged();
     } else {
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(LAUNCHER_VERSIONDB_URL "/versions." + abis.at(i - 1) + ".json.min")));
+        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(m_baseUrl + "/versions." + abis.at(i - 1) + ".json.min")));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
     }
 }

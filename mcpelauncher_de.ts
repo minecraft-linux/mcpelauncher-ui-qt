@@ -939,9 +939,9 @@ missing Symbols expected to be provided by this Launcher via updates
         <translation>Nicht unterstütze Minecraft Version</translation>
     </message>
     <message>
-        <location filename="qml/main.qml" line="150"/>
-        <source>Your previously downloaded Minecraft Version might be unsupported or just corrupted.&lt;br/&gt;&lt;b&gt;if you wanted to play a Beta or a new Release please wait patiently for an update,&lt;br/&gt;please choose a compatible version from the profile Editor&lt;/b&gt;&lt;br/&gt;otherwise if you have updated the Launcher recently.&lt;br/&gt;e.g. a crash please delete it in Settings,&lt;br/&gt;then download it again via the updated Launcher.</source>
-        <translation>Die zuvor heruntergeladene Minecraft Version wird möglicherweiße nicht unterstützt. Bitte wähle eine andere Version im Profil Editor aus.</translation>
+        <location filename="qml/main.qml" line="163"/>
+        <source>&lt;p&gt;Are you trying to play 1.17.40+ without an internet connection? Due to piracy is this functionality currently unavailable. Tracking issue https://github.com/minecraft-linux/mcpelauncher-updates-bin/issues/1&lt;/p&gt;The Minecraft Version you are trying to run is unsupported.&lt;br/&gt;&lt;b&gt;if you wanted to play a new Release please wait patiently for an update,&lt;br/&gt;please choose a compatible version from the profile Editor&lt;/b&gt;</source>
+        <translation>&lt;p&gt;Versuchst du gerade Minecraft 1.17.40+ ohne Internet Verbindung zu starten? Wegen piraterie ist diese funktion derzeit nicht verfügbar. Weitere Informationen unter https://github.com/minecraft-linux/mcpelauncher-updates-bin/issues/1&lt;/p&gt;Diese Minecraft Version wird nicht unterstützt. Bitte wähle eine andere Version im Profil Editor aus.</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="157"/>

@@ -5,7 +5,14 @@
 #include <QDir>
 #include <QSettings>
 
-VersionManager::VersionManager() : m_versionList(m_versions) {
+#ifndef LAUNCHER_VERSIONDB_URL
+#define LAUNCHER_VERSIONDB_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master"
+#endif
+#ifndef LAUNCHER_VERSIONDB_URL_NOEXT
+#define LAUNCHER_VERSIONDB_URL_NOEXT "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/v0.2.0"
+#endif
+
+VersionManager::VersionManager() : m_versionList(m_versions), m_archival(LAUNCHER_VERSIONDB_URL_NOEXT), m_archival_ext(LAUNCHER_VERSIONDB_URL) {
     baseDir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions");
     QDir().mkpath(baseDir);
     loadVersions();
