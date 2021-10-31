@@ -147,7 +147,7 @@ Window {
     MessageDialog {
         id: corruptedInstallDialog
         title: qsTr("Unsupported Minecraft Version")
-        text: qsTr("</p>The Minecraft Version you are trying to run is unsupported.<br/><b>if you wanted to play a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b>")
+        text: qsTr("The Minecraft Version you are trying to run is unsupported.<br/><b>if you wanted to play a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b>")
     }
 
     GameLauncher {
