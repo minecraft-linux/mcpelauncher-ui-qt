@@ -21,7 +21,6 @@
         <file>qml/LauncherSettingsDev.qml</file>
         <file>qml/LauncherSettingsStorage.qml</file>
         <file>qml/LauncherSettingsAbout.qml</file>
-        <file>qml/LauncherAgree.qml</file>
         <file>qml/LauncherChangeLog.qml</file>
         <file>qml/LauncherSettingsWindow.qml</file>
         <file>qml/GameLogWindow.qml</file>

@@ -70,7 +70,16 @@ Item {
                 Layout.topMargin: 4
                 spacing: 25
 
-                property int buttonWidth: children[0].implicitWidth
+                property int buttonWidth: Math.max(children[0].implicitWidth, children[1].implicitWidth)
+
+                TransparentButton {
+                    enabled: !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
+                    text: (LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK ? qsTr("Not available") : qsTr("Use .apk")).toUpperCase()
+                    textColor: "#0aa82f"
+                    Layout.preferredWidth: alternativeOptions.buttonWidth
+                    font.pointSize: 12
+                    onClicked: apkImportHelper.pickFile()
+                }
 
                 TransparentButton {
                     text: "Get help".toUpperCase()

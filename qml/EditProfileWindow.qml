@@ -127,7 +127,7 @@ Window {
 
                 Component.onCompleted: {
                     var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
-                    if (!hideLatest) {
+                    if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
                         var support = checkGooglePlayLatestSupport()
                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
                         versionsmodel.append({name: qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))), versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
@@ -142,7 +142,7 @@ Window {
                             }
                         }
                     }
-                    if (googleLoginHelper.account !== null) {
+                    if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
                         for (i = 0; i < archivalVersions.length; i++) {
                             for (var j = 0; j < abis.length; j++) {
                                 if (archivalVersions[i].abi == abis[j]) {

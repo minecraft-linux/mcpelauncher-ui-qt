@@ -18,7 +18,6 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
     Q_PROPERTY(int lastVersion READ lastVersion WRITE setLastVersion NOTIFY settingsChanged)
     Q_PROPERTY(QUrl gameDataDir READ gameDataDir)
-    Q_PROPERTY(bool allowLauncherExtensions READ allowLauncherExtensions WRITE setAllowLauncherExtensions NOTIFY settingsChanged)
 
 private:
     QSettings settings;
@@ -51,9 +50,6 @@ public:
 
     int lastVersion() const { return settings.value("lastVersion", 0).toInt(); }
     void setLastVersion(int value) { settings.setValue("lastVersion", value); emit settingsChanged(); }
-
-    bool allowLauncherExtensions() const { return settings.value("allowLauncherExtensions", true).toBool(); }
-    void setAllowLauncherExtensions(bool value) { settings.setValue("allowLauncherExtensions", value); emit settingsChanged(); }
 
     QUrl gameDataDir() {
         return QUrl::fromLocalFile(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher"));

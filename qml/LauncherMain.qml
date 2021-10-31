@@ -101,12 +101,12 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
+            text: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? ((googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
             subText: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
             Layout.fillWidth: true
             Layout.preferredHeight: 70
             Layout.minimumHeight: implicitHeight
-            enabled: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense
+            enabled: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
 
             onClicked: {
                 if(gameLauncher.running) {
@@ -410,11 +410,7 @@ LauncherBase {
         if (launcherSettings.startHideLauncher && !launcherSettings.startOpenLog)
             application.setVisibleInDock(false);
         var profile = profileManager.activeProfile;
-        var verifiedLicense = playVerChannel.hasVerifiedLicense;
-        if(!verifiedLicense) {
-            showLaunchError("The Launcher has trouble to verify that you own the Game on Google Play. You may need to buy the Game. If you own the game on the Play Store on the signed in account try sign out, sign in again and accept the Tos Prompt. If you won't accept the Google Play Terms of Service Window inside the Launcher after sign in you cannot play the Game.");
-        }
-        gameLauncher.start(launcherSettings.disableGameLog, profile.arch, verifiedLicense);
+        gameLauncher.start(launcherSettings.disableGameLog, profile.arch, true);
     }
     
 }

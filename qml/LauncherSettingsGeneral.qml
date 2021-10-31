@@ -83,14 +83,6 @@ ScrollView {
             onCheckedChanged: launcherSettings.checkForUpdates = checked
         }
 
-        MCheckBox {
-            text: qsTr("Allow proprietary Launcher Extensions")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.allowLauncherExtensions
-            onCheckedChanged: launcherSettings.allowLauncherExtensions = checked
-        }
-
         MButton {
             Layout.topMargin: 20
             text: qsTr("Run troubleshooter")

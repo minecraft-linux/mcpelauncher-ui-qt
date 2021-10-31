@@ -23,9 +23,8 @@ set(LAUNCHER_CHANGE_LOG "" CACHE STRING "Specify the changelog to show after upd
 set(LAUNCHER_VERSION_NAME "" CACHE STRING "Specify the version name shown in settings")
 set(LAUNCHER_VERSION_CODE "" CACHE STRING "Specify the version code (integer) shown in settings")
 option(LAUNCHER_DISABLE_DEV_MODE "Disables the dev tab by default")
-option(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK "Enables checking license of the Game")
+option(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK "Enables checking license of the Game" ON)
 option(LAUNCHER_MACOS_HAVE_ARMLAUNCHER "Enables use of the arm launcher")
-set(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK true CACHE STRING "Enables checking license of the Game" FORCE)
 
 find_package(Qt5LinguistTools)
 set(LAUNCHER_LINGUIST_RESOURCES "")

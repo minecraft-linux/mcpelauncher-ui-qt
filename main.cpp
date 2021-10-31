@@ -45,11 +45,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("mrarm.io");
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
 
-#ifdef NDEBUG
-    // Silence console
-    qInstallMessageHandler([](QtMsgType type, const QMessageLogContext &context, const QString &msg) {});
-#endif
-
     LauncherApp app(argc, argv);
     QCommandLineParser parser;
     parser.setApplicationDescription("Minecraft Linux Launcher Error Helper");
@@ -58,7 +53,18 @@ int main(int argc, char *argv[])
         QCoreApplication::translate("main", "Developer Mode - Enable unsafe Launcher Settings"));
     parser.addOption(devmodeOption);
 
+    QCommandLineOption verboseOption(QStringList() << "v" << "verbose", 
+        QCoreApplication::translate("main", "Verbose log Qt Messages to stdout"));
+    parser.addOption(verboseOption);
+
     parser.process(app);
+
+    auto verbose = parser.isSet(verboseOption);
+
+    if(!verbose) {
+        // Silence console
+        qInstallMessageHandler([](QtMsgType type, const QMessageLogContext &context, const QString &msg) {});
+    }
 
     QTranslator translator;
     if (translator.load(QLocale(), QLatin1String("mcpelauncher"), QLatin1String("_"), QLatin1String(":/translations"))) {
