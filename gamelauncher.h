@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QProcess>
-#include "googleplayapi.h"
 
 class ProfileInfo;
 
@@ -11,7 +10,6 @@ class GameLauncher : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString gameDir READ gameDir WRITE setGameDir)
     Q_PROPERTY(ProfileInfo* profile READ profile WRITE setProfile)
-    Q_PROPERTY(GooglePlayApi* api READ api WRITE setApi)
     Q_PROPERTY(bool crashed READ crashed NOTIFY stateChanged)
     Q_PROPERTY(bool running READ running NOTIFY stateChanged)
 
@@ -19,7 +17,6 @@ private:
     QScopedPointer<QProcess> process;
     QString m_gameDir;
     ProfileInfo* m_profile;
-    GooglePlayApi * m_api;
     bool m_crashed = false;
     bool m_gamelogopen = false;
     bool m_disableGameLog = false;
@@ -42,10 +39,6 @@ public:
     ProfileInfo* profile() { return m_profile; }
 
     void setProfile(ProfileInfo* value) { m_profile = value; }
-
-    GooglePlayApi* api() { return m_api; }
-
-    void setApi(GooglePlayApi* value) { m_api = value; }
 
     bool running() const { return !process.isNull() && !m_crashed; }
 

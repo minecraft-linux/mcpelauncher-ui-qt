@@ -4,11 +4,9 @@
 #include <QFile>
 #include <QDir>
 #include "supportedandroidabis.h"
-#include "googleloginhelper.h"
-#include "launchersettings.h"
 #include <sstream>
 
-GameLauncher::GameLauncher(QObject *parent) : QObject(parent), m_api(nullptr) {
+GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
 
 std::string GameLauncher::findLauncher(std::string name) {
@@ -55,21 +53,6 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
         args.append("-fguv");
     }
 #endif
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    env.insert("GPLAY_TOKEN_CACHE_PATH", QString::fromStdString(GoogleLoginHelper::getTokenCachePath()));
-    if(m_api && m_api->getCheckin()) {
-        env.insert("GPLAY_CHECKIN_ANDROID_ID", QString::fromStdString(std::to_string(m_api->getCheckin()->android_id)));
-        env.insert("GPLAY_CHECKIN_DEVICE_DATA_VERSION_INFO", QString::fromStdString(m_api->getCheckin()->device_data_version_info));
-    }
-    if(LauncherSettings().allowLauncherExtensions()) {
-        env.insert("MCPELAUNCHER_ALLOW_PROPRIETARY_EXTENSIONS", "1");
-        // const char * modEnv = "MCPELAUNCHER_MOD_DIRS";
-        // auto oldval = env.value(modEnv, "");
-        // auto newval = QString::fromStdString();
-        // env.insert(modEnv, oldval.isEmpty() ? newval : oldval + ":" + newval );
-    }
-    process->setProcessEnvironment(env);
-
     process->setProcessChannelMode(QProcess::MergedChannels);
     if (m_disableGameLog) {
         #ifdef _WIN32

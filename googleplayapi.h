@@ -56,8 +56,6 @@ public:
 
     playapi::api* getApi() { return api.data(); }
 
-    playapi::checkin_result* getCheckin() { return &checkinResult; }
-
     GooglePlayApiStatus getStatus() const { return status; }
 
 signals:

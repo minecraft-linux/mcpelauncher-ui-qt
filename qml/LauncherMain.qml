@@ -393,7 +393,6 @@ LauncherBase {
             return;
         }
 
-        gameLauncher.api = playApiInstance;
         gameLauncher.profile = profileManager.activeProfile;
         var gameDir = getCurrentGameDir(profileManager.activeProfile);
         console.log("Game dir = " + gameDir);
