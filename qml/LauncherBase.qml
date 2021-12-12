@@ -117,60 +117,6 @@ ColumnLayout {
         }
     }
 
-    Rectangle {
-        Layout.alignment: Qt.AlignTop
-        Layout.fillWidth: true
-        Layout.preferredHeight: children[0].implicitHeight + 20
-        color: "#BBDEFB"
-
-        Text {
-            width: parent.width
-            height: parent.height
-            text: "MCPE-121068: Textures are almost normal again, the launcher tries to fix the broken textures of the Game"
-            color: "#0D47A1"
-            font.pointSize: 9
-            font.bold: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            wrapMode: Text.Wrap
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                Qt.openUrlExternally("https://github.com/ChristopherHX/mcpelauncher-manifest/issues/48#issuecomment-795472828")
-            }
-        }
-    }
-
-    Rectangle {
-        Layout.alignment: Qt.AlignTop
-        Layout.fillWidth: true
-        Layout.preferredHeight: children[0].implicitHeight + 20
-        color: "#EE0000"
-
-        Text {
-            width: parent.width
-            height: parent.height
-            text: "MCPE-117105: Cannot craft? click here (Workaround)"
-            color: "#FFFFFF"
-            font.pointSize: 9
-            font.bold: true
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            wrapMode: Text.Wrap
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                Qt.openUrlExternally("https://github.com/minecraft-linux/mcpelauncher-manifest/issues/478#issuecomment-822441250")
-            }
-        }
-    }
-
     ColumnLayout {
         id: container
         Layout.alignment: Qt.AlignCenter
