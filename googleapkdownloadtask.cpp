@@ -171,12 +171,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
     });
     emit progress(0.f);
-    struct ErrorBuffer {
-        CURL * handle;
-        char errormsg[CURL_ERROR_SIZE];
-    };
-    auto errorbuf = std::make_shared<ErrorBuffer>();
-    errorbuf->handle = req.perform([this, file, zs, fd, isGzipped, success, _error, errorbuf](playapi::http_response resp) {
+    req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs.get());
@@ -195,11 +190,10 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
             }
         }
         else {
-            auto len = strlen(errorbuf->errormsg);
-            emit error(QObject::tr("CURL Network error: %1").arg(len ? errorbuf->errormsg : QObject::tr("Unknown error")));
+            emit error(QObject::tr("CURL Network error: %1").arg(QObject::tr("Unknown error")));
             _error();
         }
-    }, [this, file, zs, fd, isGzipped, _error, errorbuf](std::exception_ptr e) {
+    }, [this, file, zs, fd, isGzipped, _error](std::exception_ptr e) {
         if (isGzipped) {
             curlDoZlibInflate(*zs, fd, Z_NULL, 0, Z_FINISH);
             inflateEnd(zs.get());
@@ -213,7 +207,6 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
         _error();
     });
-    curl_easy_setopt(errorbuf->handle, CURLOPT_ERRORBUFFER, errorbuf->errormsg);
 #endif
 }
 
