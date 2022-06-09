@@ -1,9 +1,9 @@
-import QtQuick 2.4
-
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import QtQuick.Controls
+import Qt.labs.platform
 
 Window {
 
@@ -45,12 +45,6 @@ Window {
             visible: marketingText.length > 0
             Layout.topMargin: 10
             Layout.fillWidth: true
-            style: CheckBoxStyle {
-                label: Text {
-                    wrapMode: Text.WordWrap
-                    text: control.text
-                }
-            }
         }
 
         RowLayout {

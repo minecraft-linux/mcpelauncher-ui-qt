@@ -7,8 +7,7 @@
 #include <zlib.h>
 #include <playapi/api.h>
 #include <utility>
-
-class GooglePlayApi;
+#include "googleplayapi.h"
 
 struct DownloadProgress {
     std::mutex mtx;

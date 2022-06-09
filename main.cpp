@@ -38,9 +38,6 @@ int main(int argc, char *argv[])
 #endif
     curl_global_init(CURL_GLOBAL_ALL);
     Q_INIT_RESOURCE(googlesigninui);
-    // Issues with qt5.9 for ubuntu 16.04 in AppImages, random scale 2 or 3
-    // Removed and enabled by default in qt6
-    // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setOrganizationName("Minecraft Linux Launcher");
     QCoreApplication::setOrganizationDomain("mrarm.io");
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");

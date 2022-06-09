@@ -1,7 +1,7 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Window 2.3
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import QtQuick.Window
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 

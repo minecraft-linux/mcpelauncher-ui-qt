@@ -1,7 +1,7 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.2
-import QtQuick.Templates 2.1 as T
-import QtQuick.Window 2.3
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Templates as T
+import QtQuick.Window
 
 T.CheckBox {
     id: control

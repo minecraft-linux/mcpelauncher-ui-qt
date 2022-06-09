@@ -1,6 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.2
-import QtQuick.Templates 2.1 as T
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Templates as T
 
 T.Button {
     id: control

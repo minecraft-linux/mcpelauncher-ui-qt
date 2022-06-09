@@ -1,8 +1,9 @@
-import QtQuick 2.9
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtQuick.Controls
+import Qt.labs.platform
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
@@ -12,6 +13,7 @@ LauncherBase {
     property VersionManager versionManager
     property ProfileManager profileManager
     property GooglePlayApi playApiInstance
+    property GoogleVersionChannel playVerChannel
     property bool isVersionsInitialized: false
     progressbarVisible: playDownloadTask.active || apkExtractionTask.active
     progressbarText: {
@@ -26,6 +28,14 @@ LauncherBase {
     spacing: 0
 
     MinecraftNews {}
+    EditProfileWindow {
+       id: profileEditWindow
+       onClosing: profileComboBox.onAddProfileResult(profileEditWindow.profile)
+       versionManager: rowLayout.versionManager
+       profileManager: rowLayout.profileManager
+       playVerChannel: rowLayout.playVerChannel
+       modality: Qt.WindowModal
+    }
 
     bottomPanelContent: RowLayout {
         anchors.fill: parent
@@ -36,14 +46,6 @@ LauncherBase {
             id: profilesettingsbox
             Layout.leftMargin: 20
 
-            property var createProfileEditWindow: function () {
-                var component = Qt.createComponent("EditProfileWindow.qml")
-                var obj = component.createObject(rowLayout, {versionManager: rowLayout.versionManager, profileManager: rowLayout.profileManager, playVerChannel: playVerChannel, modality: Qt.WindowModal})
-                obj.closing.connect(function() {
-                    profileComboBox.onAddProfileResult(obj.profile)
-                })
-                return obj;
-            }
             Text {
                 text: qsTr("Profile")
                 color: "#fff"
@@ -59,9 +61,8 @@ LauncherBase {
                     id: profileComboBox
                     Layout.preferredWidth: 200
                     onAddProfileSelected: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.reset()
-                        window.show()
+                        profileEditWindow.reset()
+                        profileEditWindow.show()
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
@@ -88,9 +89,8 @@ LauncherBase {
                     enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
                     onClicked: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.setProfile(profileComboBox.getProfile())
-                        window.show()
+                        profileEditWindow.setProfile(profileComboBox.getProfile())
+                        profileEditWindow.show()
                     }
                 }
 
@@ -205,7 +205,7 @@ LauncherBase {
         if (checkGooglePlayLatestSupport()) {
             console.log("Use play version");
 
-            return playVerChannel.latestVersionCode;
+            return rowLayout.playVerChannel.latestVersionCode;
         } else {
             console.log("Use compat version");
             var ver = launcherLatestVersion();
@@ -267,8 +267,8 @@ LauncherBase {
         if (archiveInfo !== null && (ver === null || ver.archs.length == 1 && ver.archs[0] == archiveInfo.abi)) {
             return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") +  ")");
         }
-        if (code === playVerChannel.latestVersionCode)
-            return playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
+        if (code === rowLayout.playVerChannel.latestVersionCode)
+            return rowLayout.playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
         if (ver !== null) {
             var profile = profileManager.activeProfile;
             return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(profile.arch.length ? profile.arch : ver.archs.join(", "));

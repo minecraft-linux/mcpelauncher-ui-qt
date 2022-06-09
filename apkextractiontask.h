@@ -4,8 +4,7 @@
 #include <QThread>
 #include <QMutex>
 #include <QTemporaryDir>
-
-class VersionManager;
+#include "versionmanager.h"
 
 class ApkExtractionTask : public QThread {
     Q_OBJECT

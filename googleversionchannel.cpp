@@ -6,7 +6,7 @@ GoogleVersionChannel::GoogleVersionChannel() {
     m_latestVersion = m_settings.value("latest_version").toString();
     m_latestVersionCode = m_settings.value("latest_version_code").toInt();
     m_latestVersionIsBeta = m_settings.value("latest_version_isbeta").toBool();
-    if (m_settings.value("latest_version_id").toString() == (m_latestVersion + m_latestVersionCode + m_latestVersionIsBeta)) {
+    if (m_settings.value("latest_version_id").toString() == (m_latestVersion + QChar(m_latestVersionCode) + QChar(m_latestVersionIsBeta))) {
         m_hasVerifiedLicense = true;
         licenseStatus = GoogleVersionChannelLicenceStatus::SUCCEDED;
     }
@@ -49,7 +49,7 @@ void GoogleVersionChannel::onAppInfoReceived(const QString &packageName, const Q
         m_playApi->validateLicense("com.mojang.minecraftpe", versionCode, [this](bool hasVerifiedLicense) {
             this->m_hasVerifiedLicense |= hasVerifiedLicense;
             licenseStatus = GoogleVersionChannelLicenceStatus::SUCCEDED;
-            m_settings.setValue("latest_version_id", hasVerifiedLicense ? (m_latestVersion + m_latestVersionCode + m_latestVersionIsBeta) : "");
+            m_settings.setValue("latest_version_id", hasVerifiedLicense ? (m_latestVersion + QChar(m_latestVersionCode) + QChar(m_latestVersionIsBeta)) : "");
             statusChanged();
         });
     }

@@ -1,9 +1,9 @@
-import QtQuick 2.4
-
-import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls.Styles 1.4
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQuick.Controls
+import Qt.labs.platform
 import io.mrarm.mcpelauncher 1.0
 import "ThemedControls"
 
@@ -25,7 +25,7 @@ Item {
         id: apkPicker
         title: "Please pick the Minecraft .apk file"
         nameFilters: [ "Android package files (*.apk *.zip)", "All files (*)" ]
-        selectMultiple: true
+        fileMode: FileDialog.OpenFiles
 
         onAccepted: {
             if (!apkExtractionTask.setSourceUrls(fileUrls)) {

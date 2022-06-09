@@ -1,7 +1,8 @@
-import QtQuick 2.9
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls 2.1
+import QtQuick
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQuick.Controls
+import Qt.labs.platform
 import io.mrarm.mcpelauncher 1.0
 
 Window {
@@ -43,6 +44,27 @@ Window {
         }
     }
 
+    GooglePlayApi {
+        id: playApi
+        login: googleLoginHelperInstance
+
+        onInitError: function(err) {
+            playDownloadError.text = qsTr("Please login again, Details:<br/>%1").arg(err);
+            playDownloadError.open()
+        }
+
+        onTosApprovalRequired: function(tos, marketing) {
+            googleTosApprovalWindow.tosText = tos
+            googleTosApprovalWindow.marketingText = marketing
+            googleTosApprovalWindow.show()
+        }
+    }
+
+    GoogleVersionChannel {
+        id: playVerChannelInstance
+        playApi: playApi
+    }
+
     Component {
         id: panelMain
 
@@ -54,6 +76,7 @@ Window {
             hasUpdate: window.hasUpdate
             updateDownloadUrl: window.updateDownloadUrl
             isVersionsInitialized: window.isVersionsInitialized
+            playVerChannel: playVerChannelInstance
         }
     }
 
@@ -96,36 +119,18 @@ Window {
         title: qsTr("Connecting to Google Play failed")
     }
 
-    GooglePlayApi {
-        id: playApi
-        login: googleLoginHelperInstance
-
-        onInitError: function(err) {
-            playDownloadError.text = qsTr("Please login again, Details:<br/>%1").arg(err);
-            playDownloadError.open()
-        }
-
-        onTosApprovalRequired: function(tos, marketing) {
-            googleTosApprovalWindow.tosText = tos
-            googleTosApprovalWindow.marketingText = marketing
-            googleTosApprovalWindow.show()
-        }
-    }
-
-    GoogleVersionChannel {
-        id: playVerChannel
-        playApi: playApi
-    }
-
     LauncherSettingsWindow {
         id: launcherSettingsWindow
         googleLoginHelper: googleLoginHelperInstance
         versionManager: versionManagerInstance
+        modality: Qt.WindowModal
+        playVerChannel: playVerChannelInstance
     }
 
     GameLogWindow {
         id: gameLogWindow
         launcher: gameLauncher
+        modality: Qt.WindowModal
 
         MessageDialog {
             id: errorDialog
@@ -178,15 +183,15 @@ Window {
         id: closeRunningDialog
         title: qsTr("Game is running")
         text: qsTr("Minecraft is currently running. Would you like to forcibly close it?\nHint: Press ignore to just close the Launcher UI")
-        standardButtons: StandardButton.Ignore | StandardButton.Yes | StandardButton.No
+        buttons: MessageDialog.Ignore | MessageDialog.Yes | MessageDialog.No
         modality: Qt.ApplicationModal
 
-        onYes: {
+        onYesClicked: {
             gameLauncher.kill()
             application.quit()
         }
 
-        onAccepted: {
+        onIgnoreClicked: {
             if(window.visible) {
                 window.hide();
             }

@@ -1,14 +1,17 @@
-import QtQuick 2.9
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Window
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtQuick.Controls
 import "ThemedControls"
+import io.mrarm.mcpelauncher 1.0
 
 ScrollView {
     Layout.fillHeight: true
     Layout.fillWidth: true
     clip: true
+    property GoogleVersionChannel playVerChannel
+    id: ldevsettings
     GridLayout {
         columns: 2
         columnSpacing: 20
@@ -36,9 +39,9 @@ ScrollView {
             text: qsTr("Show Beta Versions")
             font.pointSize: parent.labelFontSize
             Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.showBetaVersions
+            Component.onCompleted: checked = ldevsettings.playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions
             onCheckedChanged: launcherSettings.showBetaVersions = checked
-            enabled: playVerChannel.latestVersionIsBeta
+            enabled: ldevsettings.playVerChannel.latestVersionIsBeta
         }
     }
 }

@@ -80,7 +80,7 @@ ColumnLayout {
             model: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
             delegate: ItemDelegate {
                 id: control
-                width: parent.width - 8
+                width: versions.parent.width - 8
                 height: 32
                 font.pointSize: 11
                 text: modelData.versionName + " (" + modelData.archs.join(", ") + ")"

@@ -1,16 +1,15 @@
-import QtQuick 2.4
-
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import QtQuick.Dialogs
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
 Window {
 
     property GameLauncher launcher
-
+    modality: Qt.WindowModal
     id: gameLogWindow
     width: 500
     height: 400
@@ -154,7 +153,7 @@ Window {
     Connections {
         target: launcher
         onLogCleared: gameLog.clear()
-        onLogAppended: gameLog.insert(gameLog.length, text)
+        onLogAppended: text => gameLog.insert(gameLog.length, text)
     }
 
 }
