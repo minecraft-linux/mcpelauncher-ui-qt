@@ -40,22 +40,15 @@ ColumnLayout {
 
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    source: "qrc:/Resources/proprietary/minecraft.svg"
-                    sourceSize.height: 44
-                }
-
-                Text {
-                    color: "#ffffff"
-                    text: qsTr("Unofficial Linux Launcher")
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    font.pixelSize: 16
+                    source: "qrc:/Resources/mcpelauncher-logo.svg"
+                    sourceSize.height: 80
                 }
 
                 Text {
                     color: "#ffffff"
                     text: qsTr("Version %1 (build %2)").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    font.pixelSize: 12
+                    font.pixelSize: 10
                 }
 
             }

@@ -97,7 +97,7 @@ endif()
 install(TARGETS mcpelauncher-ui-qt RUNTIME COMPONENT mcpelauncher-ui-qt DESTINATION bin)
 if (NOT APPLE)
     install(FILES mcpelauncher-ui-qt.desktop COMPONENT mcpelauncher-ui-qt DESTINATION share/applications)
-    install(FILES Resources/proprietary/mcpelauncher-icon-512.png RENAME mcpelauncher-ui-qt.png
+    install(FILES Resources/mcpelauncher-icon.svg RENAME mcpelauncher-ui-qt.svg
             COMPONENT mcpelauncher-ui-qt DESTINATION share/pixmaps)
 endif()
 include(CPackSettings.cmake)
