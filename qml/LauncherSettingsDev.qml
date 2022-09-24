@@ -15,6 +15,7 @@ ScrollView {
         rowSpacing: 8
         id: gridLayout12
         property int labelFontSize: 12
+        Layout.fillWidth: true
 
         MCheckBox {
             text: qsTr("Show unverified versions")
@@ -39,6 +40,22 @@ ScrollView {
             Component.onCompleted: checked = launcherSettings.showBetaVersions
             onCheckedChanged: launcherSettings.showBetaVersions = checked
             enabled: playVerChannel.latestVersionIsBeta
+        }
+
+        Text {
+            text: qsTr("Versions feed base url")
+            font.pointSize: parent.labelFontSize
+            Layout.columnSpan: 1
+        }
+        MTextField {
+            id: versionsFeedBaseUrl
+            Layout.columnSpan: 1
+            Layout.fillWidth: true
+            Component.onCompleted: versionsFeedBaseUrl.text = launcherSettings.versionsFeedBaseUrl
+            onEditingFinished: {
+                launcherSettings.versionsFeedBaseUrl = versionsFeedBaseUrl.text;
+                versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true), launcherSettings.versionsFeedBaseUrl);
+            }
         }
     }
 }

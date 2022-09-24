@@ -102,17 +102,23 @@ int main(int argc, char *argv[])
 #ifdef LAUNCHER_VERSION_NAME
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant(LAUNCHER_VERSION_NAME));
 #else
-    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant("Unknown OpenSource Build"));
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant(""));
 #endif
 #ifdef LAUNCHER_VERSION_CODE
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(LAUNCHER_VERSION_CODE));
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(0));
 #endif
+    QString license;
+    QFile lfile(":/LICENSE");
+    if(lfile.open(QIODevice::ReadOnly)) {
+        license = lfile.readAll();
+        lfile.close();
+    }
 #ifdef LAUNCHER_CHANGE_LOG
-    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(LAUNCHER_CHANGE_LOG));
+    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(QString(LAUNCHER_CHANGE_LOG) + "\n" + license.replace("\n", "<br/>")));
 #else
-    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(""));
+    engine.rootContext()->setContextProperty("LAUNCHER_CHANGE_LOG", QVariant(license.replace("\n", "<br/>")));
 #endif
 #ifdef LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
     engine.rootContext()->setContextProperty("LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK", QVariant(true));

@@ -18,6 +18,7 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
     Q_PROPERTY(int lastVersion READ lastVersion WRITE setLastVersion NOTIFY settingsChanged)
     Q_PROPERTY(QUrl gameDataDir READ gameDataDir)
+    Q_PROPERTY(QString versionsFeedBaseUrl READ versionsFeedBaseUrl WRITE setVersionsFeedBaseUrl NOTIFY settingsChanged)
 
 private:
     QSettings settings;
@@ -54,6 +55,10 @@ public:
     QUrl gameDataDir() {
         return QUrl::fromLocalFile(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher"));
     }
+
+    QString versionsFeedBaseUrl() const { return !disableDevMode ? settings.value("versionsFeedBaseUrl", "").toString() : ""; }
+    void setVersionsFeedBaseUrl(QString value) { settings.setValue("versionsFeedBaseUrl", value); emit settingsChanged(); }
+
 public slots:
     void resetSettings() {
         settings.clear();
