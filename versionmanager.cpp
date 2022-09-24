@@ -172,5 +172,5 @@ bool VersionManager::checkSupport(QString const& directory) {
 VersionInfo* VersionList::latestDownloadedVersion() const {
     if (m_versions.empty())
         return nullptr;
-    return (m_versions.end() - 1).value();
+    return m_versions.last();
 }

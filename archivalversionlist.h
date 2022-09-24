@@ -29,6 +29,7 @@ private:
     QList<QObject*> m_versions;
     QList<QObject*> m_versionsnext;
     QString m_baseUrl;
+    QString m_defBaseUrl;
 
     void onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis);
 
@@ -37,7 +38,7 @@ public:
 
     QList<QObject*> const& versions() const { return m_versions; }
 
-    void downloadLists(QStringList abis);
+    void downloadLists(QStringList abis, QString versionDBUrl);
 
 signals:
     void versionsChanged();

@@ -47,7 +47,8 @@ ColumnLayout {
 
                 Text {
                     color: "#ffffff"
-                    text: qsTr("Version %1 (build %2)").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE)
+                    visible: LAUNCHER_VERSION_NAME || LAUNCHER_VERSION_CODE
+                    text: qsTr("Version %1 (build %2)").arg(LAUNCHER_VERSION_NAME || "Unknown").arg(LAUNCHER_VERSION_CODE || "Unknown")
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font.pixelSize: 10
                 }

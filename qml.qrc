@@ -48,5 +48,6 @@
         <file>qml/LauncherSettingsVersions.qml</file>
         <file>qml/ApkImportWindow.qml</file>
         <file>qml/ApkImportHelper.qml</file>
+        <file>LICENSE</file>
     </qresource>
 </RCC>

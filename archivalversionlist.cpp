@@ -8,15 +8,16 @@
 #include <QStandardPaths>
 
 ArchivalVersionList::ArchivalVersionList(QString baseUrl) {
-    m_baseUrl = baseUrl;
+    m_defBaseUrl = baseUrl;
     m_netManager = new QNetworkAccessManager(this);
     QNetworkDiskCache* cache = new QNetworkDiskCache(m_netManager);
     cache->setCacheDirectory(QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)).filePath("versionCache"));
     m_netManager->setCache(cache);
 }
 
-void ArchivalVersionList::downloadLists(QStringList abis) {
+void ArchivalVersionList::downloadLists(QStringList abis, QString baseUrl) {
     m_versionsnext.clear();
+    m_baseUrl = baseUrl.isEmpty() ? m_defBaseUrl : baseUrl;
     if (abis.size()) {
         auto && versiondburl = m_baseUrl + "/versions." + abis.at(abis.size() - 1) + ".json.min";
         qDebug() << "Downloading Versionsdb" << versiondburl;
