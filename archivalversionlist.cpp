@@ -74,7 +74,7 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
         qDebug() << "Version list loaded, entry count:" << m_versions.size();
         emit versionsChanged();
     } else {
-        auto && versiondburl = m_baseUrl + "/versions." + abis.at(abis.size() - 1) + ".json.min";
+        auto && versiondburl = m_baseUrl + "/versions." + abis.at(i - 1) + ".json.min";
         qDebug() << "Downloading Versionsdb" << versiondburl;
         QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(versiondburl)));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
