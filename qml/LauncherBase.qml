@@ -42,6 +42,7 @@ ColumnLayout {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     source: "qrc:/Resources/mcpelauncher-logo.svg"
                     sourceSize.height: 80
+                    sourceSize.width: 365 // This is required for the AppImage qt5.9 to display the svg not in 80x80
                 }
 
                 Text {
