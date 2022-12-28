@@ -11,6 +11,7 @@ LauncherBase {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property ProfileManager profileManager
+    property GoogleVersionChannel playVerChannelInstance
     property GooglePlayApi playApiInstance
     property bool isVersionsInitialized: false
     progressbarVisible: playDownloadTask.active || apkExtractionTask.active
@@ -26,6 +27,14 @@ LauncherBase {
     spacing: 0
 
     MinecraftNews {}
+    EditProfileWindow {
+       id: profileEditWindow
+       onClosing: profileComboBox.onAddProfileResult(profileEditWindow.profile)
+       versionManager: rowLayout.versionManager
+       profileManager: rowLayout.profileManager
+       playVerChannel: rowLayout.playVerChannelInstance
+       modality: Qt.WindowModal
+    }
 
     bottomPanelContent: RowLayout {
         anchors.fill: parent
@@ -36,14 +45,6 @@ LauncherBase {
             id: profilesettingsbox
             Layout.leftMargin: 20
 
-            property var createProfileEditWindow: function () {
-                var component = Qt.createComponent("EditProfileWindow.qml")
-                var obj = component.createObject(rowLayout, {versionManager: rowLayout.versionManager, profileManager: rowLayout.profileManager, playVerChannel: playVerChannel, modality: Qt.WindowModal})
-                obj.closing.connect(function() {
-                    profileComboBox.onAddProfileResult(obj.profile)
-                })
-                return obj;
-            }
             Text {
                 text: qsTr("Profile")
                 color: "#fff"
@@ -59,9 +60,8 @@ LauncherBase {
                     id: profileComboBox
                     Layout.preferredWidth: 200
                     onAddProfileSelected: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.reset()
-                        window.show()
+                        profileEditWindow.reset()
+                        profileEditWindow.show()
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
@@ -88,9 +88,8 @@ LauncherBase {
                     enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
                     onClicked: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.setProfile(profileComboBox.getProfile())
-                        window.show()
+                        profileEditWindow.setProfile(profileComboBox.getProfile())
+                        profileEditWindow.show()
                     }
                 }
 

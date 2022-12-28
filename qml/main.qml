@@ -54,6 +54,7 @@ Window {
             hasUpdate: window.hasUpdate
             updateDownloadUrl: window.updateDownloadUrl
             isVersionsInitialized: window.isVersionsInitialized
+            playVerChannelInstance: playVerChannel
         }
     }
 
