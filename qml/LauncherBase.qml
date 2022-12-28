@@ -45,7 +45,7 @@ ColumnLayout {
                     sourceSize.width: 365 // This is required for the AppImage qt5.9 to display the svg not in 80x80
                     width: 365
                     height: 80
-                    fillMode: Image.PreserveAspectFit
+                    fillMode: Image.Stretch
                 }
 
                 Text {
