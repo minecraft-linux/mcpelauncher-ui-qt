@@ -91,7 +91,7 @@ Window {
                 property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
                 property var extraVersionName: null
                 property var hideLatest: googleLoginHelper.hideLatest
-                property var update: () => {
+                property var update: function() {
                     versionsmodel.clear();
                     var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
