@@ -54,6 +54,7 @@ Window {
             hasUpdate: window.hasUpdate
             updateDownloadUrl: window.updateDownloadUrl
             isVersionsInitialized: window.isVersionsInitialized
+            playVerChannelInstance: playVerChannel
         }
     }
 
@@ -254,17 +255,18 @@ Window {
     }
 
     function needsToLogIn() {
-        return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size === 0
+        return googleLoginHelperInstance.account == null && versionManagerInstance.versions.size === 0;
     }
 
     Component.onCompleted: {
-        if(launcherSettings.checkForUpdates)
-            updateChecker.checkForUpdates()
+        if(launcherSettings.checkForUpdates) {
+            updateChecker.checkForUpdates();
+        }
         versionManagerInstance.archivalVersions.versionsChanged.connect(function() {
             isVersionsInitialized = true;
             console.log("Versionslist initialized");
-        })
-        versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true))
+        });
+        versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true), launcherSettings.versionsFeedBaseUrl);
         if(LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
             stackView.push(panelChangelog);
         } else {

@@ -15,9 +15,9 @@ GoogleVersionChannel::GoogleVersionChannel() {
 void GoogleVersionChannel::setPlayApi(GooglePlayApi *value) {
     setStatus(GoogleVersionChannelStatus::NOT_READY);
     if (m_playApi != nullptr) {
-        disconnect(value, &GooglePlayApi::ready, this, &GoogleVersionChannel::onApiReady);
-        disconnect(value, &GooglePlayApi::appInfoReceived, this, &GoogleVersionChannel::onAppInfoReceived);
-        disconnect(value, &GooglePlayApi::appInfoFailed, this, &GoogleVersionChannel::onAppInfoFailed);
+        disconnect(m_playApi, &GooglePlayApi::ready, this, &GoogleVersionChannel::onApiReady);
+        disconnect(m_playApi, &GooglePlayApi::appInfoReceived, this, &GoogleVersionChannel::onAppInfoReceived);
+        disconnect(m_playApi, &GooglePlayApi::appInfoFailed, this, &GoogleVersionChannel::onAppInfoFailed);
     }
     m_playApi = value;
     if (value) {

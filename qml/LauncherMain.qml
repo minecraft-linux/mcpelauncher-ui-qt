@@ -11,6 +11,7 @@ LauncherBase {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property ProfileManager profileManager
+    property GoogleVersionChannel playVerChannelInstance
     property GooglePlayApi playApiInstance
     property bool isVersionsInitialized: false
     progressbarVisible: playDownloadTask.active || apkExtractionTask.active
@@ -26,6 +27,14 @@ LauncherBase {
     spacing: 0
 
     MinecraftNews {}
+    EditProfileWindow {
+       id: profileEditWindow
+       onClosing: profileComboBox.onAddProfileResult(profileEditWindow.profile)
+       versionManager: rowLayout.versionManager
+       profileManager: rowLayout.profileManager
+       playVerChannel: rowLayout.playVerChannelInstance
+       modality: Qt.WindowModal
+    }
 
     bottomPanelContent: RowLayout {
         anchors.fill: parent
@@ -36,14 +45,6 @@ LauncherBase {
             id: profilesettingsbox
             Layout.leftMargin: 20
 
-            property var createProfileEditWindow: function () {
-                var component = Qt.createComponent("EditProfileWindow.qml")
-                var obj = component.createObject(rowLayout, {versionManager: rowLayout.versionManager, profileManager: rowLayout.profileManager, playVerChannel: playVerChannel, modality: Qt.WindowModal})
-                obj.closing.connect(function() {
-                    profileComboBox.onAddProfileResult(obj.profile)
-                })
-                return obj;
-            }
             Text {
                 text: qsTr("Profile")
                 color: "#fff"
@@ -59,9 +60,8 @@ LauncherBase {
                     id: profileComboBox
                     Layout.preferredWidth: 200
                     onAddProfileSelected: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.reset()
-                        window.show()
+                        profileEditWindow.reset()
+                        profileEditWindow.show()
                     }
                     Component.onCompleted: {
                         setProfile(profileManager.activeProfile)
@@ -88,9 +88,8 @@ LauncherBase {
                     enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
 
                     onClicked: {
-                        var window = profilesettingsbox.createProfileEditWindow()
-                        window.setProfile(profileComboBox.getProfile())
-                        window.show()
+                        profileEditWindow.setProfile(profileComboBox.getProfile())
+                        profileEditWindow.show()
                     }
                 }
 
@@ -101,17 +100,20 @@ LauncherBase {
         PlayButton {
             id: pbutton
             Layout.alignment: Qt.AlignHCenter
-            text: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? ((googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("You have to own the game")) : qsTr("Please wait...")
-            subText: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "..."
+            text: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) ? ((googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? qsTr("Open log") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : qsTr("Ask Google Again")) : qsTr("Please wait...")
+            subText: (isVersionsInitialized && ( googleLoginHelper.account == null || playVerChannel.licenseStatus > 1 /* Fail or Succeeded */) ) ? ((googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? qsTr("Game is running") : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "Failed to obtain apk url") : "..."
             Layout.fillWidth: true
             Layout.preferredHeight: 70
             Layout.minimumHeight: implicitHeight
-            enabled: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
+            enabled: (isVersionsInitialized && playVerChannel.licenseStatus > 1 /* Fail or Succeeded */ ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (gameLauncher.running || getDisplayedVersionName()) && (googleLoginHelper.account !== null || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
 
             onClicked: {
                 if(gameLauncher.running) {
                     gameLogWindow.show();
                     gameLauncher.logAttached();
+                } else if(googleLoginHelper.account !== null && !playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) {
+                    playVerChannel.playApi = null;
+                    playVerChannel.playApi = playApiInstance;
                 } else {
                     if (needsDownload()) {
                         if (googleLoginHelper.account === null) {
@@ -178,12 +180,14 @@ LauncherBase {
     /* utility functions */
 
     function launcherLatestVersion() {
-        var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
+        var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
+        console.log("launcherLatestVersion: " + JSON.stringify(abis));
         for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
             var ver = versionManager.archivalVersions.versions[i];
             if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !ver.isBeta) {
                 for (var j = 0; j < abis.length; j++) {
                     if (ver.abi === abis[j]) {
+                        console.log("launcherLatestVersion: " + JSON.stringify(ver));
                         return ver;
                     }
                 }

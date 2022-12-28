@@ -1,6 +1,8 @@
 #include "googleapkdownloadtask.h"
 #include "googleplayapi.h"
 #include "googleloginhelper.h"
+#include <QStandardPaths>
+#include <QDir>
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -71,8 +73,10 @@ bool GoogleApkDownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data
 }
 
 template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, U cookie, std::function<void()> success, std::function<void()> _error, std::shared_ptr<DownloadProgress> _progress, size_t id) {
+    auto apksdir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/apks");
+    QDir().mkpath(apksdir);
+    auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath("temp-XXXXXX.apk"));
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
-    auto file = std::make_shared<QTemporaryFile>();
     file->open();
     auto url = dd.downloadurl();
     {
@@ -117,7 +121,6 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         }
     });
 #else
-    auto file = std::make_shared<QTemporaryFile>();
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
     if(_progress->downloadsize != -1) {

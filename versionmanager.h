@@ -153,8 +153,8 @@ public slots:
 
     void removeVersion(VersionInfo* version, QStringList abis);
 
-    void downloadLists(QStringList abis) {
-        m_archival.downloadLists(abis);
+    void downloadLists(QStringList abis, QString baseUrl) {
+        m_archival.downloadLists(abis, baseUrl);
     }
 
     bool checkSupport(QString const& versionName);
