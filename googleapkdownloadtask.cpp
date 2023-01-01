@@ -123,6 +123,8 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
 #else
     bool isGzipped = dd.has_gzippeddownloadurl();
     playapi::http_request req(isGzipped ? dd.gzippeddownloadurl() : dd.downloadurl());
+    // The http method has been undefined behavior
+    req.set_method(playapi::http_method::GET);
     if(_progress->downloadsize != -1) {
         auto size = isGzipped ? dd.gzippeddownloadsize() : dd.downloadsize();
         if(size > 0) {
