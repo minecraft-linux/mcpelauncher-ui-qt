@@ -40,7 +40,7 @@ ColumnLayout {
 
                 Image {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    source: "qrc:/Resources/mcpelauncher-logo.svg"
+                    source: "qrc:/Resources/mcpelauncher-logo.png"
                     sourceSize.height: 80
                 }
 

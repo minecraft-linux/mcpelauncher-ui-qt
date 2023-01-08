@@ -25,7 +25,7 @@
         <file>qml/LauncherSettingsWindow.qml</file>
         <file>qml/GameLogWindow.qml</file>
         <file>Resources/noise.png</file>
-        <file>Resources/mcpelauncher-logo.svg</file>
+        <file>Resources/mcpelauncher-logo.png</file>
         <file>Resources/green-button.png</file>
         <file>Resources/dropdown.png</file>
         <file>Resources/dropdown-bg.png</file>
