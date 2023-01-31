@@ -215,7 +215,7 @@ Window {
                 FolderDialog {
                     id: dataDirPathDialog
                     onAccepted: {
-                        dataDirPath.text = QmlUrlUtils.urlToLocalFile(fileUrl)
+                        dataDirPath.text = QmlUrlUtils.urlToLocalFile(dataDirPathDialog.folder)
                     }
                 }
             }

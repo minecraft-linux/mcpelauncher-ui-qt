@@ -28,7 +28,7 @@ Item {
         fileMode: FileDialog.OpenFiles
 
         onAccepted: {
-            if (!apkExtractionTask.setSourceUrls(fileUrls)) {
+            if (!apkExtractionTask.setSourceUrls(apkPicker.currentFiles)) {
                 apkExtractionMessageDialog.text = "Invalid file URL"
                 apkExtractionMessageDialog.open()
                 return;
