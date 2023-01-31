@@ -141,6 +141,8 @@ Window {
     TroubleshooterWindow {
         id: troubleshooterWindow
         googleLoginHelper: googleLoginHelperInstance
+        playVerChannel: playVerChannelInstance
+        modality: Qt.WindowModal
     }
 
     GoogleTosApprovalWindow {

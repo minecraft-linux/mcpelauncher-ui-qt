@@ -20,6 +20,7 @@ Window {
     flags: Qt.Dialog
     title: qsTr("Troubleshooting")
     property GoogleLoginHelper googleLoginHelper
+    property GoogleVersionChannel playVerChannel
 
     ColumnLayout {
         id: layout
