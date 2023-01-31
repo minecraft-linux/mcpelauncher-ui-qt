@@ -301,6 +301,7 @@ Window {
         profile = null
         profileName.text = ""
         profileName.enabled = true
+        profileVersion.update();
         profileVersion.currentIndex = 0
         profileTexturePatch.currentIndex = 0
         dataDirCheck.checked = false
