@@ -5,7 +5,6 @@
 #include <QDir>
 #include "supportedandroidabis.h"
 #include <sstream>
-#include "stdio.h"
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
 
