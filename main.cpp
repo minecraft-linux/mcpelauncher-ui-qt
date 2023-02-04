@@ -125,6 +125,11 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK", QVariant(false));
 #endif
+#ifdef __APPLE__
+    engine.rootContext()->setContextProperty("SHOW_ANGLEBACKEND", QVariant(true));
+#else
+    engine.rootContext()->setContextProperty("SHOW_ANGLEBACKEND", QVariant(false));
+#endif
     engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(LauncherSettings::disableDevMode &= !parser.isSet(devmodeOption)));
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
