@@ -189,31 +189,36 @@ Window {
                 textRole: "name"
                 model: texturePatchModel
             }
-                Text {
-                    visible: SHOW_ANGLEBACKEND
-                    text: qsTr("ANGLE backend")
-                    font.pointSize: parent.labelFontSize
-                }
 
-                MComboBox {
-                    visible: SHOW_ANGLEBACKEND                
-                    ListModel {
-                        id: graphicsAPIModel
-                        ListElement {
-                            name: "Metal"
-                        }
-                        ListElement {
-                            name: "OpenGL"
-                        }
+            Text {
+                visible: SHOW_ANGLEBACKEND
+                text: qsTr("ANGLE backend")
+                font.pointSize: parent.labelFontSize
+            }
+
+            MComboBox {
+                visible: SHOW_ANGLEBACKEND
+                ListModel {
+                    id: graphicsAPIModel
+                    ListElement {
+                        name: qsTr("Default")
                     }
-
-
-                    id: profileGraphicsAPI
-                    Layout.fillWidth: true
-
-                    textRole: "name"
-                    model: graphicsAPIModel
+                    ListElement {
+                        name: qsTr("Metal")
+                    }
+                    ListElement {
+                        name: qsTr("OpenGL")
+                    }
                 }
+
+
+                id: profileGraphicsAPI
+                Layout.fillWidth: true
+
+                textRole: "name"
+                model: graphicsAPIModel
+            }
+
             MCheckBox {
                 id: dataDirCheck
                 text: qsTr("Data directory")

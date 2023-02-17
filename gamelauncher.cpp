@@ -5,6 +5,7 @@
 #include <QDir>
 #include "supportedandroidabis.h"
 #include <sstream>
+
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
 
@@ -47,14 +48,14 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             args.append("-tp");
             args.append(QString::number(m_profile->texturePatch == 1));
         }
-        #ifdef __APPLE__
-        if (m_profile->graphicsAPI == 0) {
+#ifdef __APPLE__
+        if (m_profile->graphicsAPI == 1) {
             env.insert("ANGLE_DEFAULT_PLATFORM", "metal");
         }
-        if (m_profile->graphicsAPI == 1) {
+        if (m_profile->graphicsAPI == 2) {
             env.insert("ANGLE_DEFAULT_PLATFORM", "gl");
         }
-        #endif
+#endif
     }
     process->setProcessEnvironment(env);
     process->setProcessChannelMode(QProcess::MergedChannels);
