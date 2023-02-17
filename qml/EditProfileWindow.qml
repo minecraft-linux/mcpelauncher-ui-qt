@@ -190,6 +190,35 @@ Window {
                 model: texturePatchModel
             }
 
+            Text {
+                visible: SHOW_ANGLEBACKEND
+                text: qsTr("ANGLE backend")
+                font.pointSize: parent.labelFontSize
+            }
+
+            MComboBox {
+                visible: SHOW_ANGLEBACKEND
+                ListModel {
+                    id: graphicsAPIModel
+                    ListElement {
+                        name: qsTr("Default")
+                    }
+                    ListElement {
+                        name: qsTr("Metal")
+                    }
+                    ListElement {
+                        name: qsTr("OpenGL")
+                    }
+                }
+
+
+                id: profileGraphicsAPI
+                Layout.fillWidth: true
+
+                textRole: "name"
+                model: graphicsAPIModel
+            }
+
             MCheckBox {
                 id: dataDirCheck
                 text: qsTr("Data directory")
@@ -304,6 +333,9 @@ Window {
         profileVersion.update();
         profileVersion.currentIndex = 0
         profileTexturePatch.currentIndex = 0
+        if (SHOW_ANGLEBACKEND) {
+            profileGraphicsAPI.currentIndex = 0
+        }
         dataDirCheck.checked = false
         dataDirPath.text = QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = false
@@ -354,6 +386,12 @@ Window {
         if(profile.texturePatch) {
             profileTexturePatch.currentIndex = profile.texturePatch;
         }
+        if (SHOW_ANGLEBACKEND) {
+            profileGraphicsAPI.currentIndex = 0;
+            if(profile.graphicsAPI) {
+                profileGraphicsAPI.currentIndex = profile.graphicsAPI;
+            }
+        }
 
         dataDirCheck.checked = profile.dataDirCustom
         dataDirPath.text = profile.dataDir.length ? profile.dataDir : QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
@@ -381,6 +419,9 @@ Window {
                 profile.setName(profileName.text)
         }
         profile.texturePatch = profileTexturePatch.currentIndex
+        if (SHOW_ANGLEBACKEND) {
+            profile.graphicsAPI = profileGraphicsAPI.currentIndex
+        }
         profile.arch = ""
         if (versionsmodel.get(profileVersion.currentIndex).obj || versionsmodel.get(profileVersion.currentIndex).versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profile.versionType = versionsmodel.get(profileVersion.currentIndex).versionType

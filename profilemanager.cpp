@@ -81,6 +81,9 @@ void ProfileManager::loadProfiles() {
         profile->windowWidth = settings.value("windowWidth").toInt();
         profile->windowHeight = settings.value("windowHeight").toInt();
         profile->texturePatch = settings.value("texturePatch").toInt();
+#ifdef __APPLE__
+        profile->graphicsAPI = settings.value("graphicsAPI").toInt();
+#endif
         if(profile->texturePatch > 2) {
             // Fixup corruption due to v0.2.2
             profile->texturePatch = 0;
@@ -114,6 +117,9 @@ void ProfileInfo::save() {
     settings.setValue("windowHeight", windowHeight);
     settings.setValue("arch", arch);
     settings.setValue("texturePatch", texturePatch);
+#ifdef __APPLE__
+    settings.setValue("graphicsAPI", graphicsAPI);
+#endif
     settings.endGroup();
 }
 
