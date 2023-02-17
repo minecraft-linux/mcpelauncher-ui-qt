@@ -21,6 +21,9 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
     Q_PROPERTY(QString arch MEMBER arch NOTIFY changed)
     Q_PROPERTY(int texturePatch MEMBER texturePatch WRITE setTexturePatch NOTIFY changed)
+#ifdef __APPLE__
+    Q_PROPERTY(int graphicsAPI MEMBER graphicsAPI WRITE setGraphicsAPI NOTIFY changed)
+#endif
 
     ProfileManager* manager;
 
@@ -44,10 +47,13 @@ public:
     bool windowCustomSize = false;
     int windowWidth = 720;
     int windowHeight = 480;
+#ifdef __APPLE__
+    int graphicsAPI = 0;
+#endif
 
     QString arch;
 
-    int texturePatch;
+    int texturePatch = 0;
 
 public slots:
     void setName(QString const& newName);
@@ -57,6 +63,11 @@ public slots:
     void setTexturePatch(int val) {
         texturePatch = val;
     }
+#ifdef __APPLE__
+    void setGraphicsAPI(int val) {
+        graphicsAPI = val;
+    }
+#endif
 
 signals:
     void changed();
