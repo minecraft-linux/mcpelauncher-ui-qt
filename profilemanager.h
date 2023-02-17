@@ -48,12 +48,12 @@ public:
     int windowWidth = 720;
     int windowHeight = 480;
 #ifdef __APPLE__
-    int graphicsAPI;
+    int graphicsAPI = 0;
 #endif
 
     QString arch;
 
-    int texturePatch;
+    int texturePatch = 0;
 
 public slots:
     void setName(QString const& newName);
