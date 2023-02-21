@@ -34,7 +34,7 @@ LauncherBase {
        versionManager: rowLayout.versionManager
        profileManager: rowLayout.profileManager
        playVerChannel: rowLayout.playVerChannel
-       modality: Qt.WindowModal
+       modality: Qt.ApplicationModal
     }
 
     bottomPanelContent: RowLayout {

@@ -123,14 +123,14 @@ Window {
         id: launcherSettingsWindow
         googleLoginHelper: googleLoginHelperInstance
         versionManager: versionManagerInstance
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         playVerChannel: playVerChannelInstance
     }
 
     GameLogWindow {
         id: gameLogWindow
         launcher: gameLauncher
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
 
         MessageDialog {
             id: errorDialog
@@ -142,7 +142,7 @@ Window {
         id: troubleshooterWindow
         googleLoginHelper: googleLoginHelperInstance
         playVerChannel: playVerChannelInstance
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
     }
 
     GoogleTosApprovalWindow {

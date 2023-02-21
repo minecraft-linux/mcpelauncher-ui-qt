@@ -9,7 +9,7 @@ import io.mrarm.mcpelauncher 1.0
 Window {
 
     property GameLauncher launcher
-    modality: Qt.WindowModal
+    modality: Qt.ApplicationModal
     id: gameLogWindow
     width: 500
     height: 400
