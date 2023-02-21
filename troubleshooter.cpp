@@ -33,6 +33,9 @@ void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
         return;
     }
     QStringList lines = QString::fromUtf8(process.readAll()).split("\n");
+    if(process.exitStatus() != 0) {
+        ret.append(new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_VERSION_QUERY_FAILED, tr("Failed to query game launcher version information"), tr("An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:\n%2").arg(process.exitCode()).arg(lines)));
+    }
     QMap<QString, QString> versionInfo;
     bool skipFirst = true;
     for (QString const& line : lines) {
@@ -45,10 +48,6 @@ void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
             break;
         versionInfo[line.left(iof)] = line.mid(iof + 2).trimmed();
     }
-#if defined(__x86_64__) || defined(__i386__)
-    if (versionInfo["SSSE3 support"] != "YES")
-        ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_NO_SSSE3_SUPPORT, tr("No CPU SSSE3 support"), tr("Your CPU may be unsupported and the game may crash on startup."))));
-#endif
     if (versionInfo["GL Renderer"].count("llvmpipe") > 0)
         ret.append((new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_SOFTWARE_RENDERER, tr("Software rendering"), ("The game is using the software (CPU) rendering. This will negatively impact performance.")))
                            ->addWikiUrl("https://mcpelauncher.readthedocs.io/en/latest/troubleshooting.html#graphics-performance-issues-software-rendering"));
