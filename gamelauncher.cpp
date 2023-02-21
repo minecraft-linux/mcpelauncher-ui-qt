@@ -115,13 +115,12 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
         emit launchFailed();
         break;
     default:
-        if (exitCode != 0) {
+        m_crashed = exitCode != 0;
+        if (m_crashed) {
             msg = tr("Process exited with unexpected exit code: %1\n").arg(exitCode);
+            logAttached();
         } else {
             msg = tr("Process exited normally\n");
-        }
-        if (m_crashed = (exitCode != 0)) {
-            logAttached();
         }
         break;
     }
