@@ -35,6 +35,7 @@ void Troubleshooter::findLauncherIssues(QList<QObject *> &ret) {
     QStringList lines = QString::fromUtf8(process.readAll()).split("\n");
     if(process.exitStatus() != 0) {
         ret.append(new TroubleshooterIssue(TroubleshooterIssue::TYPE_LAUNCHER_VERSION_QUERY_FAILED, tr("Failed to query game launcher version information"), tr("An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:\n%2").arg(process.exitCode()).arg(lines)));
+        return;
     }
     QMap<QString, QString> versionInfo;
     bool skipFirst = true;
