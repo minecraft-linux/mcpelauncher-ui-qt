@@ -161,7 +161,7 @@ Window {
         id: gameLauncher
         onLaunchFailed: {
             exited();
-            showLaunchError(qsTr("Could not execute the game launcher. Please make sure it's dependencies are properly installed.<br><a href=\"https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/appimage\">Click here for more information Linux (Description)</a><br>This means for macOS you cannot use this launcher"))
+            showLaunchError(qsTr("Could not execute the game launcher. Please make sure it's dependencies are properly installed.<br><a href=\"%1\">Click here for more information Linux</a>").arg("https://github.com/minecraft-linux/mcpelauncher-manifest/issues/796"))
         }
         onStateChanged: {
             if (!running)

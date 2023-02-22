@@ -332,8 +332,8 @@ LauncherBase {
         }
         // Handle latest is beta, beta isn't enabled
         if (playVerChannel.latestVersionIsBeta && !launcherSettings.showBetaVersions) {
-            rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, therefore not supported").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
-            rowLayout.warnUrl = "";
+            rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, which are hidden by default (Click here for more Information)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""));
+            rowLayout.warnUrl = "https://github.com/minecraft-linux/mcpelauncher-manifest/issues/797";
             return false;
         }
         if(launcherSettings.showUnverified) {
@@ -353,8 +353,8 @@ LauncherBase {
                 }
             }
         }
-        rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 isn't supported yet, supporting new Minecraft Versions isn't a Bug, it is a feature Request (Click here for more Information)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
-        rowLayout.warnUrl = "https://github.com/ChristopherHX/mcpelauncher-manifest/issues/48"
+        rowLayout.warnMessage = qsTr("Latest Minecraft Version %1 compatibility is Unknown, supporting new Minecraft Versions is a feature Request (Click here for more Information)").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""));
+        rowLayout.warnUrl = "https://github.com/minecraft-linux/mcpelauncher-manifest/issues/797";
         return false;
     }
 
