@@ -991,7 +991,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/main.qml" line="170"/>
         <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Click here for more information&lt;/a&gt;</source>
-        <translation>Kann das spiel nicht auf diesem Computer ausführen. Bitte stellen sie sicher das alle Abhänigkeiten installiert sind.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Drücke hier für weitere Informationen&lt;/a&gt;</translation>
+        <translation>Kann das Spiel nicht starten. Bitte stellen sie sicher das alle Abhänigkeiten installiert sind.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Drücke hier für weitere Informationen&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="192"/>
