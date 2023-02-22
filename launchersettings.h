@@ -34,7 +34,7 @@ public:
     bool startOpenLog() const { return settings.value("startOpenLog", false).toBool(); }
     void setStartOpenLog(bool value) { settings.setValue("startOpenLog", value); emit settingsChanged(); }
 
-    bool disableGameLog() const { return settings.value("disableGameLog", true).toBool(); }
+    bool disableGameLog() const { return settings.value("disableGameLog", false).toBool(); }
     void setDisableGameLog(bool value) { settings.setValue("disableGameLog", value); emit settingsChanged(); }
 
     bool checkForUpdates() const { return settings.value("checkForUpdates", true).toBool(); }
