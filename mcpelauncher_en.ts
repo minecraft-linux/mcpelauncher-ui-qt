@@ -917,7 +917,7 @@ missing Symbols expected to be provided by this Launcher via updates
     </message>
     <message>
         <location filename="qml/main.qml" line="170"/>
-        <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;https://github.com/ChristopherHX/linux-packaging-scripts/releases/tag/appimage&quot;&gt;Click here for more information Linux (Description)&lt;/a&gt;&lt;br&gt;This means for macOS you cannot use this launcher</source>
+        <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Click here for more information&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
