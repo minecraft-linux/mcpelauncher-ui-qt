@@ -55,6 +55,7 @@ T.ComboBox {
         padding: 4
 
         contentItem: ListView {
+            ScrollBar.vertical: ScrollBar {}
             clip: true
             implicitHeight: contentHeight
             model: control.delegateModel
