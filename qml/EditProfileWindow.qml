@@ -91,19 +91,25 @@ Window {
                 property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
                 property var extraVersionName: null
                 property var hideLatest: googleLoginHelper.hideLatest
+                property var data: []
                 property var update: function() {
+                    data = [];
                     versionsmodel.clear();
-                    var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
+                    var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
+                    var append = function(obj) {
+                        data.push(obj);
+                        versionsmodel.append(obj);
+                    };
                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
                         var support = checkGooglePlayLatestSupport()
                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
-                        versionsmodel.append({name: qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))), versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
+                        append({name: qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))), versionType: ProfileInfo.LATEST_GOOGLE_PLAY})
                     }
                     for (var i = 0; i < versions.length; i++) {
                         for (var j = 0; j < abis.length; j++) {
                             for (var k = 0; k < versions[i].archs.length; k++) {
                                 if (versions[i].archs[k] == abis[j]) {
-                                    versionsmodel.append({name: qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs[k]), versionType: ProfileInfo.LOCKED_CODE, obj: versions[i], arch: versions[i].archs[k] })
+                                    append({name: qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs[k]), versionType: ProfileInfo.LOCKED_CODE, obj: versions[i], arch: versions[i].archs[k] })
                                     break;
                                 }
                             }
@@ -113,14 +119,14 @@ Window {
                         for (i = 0; i < archivalVersions.length; i++) {
                             for (var j = 0; j < abis.length; j++) {
                                 if (archivalVersions[i].abi == abis[j]) {
-                                    versionsmodel.append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i], arch: archivalVersions[i].abi})
+                                    append({name: qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")), versionType: ProfileInfo.LOCKED_CODE, obj: archivalVersions[i], arch: archivalVersions[i].abi})
                                     break;
                                 }
                             }
                         }
                     }
                     if (extraVersionName != null) {
-                        versionsmodel.append({name: extraVersionName, versionType: ProfileInfo.LOCKED_NAME})
+                        append({name: extraVersionName, versionType: ProfileInfo.LOCKED_NAME})
                     }
                 }
                 
@@ -330,6 +336,7 @@ Window {
         profile = null
         profileName.text = ""
         profileName.enabled = true
+        profileVersion.extraVersionName = null;
         profileVersion.update();
         profileVersion.currentIndex = 0
         profileTexturePatch.currentIndex = 0
@@ -347,20 +354,24 @@ Window {
         profile = p
         profileName.text = profile.name
         profileName.enabled = !profile.nameLocked
+        profileVersion.extraVersionName = null;
         profileVersion.update();
         if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
             profileVersion.currentIndex = 0
         } else if (profile.versionType == ProfileInfo.LOCKED_CODE) {
             var index = -1
             for (var i = 0; i < versionsmodel.count; i++) {
-                if (versionsmodel.get(i).obj && versionsmodel.get(i).obj.versionCode === profile.versionCode && profile.arch === versionsmodel.get(i).arch) {
+                var entry = profileVersion.data[i];
+                if (entry && entry.obj && entry.obj.versionCode === profile.versionCode && profile.arch === entry.arch) {
                     index = i
                     break
                 }
             }
             if (index === -1) {
                 profileVersion.extraVersionName = getDisplayedVersionName();
-                versionsmodel.append({name: profileVersion.extraVersionName, versionType: ProfileInfo.LOCKED_NAME})
+                var extraversion = {name: profileVersion.extraVersionName, versionType: ProfileInfo.LOCKED_NAME};
+                versionsmodel.append(extraversion);
+                profileVersion.data.push(extraversion);
                 profileVersion.currentIndex = versionsmodel.count - 1
             } else {
                 profileVersion.currentIndex = index
@@ -368,14 +379,16 @@ Window {
         } else if (profile.versionType == ProfileInfo.LOCKED_NAME) {
             var index = -1
             for (var i = 0; i < versionsmodel.count; i++) {
-                if (versionsmodel.get(i).obj && versionsmodel.get(i).obj.directory === profile.directory) {
+                if (profileVersion.data[i].obj && profileVersion.data[i].obj.directory === profile.directory) {
                     index = i
                     break
                 }
             }
             if (index === -1) {
                 profileVersion.extraVersionName = getDisplayedVersionName()//profile.versionDirName
-                versionsmodel.append({name: profileVersion.extraVersionName, versionType: ProfileInfo.LOCKED_NAME})
+                var extraversion = {name: profileVersion.extraVersionName, versionType: ProfileInfo.LOCKED_NAME};
+                versionsmodel.append(extraversion)
+                profileVersion.data.push(extraversion);
                 profileVersion.currentIndex = versionsmodel.count - 1
             } else {
                 profileVersion.currentIndex = index
@@ -423,14 +436,14 @@ Window {
             profile.graphicsAPI = profileGraphicsAPI.currentIndex
         }
         profile.arch = ""
-        if (versionsmodel.get(profileVersion.currentIndex).obj || versionsmodel.get(profileVersion.currentIndex).versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
-            profile.versionType = versionsmodel.get(profileVersion.currentIndex).versionType
+        if (profileVersion.data[profileVersion.currentIndex].obj || profileVersion.data[profileVersion.currentIndex].versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
+            profile.versionType = profileVersion.data[profileVersion.currentIndex].versionType
             // fails if it is a extraversion
             if (profile.versionType == ProfileInfo.LOCKED_NAME)
-                profile.versionDirName = versionsmodel.get(profileVersion.currentIndex).obj.directory
+                profile.versionDirName = profileVersion.data[profileVersion.currentIndex].obj.directory
             if (profile.versionType == ProfileInfo.LOCKED_CODE) {
-                profile.versionCode = versionsmodel.get(profileVersion.currentIndex).obj.versionCode
-                profile.arch = versionsmodel.get(profileVersion.currentIndex).arch || ""
+                profile.versionCode = profileVersion.data[profileVersion.currentIndex].obj.versionCode
+                profile.arch = profileVersion.data[profileVersion.currentIndex].arch || ""
             }
         }
 
