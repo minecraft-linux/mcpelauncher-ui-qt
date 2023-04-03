@@ -314,8 +314,19 @@ LauncherBase {
 
     // Tests if it really works
     function checkLauncherLatestSupport() {
-        var ver = versionManager.versions.get(launcherLatestVersionscode())
-        return versionManager.archivalVersions.versions.length == 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(launcherLatestVersionscode()) != null);
+        var latestCode = launcherLatestVersionscode();
+        return versionManager.archivalVersions.versions.length == 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) != null || checkRollForward(latestCode));
+    }
+
+    function checkRollForward(code) {
+        var rollfwds = versionManager.archivalVersions.rollforwardVersionRange;
+        for(var i = 0; i < rollfwds.length; i++) {
+            console.log(JSON.stringify(rollfwds[i]));
+            if(rollfwds[i].minVersionCode <= code && code <= rollfwds[i].maxVersionCode) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Tests for raw Google Play latest (previous default, allways true)
@@ -338,6 +349,9 @@ LauncherBase {
         }
         if(launcherSettings.showUnverified) {
             console.log("Bug errata 3")
+            return true;
+        }
+        if(checkRollForward(playVerChannel.latestVersionCode)) {
             return true;
         }
         var archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode);

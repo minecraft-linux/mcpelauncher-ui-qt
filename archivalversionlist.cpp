@@ -17,6 +17,7 @@ ArchivalVersionList::ArchivalVersionList(QString baseUrl) {
 
 void ArchivalVersionList::downloadLists(QStringList abis, QString baseUrl) {
     m_versionsnext.clear();
+    m_rollforwardVersionRange.clear();
     m_baseUrl = baseUrl.isEmpty() ? m_defBaseUrl : baseUrl;
     if (abis.size()) {
         auto && versiondburl = m_baseUrl + "/versions." + abis.at(abis.size() - 1) + ".json.min";
@@ -66,6 +67,13 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
         info->versionCode = ela.at(0).toInt();
         info->versionName = ela.at(1).toString();
         info->isBeta = ela.at(2).toInt() == 1;
+        // Roll forward
+        if(ela.count() > 3 && ela.at(0).toInt() < ela.at(3).toInt()) {
+            RollforwardVersionRange* rollfwd = new RollforwardVersionRange(this);
+            rollfwd->minVersionCode = ela.at(0).toInt();
+            rollfwd->maxVersionCode = ela.at(3).toInt();
+            m_rollforwardVersionRange.push_back(rollfwd);
+        }
         info->abi = abi;
         m_versionsnext.push_front(info);
     }
