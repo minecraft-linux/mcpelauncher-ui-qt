@@ -69,11 +69,11 @@ T.Button {
     states: [
         State {
             name: "normal"
-            when: !control.hovered
+            when: !(control.hovered || control.activeFocus)
         },
         State {
             name: "hovered"
-            when: control.hovered
+            when: (control.hovered || control.activeFocus)
             PropertyChanges {
                 target: buttonBackground
                 scale: 1.0

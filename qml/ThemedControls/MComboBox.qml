@@ -15,7 +15,7 @@ T.ComboBox {
     background: BorderImage {
         id: buttonBackground
         anchors.fill: parent
-        source: control.hovered || control.down ? "qrc:/Resources/dropdown-active.png" : "qrc:/Resources/dropdown.png"
+        source: (control.hovered || control.activeFocus) || control.down ? "qrc:/Resources/dropdown-active.png" : "qrc:/Resources/dropdown.png"
         smooth: false
         border { left: 4; top: 4; right: 32; bottom: 4 }
         horizontalTileMode: BorderImage.Stretch

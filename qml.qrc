@@ -33,6 +33,7 @@
         <file>Resources/progressbar.png</file>
         <file>Resources/progressbar-progress.png</file>
         <file>Resources/field.png</file>
+        <file>Resources/field-active.png</file>
         <file>Resources/button-active.png</file>
         <file>Resources/button.png</file>
         <file>Resources/button-tab.png</file>
