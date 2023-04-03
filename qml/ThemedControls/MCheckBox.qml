@@ -20,7 +20,7 @@ T.CheckBox {
         BorderImage {
             id: buttonBackground
             anchors.fill: parent
-            source: control.hovered ? "qrc:/Resources/button-active.png" : "qrc:/Resources/button.png"
+            source: (control.hovered || control.activeFocus) ? "qrc:/Resources/button-active.png" : "qrc:/Resources/button.png"
             smooth: false
             border { left: 4; top: 4; right: 4; bottom: 4 }
             horizontalTileMode: BorderImage.Stretch

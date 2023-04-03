@@ -14,7 +14,7 @@ T.Button {
     background: Rectangle {
         id: buttonBackground
         color: "#000"
-        opacity: control.hovered ? 0.1 : 0
+        opacity: (control.hovered || control.activeFocus) ? 0.1 : 0
     }
 
     contentItem: Text {
