@@ -115,6 +115,7 @@ void GoogleLoginHelper::updateDevice() {
             }
         }
     }
+    device.build_sdk_version = 30;
     emit accountInfoChanged();
 }
 
