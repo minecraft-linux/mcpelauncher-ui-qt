@@ -223,7 +223,7 @@ LauncherBase {
             return !versionManager.versions.contains(launcherLatestVersionscode());
         if (profile.versionType == ProfileInfo.LOCKED_CODE) {
             var dver = versionManager.versions.get(profile.versionCode);
-            return !dver || !versionManager.checkSupport(dver);
+            return !dver || !launcherSettings.showUnsupported && !versionManager.checkSupport(dver);
         }
         if (profile.versionType == ProfileInfo.LOCKED_NAME)
             return false;
