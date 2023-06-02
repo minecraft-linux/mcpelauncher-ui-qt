@@ -88,6 +88,15 @@ void ProfileManager::loadProfiles() {
             // Fixup corruption due to v0.2.2
             profile->texturePatch = 0;
         }
+        profile->commandline = settings.value("commandline").toString();
+        int size = settings.beginReadArray("env");
+        if (size >= 0) {
+            for (int i = 0; i < size; i++) {
+                settings.setArrayIndex(i);
+                profile->env[settings.value("name").toString()] = settings.value("value").toString();
+            }
+        }
+        settings.endArray();
         settings.endGroup();
     }
 }
@@ -120,6 +129,15 @@ void ProfileInfo::save() {
 #ifdef __APPLE__
     settings.setValue("graphicsAPI", graphicsAPI);
 #endif
+    settings.setValue("commandline", commandline);
+    settings.beginWriteArray("env", env.count());
+    QMap<QString, QString>::const_iterator it = env.constBegin();
+    for (int i = 0; it != env.constEnd(); i++, it++) {
+        settings.setArrayIndex(i);
+        settings.setValue("name", it.key());
+        settings.setValue("value", it.value());
+    }
+    settings.endArray();
     settings.endGroup();
 }
 

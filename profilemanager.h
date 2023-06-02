@@ -21,6 +21,8 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
     Q_PROPERTY(QString arch MEMBER arch NOTIFY changed)
     Q_PROPERTY(int texturePatch MEMBER texturePatch WRITE setTexturePatch NOTIFY changed)
+    Q_PROPERTY(QString commandline MEMBER commandline NOTIFY changed)
+    Q_PROPERTY(QMap<QString, QString> env MEMBER env NOTIFY changed)
 #ifdef __APPLE__
     Q_PROPERTY(int graphicsAPI MEMBER graphicsAPI WRITE setGraphicsAPI NOTIFY changed)
 #endif
@@ -54,6 +56,10 @@ public:
     QString arch;
 
     int texturePatch = 0;
+
+    QString commandline;
+
+    QMap<QString, QString> env;
 
 public slots:
     void setName(QString const& newName);

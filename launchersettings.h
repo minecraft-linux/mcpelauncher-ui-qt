@@ -16,6 +16,8 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool showUnverified READ showUnverified WRITE setShowUnverified NOTIFY settingsChanged)
     Q_PROPERTY(bool showUnsupported READ showUnsupported WRITE setShowUnsupported NOTIFY settingsChanged)
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
+    Q_PROPERTY(bool downloadOnly READ downloadOnly WRITE setDownloadOnly NOTIFY settingsChanged)
+    Q_PROPERTY(QString singleArch READ singleArch WRITE setSingleArch NOTIFY settingsChanged)
     Q_PROPERTY(int lastVersion READ lastVersion WRITE setLastVersion NOTIFY settingsChanged)
     Q_PROPERTY(QUrl gameDataDir READ gameDataDir)
     Q_PROPERTY(QString versionsFeedBaseUrl READ versionsFeedBaseUrl WRITE setVersionsFeedBaseUrl NOTIFY settingsChanged)
@@ -45,6 +47,12 @@ public:
 
     bool showUnsupported() const { return !disableDevMode && settings.value("showUnsupported", false).toBool(); }
     void setShowUnsupported(bool value) { settings.setValue("showUnsupported", value); emit settingsChanged(); }
+
+    bool downloadOnly() const { return !disableDevMode && settings.value("downloadOnly", false).toBool(); }
+    void setDownloadOnly(bool value) { settings.setValue("downloadOnly", value); emit settingsChanged(); }
+
+    QString singleArch() const { return !disableDevMode ? settings.value("singleArch", "").toString() : ""; }
+    void setSingleArch(QString value) { settings.setValue("singleArch", value); emit settingsChanged(); }
 
     bool showBetaVersions() const { return !disableDevMode && settings.value("showBetaVersions", false).toBool(); }
     void setShowBetaVersions(bool value) { settings.setValue("showBetaVersions", value); emit settingsChanged(); }

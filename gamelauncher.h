@@ -15,6 +15,7 @@ class GameLauncher : public QObject {
 
 private:
     QScopedPointer<QProcess> process;
+    QScopedPointer<QProcess> fileprocess;
     QString m_gameDir;
     ProfileInfo* m_profile;
     bool m_crashed = false;
@@ -45,7 +46,8 @@ public:
     bool crashed() const { return m_crashed; }
 
 public slots:
-    void start(bool disableGameLog, QString arch = "", bool hasVerifiedLicense = true);
+    void start(bool disableGameLog, QString arch = "", bool hasVerifiedLicense = true, QString filepath = "");
+    void startFile(QString file);
 
     void kill();
 
@@ -63,6 +65,8 @@ signals:
     void launchFailed();
 
     void corruptedInstall();
+
+    void fileStarted(bool success);
 };
 
 #endif // GAMELAUNCHER_H

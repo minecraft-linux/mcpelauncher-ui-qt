@@ -101,8 +101,11 @@ void GooglePlayApi::cleanupLogin() {
 }
 
 void GooglePlayApi::updateLogin() {
-    QtConcurrent::run([this]() {
+    auto previousUpdateLoginTask = updateLoginTask;
+    updateLoginTask = QtConcurrent::run([this, previousUpdateLoginTask]() {
         try {
+            QFuture<void> ptask = previousUpdateLoginTask;
+            ptask.waitForFinished();
             QMutexLocker checkinMutexLocker (&checkinMutex);
             if (status == GooglePlayApiStatus::PENDING) {
                 emit initError(tr("<b>Please report this error</b><br>GooglePlayApi already in progress status reporting not working status=%1").arg((int)status));

@@ -15,6 +15,7 @@ class GoogleLoginHelper : public QObject {
     Q_OBJECT
     Q_PROPERTY(GoogleAccount* account READ account NOTIFY accountInfoChanged)
     Q_PROPERTY(bool includeIncompatible READ getIncludeIncompatible WRITE setIncludeIncompatible)
+    Q_PROPERTY(QString singleArch READ getSingleArch WRITE setSingleArch)
     Q_PROPERTY(bool hideLatest READ hideLatest NOTIFY accountInfoChanged)
 
 private:
@@ -26,6 +27,7 @@ private:
     playapi::login_api login;
     bool hasAccount = false;
     bool includeIncompatible = false;
+    QString singleArch;
 
     static std::string getTokenCachePath();
 
@@ -38,11 +40,22 @@ private:
         return includeIncompatible;
     }
 
+    QString getSingleArch() {
+        return singleArch;
+    }
+
     void updateDevice();
 
     void setIncludeIncompatible(bool includeIncompatible) {
         if (this->includeIncompatible != includeIncompatible) {
             this->includeIncompatible = includeIncompatible;
+            updateDevice();
+        }
+    }
+
+    void setSingleArch(QString singleArch) {
+        if (this->singleArch != singleArch) {
+            this->singleArch = singleArch;
             updateDevice();
         }
     }

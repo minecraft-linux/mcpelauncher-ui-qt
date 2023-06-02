@@ -153,8 +153,10 @@ LauncherBase {
             }
         }
         onFinished: {
-            apkExtractionTask.sources = filePaths
-            apkExtractionTask.start()
+            if(!launcherSettings.downloadOnly) {
+                apkExtractionTask.sources = filePaths
+                apkExtractionTask.start()
+            }
         }
     }
 
