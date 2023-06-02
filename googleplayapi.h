@@ -1,6 +1,7 @@
 #ifndef GOOGLEPLAYAPI_H
 #define GOOGLEPLAYAPI_H
 
+#include <QFuture>
 #include <QObject>
 #include <QMutex>
 #include <QThread>
@@ -28,6 +29,7 @@ private:
     playapi::checkin_result checkinResult;
     std::promise<std::pair<bool, bool>> tosApprovalPromise;
     GooglePlayApiStatus status = GooglePlayApiStatus::NOT_READY;
+    QFuture<void> updateLoginTask;
 
     QString CheckinInfoGroup();
     void loadCheckinInfo();

@@ -103,14 +103,11 @@ void GoogleLoginHelper::onLoginFinished(int code) {
 
 void GoogleLoginHelper::updateDevice() {
     device.config_native_platforms = {};
-    for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if(abi.second.compatible) {
-            device.config_native_platforms.push_back(abi.first);
-        }
-    }
-    if (includeIncompatible) {
+    if(!singleArch.isEmpty()) {
+        device.config_native_platforms.push_back(singleArch.toStdString());
+    } else {
         for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-            if(!abi.second.compatible) {
+            if(abi.second.compatible || includeIncompatible) {
                 device.config_native_platforms.push_back(abi.first);
             }
         }
@@ -133,7 +130,7 @@ void GoogleLoginHelper::signOut() {
 QStringList GoogleLoginHelper::getAbis(bool includeIncompatible) {
     QStringList abis;
     for (auto&& abi : SupportedAndroidAbis::getAbis()) {
-        if (!includeIncompatible && !abi.second.compatible) {
+        if (!includeIncompatible && !abi.second.compatible || !singleArch.isEmpty() && abi.first != singleArch.toStdString()) {
             continue;
         }
         abis.append(QString::fromStdString(abi.first));
@@ -155,7 +152,7 @@ bool GoogleLoginHelper::hideLatest() {
     }
     auto supportedabis = SupportedAndroidAbis::getAbis();
     auto res = supportedabis.find(device.config_native_platforms[0]);
-    return res == supportedabis.end() || !res->second.compatible;
+    return !includeIncompatible && singleArch.isEmpty() && (res == supportedabis.end() || !res->second.compatible);
 }
 
 bool GoogleLoginHelper::isSupported() {

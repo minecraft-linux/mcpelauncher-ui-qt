@@ -20,6 +20,9 @@
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <curl/curl.h>
+#include <QObject>
+#include <QCoreApplication>
+#include <QtConcurrent>
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -44,7 +47,8 @@ int main(int argc, char *argv[])
 
     LauncherApp app(argc, argv);
     QCommandLineParser parser;
-    parser.setApplicationDescription("Minecraft Linux Launcher Error Helper");
+    parser.setApplicationDescription("Minecraft Linux Launcher UI");
+    parser.addPositionalArgument("file", "file or uri to open with the default profile");
     parser.addHelpOption();
     QCommandLineOption devmodeOption(QStringList() << "d" << "enable-devmode", 
         QCoreApplication::translate("main", "Developer Mode - Enable unsafe Launcher Settings"));
@@ -54,7 +58,67 @@ int main(int argc, char *argv[])
         QCoreApplication::translate("main", "Verbose log Qt Messages to stdout"));
     parser.addOption(verboseOption);
 
+    QCommandLineOption profileOption(QStringList() << "p" << "profile", 
+        QCoreApplication::translate("main", "directly start the game launcher with the specified profile"));
+    parser.addOption(profileOption);
+
     parser.process(app);
+
+    bool hasFileOrUri = parser.positionalArguments().count() == 1;
+
+    if(parser.isSet(profileOption) || hasFileOrUri) {
+        VersionManager vmanager;
+        ProfileManager manager;
+        auto profileName = parser.value(profileOption);
+        ProfileInfo * profile = nullptr;
+        if(profileName.length() > 0) {
+            for(auto&& pro : manager.profiles()) {
+                if(((ProfileInfo *)pro)->name == profileName) {
+                    profile = (ProfileInfo *)pro;
+                }
+            }
+            if(profile == nullptr) {
+                printf("Profile not found: %s\n", profileName.toStdString().data());
+                return 1;
+            }
+        } else {
+            profile = manager.activeProfile();
+        }
+
+        GameLauncher launcher;
+        launcher.logAttached();
+        QObject::connect(&launcher, &GameLauncher::logAppended, [](QString str) {
+            printf("%s", str.toStdString().data());
+        });
+        QObject::connect(&launcher, &GameLauncher::stateChanged, [&]() {
+            if(!launcher.running()) {
+                app.exit(launcher.crashed() ? 1 : 0);
+            }
+        });
+        QObject::connect(&launcher, &GameLauncher::fileStarted, [&](bool success) {
+            if(success) {
+                app.exit(success ? 0 : 1);
+            } else {
+                launcher.start(false, profile->arch, true, parser.positionalArguments().at(0));
+            }
+        });
+        launcher.setProfile(profile);
+        if(profile->versionType == ProfileInfo::LATEST_GOOGLE_PLAY) {
+            GoogleVersionChannel playChannel;
+            launcher.setGameDir(vmanager.getDirectoryFor(vmanager.versionList()->get(playChannel.latestVersionCode())));
+        } else if(profile->versionType == ProfileInfo::LOCKED_NAME) {
+            launcher.setGameDir(vmanager.getDirectoryFor(profile->versionDirName));
+        } else if(profile->versionType == ProfileInfo::LOCKED_CODE && profile->versionCode) {
+            launcher.setGameDir(vmanager.getDirectoryFor(vmanager.versionList()->get(profile->versionCode)));
+        }
+        
+        if(hasFileOrUri) {
+            launcher.startFile(parser.positionalArguments().at(0));
+        } else {
+            launcher.start(false, profile->arch, true);
+        }
+        return app.exec();
+    }
 
     auto verbose = parser.isSet(verboseOption);
 

@@ -21,7 +21,7 @@ std::string GameLauncher::findLauncher(std::string name) {
     return std::string();
 }
 
-void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLicense) {
+void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLicense, QString filepath) {
     if (running()) {
         return;
     }
@@ -32,6 +32,10 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
     if (m_gameDir.length() > 0) {
         args.append("-dg");
         args.append(m_gameDir);
+    }
+    if (filepath.length() > 0) {
+        args.append("--import-file-path");
+        args.append(filepath);
     }
     if (m_profile != nullptr) {
         if (m_profile->dataDirCustom) {
@@ -56,6 +60,68 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             env.insert("ANGLE_DEFAULT_PLATFORM", "gl");
         }
 #endif
+        std::string commandline = m_profile->commandline.toStdString();
+        if(!commandline.empty()) {
+            char quote = '\0';
+            std::string arg;
+            for(size_t i = 0, length = commandline.length(); i < length; i++) {
+                auto&& cur = commandline[i];
+                switch (cur) {
+                case ' ':
+                case '\t':
+                    if(quote == '\0') {
+                        args.append(QString::fromStdString(arg));
+                        arg = "";
+                    } else {
+                        arg += cur;
+                    }
+                    break;
+                case '"':
+                case '\'':
+                    if(quote == '\0') {
+                        quote = cur;
+                    } else if(cur == quote) {
+                        quote = '\0';
+                    } else  {
+                        arg += cur;
+                    }
+                    break;
+                case '\\':
+                    i++;
+                    if(i < length) {
+                        cur = commandline[i];
+                        switch (cur) {
+                        case 'n':
+                            arg += '\n';
+                            break;
+                        case 'r':
+                            arg += '\r';
+                            break;
+                        case 't':
+                            arg += '\t';
+                            break;
+                        case '0':
+                            arg += '0';
+                            break;
+                        default:
+                            arg += cur;
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    arg += cur;
+                    break;
+                }
+            }
+            if(!arg.empty()) { 
+                args.append(QString::fromStdString(arg));
+            }
+        }
+        QMap<QString, QString>::const_iterator it = m_profile->env.constBegin();
+        for (int i = 0; it != m_profile->env.constEnd(); i++) {
+            env.insert(it.key(), it.value());
+        }
     }
     process->setProcessEnvironment(env);
     process->setProcessChannelMode(QProcess::MergedChannels);
@@ -93,6 +159,33 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
     logAttached();
     emit stateChanged();
     emit logAppended(QString::fromStdString(errormsg.str()));
+}
+
+void GameLauncher::startFile(QString file) {
+    fileprocess.reset(new QProcess);
+    QStringList args;
+    args.append(file);
+    fileprocess->setProcessChannelMode(QProcess::MergedChannels); 
+    if (m_gamelogopen)
+        logAttached();
+    connect(fileprocess.data(), QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [this](int exitCode, QProcess::ExitStatus exitStatus) {
+        emit fileStarted(exitCode == 0);
+    });
+    connect(fileprocess.data(), &QProcess::errorOccurred, [this](QProcess::ProcessError error) {
+        emit fileStarted(false);
+    });
+    connect(fileprocess.data(), &QProcess::readyReadStandardOutput, [this]() {
+        emit logAppended(QString::fromUtf8(fileprocess->readAllStandardOutput()));
+    });
+
+    std::string launcherpath;
+    if(!(launcherpath = findLauncher("mcpelauncher-client")).empty()) {
+        fileprocess->start(QString::fromStdString(launcherpath), args);
+        emit stateChanged();
+        return;
+    } else {
+        emit fileStarted(false);
+    }
 }
 
 void GameLauncher::handleStdOutAvailable() {
