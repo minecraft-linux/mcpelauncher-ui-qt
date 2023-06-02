@@ -112,7 +112,7 @@ LauncherBase {
                 if(gameLauncher.running) {
                     gameLogWindow.show();
                     gameLauncher.logAttached();
-                } else if(googleLoginHelper.account !== null && !playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) {
+                } else if(googleLoginHelper.account !== null && !playVerChannel.hasVerifiedLicense && LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) {
                     playVerChannel.playApi = null;
                     playVerChannel.playApi = playApiInstance;
                 } else {
