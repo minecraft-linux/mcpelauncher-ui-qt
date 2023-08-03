@@ -23,6 +23,12 @@
 #include <QObject>
 #include <QCoreApplication>
 #include <QtConcurrent>
+#ifdef LAUNCHER_ENABLE_GLFW
+#include <QTimer>
+#include <QKeyEvent>
+#include <QWindow>
+#include <GLFW/glfw3.h>
+#endif
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -198,6 +204,41 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
+#ifdef LAUNCHER_ENABLE_GLFW
+    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_TRUE);
+    glfwInit();
+    int glfwjid = 0;
+    QTimer *timer = new QTimer(&app);
+    GLFWgamepadstate oldstate;
+    memset(&oldstate, 0, sizeof(oldstate));
+    QObject::connect(timer, &QTimer::timeout, [&]() {
+        glfwPollEvents();
+        if(GLFWgamepadstate state; glfwjid != -1 && glfwGetGamepadState(glfwjid, &state) == GLFW_TRUE) {
+            QObject* window = QGuiApplication::focusWindow();
+            if(window) {
+                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
+                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Enter, Qt::NoModifier), Qt::NormalEventPriority);
+                }
+                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
+                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
+                }
+                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT]) {
+                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Tab, Qt::NoModifier), Qt::NormalEventPriority);
+                }
+                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN]) {
+                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Down, Qt::NoModifier), Qt::NormalEventPriority);
+                }
+                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP]) {
+                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Up, Qt::NoModifier), Qt::NormalEventPriority);
+                }
+                oldstate = state;
+            }
+        }
+    });
+    timer->setInterval(50);
+    timer->start();
+#endif
 
     return app.exec();
 }
