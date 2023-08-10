@@ -94,7 +94,7 @@ if (APPLE)
     endif()
 endif()
 
-target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Svg Qt5::Concurrent playdl-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-apkinfo file-util gplayapi)
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Svg Qt5::Concurrent playdl-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-common mcpelauncher-apkinfo file-util gplayapi)
 
 if (ENABLE_APPIMAGE_UPDATE_CHECK)
     target_compile_definitions(${PROJECT_NAME} PUBLIC APPIMAGE_UPDATE_CHECK=1)
