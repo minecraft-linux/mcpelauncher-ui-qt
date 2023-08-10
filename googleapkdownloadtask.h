@@ -48,7 +48,7 @@ public:
     bool active() const { return m_active; }
 
     bool keepApks() const { return m_keepApks; }
-    void setKeepApks(bool keepApks) const { m_keepApks = keepApks; }
+    void setKeepApks(bool keepApks) { m_keepApks = keepApks; }
 
     QString packageName() const { return m_packageName; }
     void setPackageName(QString packageName) { m_packageName = packageName; }
