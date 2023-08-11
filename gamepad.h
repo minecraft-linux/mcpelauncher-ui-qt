@@ -8,18 +8,18 @@ class Gamepad : public QObject {
     Q_PROPERTY(int id MEMBER m_id)
     Q_PROPERTY(QString guid MEMBER m_guid)
     Q_PROPERTY(QString name MEMBER m_name)
-    Q_PROPERTY(QList<bool> buttons READ buttons NOTIFY inputChanged)
-    Q_PROPERTY(QList<int> hats READ buttons NOTIFY inputChanged)
-    Q_PROPERTY(QList<double> axes READ axes NOTIFY inputChanged)
+    Q_PROPERTY(QVector<bool> buttons READ buttons NOTIFY inputChanged)
+    Q_PROPERTY(QVector<int> hats READ buttons NOTIFY inputChanged)
+    Q_PROPERTY(QVector<double> axes READ axes NOTIFY inputChanged)
     Q_PROPERTY(QString fakeGamePadMapping MEMBER m_fakeGamePadMapping)
 
 private:
     int m_id;
     QString m_guid;
     QString m_name;
-    QList<bool> m_buttons;
-    QList<int> m_hats;
-    QList<double> m_axes;
+    QVector<bool> m_buttons;
+    QVector<int> m_hats;
+    QVector<double> m_axes;
     bool m_isGamePad = false;
     QString m_fakeGamePadMapping;
 
@@ -35,13 +35,13 @@ public:
         return m_id;
     }
 
-    QList<bool> buttons() const {
+    QVector<bool> buttons() const {
         return m_buttons;
     }
-    QList<int> hats() const {
+    QVector<int> hats() const {
         return m_hats;
     }
-    QList<double> axes() const {
+    QVector<double> axes() const {
         return m_axes;
     }
 
@@ -82,7 +82,7 @@ public:
     }
 
     bool enabled() {
-        return enabled;
+        return m_enabled;
     }
 
     void setEnabled(bool enabled) {
