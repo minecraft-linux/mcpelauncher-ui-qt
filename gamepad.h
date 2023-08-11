@@ -5,27 +5,57 @@
 class Gamepad : public QObject {
     Q_OBJECT
 
+    Q_PROPERTY(int id MEMBER m_id)
+    Q_PROPERTY(QString guid MEMBER m_guid)
+    Q_PROPERTY(QString name MEMBER m_name)
     Q_PROPERTY(QList<bool> buttons READ buttons NOTIFY inputChanged)
     Q_PROPERTY(QList<int> hats READ buttons NOTIFY inputChanged)
     Q_PROPERTY(QList<double> axes READ axes NOTIFY inputChanged)
+    Q_PROPERTY(QString fakeGamePadMapping MEMBER m_fakeGamePadMapping)
 
 private:
+    int m_id;
+    QString m_guid;
+    QString m_name;
     QList<bool> m_buttons;
     QList<int> m_hats;
     QList<double> m_axes;
+    bool m_isGamePad = false;
+    QString m_fakeGamePadMapping;
 
 public:
-    QList<bool> buttons() {
+    Gamepad(QObject* parent, int id, QString guid, QString name, QString fakeGamePadMapping) : QObject(parent) {
+        m_id = 0;
+        m_guid = guid;
+        m_name = name;
+        m_fakeGamePadMapping = fakeGamePadMapping;
+    }
+
+    int id() const {
+        return m_id;
+    }
+
+    QList<bool> buttons() const {
         return m_buttons;
     }
-    QList<int> hats() {
+    QList<int> hats() const {
         return m_hats;
     }
-    QList<double> axes() {
+    QList<double> axes() const {
         return m_axes;
     }
+
+    void updateInput(bool* buttons, size_t numButtons, bool* hats, size_t numHats, double* axes, size_t numAxes) {
+        m_buttons.resize(numButtons);
+        m_hats.resize(numHats);
+        m_axes.resize(numAxes);
+        memcpy(m_buttons.data(), buttons, numButtons * sizeof(*buttons));
+        memcpy(m_hats.data(), hats, numHats * sizeof(*hats));
+        memcpy(m_axes.data(), axes, numAxes * sizeof(*axes));
+        inputChanged();
+    }
 signals:
-    inputChanged();
+    void inputChanged();
 };
 
 class GamepadManager : public QObject {
@@ -36,10 +66,12 @@ class GamepadManager : public QObject {
     Q_PROPERTY(QList<Gamepad*> gamepads READ gamepads NOTIFY gamepadsChanged)
 
 private:
+    bool m_enabled = true;
     QStringList m_errors;
     QList<Gamepad*> m_gamepads;
 
 public:
+
     QStringList addError(QString error) {
         m_errors << error;
         errorAdded();
@@ -57,7 +89,7 @@ public:
         m_enabled = enabled;
     }
 
-    QList<Gamepad*> gamepads() {
+    QList<Gamepad*>& gamepads() {
         return m_gamepads;
     }
 

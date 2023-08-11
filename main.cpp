@@ -167,9 +167,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<Troubleshooter>("io.mrarm.mcpelauncher", 1, 0, "Troubleshooter");
     qmlRegisterType<UpdateChecker>("io.mrarm.mcpelauncher", 1, 0, "UpdateChecker");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
-    Gamepad gamepad;
+    GamepadManager gamepadManager;
     qmlRegisterSingletonType<Gamepad>("io.mrarm.mcpelauncher", 1, 0, "Gamepad", [&](QQmlEngine*, QJSEngine*) -> QObject* {
-        return &gamepad;
+        return &gamepadManager;
     });
 
     QQmlApplicationEngine engine;
@@ -216,9 +216,18 @@ int main(int argc, char *argv[])
     QTimer *timer = new QTimer(&app);
     GLFWgamepadstate oldstate;
     memset(&oldstate, 0, sizeof(oldstate));
+    //glfwSetJoystickUserPointer()
+    static auto gamepadManagerRef = &gamepadManager;
+    auto addRemoveGamePad = +[](int jid, int event) {
+        if(event == GLFW_CONNECTED) {
+            glfwSetJoystickUserPointer(jid, nullptr);
+            //gamepadManagerRef->gamepads().emplace_back(new Gamepad(gamepadManagerRef, ))
+        }
+    };
+    glfwSetJoystickCallback(addRemoveGamePad);
     QObject::connect(timer, &QTimer::timeout, [&]() {
         glfwPollEvents();
-        if(gamepad.enabled()) {
+        if(gamepadManager.enabled()) {
             GLFWgamepadstate state;
             if(glfwGetGamepadState(0, &state) == GLFW_TRUE) {
                 QObject* window = QGuiApplication::focusWindow();
