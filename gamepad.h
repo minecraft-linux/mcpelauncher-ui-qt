@@ -41,7 +41,7 @@ public:
     QVector<unsigned char> hats() const {
         return m_hats;
     }
-    QVector<double> axes() const {
+    QVector<float> axes() const {
         return m_axes;
     }
 
