@@ -220,15 +220,15 @@ int main(int argc, char *argv[])
         if(event == GLFW_CONNECTED) {
             auto guid = glfwGetJoystickGUID(jid);
             auto name = glfwGetJoystickName(jid);
-            auto gamepad = new Gamepad(gamepadManagerRef, jid, guid, name, "");
+            auto gamepad = new Gamepad(&gamepadManager, jid, guid, name, "");
             glfwSetJoystickUserPointer(jid, gamepad);
-            gamepadManager.gamepads().emplace_back(gamepad);
+            gamepadManager.gamepads().append(gamepad);
         } else {
             auto gamepad = (Gamepad*)glfwGetJoystickUserPointer(jid);
             gamepadManager.gamepads().removeOne(gamepad);
         }
         gamepadManager.gamepadsChanged();
-    }
+    };
     glfwSetJoystickCallback(addRemoveGamePad);
     for(int i = GLFW_JOYSTICK_1; i < GLFW_JOYSTICK_LAST; i++) {
         if(glfwJoystickPresent(i)) {
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
             }
         } else {
             for(auto&& gamepad : gamepadManager.gamepads()) {
-                auto joystick = gamepad->id()
+                auto joystick = gamepad->id();
                 int axesCount, hatsCount, buttonsCount;
                 auto axes = glfwGetJoystickAxes(joystick, &axesCount);  
                 auto hats = glfwGetJoystickHats(joystick, &hatsCount);
