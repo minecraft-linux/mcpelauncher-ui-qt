@@ -8,18 +8,18 @@ class Gamepad : public QObject {
     Q_PROPERTY(int id MEMBER m_id)
     Q_PROPERTY(QString guid MEMBER m_guid)
     Q_PROPERTY(QString name MEMBER m_name)
-    Q_PROPERTY(QVector<bool> buttons READ buttons NOTIFY inputChanged)
-    Q_PROPERTY(QVector<int> hats READ buttons NOTIFY inputChanged)
-    Q_PROPERTY(QVector<double> axes READ axes NOTIFY inputChanged)
+    Q_PROPERTY(QVector<unsigned char> buttons READ buttons NOTIFY inputChanged)
+    Q_PROPERTY(QVector<unsigned char> hats READ hats NOTIFY inputChanged)
+    Q_PROPERTY(QVector<float> axes READ axes NOTIFY inputChanged)
     Q_PROPERTY(QString fakeGamePadMapping MEMBER m_fakeGamePadMapping)
 
 private:
     int m_id;
     QString m_guid;
     QString m_name;
-    QVector<bool> m_buttons;
-    QVector<int> m_hats;
-    QVector<double> m_axes;
+    QVector<unsigned char> m_buttons;
+    QVector<unsigned char> m_hats;
+    QVector<float> m_axes;
     bool m_isGamePad = false;
     QString m_fakeGamePadMapping;
 
@@ -35,17 +35,17 @@ public:
         return m_id;
     }
 
-    QVector<bool> buttons() const {
+    QVector<unsigned char> buttons() const {
         return m_buttons;
     }
-    QVector<int> hats() const {
+    QVector<unsigned char> hats() const {
         return m_hats;
     }
     QVector<double> axes() const {
         return m_axes;
     }
 
-    void updateInput(bool* buttons, size_t numButtons, bool* hats, size_t numHats, double* axes, size_t numAxes) {
+    void updateInput(const unsigned char* buttons, size_t numButtons, const unsigned char* hats, size_t numHats, const float* axes, size_t numAxes) {
         m_buttons.resize(numButtons);
         m_hats.resize(numHats);
         m_axes.resize(numAxes);
@@ -72,7 +72,7 @@ private:
 
 public:
 
-    QStringList addError(QString error) {
+    void addError(QString error) {
         m_errors << error;
         errorAdded();
     }
