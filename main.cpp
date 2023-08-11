@@ -222,13 +222,13 @@ int main(int argc, char *argv[])
             auto guid = glfwGetJoystickGUID(jid);
             auto name = glfwGetJoystickName(jid);
             int axescount, hatscount, buttonscount;
-            if (!glfwGetJoystickAxes(joystick, &axescount)) {
+            if (!glfwGetJoystickAxes(jid, &axescount)) {
                 axescount = 0;
             }
-            if (!glfwGetJoystickHats(joystick, &hatscount)) {
+            if (!glfwGetJoystickHats(jid, &hatscount)) {
                 hatscount = 0;
             }
-            if (!glfwGetJoystickButtons(joystick, &buttonscount)) {
+            if (!glfwGetJoystickButtons(jid, &buttonscount)) {
                 buttonscount = 0;
             }
             std::ostringstream mapping;
