@@ -216,41 +216,61 @@ int main(int argc, char *argv[])
     QTimer *timer = new QTimer(&app);
     GLFWgamepadstate oldstate;
     memset(&oldstate, 0, sizeof(oldstate));
-    //glfwSetJoystickUserPointer()
     auto addRemoveGamePad = +[](int jid, int event) {
         if(event == GLFW_CONNECTED) {
-            glfwSetJoystickUserPointer(jid, nullptr);
-            //gamepadManager.gamepads().emplace_back(new Gamepad(gamepadManagerRef, ))
+            auto guid = glfwGetJoystickGUID(jid);
+            auto name = glfwGetJoystickName(jid);
+            auto gamepad = new Gamepad(gamepadManagerRef, jid, guid, name, "");
+            glfwSetJoystickUserPointer(jid, gamepad);
+            gamepadManager.gamepads().emplace_back(gamepad);
+        } else {
+            auto gamepad = (Gamepad*)glfwGetJoystickUserPointer(jid);
+            gamepadManager.gamepads().removeOne(gamepad);
         }
-    };
+        gamepadManager.gamepadsChanged();
+    }
     glfwSetJoystickCallback(addRemoveGamePad);
+    for(int i = GLFW_JOYSTICK_1; i < GLFW_JOYSTICK_LAST; i++) {
+        if(glfwJoystickPresent(i)) {
+            addRemoveGamePad(i, GLFW_CONNECTED);
+        }
+    }
     QObject::connect(timer, &QTimer::timeout, [&]() {
         glfwPollEvents();
         if(gamepadManager.enabled()) {
-            GLFWgamepadstate state;
-            if(glfwGetGamepadState(0, &state) == GLFW_TRUE) {
-                QObject* window = QGuiApplication::focusWindow();
-                if(window) {
-                    if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
-                        QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Enter, Qt::NoModifier), Qt::NormalEventPriority);
+            for(auto&& gamepad : gamepadManager.gamepads()) {
+                GLFWgamepadstate state;
+                if(glfwGetGamepadState(gamepad->id(), &state) == GLFW_TRUE) {
+                    QObject* window = QGuiApplication::focusWindow();
+                    if(window) {
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Enter, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Tab, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Down, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Up, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        oldstate = state;
                     }
-                    if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
-                        QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
-                    }
-                    if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT]) {
-                        QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Tab, Qt::NoModifier), Qt::NormalEventPriority);
-                    }
-                    if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN]) {
-                        QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Down, Qt::NoModifier), Qt::NormalEventPriority);
-                    }
-                    if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP]) {
-                        QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Up, Qt::NoModifier), Qt::NormalEventPriority);
-                    }
-                    oldstate = state;
                 }
             }
         } else {
-
+            for(auto&& gamepad : gamepadManager.gamepads()) {
+                auto joystick = gamepad->id()
+                int axesCount, hatsCount, buttonsCount;
+                auto axes = glfwGetJoystickAxes(joystick, &axesCount);  
+                auto hats = glfwGetJoystickHats(joystick, &hatsCount);
+                auto buttons = glfwGetJoystickButtons(joystick, &buttonsCount);
+                gamepad->updateInput(buttons, buttonsCount, hats, hatsCount, axes, axesCount);
+            }
         }
     });
     timer->setInterval(50);
