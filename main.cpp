@@ -30,6 +30,7 @@
 #include <QWindow>
 #include <GLFW/glfw3.h>
 #endif
+#include <sstream>
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -220,7 +221,47 @@ int main(int argc, char *argv[])
         if(event == GLFW_CONNECTED) {
             auto guid = glfwGetJoystickGUID(jid);
             auto name = glfwGetJoystickName(jid);
-            auto gamepad = new Gamepad(&gamepadManager, jid, guid, name, "");
+            int axescount, hatscount, buttonscount;
+            if (!glfwGetJoystickAxes(joystick, &axescount)) {
+                axescount = 0;
+            }
+            if (!glfwGetJoystickHats(joystick, &hatscount)) {
+                hatscount = 0;
+            }
+            if (!glfwGetJoystickButtons(joystick, &buttonscount)) {
+                buttonscount = 0;
+            }
+            std::ostringstream mapping;
+            mapping << guid << "," << name;
+            const char* btns[] = { "a", "b", "x", "y", "leftshoulder", "rightshoulder", "righttrigger", "lefttrigger", "back", "start", "leftstick", "rightstick", "guide", "dpleft", "dpdown", "dpright", "dpup" };
+            const char* axes[] = { "leftx", "lefty", "rightx", "righty", "lefttrigger", "righttrigger" };
+            if (axescount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < axescount && i < sizeof(axes) / sizeof(axes[0]); i++) {
+                    submap << "," << axes[i] << ":a" << i;
+                }
+                mapping << submap.str();
+            }
+            const char* hats[] = { "dpup", "dpright", "dpdown", "dpleft" };
+            if (hatscount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < hatscount && i < sizeof(hats) / sizeof(hats[0]) / 4; i++) {
+                   for (size_t j = 0; j < 4; j++) {
+                       submap << "," << hats[i*4 + j] << ":h" << i << "." << (1 << j);
+                   }
+                }
+                mapping << submap.str();
+            }
+            if (buttonscount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < buttonscount && i < sizeof(btns) / sizeof(btns[0]); i++) {
+                    submap << "," << btns[i] << ":b" << i;
+                }
+                mapping << submap.str();
+            }
+            auto mapstr = mapping.str();
+            mapstr = mapstr + ",platform:Linux,\n" + mapstr + ",platform:Mac OS X,";
+            auto gamepad = new Gamepad(&gamepadManager, jid, guid, name, QString::fromStdString(mapstr));
             glfwSetJoystickUserPointer(jid, gamepad);
             gamepadManager.gamepads().append(gamepad);
         } else {
