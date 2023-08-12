@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
             mapstr = mapstr + ",platform:Linux,\n" + mapstr + ",platform:Mac OS X,";
             auto gamepad = new Gamepad(gamepadManager, jid, guid, name, QString::fromStdString(mapstr));
             glfwSetJoystickUserPointer(jid, gamepad);
-            gamepad->setHasMapping(glfwJoystickIsGamepad(jid));
+            ((Gamepad*)gamepad)->setHasMapping(glfwJoystickIsGamepad(jid));
             gamepadManager->gamepads().append(gamepad);
         } else {
             auto gamepad = (Gamepad*)glfwGetJoystickUserPointer(jid);
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
         if(gamepadManager->enabled()) {
             for(auto&& gamepad : gamepadManager->gamepads()) {
                 GLFWgamepadstate state;
-                if(glfwGetGamepadState(gamepad->id(), &state) == GLFW_TRUE) {
+                if(glfwGetGamepadState(((Gamepad*)gamepad)->id(), &state) == GLFW_TRUE) {
                     QObject* window = QGuiApplication::focusWindow();
                     if(window) {
                         if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
@@ -326,13 +326,13 @@ int main(int argc, char *argv[])
             }
         }
         for(auto&& gamepad : gamepadManager->gamepads()) {
-            auto joystick = gamepad->id();
+            auto joystick = ((Gamepad*)gamepad)->id();
             int axesCount, hatsCount, buttonsCount;
             auto axes = glfwGetJoystickAxes(joystick, &axesCount);  
             auto hats = glfwGetJoystickHats(joystick, &hatsCount);
             auto buttons = glfwGetJoystickButtons(joystick, &buttonsCount);
-            gamepad->updateInput(buttons, buttonsCount, hats, hatsCount, axes, axesCount);
-            gamepad->setHasMapping(glfwJoystickIsGamepad(joystick));
+            ((Gamepad*)gamepad)->updateInput(buttons, buttonsCount, hats, hatsCount, axes, axesCount);
+            ((Gamepad*)gamepad)->setHasMapping(glfwJoystickIsGamepad(joystick));
         }
     });
     timer->setInterval(50);

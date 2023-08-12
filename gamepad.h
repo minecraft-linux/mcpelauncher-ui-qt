@@ -76,12 +76,13 @@ class GamepadManager : public QObject {
 
     Q_PROPERTY(QStringList errors READ errors NOTIFY errorAdded)
     Q_PROPERTY(bool enabled READ enabled WRITE setEnabled)
-    Q_PROPERTY(QList<Gamepad*> gamepads READ gamepads NOTIFY gamepadsChanged)
+    //  QList<Gamepad*> works in qt5.15+
+    Q_PROPERTY(QList<QObject*> gamepads READ gamepads NOTIFY gamepadsChanged)
 
 private:
     bool m_enabled = true;
     QStringList m_errors;
-    QList<Gamepad*> m_gamepads;
+    QList<QObject*> m_gamepads;
 
 public:
 
@@ -102,7 +103,7 @@ public:
         m_enabled = enabled;
     }
 
-    QList<Gamepad*>& gamepads() {
+    QList<QObject*>& gamepads() {
         return m_gamepads;
     }
 
