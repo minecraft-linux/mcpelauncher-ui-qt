@@ -41,13 +41,11 @@ Window {
                 
                 model: {
                     var ret = []
-                    if(GamepadManager.gamepads) {
-                        //console.log(JSON.stringify(GamepadManager.gamepads));
-                        for (var i = 0; i < GamepadManager.gamepads.length; i++) {
-                            ret.push(GamepadManager.gamepads[i].name);
-                        }
+                    //console.log(JSON.stringify(GamepadManager.gamepads));
+                    for (var i = 0; i < GamepadManager.gamepads.length; i++) {
+                        ret.push(GamepadManager.gamepads[i].name);
                     }
-                    console.log(ret);
+                    console.log(JSON.stringify(ret));
                     return ret
                 }
 
