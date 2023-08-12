@@ -305,6 +305,9 @@ int main(int argc, char *argv[])
                         if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
                             QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Space, Qt::NoModifier), Qt::NormalEventPriority);
                         }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_B] != state.buttons[GLFW_GAMEPAD_BUTTON_B]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_B] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Escape, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
                         if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
                             QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
                         }

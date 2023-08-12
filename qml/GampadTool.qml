@@ -16,6 +16,9 @@ Window {
     minimumHeight: 400
     title: qsTr("Gamepad Tool")
 
+    property var margin: 10
+    property var hasGamepad: GamepadManager.gamepads.length > 0 && control.currentIndex >= 0 && control.currentIndex < GamepadManager.gamepads.length
+
     ScrollView {
         anchors.fill: parent
 
@@ -29,6 +32,10 @@ Window {
             
             MComboBox {
                 id: control
+
+                Layout.topMargin: gamepadTool.margin
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
 
                 property var currentGamepad: ""
                 
@@ -87,37 +94,45 @@ Window {
 
             MTextField {
                 Layout.fillWidth: true
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
                 readOnly: true
-                text: GamepadManager.gamepads[control.currentIndex].guid
+                text: gamepadTool.hasGamepad ? GamepadManager.gamepads[control.currentIndex].guid : qsTr("No Gamepad")
             }
 
             MTextField {
                 Layout.fillWidth: true
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
                 readOnly: true
-                text: GamepadManager.gamepads[control.currentIndex].name
+                text: gamepadTool.hasGamepad ? GamepadManager.gamepads[control.currentIndex].name : qsTr("No Gamepad")
             }
 
             Text {
-                text: "Has a gamepad Mapping? " + (GamepadManager.gamepads[control.currentIndex].hasMapping ? "true" : "false")
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
+                text: "Has a gamepad Mapping? " + (gamepadTool.hasGamepad && GamepadManager.gamepads[control.currentIndex].hasMapping ? "true" : "false")
             }
 
             Repeater {
                 id: inputRepeater
-                property var content: [ "a", "b", "x", "y", "leftshoulder", "rightshoulder", "righttrigger", "lefttrigger", "back", "start", "leftstick", "rightstick", "guide", "dpleft", "dpdown", "dpright", "dpup", "leftx", "lefty", "rightx", "righty" ]
-                model: inputRepeater.content.length
+                model: [ "a", "b", "x", "y", "leftshoulder", "rightshoulder", "righttrigger", "lefttrigger", "back", "start", "leftstick", "rightstick", "guide", "dpleft", "dpdown", "dpright", "dpup", "leftx", "lefty", "rightx", "righty" ]
                 GamepadInputField {
-                    required property int index
-                    name: inputRepeater.content[index]
+                    Layout.leftMargin: gamepadTool.margin
+                    Layout.rightMargin: gamepadTool.margin
+                    name: modelData
+                    hasGamepad: gamepadTool.hasGamepad
                 }
             }
 
             MTextField {
                 id: gamepadMapping
                 Layout.fillWidth: true
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
                 readOnly: true
                 text: {
-                    console.log("mapping");
-                    if(GamepadManager.gamepads) {
+                    if(gamepadTool.hasGamepad) {
                         var fields = [];
                         fields.push(GamepadManager.gamepads[control.currentIndex].guid);
                         fields.push(GamepadManager.gamepads[control.currentIndex].name);
@@ -129,17 +144,60 @@ Window {
                         }
                         return fields.join(",");
                     }
-                    return "No Gamepad";
+                    return qsTr("No Gamepad");
                 }
             }
+
             MButton {
                 Layout.fillWidth: true
-                text: "Save Mapping"
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
+                text: qsTr("Save Mapping to current Profile")
+                enabled: gamepadTool.hasGamepad
                 onClicked: {
                     console.log(gamepadMapping.text);
                     console.log(QmlUrlUtils.urlToLocalFile(window.getCurrentGameDataDir()));
                     GamepadManager.saveMapping(QmlUrlUtils.urlToLocalFile(window.getCurrentGameDataDir()), gamepadMapping.text);
                 }
+            }
+
+            MButton {
+                Layout.fillWidth: true
+                Layout.leftMargin: gamepadTool.margin
+                Layout.rightMargin: gamepadTool.margin
+                Layout.bottomMargin: gamepadTool.margin
+                text: qsTr("Save Mapping to default Data directory")
+                enabled: gamepadTool.hasGamepad
+                onClicked: {
+                    console.log(gamepadMapping.text);
+                    console.log(QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir));
+                    GamepadManager.saveMapping(QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir), gamepadMapping.text);
+                }
+            }
+            
+            Image {
+                id: buttons
+                smooth: false
+                fillMode: Image.Tile
+                source: "qrc:/Resources/noise.png"
+                Layout.alignment: Qt.AlignTop
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+
+                RowLayout {
+                    x: parent.width / 2 - width / 2
+                    y: parent.height / 2 - height / 2
+
+                    spacing: 20
+
+                    PlayButton {
+                        Layout.preferredWidth: 150
+                        text: qsTr("Close")
+                        onClicked: gamepadTool.close()
+                    }
+
+                }
+
             }
         }
     }

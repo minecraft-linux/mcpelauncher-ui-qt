@@ -13,7 +13,8 @@ RowLayout {
     id: layout
 
     property var name: ""
-    property var gamepad: GamepadManager.gamepads[control.currentIndex]
+    property var hasGamepad: true
+    property var gamepad: layout.hasGamepad ? GamepadManager.gamepads[control.currentIndex] : null
     property var key: change.active ? "" : btna.text
 
     Text {
@@ -32,9 +33,10 @@ RowLayout {
         property var active: false
         text: "..."
         onClicked: {
-            if(active) {
+            if(active || !layout.hasGamepad) {
                 active = false;
-                return;
+                btna.text = "";
+                return "";
             }
             active = true;
             var oldButtons = [];
@@ -47,13 +49,18 @@ RowLayout {
             }
             if(GamepadManager.enabled) {
                 btna.text = Qt.binding(function() {
+                    if(!layout.hasGamepad) {
+                        active = false;
+                        btna.text = "";
+                        return;
+                    }
                     GamepadManager.enabled = false;
                     for(var i = 0; i < layout.gamepad.buttons.length; i++) {
                         if(oldButtons[i] != layout.gamepad.buttons[i]) {
                             active = false;
                             btna.text = "b" + i;
                             GamepadManager.enabled = true;
-                            break;
+                            return "";
                         }
                     }
                     for(var i = 0; i < layout.gamepad.axes.length; i++) {
@@ -61,7 +68,7 @@ RowLayout {
                             active = false;
                             btna.text = "a" + i;
                             GamepadManager.enabled = true;
-                            break;
+                            return "";
                         }
                     }
                     return "waiting";
