@@ -23,12 +23,16 @@
 #include <QObject>
 #include <QCoreApplication>
 #include <QtConcurrent>
+#include "gamepad.h"
 #ifdef LAUNCHER_ENABLE_GLFW
 #include <QTimer>
 #include <QKeyEvent>
 #include <QWindow>
 #include <GLFW/glfw3.h>
 #endif
+#include <fstream>
+#include <sstream>
+#include <mcpelauncher/path_helper.h>
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -163,6 +167,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<Troubleshooter>("io.mrarm.mcpelauncher", 1, 0, "Troubleshooter");
     qmlRegisterType<UpdateChecker>("io.mrarm.mcpelauncher", 1, 0, "UpdateChecker");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
+    static GamepadManager* gamepadManager = new GamepadManager();
+    qmlRegisterSingletonType<GamepadManager>("io.mrarm.mcpelauncher", 1, 0, "GamepadManager", +[](QQmlEngine*, QJSEngine*) -> QObject* {
+        return gamepadManager;
+    });
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("application", &app);
@@ -205,32 +213,123 @@ int main(int argc, char *argv[])
 #ifdef LAUNCHER_ENABLE_GLFW
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_TRUE);
     glfwInit();
-    int glfwjid = 0;
+    std::vector<std::string> controllerDbPaths;
+    PathHelper::findAllDataFiles("gamecontrollerdb.txt", [&controllerDbPaths](std::string const& path) {
+        controllerDbPaths.push_back(path);
+    });
+    // Bugfix: allow users to change internal gamepad layouts
+    std::reverse(controllerDbPaths.begin(), controllerDbPaths.end());
+    for(std::string const& path : controllerDbPaths) {
+        printf("Loading gamepad mappings: %s\n", path.c_str());
+        std::ifstream mapping(path.data(), std::ios::binary);
+        if(mapping.is_open()) {
+            std::stringstream file;
+            file << mapping.rdbuf();
+            glfwUpdateGamepadMappings(file.str().data());
+        }
+    }
     QTimer *timer = new QTimer(&app);
     GLFWgamepadstate oldstate;
     memset(&oldstate, 0, sizeof(oldstate));
+    auto addRemoveGamePad = +[](int jid, int event) {
+        if(event == GLFW_CONNECTED) {
+            auto guid = glfwGetJoystickGUID(jid);
+            auto name = glfwGetJoystickName(jid);
+            int axescount, hatscount, buttonscount;
+            if (!glfwGetJoystickAxes(jid, &axescount)) {
+                axescount = 0;
+            }
+            if (!glfwGetJoystickHats(jid, &hatscount)) {
+                hatscount = 0;
+            }
+            if (!glfwGetJoystickButtons(jid, &buttonscount)) {
+                buttonscount = 0;
+            }
+            std::ostringstream mapping;
+            mapping << guid << "," << name;
+            const char* btns[] = { "a", "b", "x", "y", "leftshoulder", "rightshoulder", "righttrigger", "lefttrigger", "back", "start", "leftstick", "rightstick", "guide", "dpleft", "dpdown", "dpright", "dpup" };
+            const char* axes[] = { "leftx", "lefty", "rightx", "righty", "lefttrigger", "righttrigger" };
+            if (axescount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < axescount && i < sizeof(axes) / sizeof(axes[0]); i++) {
+                    submap << "," << axes[i] << ":a" << i;
+                }
+                mapping << submap.str();
+            }
+            const char* hats[] = { "dpup", "dpright", "dpdown", "dpleft" };
+            if (hatscount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < hatscount && i < sizeof(hats) / sizeof(hats[0]) / 4; i++) {
+                   for (size_t j = 0; j < 4; j++) {
+                       submap << "," << hats[i*4 + j] << ":h" << i << "." << (1 << j);
+                   }
+                }
+                mapping << submap.str();
+            }
+            if (buttonscount) {
+                std::ostringstream submap;
+                for (size_t i = 0; i < buttonscount && i < sizeof(btns) / sizeof(btns[0]); i++) {
+                    submap << "," << btns[i] << ":b" << i;
+                }
+                mapping << submap.str();
+            }
+            auto mapstr = mapping.str();
+            mapstr = mapstr + ",platform:Linux,\n" + mapstr + ",platform:Mac OS X,";
+            auto gamepad = new Gamepad(gamepadManager, jid, guid, name, QString::fromStdString(mapstr));
+            glfwSetJoystickUserPointer(jid, gamepad);
+            ((Gamepad*)gamepad)->setHasMapping(glfwJoystickIsGamepad(jid));
+            gamepadManager->gamepads().append(gamepad);
+        } else {
+            auto gamepad = (Gamepad*)glfwGetJoystickUserPointer(jid);
+            gamepadManager->gamepads().removeOne(gamepad);
+        }
+        gamepadManager->gamepadsChanged();
+    };
+    glfwSetJoystickCallback(addRemoveGamePad);
+    for(int i = GLFW_JOYSTICK_1; i < GLFW_JOYSTICK_LAST; i++) {
+        if(glfwJoystickPresent(i)) {
+            addRemoveGamePad(i, GLFW_CONNECTED);
+        }
+    }
     QObject::connect(timer, &QTimer::timeout, [&]() {
         glfwPollEvents();
-        if(GLFWgamepadstate state; glfwjid != -1 && glfwGetGamepadState(glfwjid, &state) == GLFW_TRUE) {
-            QObject* window = QGuiApplication::focusWindow();
-            if(window) {
-                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
-                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Enter, Qt::NoModifier), Qt::NormalEventPriority);
+        if(gamepadManager->enabled()) {
+            for(auto&& gamepad : gamepadManager->gamepads()) {
+                GLFWgamepadstate state;
+                if(glfwGetGamepadState(((Gamepad*)gamepad)->id(), &state) == GLFW_TRUE) {
+                    QObject* window = QGuiApplication::focusWindow();
+                    if(window) {
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_A] != state.buttons[GLFW_GAMEPAD_BUTTON_A]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_A] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Space, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_B] != state.buttons[GLFW_GAMEPAD_BUTTON_B]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_B] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Escape, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Tab, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Down, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP]) {
+                            QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Up, Qt::NoModifier), Qt::NormalEventPriority);
+                        }
+                        oldstate = state;
+                    }
                 }
-                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT]) {
-                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_LEFT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Backtab, Qt::NoModifier), Qt::NormalEventPriority);
-                }
-                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT]) {
-                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_RIGHT] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Tab, Qt::NoModifier), Qt::NormalEventPriority);
-                }
-                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN]) {
-                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_DOWN] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Down, Qt::NoModifier), Qt::NormalEventPriority);
-                }
-                if(oldstate.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] != state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP]) {
-                    QCoreApplication::postEvent(window, new QKeyEvent(state.buttons[GLFW_GAMEPAD_BUTTON_DPAD_UP] ? QEvent::Type::KeyPress : QEvent::Type::KeyRelease, Qt::Key_Up, Qt::NoModifier), Qt::NormalEventPriority);
-                }
-                oldstate = state;
             }
+        }
+        for(auto&& gamepad : gamepadManager->gamepads()) {
+            auto joystick = ((Gamepad*)gamepad)->id();
+            int axesCount, hatsCount, buttonsCount;
+            auto axes = glfwGetJoystickAxes(joystick, &axesCount);  
+            auto hats = glfwGetJoystickHats(joystick, &hatsCount);
+            auto buttons = glfwGetJoystickButtons(joystick, &buttonsCount);
+            ((Gamepad*)gamepad)->updateInput(buttons, buttonsCount, hats, hatsCount, axes, axesCount);
+            ((Gamepad*)gamepad)->setHasMapping(glfwJoystickIsGamepad(joystick));
         }
     });
     timer->setInterval(50);

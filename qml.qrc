@@ -49,6 +49,8 @@
         <file>qml/LauncherSettingsVersions.qml</file>
         <file>qml/ApkImportWindow.qml</file>
         <file>qml/ApkImportHelper.qml</file>
+        <file>qml/GampadTool.qml</file>
+        <file>qml/GamepadInputField.qml</file>
         <file>LICENSE</file>
     </qresource>
 </RCC>
