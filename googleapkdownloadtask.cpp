@@ -76,6 +76,9 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     auto apksdir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/apks");
     QDir().mkpath(apksdir);
     auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath("temp-XXXXXX.apk"));
+    if(m_keepApks) {
+        file->setAutoRemove(false);
+    }
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
     file->open();
     auto url = dd.downloadurl();
