@@ -16,6 +16,10 @@ ScrollView {
         id: gridLayout12
         property int labelFontSize: 12
 
+        GampadTool {
+            id: gamepadTool
+        }
+
         Text {
             text: qsTr("Google Account")
             font.pointSize: parent.labelFontSize
@@ -96,5 +100,13 @@ ScrollView {
             Layout.columnSpan: 1
             onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
         }
+
+        MButton {
+            Layout.topMargin: 20
+            text: qsTr("Open Gamepad Tool")
+            Layout.columnSpan: 1
+            onClicked: gamepadTool.show()
+        }
+        
     }
 }

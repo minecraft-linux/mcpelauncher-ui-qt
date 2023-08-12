@@ -1,17 +1,19 @@
 #pragma once
 
 #include <QObject>
+#include <fstream>
 
 class Gamepad : public QObject {
     Q_OBJECT
 
-    Q_PROPERTY(int id MEMBER m_id)
-    Q_PROPERTY(QString guid MEMBER m_guid)
-    Q_PROPERTY(QString name MEMBER m_name)
+    Q_PROPERTY(int id MEMBER m_id NOTIFY metaChanged)
+    Q_PROPERTY(QString guid MEMBER m_guid NOTIFY metaChanged)
+    Q_PROPERTY(QString name MEMBER m_name NOTIFY metaChanged)
     Q_PROPERTY(QVector<unsigned char> buttons READ buttons NOTIFY inputChanged)
     Q_PROPERTY(QVector<unsigned char> hats READ hats NOTIFY inputChanged)
     Q_PROPERTY(QVector<float> axes READ axes NOTIFY inputChanged)
-    Q_PROPERTY(QString fakeGamePadMapping MEMBER m_fakeGamePadMapping)
+    Q_PROPERTY(QString fakeGamePadMapping MEMBER m_fakeGamePadMapping NOTIFY metaChanged)
+    Q_PROPERTY(bool hasMapping MEMBER m_hasMapping NOTIFY mappingChanged)
 
 private:
     int m_id;
@@ -22,6 +24,7 @@ private:
     QVector<float> m_axes;
     bool m_isGamePad = false;
     QString m_fakeGamePadMapping;
+    bool m_hasMapping = false;
 
 public:
     Gamepad(QObject* parent, int id, QString guid, QString name, QString fakeGamePadMapping) : QObject(parent) {
@@ -29,6 +32,7 @@ public:
         m_guid = guid;
         m_name = name;
         m_fakeGamePadMapping = fakeGamePadMapping;
+        metaChanged();
     }
 
     int id() const {
@@ -54,8 +58,17 @@ public:
         memcpy(m_axes.data(), axes, numAxes * sizeof(*axes));
         inputChanged();
     }
+
+    void setHasMapping(bool hasMapping) {
+        if(m_hasMapping != hasMapping) {
+            m_hasMapping = hasMapping;
+            mappingChanged();
+        }
+    }
 signals:
     void inputChanged();
+    void metaChanged();
+    void mappingChanged();
 };
 
 class GamepadManager : public QObject {
@@ -102,5 +115,12 @@ public slots:
 
     void clearErrors() {
         m_errors.clear();
+    }
+
+    void saveMapping(QString datadir, QString mapping) {
+        std::ofstream gamepaddb((datadir.toStdString() + "/gamecontrollerdb.txt").data(), std::ios::binary | std::ios::ate | std::ios::app);
+        if(gamepaddb.is_open()) {
+            gamepaddb << "\n" << mapping.toStdString() << "\n";
+        }
     }
 };
