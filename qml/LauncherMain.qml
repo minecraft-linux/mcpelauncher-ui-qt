@@ -144,6 +144,7 @@ LauncherBase {
         id: playDownloadTask
         playApi: playApiInstance
         packageName: "com.mojang.minecraftpe"
+        keepApks: launcherSettings.downloadOnly
         onProgress: setProgressbarValue(progress)
         onError: function(err) {
             if (playDownloadError.visible) {

@@ -23,6 +23,7 @@ class GoogleApkDownloadTask : public QObject {
     Q_PROPERTY(qint32 versionCode WRITE setVersionCode READ versionCode)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
     Q_PROPERTY(QStringList filePaths READ filePaths)
+    Q_PROPERTY(bool keepApks READ keepApks WRITE setKeepApks)
 
 private:
     GooglePlayApi* m_playApi = nullptr;
@@ -31,6 +32,7 @@ private:
     QMutex fileMutex;
     std::vector<std::shared_ptr<QTemporaryFile>> files;
     std::atomic_bool m_active;
+    bool m_keepApks = false;
 
     void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk = false);
 
@@ -43,6 +45,9 @@ public:
     void setPlayApi(GooglePlayApi* value);
 
     bool active() const { return m_active; }
+
+    bool keepApks() const { return m_keepApks; }
+    void setKeepApks(bool keepApks) { m_keepApks = keepApks; }
 
     QString packageName() const { return m_packageName; }
     void setPackageName(QString packageName) { m_packageName = packageName; }
