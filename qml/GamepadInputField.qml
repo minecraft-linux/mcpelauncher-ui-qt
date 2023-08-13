@@ -13,8 +13,7 @@ RowLayout {
     id: layout
 
     property var name: ""
-    property var hasGamepad: true
-    property var gamepad: layout.hasGamepad ? GamepadManager.gamepads[control.currentIndex] : null
+    property var gamepad: null
     property var key: change.active ? "" : btna.text
 
     Text {
@@ -33,28 +32,36 @@ RowLayout {
         property var active: false
         text: "..."
         onClicked: {
-            if(active || !layout.hasGamepad) {
+            if(active || !gamepad) {
+                if(active) {
+                    GamepadManager.enabled = true;
+                }
                 active = false;
                 btna.text = "";
                 return "";
             }
-            active = true;
-            var oldButtons = [];
-            for(var i = 0; i < layout.gamepad.buttons.length; i++) {
-                oldButtons.push(layout.gamepad.buttons[i]);
-            }
-            var oldAxes = [];
-            for(var i = 0; i < layout.gamepad.axes.length; i++) {
-                oldAxes.push(layout.gamepad.axes[i]);
-            }
             if(GamepadManager.enabled) {
+                active = true;
+                GamepadManager.enabled = false;
+                var oldButtons = [];
+                for(var i = 0; i < layout.gamepad.buttons.length; i++) {
+                    oldButtons.push(layout.gamepad.buttons[i]);
+                }
+                var oldAxes = [];
+                for(var i = 0; i < layout.gamepad.axes.length; i++) {
+                    oldAxes.push(layout.gamepad.axes[i]);
+                }
+                var oldHats = [];
+                for(var i = 0; i < layout.gamepad.hats.length; i++) {
+                    oldHats.push(layout.gamepad.hats[i]);
+                }
                 btna.text = Qt.binding(function() {
-                    if(!layout.hasGamepad) {
+                    if(!gamepad) {
                         active = false;
                         btna.text = "";
-                        return;
+                        GamepadManager.enabled = true;
+                        return "";
                     }
-                    GamepadManager.enabled = false;
                     for(var i = 0; i < layout.gamepad.buttons.length; i++) {
                         if(oldButtons[i] != layout.gamepad.buttons[i]) {
                             active = false;
@@ -67,6 +74,14 @@ RowLayout {
                         if(Math.abs(oldAxes[i] - layout.gamepad.axes[i]) > 0.5) {
                             active = false;
                             btna.text = "a" + i;
+                            GamepadManager.enabled = true;
+                            return "";
+                        }
+                    }
+                    for(var i = 0; i < layout.gamepad.hats.length; i++) {
+                        if(oldHats[i] != layout.gamepad.hats[i]) {
+                            active = false;
+                            btna.text = "h" + i + "." + layout.gamepad.hats[i];
                             GamepadManager.enabled = true;
                             return "";
                         }
