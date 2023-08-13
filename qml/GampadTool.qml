@@ -39,8 +39,7 @@ Window {
                 property var currentGamepad: ""
                 
                 model: {
-                    var ret = []
-                    //console.log(JSON.stringify(GamepadManager.gamepads));
+                    var ret = [];
                     for (var i = 0; i < GamepadManager.gamepads.length; i++) {
                         ret.push(GamepadManager.gamepads[i].name);
                     }
@@ -66,8 +65,6 @@ Window {
                 }
 
                 Layout.fillWidth: true
-
-                
 
                 onActivated: function(index) {
                     currentGamepad = GamepadManager.gamepads[index].guid;
@@ -118,7 +115,7 @@ Window {
                     Layout.leftMargin: gamepadTool.margin
                     Layout.rightMargin: gamepadTool.margin
                     name: modelData
-                    hasGamepad: gamepadTool.hasGamepad
+                    gamepad: gamepadTool.hasGamepad ? GamepadManager.gamepads[control.currentIndex] : null
                 }
             }
 

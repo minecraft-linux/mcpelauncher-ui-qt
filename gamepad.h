@@ -28,7 +28,7 @@ private:
 
 public:
     Gamepad(QObject* parent, int id, QString guid, QString name, QString fakeGamePadMapping) : QObject(parent) {
-        m_id = 0;
+        m_id = id;
         m_guid = guid;
         m_name = name;
         m_fakeGamePadMapping = fakeGamePadMapping;
