@@ -80,7 +80,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: children[0].implicitHeight + 20
         color: hasUpdate && !(progressbarVisible || updateChecker.active) ? "#BBDEFB" : "#EE0000"
-        visible: hasUpdate && !(progressbarVisible || updateChecker.active) || warnMessage.length > 0
+        visible: launcherSettings.showNotifications && (hasUpdate && !(progressbarVisible || updateChecker.active) || warnMessage.length > 0)
 
         Text {
             width: parent.width
@@ -109,6 +109,47 @@ ColumnLayout {
                     Qt.openUrlExternally(rowLayout.warnUrl)
                 }
             }
+        }
+    }
+
+    Rectangle {
+        Layout.alignment: Qt.AlignTop
+        Layout.fillWidth: true
+        Layout.preferredHeight: children[0].implicitHeight + 20
+        color: "#AAAA00"
+        visible: {
+            if(!launcherSettings.showNotifications) {
+                return false;
+            }
+            for (var i = 0; i < GamepadManager.gamepads.length; i++) {
+                if(!GamepadManager.gamepads[i].hasMapping) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        Text {
+            width: parent.width
+            height: parent.height
+            text: {
+                var ret = [];
+                for (var i = 0; i < GamepadManager.gamepads.length; i++) {
+                    if(!GamepadManager.gamepads[i].hasMapping) {
+                        ret.push(GamepadManager.gamepads[i].name);
+                    }
+                }
+                if(ret.length === 1) {
+                    return qsTr("One Joystick can not be used as Gamepad Input: %1. Open Settings to configure it.").arg(ret.join(", "));
+                }
+                return qsTr("%1 Joysticks can not be used as Gamepad Input: %2. Open Settings to configure them.").arg(ret.length).arg(ret.join(", "));
+            }
+            color: "#0000FF"
+            font.pointSize: 9
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
         }
     }
 

@@ -87,6 +87,14 @@ ScrollView {
             onCheckedChanged: launcherSettings.checkForUpdates = checked
         }
 
+        MCheckBox {
+            text: qsTr("Show Notification banner")
+            font.pointSize: parent.labelFontSize
+            Layout.columnSpan: 2
+            Component.onCompleted: checked = launcherSettings.showNotifications
+            onCheckedChanged: launcherSettings.showNotifications = checked
+        }
+
         MButton {
             Layout.topMargin: 20
             text: qsTr("Run troubleshooter")
