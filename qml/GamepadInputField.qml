@@ -33,11 +33,11 @@ RowLayout {
         text: "..."
         onClicked: {
             if(active || !gamepad) {
-                active = false;
-                btna.text = "";
                 if(active) {
                     GamepadManager.enabled = true;
                 }
+                active = false;
+                btna.text = "";
                 return "";
             }
             if(GamepadManager.enabled) {
