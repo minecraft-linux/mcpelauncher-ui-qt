@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
         return -1;
 
 #ifdef LAUNCHER_ENABLE_GLFW
-    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_TRUE);
+    glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
     glfwInit();
     std::vector<std::string> controllerDbPaths;
     PathHelper::findAllDataFiles("gamecontrollerdb.txt", [&controllerDbPaths](std::string const& path) {
