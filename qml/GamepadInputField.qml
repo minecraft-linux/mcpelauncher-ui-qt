@@ -78,6 +78,14 @@ RowLayout {
                             return "";
                         }
                     }
+                    for(var i = 0; i < layout.gamepad.hats.length; i++) {
+                        if(oldHats[i] != layout.gamepad.hats[i]) {
+                            active = false;
+                            btna.text = "h" + i + "." + layout.gamepad.hats[i];
+                            GamepadManager.enabled = true;
+                            return "";
+                        }
+                    }
                     return "waiting";
                 });
             }
