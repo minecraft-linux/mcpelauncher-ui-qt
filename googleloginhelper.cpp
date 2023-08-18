@@ -77,7 +77,7 @@ void GoogleLoginHelper::onLoginFinished(int code) {
             currentAccount.setAccountIdentifier(window->accountIdentifier());
             currentAccount.setAccountUserId(window->accountUserId());
             currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
-            // Bug 18 August 2023 identifier is missing
+            // Bug 18 August 2023 email account identifier is missing
             if(currentAccount.accountIdentifier().isEmpty()) {
                 currentAccount.setAccountIdentifier("anonymous@noreply.localhost");
             }
