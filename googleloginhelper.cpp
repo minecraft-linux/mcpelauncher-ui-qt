@@ -74,13 +74,9 @@ void GoogleLoginHelper::onLoginFinished(int code) {
     if (code == QDialog::Accepted) {
         try {
             login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
-            currentAccount.setAccountIdentifier(window->accountIdentifier());
+            currentAccount.setAccountIdentifier(QString::fromStdString(login.get_email()));
             currentAccount.setAccountUserId(window->accountUserId());
             currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
-            // Bug 18 August 2023 email account identifier is missing
-            if(currentAccount.accountIdentifier().isEmpty()) {
-                currentAccount.setAccountIdentifier("anonymous@noreply.localhost");
-            }
             hasAccount = currentAccount.isValid();
             if (hasAccount) {
                 settings.beginGroup("googlelogin");
