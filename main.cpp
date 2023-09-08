@@ -68,15 +68,30 @@ int main(int argc, char *argv[])
         QCoreApplication::translate("main", "Verbose log Qt Messages to stdout"));
     parser.addOption(verboseOption);
 
-    QCommandLineOption profileOption(QStringList() << "p" << "profile", 
+    QCommandLineOption profileOptionLegacy(QStringList() << "p" << "profile", 
         QCoreApplication::translate("main", "directly start the game launcher with the specified profile"));
+
+    QCommandLineOption profileOption(QStringList() << "p" << "profile", 
+        QCoreApplication::translate("main", "directly start the game launcher with the specified profile"), "profileName", "");
     parser.addOption(profileOption);
 
-    parser.process(app);
-
+    if(!parser.parse(app.arguments())) {
+        // TODO remove legacyParser once the old -p flag is deprecated
+        parser.~QCommandLineParser();
+        new (&parser) QCommandLineParser();
+        parser.addPositionalArgument("file", "file or uri to open with the default profile");
+        parser.addHelpOption();
+        parser.addOption(devmodeOption);
+        parser.addOption(verboseOption);
+        parser.addOption(profileOptionLegacy);
+        parser.process(app);
+    } else if(parser.isSet("help") || parser.isSet("help-all")) {
+        parser.process(app);
+    }
+    
     bool hasFileOrUri = parser.positionalArguments().count() == 1;
 
-    if(parser.isSet(profileOption) || hasFileOrUri) {
+    if(parser.isSet(profileOption) || parser.isSet(profileOptionLegacy) || hasFileOrUri) {
         VersionManager vmanager;
         ProfileManager manager;
         auto profileName = parser.value(profileOption);
@@ -105,6 +120,9 @@ int main(int argc, char *argv[])
                 app.exit(launcher.crashed() ? 1 : 0);
             }
         });
+        QObject::connect(&launcher, &GameLauncher::launchFailed, [&]() {
+            app.exit(1);
+        });
         QObject::connect(&launcher, &GameLauncher::fileStarted, [&](bool success) {
             if(success) {
                 app.exit(success ? 0 : 1);
@@ -127,7 +145,7 @@ int main(int argc, char *argv[])
         } else {
             launcher.start(false, profile->arch, true);
         }
-        return app.exec();
+        return launcher.running() ? app.exec() : 1;
     }
 
     auto verbose = parser.isSet(verboseOption);
