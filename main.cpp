@@ -78,8 +78,8 @@ int main(int argc, char *argv[])
         QCoreApplication::translate("main", "directly start the game launcher with the specified profile"), "profileName", "");
     parser.addOption(profileOption);
 
+    // TODO remove legacyParser once the old -p flag is deprecated
     if(!parser.parse(app.arguments())) {
-        // TODO remove legacyParser once the old -p flag is deprecated
         parser.~QCommandLineParser();
         new (&parser) QCommandLineParser();
         parser.addPositionalArgument("file", "file or uri to open with the default profile");
@@ -87,10 +87,8 @@ int main(int argc, char *argv[])
         parser.addOption(devmodeOption);
         parser.addOption(verboseOption);
         parser.addOption(profileOptionLegacy);
-        parser.process(app);
-    } else if(parser.isSet("help") || parser.isSet("help-all")) {
-        parser.process(app);
     }
+    parser.process(app);
     
     bool hasFileOrUri = parser.positionalArguments().count() == 1;
 
