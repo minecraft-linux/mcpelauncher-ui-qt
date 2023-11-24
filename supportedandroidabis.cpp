@@ -49,6 +49,15 @@ bool Supports32Bit() {
 
 std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::getAbis() {
     std::map<std::string, SupportReport, AndroidAbiComparer> abis = { };
+#if defined(__APPLE__) && defined(__x86_64__) && defined(LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
+    if(ProcessIsTranslated()) {
+        abis["arm64-v8a"] = { .compatible = true, .launchername = "mcpelauncher-client-arm64-v8a" };
+        abis["armeabi-v7a"] = { .compatible = false, .launchername = "mcpelauncher-client-armeabi-v7a", .details = QObject::tr("Not an armv7 System").toStdString() };
+        abis["x86"] = { .compatible = false, .launchername = "mcpelauncher-client-x86", .details = QObject::tr("Not a x86 System").toStdString() };
+        abis["x86_64"] = { .compatible = false, .launchername = "mcpelauncher-client-x86_64", .details = QObject::tr("The Game crashes under Rosetta 2, since macOS 14. However it used to work between macOS 11 and 13.").toStdString() };
+        return abis;
+    }
+#endif
 #if defined(__i386__) || defined(__x86_64__)
     CpuId cpuid;
     bool hasssse3 = cpuid.queryFeatureFlag(CpuId::FeatureFlag::SSSE3);
@@ -154,7 +163,7 @@ std::map<std::string, SupportReport, AndroidAbiComparer> SupportedAndroidAbis::g
 }
 
 bool ProcessIsTranslated() {
-#if defined(__APPLE__) && defined(LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
+#if defined(__APPLE__) && defined(__x86_64__) && defined(LAUNCHER_MACOS_HAVE_ARMLAUNCHER)
 // Reference https://developer.apple.com/documentation/apple_silicon/about_the_rosetta_translation_environment
 // Returns true if x86_64 version runs under arm64 macbook
     int ret = 0;
