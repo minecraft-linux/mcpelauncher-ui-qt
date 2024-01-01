@@ -98,7 +98,7 @@ Window {
                     var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
                     var append = function(obj) {
                         data.push(obj);
-                        versionsmodel.append(obj);
+                        versionsmodel.append({ name: obj.name });
                     };
                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
                         var support = checkGooglePlayLatestSupport()
