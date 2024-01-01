@@ -154,11 +154,15 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             }
         }
     }
+    if(errormsg.width() == 0) {
+        errormsg << "Game not found\n";
+    }
     process.reset();
     m_crashed = true;
     logAttached();
     emit stateChanged();
     emit logAppended(QString::fromStdString(errormsg.str()));
+    emit launchFailed();
 }
 
 void GameLauncher::startFile(QString file) {
