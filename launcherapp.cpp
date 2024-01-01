@@ -52,20 +52,22 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
     QObject::connect(&launcher, &GameLauncher::logAppended, [](QString str) {
         printf("%s", str.toStdString().data());
     });
-    QObject::connect(&launcher, &GameLauncher::stateChanged, [&]() {
-        if(!launcher.running() && startEventLoop) {
-            this->exit(launcher.crashed() ? 1 : 0);
-        }
-    });
+    int exitCode = -1;
+    bool exited = false;
+    auto shouldExit = [&](int code) {
+        exitCode = code;
+        exited = true;
+        this->exit(1);
+    };
     QObject::connect(&launcher, &GameLauncher::launchFailed, [&]() {
         if(startEventLoop) {
-            this->exit(1);
+            shouldExit(1);
         }
     });
     QObject::connect(&launcher, &GameLauncher::fileStarted, [&](bool success) {
         if(success) {
             if(startEventLoop) {
-                this->exit(success ? 0 : 1);
+                shouldExit(success ? 0 : 1);
             }
         } else {
             launcher.start(false, profile->arch, true, filePath);
@@ -74,7 +76,15 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
     launcher.setProfile(profile);
     if(profile->versionType == ProfileInfo::LATEST_GOOGLE_PLAY) {
         GoogleVersionChannel playChannel;
-        launcher.setGameDir(vmanager.getDirectoryFor(vmanager.versionList()->get(playChannel.latestVersionCode())));
+        auto versionInfo = vmanager.versionList()->get(playChannel.latestVersionCode());
+        if(versionInfo == nullptr) {
+            printf("Couldn't find Google Play Latest version %d\n", playChannel.latestVersionCode());
+            versionInfo = vmanager.versionList()->latestDownloadedVersion();
+        }
+        if(versionInfo == nullptr) {
+            printf("Couldn't find any Latest Downloaded version!\n");
+        }
+        launcher.setGameDir(vmanager.getDirectoryFor(versionInfo));
     } else if(profile->versionType == ProfileInfo::LOCKED_NAME) {
         launcher.setGameDir(vmanager.getDirectoryFor(profile->versionDirName));
     } else if(profile->versionType == ProfileInfo::LOCKED_CODE && profile->versionCode) {
@@ -86,7 +96,7 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
     } else {
         launcher.start(false, profile->arch, true);
     }
-    return launcher.running() ? (startEventLoop ? this->exec() : 0) : 1;
+    return exited ? exitCode : startEventLoop ? this->exec() : 0;
 }
 
 
