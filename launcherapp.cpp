@@ -57,8 +57,13 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
     auto shouldExit = [&](int code) {
         exitCode = code;
         exited = true;
-        this->exit(1);
+        this->exit(code);
     };
+    QObject::connect(&launcher, &GameLauncher::stateChanged, [&]() {
+        if(!launcher.running() && startEventLoop) {
+            this->exit(launcher.crashed() ? 1 : 0);
+        }
+    });
     QObject::connect(&launcher, &GameLauncher::launchFailed, [&]() {
         if(startEventLoop) {
             shouldExit(1);
