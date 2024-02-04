@@ -59,6 +59,8 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
         if (m_profile->graphicsAPI == 2) {
             env.insert("ANGLE_DEFAULT_PLATFORM", "gl");
         }
+#else
+        env.insert("MESA_EXTENSION_OVERRIDE", "-GL_EXT_instanced_arrays");
 #endif
         std::string commandline = m_profile->commandline.toStdString();
         if(!commandline.empty()) {
