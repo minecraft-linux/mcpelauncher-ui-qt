@@ -7,7 +7,6 @@ import io.mrarm.mcpelauncher 1.0
 import "ThemedControls"
 
 Window {
-
     property VersionManager versionManager
 
     id: root
@@ -16,9 +15,11 @@ Window {
     flags: Qt.Dialog
     title: "Minecraft .apk import"
     visible: apkImportHelper.extractingApk
-    property var allowIncompatible: false
+    color: "#333"
 
-    onClosing: function() {
+    property bool allowIncompatible: false
+
+    onClosing: function () {
         close.accepted = false
     }
 
@@ -26,19 +27,13 @@ Window {
         id: layout
         anchors.fill: parent
         anchors.margins: 10
-        spacing: 10
-
-        Text {
-            text: "Extracting the .apk"
-            Layout.fillWidth: true
-        }
 
         MProgressBar {
             id: apkExtractionProgressBar
-            width: parent.width
+            label: qsTr("Extracting the .apk")
             Layout.fillWidth: true
+            Layout.minimumHeight: 30
         }
-
     }
 
     ApkImportHelper {
@@ -51,5 +46,4 @@ Window {
     function pickFile() {
         apkImportHelper.pickFile()
     }
-
 }

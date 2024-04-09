@@ -9,11 +9,15 @@
         <file>qml/ThemedControls/MBusyIndicator.qml</file>
         <file>qml/ThemedControls/MButton.qml</file>
         <file>qml/ThemedControls/MCheckBox.qml</file>
+        <file>qml/ThemedControls/BaseHeader.qml</file>
+        <file>qml/ThemedControls/HorizontalDivider.qml</file>
+        <file>qml/ThemedControls/MSideBarItem.qml</file>
+        <file>qml/ThemedControls/CenteredScrollView.qml</file>
         <file>qml/MinecraftNews.qml</file>
+        <file>qml/Launcher.qml</file>
         <file>qml/LauncherMain.qml</file>
         <file>qml/LauncherBase.qml</file>
         <file>qml/LauncherLogin.qml</file>
-        <file>qml/CenteredRectangle.qml</file>
         <file>qml/ProfileComboBox.qml</file>
         <file>qml/GoogleTosApprovalWindow.qml</file>
         <file>qml/EditProfileWindow.qml</file>
@@ -27,22 +31,12 @@
         <file>Resources/noise.png</file>
         <file>Resources/mcpelauncher-logo.svg</file>
         <file>Resources/green-button.png</file>
-        <file>Resources/dropdown.png</file>
-        <file>Resources/dropdown-bg.png</file>
-        <file>Resources/dropdown-active.png</file>
-        <file>Resources/progressbar.png</file>
-        <file>Resources/progressbar-progress.png</file>
-        <file>Resources/field.png</file>
-        <file>Resources/field-active.png</file>
-        <file>Resources/button-active.png</file>
-        <file>Resources/button.png</file>
-        <file>Resources/button-tab.png</file>
-        <file>Resources/button-tab-active.png</file>
-        <file>Resources/button-tab-selected.png</file>
         <file>Resources/check.png</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
         <file>Resources/icon-copy.png</file>
+        <file>Resources/icon-home.png</file>
+        <file>Resources/icon-news.png</file>
         <file>qml/ThemedControls/MTabButton.qml</file>
         <file>qml/LauncherSettingsGeneral.qml</file>
         <file>qml/TroubleshooterWindow.qml</file>

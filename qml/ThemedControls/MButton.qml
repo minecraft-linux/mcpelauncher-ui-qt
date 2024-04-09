@@ -1,32 +1,25 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Templates as T
-import QtQuick.Window
 
 T.Button {
     id: control
+    padding: 10
+    implicitWidth: 12 + contentItem.implicitWidth + leftPadding + rightPadding
+    height: 40
+    opacity: enabled ? 1 : 0.3
 
-    padding: 8
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: 36
-    baselineOffset: contentItem.y + contentItem.baselineOffset
-
-    background: BorderImage {
-        id: buttonBackground
+    background: Rectangle {
         anchors.fill: parent
-        source: (control.hovered || control.activeFocus) ? "qrc:/Resources/button-active.png" : "qrc:/Resources/button.png"
-        smooth: false
-        border { left: 4; top: 4; right: 4; bottom: 4 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
+        border.color: control.down ? "#888" : (control.hovered ? "#666" : "#555")
+        color: control.down ? "#333" : "#1e1e1e"
+        radius: 2
     }
 
     contentItem: Text {
-        id: textItem
+        anchors.fill: parent
         text: control.text
-        font.pointSize: 11
-        opacity: enabled ? 1.0 : 0.3
-        color: "#000"
+        font.pointSize: 10
+        color: "#fff"
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }

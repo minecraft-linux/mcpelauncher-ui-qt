@@ -7,7 +7,7 @@ MComboBox {
     property int addProfileIndex: profiles.length
     property var currentProfile: profiles[0]
 
-    signal addProfileSelected()
+    signal addProfileSelected
 
     function getProfile() {
         return currentProfile
@@ -26,7 +26,7 @@ MComboBox {
     }
     function onAddProfileResult(newProfile) {
         if (newProfile !== null && setProfile(newProfile))
-            return;
+            return
         if (!setProfile(currentProfile)) {
             currentIndex = 0
             currentProfile = profiles[0]
@@ -55,8 +55,9 @@ MComboBox {
             id: separator
             width: parent.width
             height: 1
-            color: 'black'
+            color: "#444"
             visible: hasSeparator
+            radius: 2
         }
 
         contentItem: Text {
@@ -65,12 +66,18 @@ MComboBox {
             anchors.rightMargin: parent.padding
             anchors.topMargin: (separator.visible ? separator.height : 0)
             text: modelData
-            font.pointSize: 11
+            font.pointSize: 10
+            color: "#fff"
             verticalAlignment: Text.AlignVCenter
+        }
+
+        background: Rectangle {
+            anchors.fill: parent
+            color: (currentIndex == index) ? "#283" : (parent.hovered ? "#333" : "#1e1e1e")
         }
     }
 
-    onActivated: function(index) {
+    onActivated: function (index) {
         if (index === addProfileIndex)
             addProfileSelected()
         else

@@ -1,49 +1,75 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Templates as T
-import QtQuick.Window
 
 T.ComboBox {
     id: control
 
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: 36
-    baselineOffset: contentItem.y + contentItem.baselineOffset
+    implicitHeight: 35
     leftPadding: 8
     rightPadding: 36
+    opacity: control.enabled ? 1.0 : 0.3
 
-    background: BorderImage {
-        id: buttonBackground
-        anchors.fill: parent
-        source: (control.hovered || control.activeFocus) || control.down ? "qrc:/Resources/dropdown-active.png" : "qrc:/Resources/dropdown.png"
-        smooth: false
-        border { left: 4; top: 4; right: 32; bottom: 4 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
-    }
-
-    indicator: Item {
-        width: 36
-        height: 36
+    background: Rectangle {
+        border.color: control.hovered ? "#666" : "#555"
+        color: "#1e1e1e"
     }
 
     contentItem: Text {
         id: textItem
         text: control.displayText
-        font.pointSize: 11
-        opacity: enabled ? 1.0 : 0.3
-        color: "#000"
+        font.pointSize: 10
+        color: "#fff"
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         elide: Text.ElideRight
     }
 
     delegate: ItemDelegate {
-        width: parent ? parent.width : 0
-        height: 32
-        font.pointSize: 11
-        text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
+        width: control.width
+        contentItem: Text {
+            text: modelData
+            color: "#fff"
+            font.pointSize: 10
+            elide: Text.ElideRight
+            verticalAlignment: Text.AlignVCenter
+        }
         highlighted: control.highlightedIndex === index
+        background: Rectangle {
+            anchors.fill: parent
+            color: parent.hovered ? "#333" : "#1e1e1e"
+            radius: 2
+        }
+    }
+
+    indicator: Canvas {
+        id: canvas
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.rightMargin: 10
+        width: 13
+        height: 6
+        contextType: "2d"
+
+        Connections {
+            target: control
+            function onPressedChanged() {
+                canvas.requestPaint()
+            }
+        }
+
+        onPaint: {
+            context.reset()
+            context.lineWidth = 1.5
+            context.strokeStyle = "#bbb"
+            context.moveTo(0, 0)
+            context.lineTo(width / 2, height)
+            context.lineTo(width, 0)
+            context.stroke()
+        }
+
+        opacity: control.enabled ? 1.0 : 0.3
     }
 
     popup: T.Popup {
@@ -63,12 +89,10 @@ T.ComboBox {
             highlightMoveDuration: 0
         }
 
-        background: BorderImage {
-            source: "qrc:/Resources/dropdown-bg.png"
-            smooth: false
-            border { left: 4; top: 4; right: 4; bottom: 4 }
-            horizontalTileMode: BorderImage.Stretch
-            verticalTileMode: BorderImage.Stretch
+        background: Rectangle {
+            color: "#1e1e1e"
+            border.color: "#555"
+            radius: 2
         }
     }
 }

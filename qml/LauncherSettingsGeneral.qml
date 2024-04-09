@@ -1,120 +1,106 @@
 import QtQuick
-import QtQuick.Window
-import QtQuick.Dialogs
 import QtQuick.Layouts
-import QtQuick.Controls
 import "ThemedControls"
 
-ScrollView {
-    Layout.fillHeight: true
-    Layout.fillWidth: true
-    clip: true
-    GridLayout {
-        columns: 2
-        columnSpacing: 20
-        rowSpacing: 8
-        id: gridLayout12
-        property int labelFontSize: 12
+ColumnLayout {
+    width: parent.width
+    spacing: 10
+    id: settingsGeneralColumn
+    property int labelFontSize: 10
 
-        GampadTool {
-            id: gamepadTool
-        }
+    RowLayout {
+        id: googleAcountRow
+        property bool accountNotNull: googleLoginHelperInstance.account !== null
 
-        Text {
-            text: qsTr("Google Account")
-            font.pointSize: parent.labelFontSize
-        }
-        Item {
-            id: item1
-            Layout.fillWidth: true
-            height: childrenRect.height
-            Layout.minimumWidth: googleAccountIdLabel.implicitWidth + googlesigninbtn.implicitWidth + 5
-
-            RowLayout {
-                anchors.right: parent.right
-                Text {
-                    text: googleLoginHelper.account !== null ? googleLoginHelper.account.accountIdentifier : ""
-                    id: googleAccountIdLabel
-                    Layout.alignment: Qt.AlignRight
-                    font.pointSize: 11
-                }
-                MButton {
-                    id: googlesigninbtn
-                    Layout.alignment: Qt.AlignRight
-                    Layout.rightMargin: 20
-                    text: googleLoginHelper.account !== null ? qsTr("Sign out") : qsTr("Sign in")
-                    onClicked: {
-                        if (googleLoginHelper.account !== null)
-                            googleLoginHelper.signOut()
-                        else
-                            googleLoginHelper.acquireAccount(window)
-                    }
-                }
+        ColumnLayout {
+            Text {
+                text: qsTr("Google Account")
+                color: "#fff"
+                font.bold: true
+                font.pointSize: settingsGeneralColumn.labelFontSize
+            }
+            Text {
+                id: googleAccountIdLabel
+                text: googleAcountRow.accountNotNull ? googleLoginHelperInstance.account.accountIdentifier : "..."
+                color: "#fff"
+                font.pointSize: settingsGeneralColumn.labelFontSize
             }
         }
 
-        MCheckBox {
-            Layout.topMargin: 20
-            text: qsTr("Show log when starting the game")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.startOpenLog
-            onCheckedChanged: launcherSettings.startOpenLog = checked
-        }
-
-        MCheckBox {
-            text: qsTr("Hide the launcher when starting the game")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.startHideLauncher
-            onCheckedChanged: launcherSettings.startHideLauncher = checked
-        }
-
-        MCheckBox {
-            id: disableGameLog
-            text: qsTr("Disable the GameLog")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.disableGameLog
-            onCheckedChanged: launcherSettings.disableGameLog = checked
-        }
-
-        MCheckBox {
-            text: qsTr("Enable checking for updates (on opening)")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.checkForUpdates
-            onCheckedChanged: launcherSettings.checkForUpdates = checked
-        }
-
-        MCheckBox {
-            text: qsTr("Show Notification banner")
-            font.pointSize: parent.labelFontSize
-            Layout.columnSpan: 2
-            Component.onCompleted: checked = launcherSettings.showNotifications
-            onCheckedChanged: launcherSettings.showNotifications = checked
+        Item {
+            Layout.fillWidth: true
         }
 
         MButton {
-            Layout.topMargin: 20
-            text: qsTr("Run troubleshooter")
-            Layout.columnSpan: 1
-            onClicked: troubleshooterWindow.findIssuesAndShow()
+            id: googlesigninbtn
+            Layout.alignment: Qt.AlignRight
+            text: googleAcountRow.accountNotNull ? qsTr("Sign out") : qsTr("Sign in")
+            onClicked: {
+                if (googleAcountRow.accountNotNull)
+                    googleLoginHelperInstance.signOut()
+                else
+                    googleLoginHelperInstance.acquireAccount(window)
+            }
         }
+    }
 
-        MButton {
-            Layout.topMargin: 20
-            text: qsTr("Open GameData Folder")
-            Layout.columnSpan: 1
-            onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
-        }
+    HorizontalDivider {}
 
-        MButton {
-            Layout.topMargin: 20
-            text: qsTr("Open Gamepad Tool")
-            Layout.columnSpan: 1
-            onClicked: gamepadTool.show()
-        }
-        
+    Text {
+        text: qsTr("Launcher")
+        color: "#fff"
+        font.bold: true
+        font.pointSize: parent.labelFontSize
+    }
+
+    MCheckBox {
+        text: qsTr("Show log when starting the game")
+        Component.onCompleted: checked = launcherSettings.startOpenLog
+        onCheckedChanged: launcherSettings.startOpenLog = checked
+    }
+
+    MCheckBox {
+        text: qsTr("Hide the launcher when starting the game")
+        Component.onCompleted: checked = launcherSettings.startHideLauncher
+        onCheckedChanged: launcherSettings.startHideLauncher = checked
+    }
+
+    MCheckBox {
+        id: disableGameLog
+        text: qsTr("Disable the GameLog")
+        Component.onCompleted: checked = launcherSettings.disableGameLog
+        onCheckedChanged: launcherSettings.disableGameLog = checked
+    }
+
+    MCheckBox {
+        text: qsTr("Enable checking for updates (on opening)")
+        Component.onCompleted: checked = launcherSettings.checkForUpdates
+        onCheckedChanged: launcherSettings.checkForUpdates = checked
+    }
+
+    MCheckBox {
+        text: qsTr("Show Notification banner")
+        Component.onCompleted: checked = launcherSettings.showNotifications
+        onCheckedChanged: launcherSettings.showNotifications = checked
+    }
+
+    MButton {
+        Layout.topMargin: 15
+        text: qsTr("Run troubleshooter")
+        onClicked: troubleshooterWindow.findIssuesAndShow()
+    }
+
+    MButton {
+        text: qsTr("Open GameData Folder")
+        onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
+    }
+
+    MButton {
+        text: qsTr("Open Gamepad Tool")
+        onClicked: gamepadTool.show()
+    }
+
+    GampadTool {
+        id: gamepadTool
     }
 }

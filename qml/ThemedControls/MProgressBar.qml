@@ -1,34 +1,52 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Templates as T
-import QtQuick.Window
 
 T.ProgressBar {
     id: control
-
     padding: 2
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: 28
-    baselineOffset: contentItem.y + contentItem.baselineOffset
+    property string label: ""
 
-    background: BorderImage {
+    background: Rectangle {
         anchors.fill: parent
-        source: "qrc:/Resources/progressbar.png"
-        smooth: false
-        border { left: 4; top: 4; right: 4; bottom: 4 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
+        color: "#1e1e1e"
     }
 
     contentItem: Item {
-        BorderImage {
+        Rectangle {
             width: parent.width * control.visualPosition
             height: parent.height
-            source: "qrc:/Resources/progressbar-progress.png"
-            smooth: false
-            border { left: 2; top: 2; right: 2; bottom: 2 }
-            horizontalTileMode: BorderImage.Stretch
-            verticalTileMode: BorderImage.Stretch
+            color: "#008643"
+            visible: !control.indeterminate
+        }
+
+        Item {
+            clip: true
+            anchors.fill: parent
+            visible: control.indeterminate
+            Rectangle {
+                id: bar
+                color: "#008643"
+                x: -width
+                width: parent.width / 4
+                height: parent.height
+
+                NumberAnimation on x {
+                    from: -bar.width
+                    to: control.width + 60
+                    loops: Animation.Infinite
+                    running: control.indeterminate
+                    duration: 1400
+                }
+            }
+        }
+
+        Text {
+            text: control.label
+            color: "#fff"
+            font.pointSize: 10
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
         }
     }
 }

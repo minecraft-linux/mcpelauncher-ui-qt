@@ -2,59 +2,44 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import QtQuick.Dialogs
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
 Window {
-
     property GameLauncher launcher
     modality: Qt.ApplicationModal
+
     id: gameLogWindow
     width: 500
     height: 400
     minimumWidth: 500
     minimumHeight: 400
     title: qsTr("Game Log")
+    color: "#1e1e1e"
 
     ColumnLayout {
         id: layout
         anchors.fill: parent
         spacing: 0
 
-        Image {
-            id: title
-            smooth: false
-            fillMode: Image.Tile
-            source: "qrc:/Resources/noise.png"
-            Layout.alignment: Qt.AlignTop
-            Layout.fillWidth: true
-            Layout.preferredHeight: 50
-
-
-            Text {
-                anchors.fill: parent
-                anchors.leftMargin: 20
-                color: "#ffffff"
-                text: gameLogWindow.title
-                font.pixelSize: 24
-                verticalAlignment: Text.AlignVCenter
-            }
-
+        BaseHeader {
+            title: gameLogWindow.title
             MButton {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                anchors.rightMargin: 20
-                implicitWidth: 36
-                implicitHeight: 36
-                onClicked: { gameLog.selectAll(); gameLog.copy(); gameLog.deselect() }
+                anchors.rightMargin: 10
+                width: height
+                onClicked: {
+                    gameLog.selectAll()
+                    gameLog.copy()
+                    gameLog.deselect()
+                }
                 Image {
                     anchors.centerIn: parent
                     source: "qrc:/Resources/icon-copy.png"
                     smooth: false
                 }
             }
-
         }
 
         Rectangle {
@@ -119,12 +104,11 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            clip: true
+            contentWidth: availableWidth
 
             function scrollToBottom() {
                 ScrollBar.vertical.position = 1 - ScrollBar.vertical.size
             }
-
 
             TextEdit {
                 id: gameLog
@@ -132,28 +116,28 @@ Window {
                 y: 8
                 width: logScrollView.availableWidth - 8 * 2
                 wrapMode: Text.Wrap
+                font.pointSize: 10
                 selectByMouse: true
                 readOnly: true
-                selectionColor: "#f57c00"
+                color: "#ddd"
+                selectionColor: "#842"
                 text: ""
 
                 onTextChanged: {
                     logScrollView.scrollToBottom()
                     if (launcher.crashed && !launcherSettings.disableGameLog && !launcherSettings.showUnsupported && !launcherSettings.showUnverified && !launcherSettings.showBetaVersions)
-                        tpanel.text = "The Launcher has exited with a non-zero error code.<br>This Launcher is instable, please retry starting the Game before open an issue. You minimally have to provide the crashlog, your Operating System name, version, CPU architecture, GPU drivers, Launcher version, you find it in Settings->About or the git commit's of your build, Game version inclusive architecture like 1.16.201.5 (x86_64), you find it in the big green Button and a guide how to reproduce your issue. Keep in mind, you have no right for support and most crash reports cannot be fixed at all. <a href=\"https://github.com/minecraft-linux/mcpelauncher-manifest/issues\">Please click here to search for existing similar issues, before open a new issue</a>" 
+                        tpanel.text = "The Launcher has exited with a non-zero error code.<br>This Launcher is instable, please retry starting the Game before open an issue. You minimally have to provide the crashlog, your Operating System name, version, CPU architecture, GPU drivers, Launcher version, you find it in Settings->About or the git commit's of your build, Game version inclusive architecture like 1.16.201.5 (x86_64), you find it in the big green Button and a guide how to reproduce your issue. Keep in mind, you have no right for support and most crash reports cannot be fixed at all. <a href=\"https://github.com/minecraft-linux/mcpelauncher-manifest/issues\">Please click here to search for existing similar issues, before open a new issue</a>"
                 }
             }
 
             onWidthChanged: scrollToBottom()
             onHeightChanged: scrollToBottom()
         }
-
     }
 
     Connections {
         target: launcher
         onLogCleared: gameLog.clear()
-        onLogAppended: text => gameLog.insert(gameLog.length, text)
+        onLogAppended: gameLog.insert(gameLog.length, text)
     }
-
 }

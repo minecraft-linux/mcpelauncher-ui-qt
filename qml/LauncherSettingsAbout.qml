@@ -1,39 +1,37 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
 import QtQuick.Dialogs
 import Qt.labs.platform
 import "ThemedControls"
 
 ColumnLayout {
     id: columnlayout
-    Layout.fillWidth: true
-    
-    TextEdit {
-        textFormat: TextEdit.RichText
+    width: parent.width
+    spacing: 10
+
+    Text {
         text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version %1 (build %2)<br/> © Copyright 2018-2022, MrARM & contributors").arg(LAUNCHER_VERSION_NAME || "Unknown").arg(LAUNCHER_VERSION_CODE || "Unknown")
-        readOnly: true
+        color: "#fff"
         wrapMode: Text.WordWrap
-        selectByMouse: true
+        font.pointSize: 10
         Layout.fillWidth: true
     }
 
-    ColumnLayout {
-        Layout.fillWidth: true
+    HorizontalDivider {}
+
+    RowLayout {
         MButton {
-            Layout.fillWidth: true
             text: qsTr("Check for Updates")
-            Layout.columnSpan: 1
             onClicked: {
                 updateCheckerConnectorSettings.enabled = true
                 updateChecker.checkForUpdates()
             }
         }
-
-        MButton {
+        Item {
             Layout.fillWidth: true
+        }
+        MButton {
             text: qsTr("Reset Launcher Settings")
-            Layout.columnSpan: 1
             onClicked: {
                 launcherSettings.resetSettings()
                 launcherreset.open()
@@ -47,24 +45,24 @@ ColumnLayout {
         text: qsTr("Please reopen the Launcher to see the changes")
     }
 
-    property var updateUrl: "";
+    property string updateUrl: ""
 
     Connections {
         id: updateCheckerConnectorSettings
         target: updateChecker
         enabled: false
-        onUpdateError: function(error) {
+        onUpdateError: function (error) {
             updateCheckerConnectorSettings.enabled = false
             updateError.text = error
             updateError.open()
         }
-        onUpdateAvailable: function(url) {
-            columnlayout.updateUrl = url;
+        onUpdateAvailable: function (url) {
+            columnlayout.updateUrl = url
         }
-        onUpdateCheck: function(available) {
+        onUpdateCheck: function (available) {
             updateCheckerConnectorSettings.enabled = false
             if (available) {
-                updateInfo.text = qsTr("An Update of the Launcher is available for download") + "<br/>" + (columnlayout.updateUrl.length !== 0 ? qsTr("You can download the new Update here: %1").arg(columnlayout.updateUrl) + "<br/>" : "") + qsTr("Do you want to update now?");
+                updateInfo.text = qsTr("An Update of the Launcher is available for download") + "<br/>" + (columnlayout.updateUrl.length !== 0 ? qsTr("You can download the new Update here: %1").arg(columnlayout.updateUrl) + "<br/>" : "") + qsTr("Do you want to update now?")
                 updateInfo.standardButtons = StandardButton.Yes | StandardButton.No
             } else {
                 updateInfo.standardButtons = StandardButton.Ok
@@ -91,5 +89,4 @@ ColumnLayout {
             }
         }
     }
-
 }

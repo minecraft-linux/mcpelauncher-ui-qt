@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Dialogs
-import QtQuick.Window
 import "ThemedControls"
 import io.mrarm.mcpelauncher 1.0
 
@@ -13,7 +12,7 @@ Item {
     property bool acquiringAccount: false
     property bool extractingApk: false
 
-    signal finished()
+    signal finished
 
     Image {
         anchors.fill: parent
@@ -22,42 +21,47 @@ Item {
         source: "qrc:/Resources/noise.png"
     }
 
-    CenteredRectangle {
+    Rectangle {
+        width: 400
+        height: container.height + 90
+        anchors.centerIn: parent
         radius: 4
         visible: !extractingApk
+        color: "#222"
 
         ColumnLayout {
-            spacing: 0
-            width: parent.width
+            id: container
+            spacing: 10
+            width: parent.width - 70
+            anchors.centerIn: parent
 
             Text {
-                text: "Sign in"
-                font.pointSize: 22
+                text: qsTr("Sign in")
+                font.pointSize: 16
+                font.bold: true
+                color: "#fff"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
-                Layout.topMargin: 4
             }
 
             Text {
-                text: "To use this launcher, you must purchase Minecraft on Google Play and sign in."
+                text: qsTr("To use this launcher, you must purchase Minecraft on Google Play and sign in.")
                 wrapMode: Text.WordWrap
-                font.pointSize: 12
+                font.pointSize: 11
+                color: "#fff"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
-                Layout.topMargin: 16
+                Layout.topMargin: 10
             }
 
             PlayButton {
-                text: "Sign in with Google"
-                leftPadding: 50
-                rightPadding: 50
-                Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 22
-                onClicked: function() {
+                text: qsTr("Sign in with Google")
+                Layout.fillWidth: true
+                Layout.topMargin: 10
+                onClicked: function () {
                     acquiringAccount = true
                     googleLoginHelper.acquireAccount(window)
                 }
@@ -65,69 +69,67 @@ Item {
 
             RowLayout {
                 id: alternativeOptions
-
                 Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 4
-                spacing: 25
-
-                property int buttonWidth: Math.max(children[0].implicitWidth, children[1].implicitWidth)
+                spacing: 15
 
                 TransparentButton {
                     enabled: !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
                     text: (LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK ? qsTr("Not available") : qsTr("Use .apk")).toUpperCase()
                     textColor: "#0aa82f"
-                    Layout.preferredWidth: alternativeOptions.buttonWidth
-                    font.pointSize: 12
+                    Layout.fillWidth: true
+                    font.pointSize: 11
                     onClicked: apkImportHelper.pickFile()
                 }
 
                 TransparentButton {
-                    text: "Get help".toUpperCase()
+                    text: qsTr("Get help").toUpperCase()
                     textColor: "#0aa82f"
-                    Layout.preferredWidth: alternativeOptions.buttonWidth
-                    font.pointSize: 12
+                    Layout.fillWidth: true
+                    font.pointSize: 11
                     onClicked: Qt.openUrlExternally("https://mcpelauncher.readthedocs.io/en/latest/index.html")
                 }
-
             }
         }
-
     }
 
-    CenteredRectangle {
-        radius: 4
+    Rectangle {
+        width: 400
+        height: extractContainer.height
         visible: extractingApk
+        color: "#222"
 
         ColumnLayout {
+            id: extractContainer
             spacing: 0
             width: parent.width
 
             Text {
-                text: "Extracting apk"
-                font.pointSize: 18
+                text: qsTr("Extracting apk")
+                color: "#fff"
+                font.pointSize: 15
+                font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.alignment: Qt.AlignTop
                 Layout.fillWidth: true
+                Layout.topMargin: 15
             }
 
             MProgressBar {
                 id: apkExtractionProgressBar
                 indeterminate: true
-                Layout.preferredWidth: parent.width * 0.7
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.topMargin: 20
+                Layout.fillWidth: true
+                Layout.margins: 15
+                Layout.preferredHeight: 20
             }
-
         }
-
     }
 
-
     Text {
-        text: "This is an unofficial Linux launcher for the Minecraft Bedrock codebase.\nThis project is not affiliated with Minecraft, Mojang or Microsoft."
+        text: qsTr("This is an unofficial Linux launcher for the Minecraft Bedrock codebase.\nThis project is not affiliated with Minecraft, Mojang or Microsoft.")
         color: "#fff"
-        y: parent.height - height - 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
         width: parent.width
         wrapMode: Text.WordWrap
         font.pointSize: 10
@@ -137,10 +139,9 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "black"
-        opacity: 0.2
+        color: "#000"
+        opacity: 0.3
         visible: acquiringAccount
-
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
@@ -168,8 +169,8 @@ Item {
 
     Connections {
         target: googleLoginHelper
-        onAccountAcquireFinished: function(acc) {
-            acquiringAccount = false;
+        onAccountAcquireFinished: function (acc) {
+            acquiringAccount = false
             if (acc)
                 root.finished()
         }
@@ -178,7 +179,7 @@ Item {
     Connections {
         target: window
         onClosing: {
-            application.quit();
+            application.quit()
         }
     }
 }

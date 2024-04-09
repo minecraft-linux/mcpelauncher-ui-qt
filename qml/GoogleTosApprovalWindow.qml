@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import QtQuick.Controls
 import Qt.labs.platform
 
 Window {
@@ -20,7 +19,7 @@ Window {
     flags: Qt.Dialog
     title: "Google Play ToS approval"
 
-    onClosing: function() {
+    onClosing: function () {
         done(tosApproved, marketingApproved)
         tosApproved = false
     }
@@ -52,7 +51,7 @@ Window {
 
             Button {
                 text: "Agree"
-                onClicked: function() {
+                onClicked: function () {
                     tosApproved = true
                     close()
                 }
@@ -60,14 +59,11 @@ Window {
 
             Button {
                 text: "Disagree"
-                onClicked: function() {
+                onClicked: function () {
                     tosApproved = false
                     close()
                 }
             }
-
         }
-
     }
-
 }

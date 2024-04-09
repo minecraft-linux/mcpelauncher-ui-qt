@@ -1,20 +1,22 @@
-import QtQuick 2.0
-
-import QtQuick.Layouts 1.2
-import QtQuick.Controls 2.2
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import "ThemedControls"
 
 ColumnLayout {
-    Keys.forwardTo: children[1].children[0]
-    Layout.fillWidth: true
-    ColumnLayout {
+    width: parent.width
+    spacing: 10
+    Keys.forwardTo: versions
+
+    Flow {
+        spacing: 10
 
         MButton {
             Layout.fillWidth: true
             text: qsTr("Delete selected")
             onClicked: {
                 if (versions.currentIndex == -1)
-                    return;
+                    return
                 versionManager.removeVersion(versions.model[versions.currentIndex])
             }
         }
@@ -38,7 +40,7 @@ ColumnLayout {
                         var found = false
                         for (var k = 0; k < abis.length; ++k) {
                             if (found = versions.model[i].archs[j] === abis[k]) {
-                                break;
+                                break
                             }
                         }
                         if (!found) {
@@ -49,27 +51,19 @@ ColumnLayout {
                     }
                     if (!foundcompatible) {
                         versionManager.removeVersion(versions.model[i])
-                    } else if (incompatible.length){
+                    } else if (incompatible.length) {
                         versionManager.removeVersion(versions.model[i], incompatible)
                     }
                 }
             }
         }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
     }
 
-    BorderImage {
+    Rectangle {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        source: "qrc:/Resources/dropdown-bg.png"
-        smooth: false
-        border { left: 4; top: 4; right: 4; bottom: 4 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
+        Layout.minimumHeight: Math.max(window.height - 180, 150)
+        color: "#1e1e1e"
 
         ListView {
             id: versions
@@ -77,17 +71,24 @@ ColumnLayout {
             anchors.margins: 4
             clip: true
             flickableDirection: Flickable.VerticalFlick
-            model: versionManager.versions.getAll().sort(function(a, b) { return b.versionCode - a.versionCode; })
+            model: versionManagerInstance.versions.getAll().sort(function (a, b) {
+                return b.versionCode - a.versionCode
+            })
             delegate: ItemDelegate {
                 id: control
-                width: versions.parent.width - 8
+                width: parent.width
                 height: 32
                 font.pointSize: 11
-                text: modelData.versionName + " (" + modelData.archs.join(", ") + ")"
+                contentItem: Text {
+                    text: modelData.versionName + " (" + modelData.archs.join(", ") + ")"
+                    color: "#fff"
+                    font.pointSize: 10
+                    verticalAlignment: Text.AlignVCenter
+                }
                 onClicked: versions.currentIndex = index
                 highlighted: ListView.isCurrentItem
                 background: Rectangle {
-                    color: control.highlighted ? "#C5CAE9" : (control.down ? "#dddedf" : "transparent")
+                    color: control.highlighted ? "#226322" : (control.down ? "#338833" : (control.hovered ? "#222" : "transparent"))
                 }
             }
             highlightResizeVelocity: -1
@@ -102,5 +103,4 @@ ColumnLayout {
         versionManager: versionManagerInstance
         allowIncompatible: launcherSettings.showUnsupported
     }
-
 }

@@ -6,19 +6,17 @@ T.TextField {
 
     padding: 8
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: 36
+    implicitHeight: 35
     verticalAlignment: TextInput.AlignVCenter
-    font.pointSize: 13
+    font.pointSize: 10
     selectByMouse: true
     selectionColor: "#51a063"
+    color: "#fff"
+    opacity: control.enabled ? 1.0 : 0.3
 
-    background: BorderImage {
-        id: buttonBackground
-        anchors.fill: parent
-        source: (control.hovered || control.activeFocus) ? "qrc:/Resources/field-active.png" : "qrc:/Resources/field.png"
-        smooth: false
-        border { left: 4; top: 4; right: 4; bottom: 4 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
+    background: Rectangle {
+        border.color: control.hovered ? "#666" : "#555"
+        color: "#1e1e1e"
+        radius: 2
     }
 }

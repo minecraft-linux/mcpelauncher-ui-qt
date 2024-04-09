@@ -1,32 +1,28 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Templates as T
-import QtQuick.Window
 
 T.TabButton {
     id: control
+    padding: 15
+    implicitWidth: 15 + implicitContentWidth + leftPadding + rightPadding
+    implicitHeight: 40
+    anchors.bottom: parent.bottom
 
-    padding: 8
-    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
-    implicitHeight: 34
-    baselineOffset: contentItem.y + contentItem.baselineOffset
-
-    background: BorderImage {
-        id: buttonBackground
-        anchors.fill: parent
-        source: checked ? "qrc:/Resources/button-tab-selected.png" : ((control.hovered || control.activeFocus) ? "qrc:/Resources/button-tab-active.png" : "qrc:/Resources/button-tab.png")
-        smooth: false
-        border { left: 4; top: 4; right: 4; bottom: 0 }
-        horizontalTileMode: BorderImage.Stretch
-        verticalTileMode: BorderImage.Stretch
+    indicator: Rectangle {
+        color: "#9c6"
+        width: 30
+        height: 3
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        visible: checked
     }
 
     contentItem: Text {
-        id: textItem
         text: control.text
         font.pointSize: 11
-        opacity: enabled ? 1.0 : 0.3
-        color: "#000"
+        font.bold: checked
+        opacity: enabled ? (checked ? 1.0 : hovered ? 0.9 : 0.7) : 0.3
+        color: "#fff"
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
