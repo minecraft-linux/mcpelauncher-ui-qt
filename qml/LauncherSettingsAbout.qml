@@ -63,10 +63,10 @@ ColumnLayout {
             updateCheckerConnectorSettings.enabled = false
             if (available) {
                 updateInfo.text = qsTr("An Update of the Launcher is available for download") + "<br/>" + (columnlayout.updateUrl.length !== 0 ? qsTr("You can download the new Update here: %1").arg(columnlayout.updateUrl) + "<br/>" : "") + qsTr("Do you want to update now?")
-                updateInfo.standardButtons = StandardButton.Yes | StandardButton.No
+                updateInfo.buttons = MessageDialog.Yes | MessageDialog.No
             } else {
-                updateInfo.standardButtons = StandardButton.Ok
                 updateInfo.text = qsTr("Your installed Launcher Version %1 (build %2) seems uptodate").arg(LAUNCHER_VERSION_NAME || '').arg(LAUNCHER_VERSION_CODE)
+                updateInfo.buttons = MessageDialog.Ok
             }
             updateInfo.open()
         }
