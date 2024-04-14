@@ -83,19 +83,17 @@ RowLayout {
     }
 
     function updateIndex(index) {
-        switch (index) {
-        case currentIndex:
+        if (index === currentIndex)
             return
-        case 0:
-            mainStackView.replace(launcherHomePage)
-            break
-        case 1:
-            mainStackView.replace(launcherNewsPage)
-            break
-        case 2:
-            mainStackView.replace(launcherSettingsPage)
-            break
+
+        mainStackView.pop(null)
+
+        if (index === 1) {
+            mainStackView.push(launcherNewsPage)
+        } else if (index === 2) {
+            mainStackView.push(launcherSettingsPage)
         }
+
         currentIndex = index
     }
 }
