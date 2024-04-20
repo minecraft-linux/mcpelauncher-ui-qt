@@ -9,12 +9,12 @@ T.TabButton {
     anchors.bottom: parent.bottom
 
     indicator: Rectangle {
+        id: indicatorBar
         color: "#9c6"
-        width: 30
+        width: 0
         height: 3
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        visible: checked
     }
 
     contentItem: Text {
@@ -26,4 +26,32 @@ T.TabButton {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
     }
+
+    states: State {
+        name: "checked"
+        when: control.checked
+    }
+
+    transitions: [
+        Transition {
+            to: "checked"
+            NumberAnimation {
+                target: indicatorBar
+                property: "width"
+                to: 30
+                duration: 250
+                easing.type: Easing.OutCubic
+            }
+        },
+        Transition {
+            to: "*"
+            NumberAnimation {
+                target: indicatorBar
+                property: "width"
+                to: 0
+                duration: 180
+                easing.type: Easing.OutQuad
+            }
+        }
+    ]
 }

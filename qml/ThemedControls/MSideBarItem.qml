@@ -11,12 +11,12 @@ T.Button {
     implicitWidth: implicitContentWidth
 
     background: Rectangle {
+        id: indicatorBar
         color: "#eee"
         width: 3
-        height: 20
+        height: 0
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
-        visible: control.checked
     }
 
     contentItem: RowLayout {
@@ -44,4 +44,32 @@ T.Button {
             Layout.rightMargin: 40
         }
     }
+
+    states: State {
+        name: "checked"
+        when: control.checked
+    }
+
+    transitions: [
+        Transition {
+            to: "checked"
+            NumberAnimation {
+                target: indicatorBar
+                property: "height"
+                to: 25
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        },
+        Transition {
+            to: "*"
+            NumberAnimation {
+                target: indicatorBar
+                property: "height"
+                to: 0
+                duration: 180
+                easing.type: Easing.OutQuad
+            }
+        }
+    ]
 }

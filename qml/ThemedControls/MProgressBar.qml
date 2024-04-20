@@ -26,16 +26,23 @@ T.ProgressBar {
             Rectangle {
                 id: bar
                 color: "#008643"
-                x: -width
-                width: parent.width / 4
                 height: parent.height
-
                 NumberAnimation on x {
-                    from: -bar.width
-                    to: control.width + 60
+                    from: -control.width / 8
+                    to: control.width
                     loops: Animation.Infinite
                     running: control.indeterminate
-                    duration: 1400
+                    duration: 1200
+                    easing.type: Easing.InOutCubic
+                }
+
+                NumberAnimation on width {
+                    from: control.width / 10
+                    to: control.width / 2
+                    loops: Animation.Infinite
+                    running: control.indeterminate
+                    duration: 1200
+                    easing.type: Easing.InOutCubic
                 }
             }
         }

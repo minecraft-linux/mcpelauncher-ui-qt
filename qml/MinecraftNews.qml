@@ -80,22 +80,30 @@ ColumnLayout {
                     states: State {
                         name: "hovered"
                         when: mouseArea.hovered
-                        PropertyChanges {
-                            target: contentBox
-                            scale: 1.0 + (10 / contentBox.width)
-                        }
                     }
 
-                    transitions: Transition {
-                        to: "hovered"
-                        reversible: true
-                        PropertyAnimation {
-                            target: contentBox
-                            property: "scale"
-                            duration: 150
-                            easing.type: Easing.InOutCubic
+                    transitions: [
+                        Transition {
+                            to: "hovered"
+                            NumberAnimation {
+                                target: contentBox
+                                property: "scale"
+                                to: 1.0 + (12 / contentBox.width)
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        },
+                        Transition {
+                            to: "*"
+                            NumberAnimation {
+                                target: contentBox
+                                property: "scale"
+                                to: 1.0
+                                duration: 100
+                                easing.type: Easing.OutSine
+                            }
                         }
-                    }
+                    ]
 
                     MouseArea {
                         id: mouseArea

@@ -242,7 +242,7 @@ Window {
                 MButton {
                     text: "..."
                     enabled: dataDirCheck.checked
-                    height: dataDirPath.height
+                    Layout.preferredHeight: dataDirPath.height
                     onClicked: {
                         if (dataDirPath.text !== null && dataDirPath.text.length > 0)
                             dataDirPathDialog.folder = QmlUrlUtils.localFileToUrl(dataDirPath.text)

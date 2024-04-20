@@ -21,6 +21,14 @@ T.Button {
         }
         horizontalTileMode: BorderImage.Stretch
         verticalTileMode: BorderImage.Stretch
+        Rectangle {
+            id: backgroundOverlay
+            anchors.centerIn: parent
+            width: parent.width - 2 * 8
+            height: parent.height - 2 * 8
+            color: "#1f1"
+            opacity: 0
+        }
     }
 
     contentItem: Item {
@@ -30,8 +38,7 @@ T.Button {
         ColumnLayout {
             id: content
             spacing: 0
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.centerIn: parent
             Text {
                 id: textItem
                 text: control.text
@@ -64,21 +71,41 @@ T.Button {
     states: State {
         name: "hovered"
         when: control.hovered && !control.down && control.enabled
-        PropertyChanges {
-            target: buttonBackground
-            scale: 1.05
-        }
     }
 
     transitions: [
         Transition {
             to: "hovered"
-            reversible: true
-            PropertyAnimation {
+            NumberAnimation {
                 target: buttonBackground
                 property: "scale"
+                to: 1.05
+                duration: 150
+                easing.type: Easing.OutCubic
+            }
+            NumberAnimation {
+                target: backgroundOverlay
+                property: "opacity"
+                to: 0.2
                 duration: 100
-                easing.type: Easing.InOutCubic
+                easing.type: Easing.OutCubic
+            }
+        },
+        Transition {
+            to: "*"
+            NumberAnimation {
+                target: buttonBackground
+                property: "scale"
+                to: 1
+                duration: 100
+                easing.type: Easing.OutQuad
+            }
+            NumberAnimation {
+                target: backgroundOverlay
+                property: "opacity"
+                to: 0
+                duration: 100
+                easing.type: Easing.OutCubic
             }
         }
     ]

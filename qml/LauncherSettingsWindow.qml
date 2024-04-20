@@ -39,7 +39,7 @@ ColumnLayout {
         }
     }
 
-    StackLayout {
+    AnimatedStackLayout {
         id: settingsStackLayout
         currentIndex: tabs.currentIndex
         Layout.fillHeight: true

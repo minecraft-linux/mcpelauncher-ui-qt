@@ -13,6 +13,7 @@
         <file>qml/ThemedControls/HorizontalDivider.qml</file>
         <file>qml/ThemedControls/MSideBarItem.qml</file>
         <file>qml/ThemedControls/CenteredScrollView.qml</file>
+        <file>qml/ThemedControls/AnimatedStackLayout.qml</file>
         <file>qml/MinecraftNews.qml</file>
         <file>qml/Launcher.qml</file>
         <file>qml/LauncherMain.qml</file>

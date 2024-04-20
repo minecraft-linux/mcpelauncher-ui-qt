@@ -73,6 +73,7 @@ T.ComboBox {
     }
 
     popup: T.Popup {
+        id: popupBox
         y: control.height
         width: control.width
         height: Math.min(contentItem.implicitHeight + topPadding + bottomPadding, control.Window.height - topMargin - bottomMargin)
@@ -93,6 +94,57 @@ T.ComboBox {
             color: "#1e1e1e"
             border.color: "#555"
             radius: 2
+        }
+
+        enter: Transition {
+            NumberAnimation {
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 100
+                easing.type: Easing.OutCubic
+            }
+
+            NumberAnimation {
+                property: "y"
+                from: 0
+                to: control.height
+                duration: 120
+                easing.type: Easing.OutCubic
+            }
+
+            NumberAnimation {
+                property: "scale"
+                from: 0.97
+                to: 1
+                duration: 80
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        exit: Transition {
+            NumberAnimation {
+                property: "opacity"
+                from: 1
+                to: 0
+                duration: 80
+                easing.type: Easing.OutSine
+            }
+
+            NumberAnimation {
+                property: "y"
+                from: control.height
+                to: 0
+                duration: 80
+            }
+
+            NumberAnimation {
+                property: "scale"
+                from: 1
+                to: 0.97
+                duration: 60
+                easing.type: Easing.OutCubic
+            }
         }
     }
 }

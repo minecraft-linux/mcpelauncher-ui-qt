@@ -114,13 +114,55 @@ ColumnLayout {
     }
 
     MProgressBar {
+        property bool showProgressbar: progressbarVisible || updateChecker.active
         Layout.fillWidth: true
         id: downloadProgress
         label: progressbarVisible ? progressbarText : qsTr("Please wait...")
         width: parent.width
-        height: 30
-        visible: progressbarVisible || updateChecker.active
+        visible: showProgressbar || closeAnim.running
         indeterminate: value < 0.005
+
+        states: State {
+            name: "visible"
+            when: downloadProgress.showProgressbar
+        }
+
+        transitions: [
+            Transition {
+                to: "visible"
+                NumberAnimation {
+                    target: downloadProgress
+                    property: "Layout.preferredHeight"
+                    to: 35
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    target: downloadProgress
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                    duration: 100
+                }
+            },
+            Transition {
+                id: closeAnim
+                to: "*"
+                NumberAnimation {
+                    target: downloadProgress
+                    property: "Layout.preferredHeight"
+                    to: 0
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    target: downloadProgress
+                    property: "opacity"
+                    to: 0
+                    duration: 100
+                }
+            }
+        ]
     }
 
     MessageDialog {
