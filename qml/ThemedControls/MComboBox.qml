@@ -30,7 +30,7 @@ T.ComboBox {
     }
 
     delegate: ItemDelegate {
-        width: control.width
+        width: parent.width
         contentItem: Text {
             text: modelData
             color: "#fff"
@@ -43,6 +43,10 @@ T.ComboBox {
             anchors.fill: parent
             color: parent.hovered ? "#333" : "#1e1e1e"
             radius: 2
+
+            FocusBorder {
+                visible: highlighted
+            }
         }
     }
 

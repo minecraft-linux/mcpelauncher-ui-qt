@@ -73,7 +73,7 @@ MComboBox {
 
         background: Rectangle {
             anchors.fill: parent
-            color: (currentIndex == index) ? "#283" : (parent.hovered ? "#333" : "#1e1e1e")
+            color: highlighted ? "#283" : (parent.hovered ? "#333" : "#1e1e1e")
         }
     }
 

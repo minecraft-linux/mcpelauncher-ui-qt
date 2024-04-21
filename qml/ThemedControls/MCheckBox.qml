@@ -41,6 +41,10 @@ T.CheckBox {
                 context.stroke()
             }
         }
+
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: Text {
@@ -52,9 +56,5 @@ T.CheckBox {
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         leftPadding: implicitIndicatorWidth + 5
-    }
-
-    background: FocusBorder {
-        visible: control.visualFocus
     }
 }
