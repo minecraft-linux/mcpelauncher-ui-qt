@@ -14,6 +14,9 @@ T.ComboBox {
     background: Rectangle {
         border.color: control.hovered ? "#666" : "#555"
         color: "#1e1e1e"
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: Text {

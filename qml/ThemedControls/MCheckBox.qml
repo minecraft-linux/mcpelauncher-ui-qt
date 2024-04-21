@@ -53,4 +53,8 @@ T.CheckBox {
         verticalAlignment: Text.AlignVCenter
         leftPadding: implicitIndicatorWidth + 5
     }
+
+    background: FocusBorder {
+        visible: control.visualFocus
+    }
 }

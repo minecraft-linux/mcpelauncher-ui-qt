@@ -15,6 +15,9 @@ T.Button {
         id: buttonBackground
         color: "#08FFFFFF"
         visible: control.hovered && !control.down
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: Text {

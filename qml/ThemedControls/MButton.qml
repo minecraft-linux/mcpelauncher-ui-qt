@@ -13,6 +13,9 @@ T.Button {
         border.color: control.down ? "#888" : (control.hovered ? "#666" : "#555")
         color: control.down ? "#333" : "#1e1e1e"
         radius: 2
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: Text {

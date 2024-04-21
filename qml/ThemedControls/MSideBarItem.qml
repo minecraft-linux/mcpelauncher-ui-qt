@@ -10,13 +10,18 @@ T.Button {
     implicitHeight: 50
     implicitWidth: implicitContentWidth
 
-    background: Rectangle {
-        id: indicatorBar
-        color: "#eee"
-        width: 3
-        height: 0
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
+    background: Item {
+        Rectangle {
+            id: indicatorBar
+            color: "#eee"
+            width: 3
+            height: 0
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+        }
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: RowLayout {

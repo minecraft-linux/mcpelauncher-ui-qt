@@ -29,6 +29,9 @@ T.Button {
             color: "#1f1"
             opacity: 0
         }
+        FocusBorder {
+            visible: control.visualFocus
+        }
     }
 
     contentItem: Item {

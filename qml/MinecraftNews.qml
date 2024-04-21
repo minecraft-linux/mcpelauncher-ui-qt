@@ -77,6 +77,10 @@ ColumnLayout {
                         }
                     }
 
+                    FocusBorder {
+                        visible: mouseArea.activeFocus
+                    }
+
                     states: State {
                         name: "hovered"
                         when: mouseArea.hovered
@@ -110,12 +114,19 @@ ColumnLayout {
                         property bool hovered: false
                         cursorShape: Qt.PointingHandCursor
                         anchors.fill: parent
-
                         hoverEnabled: true
+                        focus: true
+                        focusPolicy: "TabFocus"
+
                         onEntered: hovered = true
                         onExited: hovered = false
                         onClicked: {
                             hovered = false
+                            openArticle()
+                        }
+                        Keys.onSpacePressed: openArticle()
+
+                        function openArticle() {
                             Qt.openUrlExternally(modelData.url)
                         }
                     }

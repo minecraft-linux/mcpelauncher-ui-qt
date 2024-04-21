@@ -17,6 +17,10 @@ T.TabButton {
         anchors.bottom: parent.bottom
     }
 
+    background: FocusBorder {
+        visible: control.visualFocus
+    }
+
     contentItem: Text {
         text: control.text
         font.pointSize: 11
