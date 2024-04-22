@@ -9,8 +9,63 @@ ColumnLayout {
     width: parent.width
     spacing: 10
 
+    Image {
+        Layout.preferredHeight: 80
+        Layout.preferredWidth: 80
+        Layout.alignment: Qt.AlignHCenter
+        source: "qrc:/Resources/mcpelauncher-icon.svg"
+    }
+
     Text {
-        text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/>Version %1 (build %2)<br/> © Copyright 2018-2022, MrARM & contributors").arg(LAUNCHER_VERSION_NAME || "Unknown").arg(LAUNCHER_VERSION_CODE || "Unknown")
+        Layout.alignment: Qt.AlignHCenter
+        font.pointSize: 12
+        font.bold: true
+        color: "#fff"
+        text: qsTr("Launcher")
+    }
+
+    Text {
+        Layout.alignment: Qt.AlignHCenter
+        horizontalAlignment: Text.AlignHCenter
+        Layout.bottomMargin: 10
+        font.pointSize: 10
+        color: "#fff"
+        text: qsTr("Version: %1<br/>Build: %2").arg(LAUNCHER_VERSION_NAME || "Unknown").arg(LAUNCHER_VERSION_CODE || "Unknown")
+    }
+
+    Flow {
+        Layout.bottomMargin: 10
+        Layout.alignment: Qt.AlignHCenter
+        spacing: 25
+        Repeater {
+            model: [{
+                    "label": qsTr("Source"),
+                    "link": "https://github.com/minecraft-linux/mcpelauncher-manifest"
+                }, {
+                    "label": qsTr("Discord"),
+                    "link": "https://discord.gg/TaUNBXr"
+                }, {
+                    "label": qsTr("Docs"),
+                    "link": "https://mcpelauncher.readthedocs.io"
+                }]
+            delegate: Text {
+                font.pointSize: 10
+                textFormat: Text.RichText
+                text: "<style>a:link{color:#b9f;}</style><a href='%1'>&#129125;&nbsp;%2</a>".arg(modelData.link).arg(modelData.label)
+                onLinkActivated: Qt.openUrlExternally(link)
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.NoButton
+                    cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+            }
+        }
+    }
+
+    HorizontalDivider {}
+
+    Text {
+        text: qsTr("This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.<br/><br/> © Copyright 2018-2022, MrARM & contributors")
         color: "#fff"
         wrapMode: Text.WordWrap
         font.pointSize: 10

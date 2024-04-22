@@ -32,6 +32,7 @@
         <file>qml/GameLogWindow.qml</file>
         <file>Resources/noise.png</file>
         <file>Resources/mcpelauncher-logo.svg</file>
+        <file>Resources/mcpelauncher-icon.svg</file>
         <file>Resources/green-button.png</file>
         <file>Resources/check.png</file>
         <file>Resources/icon-edit.png</file>
