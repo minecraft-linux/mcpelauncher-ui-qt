@@ -41,11 +41,11 @@ T.ComboBox {
         highlighted: control.highlightedIndex === index
         background: Rectangle {
             anchors.fill: parent
-            color: parent.hovered ? "#333" : "#1e1e1e"
+            color: highlighted ? "#333" : "#1e1e1e"
             radius: 2
 
             FocusBorder {
-                visible: highlighted
+                visible: highlighted && control.visualFocus
             }
         }
     }
