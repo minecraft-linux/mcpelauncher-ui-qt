@@ -27,26 +27,7 @@ ColumnLayout {
         id: baseHeader
         Layout.fillWidth: true
         title: qsTr("Unofficial *nix launcher for Minecraft")
-    }
-    Rectangle {
-        z: 4
-        anchors.right: baseHeader.right
-        anchors.rightMargin: 2
-        anchors.topMargin: 2
-        anchors.top: rowLayout.top
-        width: children[0].implicitWidth + 2
-        height: children[0].implicitHeight + 2
-        color: "#333333"
-        radius: 4
-        visible: LAUNCHER_VERSION_NAME || false
-
-        Text {
-            anchors.centerIn: parent
-            color: "#fff"
-            font.pointSize: 8
-
-            text: qsTr("%1 (build %2)").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE || "Unknown")
-        }
+        subtitle: LAUNCHER_VERSION_NAME ? qsTr("%1 (build %2)").arg(LAUNCHER_VERSION_NAME).arg(LAUNCHER_VERSION_CODE || "Unknown") : ""
     }
 
     Rectangle {
