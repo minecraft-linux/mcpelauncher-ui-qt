@@ -32,6 +32,13 @@ RowLayout {
                 onClicked: updateIndex(1)
                 checked: currentIndex === 1
             }
+            MSideBarItem {
+                text: qsTr("Mods")
+                iconSource: "qrc:/Resources/icon-mods.png"
+                showText: useWideLayout
+                onClicked: updateIndex(2)
+                checked: currentIndex === 2
+            }
             Item {
                 Layout.fillHeight: true
             }
@@ -39,15 +46,15 @@ RowLayout {
                 text: qsTr("Game Log")
                 iconSource: "qrc:/Resources/icon-log.png"
                 showText: useWideLayout
-                onClicked: updateIndex(2)
-                checked: currentIndex === 2
+                onClicked: updateIndex(3)
+                checked: currentIndex === 3
             }
             MSideBarItem {
                 text: qsTr("Settings")
                 iconSource: "qrc:/Resources/icon-settings.png"
                 showText: useWideLayout
-                onClicked: updateIndex(3)
-                checked: currentIndex == 3
+                onClicked: updateIndex(4)
+                checked: currentIndex == 4
             }
         }
     }
@@ -78,6 +85,11 @@ RowLayout {
     Component {
         id: launcherNewsPage
         MinecraftNews {}
+    }
+
+    Component {
+        id: launcherModsPage
+        Mods {}
     }
 
     ListModel {
@@ -121,8 +133,10 @@ RowLayout {
         if (index === 1) {
             mainStackView.push(launcherNewsPage)
         } else if (index === 2) {
-            mainStackView.push(gameLogPage)
+            mainStackView.push(launcherModsPage)
         } else if (index === 3) {
+            mainStackView.push(gameLogPage)
+        } else if (index === 4) {
             mainStackView.push(launcherSettingsPage)
         }
 
