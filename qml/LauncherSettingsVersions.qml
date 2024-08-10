@@ -79,7 +79,7 @@ ColumnLayout {
                 text: qsTr("IsChromeOS")
                 Layout.bottomMargin: 10
                 Component.onCompleted: {
-                    packageField.text = launcherSettings.chromeOSMode
+                    isChromeOS.checked = launcherSettings.trialMode || launcherSettings.chromeOSMode
                 }
             }
 
