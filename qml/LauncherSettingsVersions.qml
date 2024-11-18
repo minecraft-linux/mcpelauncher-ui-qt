@@ -13,174 +13,176 @@ ColumnLayout {
     Component {
         id: downloadApkComponent
         Popup {
-        id: downloadApk
-        background: Rectangle {
-            color: "#333"
-        }
-        height: scope.implicitHeight + 20
-        width: layout.width
-        modal: true
-        clip: true
+            id: downloadApk
+            background: Rectangle {
+                color: "#333"
+            }
+            height: scope.implicitHeight + 20
+            width: layout.width
+            modal: true
+            clip: true
 
-        property int currentCode: versionBox.codes[versionBox.currentIndex]
+            property int currentCode: versionBox.codes[versionBox.currentIndex]
 
-        property bool showVersionListTrial: packageField.text == "com.mojang.minecrafttrialpe"
-        property bool showVersionList: packageField.text == "com.mojang.minecraftpe" || showVersionListTrial
-        property var currentVersionCode: function() { return (manualgoogleLoginHelperInstance.chromeOS && showVersionList && (currentCode > 982000000 && currentCode < 990000000 || currentCode > 972000000 && currentCode < 980000000) ? 1000000000 : 0) + currentCode; }
-
-        Overlay.modal: Rectangle {
-            id: popupOverlay
-            color: "#8f181818"
-        }
-        ColumnLayout {
-            anchors.fill: parent
-            id: scope
-            property var playVersion: null
-
-            MTextField {
-                id: packageField
-                Layout.fillWidth: true
-                Component.onCompleted: {
-                    packageField.text = launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
-                }
-                onEditingFinished: {
-                    manualplayApi.requestAppInfo(packageField.text)
-                }
+            property bool showVersionListTrial: packageField.text == "com.mojang.minecrafttrialpe"
+            property bool showVersionList: packageField.text == "com.mojang.minecraftpe" || showVersionListTrial
+            property var currentVersionCode: function () {
+                return (manualgoogleLoginHelperInstance.chromeOS && showVersionList && (currentCode > 982000000 && currentCode < 990000000 || currentCode > 972000000 && currentCode < 980000000) ? 1000000000 : 0) + currentCode
             }
 
-            MComboBox {
-                Layout.fillWidth: true
-                id: versionBox
-                property var codes: []
-                model: {
-                    var ret = []
-                    var ncodes = []
-                    if(scope.playVersion !== null) {
-                        ret.push(scope.playVersion.versionName)
-                        ncodes.push(scope.playVersion.versionCode)
+            Overlay.modal: Rectangle {
+                id: popupOverlay
+                color: "#8f181818"
+            }
+            ColumnLayout {
+                anchors.fill: parent
+                id: scope
+                property var playVersion: null
+
+                MTextField {
+                    id: packageField
+                    Layout.fillWidth: true
+                    Component.onCompleted: {
+                        packageField.text = launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
                     }
-                    if(downloadApk.showVersionList) {
-                        for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-                            var ver = versionManager.archivalVersions.versions[i]
-                            if ((scope.playVersion && scope.playVersion.isBeta || !ver.isBeta) && (!downloadApk.showVersionListTrial || ver.abi.indexOf("x86") !== -1)) {
+                    onEditingFinished: {
+                        manualplayApi.requestAppInfo(packageField.text)
+                    }
+                }
+
+                MComboBox {
+                    Layout.fillWidth: true
+                    id: versionBox
+                    property var codes: []
+                    model: {
+                        var ret = []
+                        var ncodes = []
+                        if (scope.playVersion !== null) {
+                            ret.push(scope.playVersion.versionName)
+                            ncodes.push(scope.playVersion.versionCode)
+                        }
+                        if (downloadApk.showVersionList) {
+                            for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
+                                var ver = versionManager.archivalVersions.versions[i]
+                                if ((scope.playVersion && scope.playVersion.isBeta || !ver.isBeta) && (!downloadApk.showVersionListTrial || ver.abi.indexOf("x86") !== -1)) {
                                     ret.push(ver.versionName + " (" + ver.abi + ")")
                                     ncodes.push(ver.versionCode)
+                                }
                             }
                         }
+                        codes = ncodes
+                        return ret
                     }
-                    codes = ncodes
-                    return ret
-                }
 
-                onActivated: {
+                    onActivated: {
                         versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                }
-                Component.onCompleted: versionsCodeField.text = downloadApk.currentVersionCode().toString()
-            }
-
-            MCheckBox {
-                id: isChromeOS
-                text: qsTr("IsChromeOS")
-                Layout.bottomMargin: 10
-                Component.onCompleted: {
-                    packageField.text = launcherSettings.chromeOSMode
-                }
-            }
-
-            GoogleLoginHelper {
-                id: manualgoogleLoginHelperInstance
-                includeIncompatible: true
-                singleArch: ""
-                unlockkey: googleLoginHelperInstance.unlockkey
-                chromeOS: isChromeOS.checked
-                onAccountInfoChanged: {
-                    versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                }
-            }
-
-            GooglePlayApi {
-                id: manualplayApi
-                login: manualgoogleLoginHelperInstance
-
-                onInitError: function (err) {
-                    console.log("Failed " + err)
-                }
-                onAppInfoReceived: function(packageName, version, versionCode, isBeta) {
-                    scope.playVersion = {
-                        versionName: version,
-                        versionCode: versionCode,
-                        isBeta: isBeta
                     }
-                    versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                }
-                onAppInfoFailed: function(packageName, err) {
-                    scope.playVersion = null
-                    versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                    Component.onCompleted: versionsCodeField.text = downloadApk.currentVersionCode().toString()
                 }
 
-                onReady: {
-                    manualplayApi.requestAppInfo(packageField.text)
-                }
-
-            }
-
-            property var apkUrls: ""
-
-            GoogleApkDownloadTask {
-                id: manualPlayDownloadTask
-                playApi: manualplayApi
-                packageName: packageField.text
-                keepApks: false
-                dryrun: true
-                versionCode: Number.parseInt(versionsCodeField.text)//(manualgoogleLoginHelperInstance.chromeOS ? 1000000000 : 0) + versionBox.codes[versionBox.currentIndex]
-                onActiveChanged: {
-                    if(manualPlayDownloadTask.active) {
-                        scope.apkUrls = "";
+                MCheckBox {
+                    id: isChromeOS
+                    text: qsTr("IsChromeOS")
+                    Layout.bottomMargin: 10
+                    Component.onCompleted: {
+                        packageField.text = launcherSettings.chromeOSMode
                     }
                 }
-                onDownloadInfo: function (url) {
-                    scope.apkUrls = url
+
+                GoogleLoginHelper {
+                    id: manualgoogleLoginHelperInstance
+                    includeIncompatible: true
+                    singleArch: ""
+                    unlockkey: googleLoginHelperInstance.unlockkey
+                    chromeOS: isChromeOS.checked
+                    onAccountInfoChanged: {
+                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                    }
                 }
-                onError: function (err) {
-                    scope.apkUrls = err
+
+                GooglePlayApi {
+                    id: manualplayApi
+                    login: manualgoogleLoginHelperInstance
+
+                    onInitError: function (err) {
+                        console.log("Failed " + err)
+                    }
+                    onAppInfoReceived: function (packageName, version, versionCode, isBeta) {
+                        scope.playVersion = {
+                            "versionName": version,
+                            "versionCode": versionCode,
+                            "isBeta": isBeta
+                        }
+                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                    }
+                    onAppInfoFailed: function (packageName, err) {
+                        scope.playVersion = null
+                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                    }
+
+                    onReady: {
+                        manualplayApi.requestAppInfo(packageField.text)
+                    }
                 }
-                onFinished: {
-                    console.log("done")
+
+                property var apkUrls: ""
+
+                GoogleApkDownloadTask {
+                    id: manualPlayDownloadTask
+                    playApi: manualplayApi
+                    packageName: packageField.text
+                    keepApks: false
+                    dryrun: true
+                    versionCode: Number.parseInt(versionsCodeField.text) //(manualgoogleLoginHelperInstance.chromeOS ? 1000000000 : 0) + versionBox.codes[versionBox.currentIndex]
+                    onActiveChanged: {
+                        if (manualPlayDownloadTask.active) {
+                            scope.apkUrls = ""
+                        }
+                    }
+                    onDownloadInfo: function (url) {
+                        scope.apkUrls = url
+                    }
+                    onError: function (err) {
+                        scope.apkUrls = err
+                    }
+                    onFinished: {
+                        console.log("done")
+                    }
                 }
-            }
+
 
                 /*GoogleVersionChannel {
                     id: manualplayVerChannelInstance
                     playApi: manualplayApi
                 }*/
-            MTextField {
-                id: versionsCodeField
-                Layout.fillWidth: true
-            }
+                MTextField {
+                    id: versionsCodeField
+                    Layout.fillWidth: true
+                }
 
-            MButton {
-                text: qsTr("Get Download Info")
-                onClicked: manualPlayDownloadTask.start()
-            }
+                MButton {
+                    text: qsTr("Get Download Info")
+                    onClicked: manualPlayDownloadTask.start()
+                }
 
-            Flickable {
+                Flickable {
                     id: flick
 
-                    Layout.fillWidth: true; height: 100;
+                    Layout.fillWidth: true
+                    height: 100
                     contentWidth: edit.contentWidth
                     contentHeight: edit.contentHeight
                     clip: true
 
-                    function ensureVisible(r)
-                    {
+                    function ensureVisible(r) {
                         if (contentX >= r.x)
-                            contentX = r.x;
-                        else if (contentX+width <= r.x+r.width)
-                            contentX = r.x+r.width-width;
+                            contentX = r.x
+                        else if (contentX + width <= r.x + r.width)
+                            contentX = r.x + r.width - width
                         if (contentY >= r.y)
-                            contentY = r.y;
-                        else if (contentY+height <= r.y+r.height)
-                            contentY = r.y+r.height-height;
+                            contentY = r.y
+                        else if (contentY + height <= r.y + r.height)
+                            contentY = r.y + r.height - height
                     }
 
                     TextEdit {
@@ -188,7 +190,7 @@ ColumnLayout {
                         focus: true
                         wrapMode: TextEdit.Wrap
                         onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-                        text: "<style type=\"text/css\">a { color: lightblue; }</style>" +scope.apkUrls
+                        text: "<style type=\"text/css\">a { color: lightblue; }</style>" + scope.apkUrls
                         color: "white"
                         textFormat: Text.RichText
                         readOnly: true
@@ -203,12 +205,11 @@ ColumnLayout {
                     }
                 }
 
-            MButton {
-                text: qsTr("Close")
-                onClicked: downloadApk.close()
+                MButton {
+                    text: qsTr("Close")
+                    onClicked: downloadApk.close()
+                }
             }
-
-        }
         }
     }
 
@@ -235,9 +236,9 @@ ColumnLayout {
 
         MButton {
             Layout.fillWidth: true
-            text: (googleLoginHelper.account !== null) ? qsTr("Download .apk") : "<s>" + qsTr("Download .apk") + "</s>"
+            text: qsTr("Download .apk")
             onClicked: {
-                if(downloadApkLoader.item) {
+                if (downloadApkLoader.item) {
                     downloadApkLoader.item.open()
                 } else {
                     downloadApkLoader.sourceComponent = downloadApkComponent
@@ -248,7 +249,7 @@ ColumnLayout {
 
         MButton {
             Layout.fillWidth: true
-            text: (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || launcherSettings.trialMode || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? launcherSettings.trialMode ?  qsTr("Import trial .apk") : qsTr("Import .apk") : "<s>" + qsTr("Import .apk") + "</s>"
+            text: launcherSettings.trialMode ? qsTr("Import trial .apk") : qsTr("Import .apk")
             onClicked: apkImportWindow.pickFile()
             enabled: (googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense || launcherSettings.trialMode || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK)
         }

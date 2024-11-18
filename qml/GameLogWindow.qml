@@ -17,16 +17,19 @@ ColumnLayout {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 10
-            width: height
+            height: 34
+            width: 34
             onClicked: {
                 var text = ""
-                for(var i = 0; i < gameLog.count; i++) {
+                for (var i = 0; i < gameLog.count; i++) {
                     text += gameLog.get(i).display + "\n"
                 }
 
                 launcherSettings.clipboard = text
             }
             Image {
+                height: 18
+                width: 18
                 anchors.centerIn: parent
                 source: "qrc:/Resources/icon-copy.png"
                 smooth: false
@@ -115,6 +118,7 @@ ColumnLayout {
             property int myIndex: index
             color: "#ddd"
             selectionColor: "#842"
+            font.family: "monospace"
 
             Connections {
                 target: selectionArea
@@ -126,21 +130,21 @@ ColumnLayout {
             Component.onCompleted: updateSelection()
 
             function updateSelection() {
-                var keep = selectionArea.selStartIndex <= selectionArea.selEndIndex;
-                var selStartIndex = keep ? selectionArea.selStartIndex : selectionArea.selEndIndex;
-                var selStartPos = keep ? selectionArea.selStartPos : selectionArea.selEndPos;
-                var selEndIndex = keep ? selectionArea.selEndIndex : selectionArea.selStartIndex;
-                var selEndPos = keep ? selectionArea.selEndPos : selectionArea.selStartPos;
-                if(index < selStartIndex || index > selEndIndex) {
-                    delegateRoot.select(0, 0);
-                } else if(index > selStartIndex && index < selEndIndex) {
-                    delegateRoot.selectAll();
-                } else if(index === selStartIndex && index === selEndIndex) {
-                    delegateRoot.select(selStartPos, selEndPos);
-                } else if(index === selStartIndex) {
-                    delegateRoot.select(selStartPos, delegateRoot.length);
-                } else if(index === selEndIndex) {
-                    delegateRoot.select(0, selEndPos);
+                var keep = selectionArea.selStartIndex <= selectionArea.selEndIndex
+                var selStartIndex = keep ? selectionArea.selStartIndex : selectionArea.selEndIndex
+                var selStartPos = keep ? selectionArea.selStartPos : selectionArea.selEndPos
+                var selEndIndex = keep ? selectionArea.selEndIndex : selectionArea.selStartIndex
+                var selEndPos = keep ? selectionArea.selEndPos : selectionArea.selStartPos
+                if (index < selStartIndex || index > selEndIndex) {
+                    delegateRoot.select(0, 0)
+                } else if (index > selStartIndex && index < selEndIndex) {
+                    delegateRoot.selectAll()
+                } else if (index === selStartIndex && index === selEndIndex) {
+                    delegateRoot.select(selStartPos, selEndPos)
+                } else if (index === selStartIndex) {
+                    delegateRoot.select(selStartPos, delegateRoot.length)
+                } else if (index === selEndIndex) {
+                    delegateRoot.select(0, selEndPos)
                 }
             }
         }
@@ -170,7 +174,7 @@ ColumnLayout {
         Connections {
             target: launcher
             onLogAppended: {
-                if(view.ScrollBar.vertical.position + view.ScrollBar.vertical.size >= 1) {
+                if (view.ScrollBar.vertical.position + view.ScrollBar.vertical.size >= 1) {
                     console.log("bottom")
                     moveToBottom.running = true
                 }
@@ -180,19 +184,19 @@ ColumnLayout {
         Shortcut {
             sequence: StandardKey.Copy
             onActivated: {
-                var keep = selectionArea.selStartIndex <= selectionArea.selEndIndex;
-                var selStartIndex = keep ? selectionArea.selStartIndex : selectionArea.selEndIndex;
-                var selStartPos = keep ? selectionArea.selStartPos : selectionArea.selEndPos;
-                var selEndIndex = keep ? selectionArea.selEndIndex : selectionArea.selStartIndex;
-                var selEndPos = keep ? selectionArea.selEndPos : selectionArea.selStartPos;
+                var keep = selectionArea.selStartIndex <= selectionArea.selEndIndex
+                var selStartIndex = keep ? selectionArea.selStartIndex : selectionArea.selEndIndex
+                var selStartPos = keep ? selectionArea.selStartPos : selectionArea.selEndPos
+                var selEndIndex = keep ? selectionArea.selEndIndex : selectionArea.selStartIndex
+                var selEndPos = keep ? selectionArea.selEndPos : selectionArea.selStartPos
                 var text = ""
-                if(selStartIndex < gameLog.count) {
+                if (selStartIndex < gameLog.count) {
                     text += gameLog.get(selStartIndex).display.substring(selStartPos)
                 }
-                for(var i = selStartIndex + 1; i < gameLog.count && (i + 1) < selEndIndex; i++) {
+                for (var i = selStartIndex + 1; i < gameLog.count && (i + 1) < selEndIndex; i++) {
                     text += gameLog.get(i).display + "\n"
                 }
-                if(selEndIndex < gameLog.count) {
+                if (selEndIndex < gameLog.count) {
                     text += gameLog.get(selEndIndex).display.substring(0, selEndPos)
                 }
 
@@ -223,15 +227,14 @@ ColumnLayout {
             property int selStartPos
             property int selEndPos
 
-
             signal selectionChanged
 
             onPressed: {
                 console.log("pressed " + mouseX + "-" + mouseY)
                 var y = mouseY + view.contentY
                 selStartIndex = view.indexAt(mouseX, y)
-                var item = view.itemAtIndex(selStartIndex);
-                if(item) {
+                var item = view.itemAtIndex(selStartIndex)
+                if (item) {
                     selStartPos = item.positionAt(mouseX - item.x, y - item.y)
                 }
                 selEndIndex = selStartIndex
@@ -240,18 +243,18 @@ ColumnLayout {
             }
 
             function changePos() {
-                if(!pressed) {
+                if (!pressed) {
                     preventStealing = false
                     return
                 }
-                preventStealing = true;
+                preventStealing = true
                 var y = mouseY + view.contentY
                 var offset = mouseY > height ? 1 : mouseY < 0 ? -1 : 0
-                if(offset < 0) {
+                if (offset < 0) {
                     y = view.contentY
                     offset *= -mouseY
                 }
-                if(offset > 0) {
+                if (offset > 0) {
                     var lastVisible = view.visibleChildren[view.visibleChildren.length - 1]
                     y = view.contentY + lastVisible.y + lastVisible.height - 1
                     offset *= mouseY - height
@@ -259,11 +262,16 @@ ColumnLayout {
 
                 selEndIndex = view.indexAt(mouseX, y)
 
-                var item = view.itemAtIndex(selEndIndex);
-                if(item) {
+                var item = view.itemAtIndex(selEndIndex)
+                if (item) {
                     selEndPos = item.positionAt(mouseX - item.x, y - item.y)
                 }
-                console.log(JSON.stringify({ selStartIndex, selStartPos, selEndIndex, selEndPos }))
+                console.log(JSON.stringify({
+                                               "selStartIndex": selStartIndex,
+                                               "selStartPos": selStartPos,
+                                               "selEndIndex": selEndIndex,
+                                               "selEndPos": selEndPos
+                                           }))
                 timer.offset = offset
                 timer.running = offset !== 0
 
@@ -279,18 +287,18 @@ ColumnLayout {
                 repeat: true
                 running: false
                 onTriggered: {
-                    if(!selectionArea.pressed) {
+                    if (!selectionArea.pressed) {
                         selectionArea.preventStealing = false
                         running = false
                         return
                     }
 
-                    if(offset > 0 && view.ScrollBar.vertical.position + view.ScrollBar.vertical.size >= 1) {
+                    if (offset > 0 && view.ScrollBar.vertical.position + view.ScrollBar.vertical.size >= 1) {
                         view.ScrollBar.vertical.position = 1 - view.ScrollBar.vertical.size
                         running = false
                         return
                     }
-                    if(offset < 0 && view.ScrollBar.vertical.position <= 0) {
+                    if (offset < 0 && view.ScrollBar.vertical.position <= 0) {
                         view.ScrollBar.vertical.position = 0
                         running = false
                         return
@@ -300,11 +308,6 @@ ColumnLayout {
                     selectionArea.changePos()
                 }
             }
-
-
         }
     }
-
-
-
 }

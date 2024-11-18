@@ -12,22 +12,28 @@ LauncherBase {
     headerContent: TabBar {
         background: null
         MTabButton {
-            text: qsTr("Provide your encryption Password")
+            text: qsTr("Unlock Credentials")
+            focusPolicy: Qt.NoFocus
         }
     }
 
     ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: 10
-        Layout.rightMargin: 10
+        Layout.margins: 20
 
-        Text {
+        MText {
             Layout.fillWidth: true
-            padding: 10
-            text: qsTr("This is not your Google Account Password. If you don't want to type it every time you open this Launcher, \"continue with invalid credentials\", then Open Settings, press logout and finally login without providing your own encryption Password")
+            text: qsTr("This is not your Google Account Password. If you don't want to type it every time you open this Launcher, check \"Continue with invalid credentials\", then open Settings, press logout and finally login without providing your own encryption password.")
             wrapMode: Text.Wrap
             color: "white"
+        }
+
+        MCheckBox {
+            id: continueInvalidCredentials
+            Layout.topMargin: 10
+            text: qsTr("Continue with invalid credentials")
+            focus: true
         }
 
         Item {
@@ -42,42 +48,46 @@ LauncherBase {
             Layout.bottomMargin: 15
             Layout.minimumHeight: warningText.height
             radius: 4
-            Text {
+            MText {
                 id: warningText
                 padding: 10
-                text: qsTr("Warning: Password is invalid")
+                text: qsTr("Password is invalid")
                 wrapMode: Text.WordWrap
                 width: parent.width
             }
 
             OpacityAnimator {
                 id: warningAnim
-                target: warning;
-                from: 1;
-                to: 0;
-                duration: 2000
+                target: warning
+                from: 1
+                to: 0
+                duration: 1000
                 running: false
+                easing.type: Easing.InExpo
             }
+        }
+
+        MText {
+            text: "Password"
+            font.bold: true
         }
 
         MTextField {
             id: pwd
             Layout.fillWidth: true
             echoMode: TextInput.Password
-            onAccepted: {
-                googleLoginHelperInstance.unlockkey = pwd.text
-                if(googleLoginHelperInstance.account && !googleLoginHelperInstance.hasEncryptedCredentials || continueInvalidCredentials.checked) {
-                    unlockLayout.finished()
-                } else {
-                    warning.opacity = 1
-                    warningAnim.restart()
-                }
+            enabled: !continueInvalidCredentials.checked
+            onAccepted: attemptUnlock()
+            onTextChanged: {
+                pwd.color = "#fff"
             }
-        }
-
-        MCheckBox {
-            id: continueInvalidCredentials
-            text: qsTr("Continue with invalid Credentials")
+            NumberAnimation on x {
+                id: shakeAnim
+                from: 3
+                to: -3
+                duration: 110
+                loops: 2
+            }
         }
     }
 
@@ -91,15 +101,20 @@ LauncherBase {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.rightMargin: 10
-            onClicked: {
-                googleLoginHelperInstance.unlockkey = pwd.text
-                if(googleLoginHelperInstance.account && !googleLoginHelperInstance.hasEncryptedCredentials || continueInvalidCredentials.checked) {
-                    unlockLayout.finished()
-                } else {
-                    warning.opacity = 1
-                    warningAnim.restart()
-                }
-            }
+            onClicked: attemptUnlock()
+        }
+    }
+
+    function attemptUnlock() {
+        googleLoginHelperInstance.unlockkey = pwd.text
+        if (googleLoginHelperInstance.account && !googleLoginHelperInstance.hasEncryptedCredentials || continueInvalidCredentials.checked) {
+            unlockLayout.finished()
+        } else {
+            warning.opacity = 1
+            warningAnim.restart()
+            shakeAnim.restart()
+            pwd.color = "#f88"
+            pwd.forceActiveFocus()
         }
     }
 }

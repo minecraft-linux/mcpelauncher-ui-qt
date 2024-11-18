@@ -89,7 +89,7 @@ Popup {
             id: baseHeader
             title: profile == null ? qsTr("Create profile") : qsTr("Edit profile")
             MButton {
-                text: qsTr("Delete profile")
+                text: qsTr("Delete")
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: 10
@@ -260,13 +260,20 @@ Popup {
                             Layout.fillWidth: true
                         }
                         MButton {
-                            text: "..."
                             enabled: dataDirCheck.checked
                             Layout.preferredHeight: dataDirPath.height
+                            Layout.minimumWidth: 40
                             onClicked: {
                                 if (dataDirPath.text !== null && dataDirPath.text.length > 0)
                                     dataDirPathDialog.folder = QmlUrlUtils.localFileToUrl(dataDirPath.text)
                                 dataDirPathDialog.open()
+                            }
+                            Image {
+                                anchors.centerIn: parent
+                                width: 20
+                                height: 20
+                                source: "qrc:/Resources/icon-folder.png"
+                                smooth: false
                             }
                         }
                         FolderDialog {
@@ -442,8 +449,8 @@ Popup {
                                     height: parent.height
                                     anchors.right: parent.right
                                     Image {
-                                        height: 3
-                                        width: 3
+                                        height: 20
+                                        width: 20
                                         anchors.centerIn: parent
                                         source: "qrc:/Resources/icon-delete.png"
                                         smooth: false
@@ -673,7 +680,7 @@ Popup {
             profile.env[envs.model.get(i).key] = envs.model.get(i).value
         }
         profile.commandline = commandline.text
-        if(adjustVersionCode && googleLoginHelperInstance.chromeOS && (profile.versionCode > 982000000 && profile.versionCode < 990000000 || profile.versionCode > 972000000 && profile.versionCode < 980000000)) {
+        if (adjustVersionCode && googleLoginHelperInstance.chromeOS && (profile.versionCode > 982000000 && profile.versionCode < 990000000 || profile.versionCode > 972000000 && profile.versionCode < 980000000)) {
             profile.versionCode = profile.versionCode + 1000000000
         }
         profile.save()

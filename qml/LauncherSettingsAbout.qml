@@ -51,8 +51,9 @@ ColumnLayout {
             delegate: Text {
                 font.pointSize: 10
                 textFormat: Text.RichText
-                text: "<style>a:link{color:#b9f;}</style><a href='%1'>&#129125;&nbsp;%2</a>".arg(modelData.link).arg(modelData.label)
+                text: "<a href='%1' style='color:#b9f;text-decoration:none;'>&#129125;&nbsp;%2</a>".arg(modelData.link).arg(modelData.label)
                 onLinkActivated: Qt.openUrlExternally(link)
+                opacity: hoveredLink ? 0.8 : 1.0
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.NoButton

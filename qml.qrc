@@ -43,6 +43,9 @@
         <file>Resources/icon-news.png</file>
         <file>Resources/icon-log.png</file>
         <file>Resources/icon-mods.png</file>
+        <file>Resources/icon-delete.png</file>
+        <file>Resources/icon-folder.png</file>
+        <file>Resources/icon-edit.svg</file>
         <file>qml/ThemedControls/MTabButton.qml</file>
         <file>qml/LauncherSettingsGeneral.qml</file>
         <file>qml/TroubleshooterWindow.qml</file>
@@ -54,6 +57,5 @@
         <file>qml/Mods.qml</file>
         <file>LICENSE</file>
         <file>qml/LauncherUnlock.qml</file>
-        <file>Resources/icon-delete.png</file>
     </qresource>
 </RCC>

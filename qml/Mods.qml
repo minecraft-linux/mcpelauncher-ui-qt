@@ -1,9 +1,10 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+
 import "ThemedControls"
 
-StackLayout {
+AnimatedStackLayout {
     id: stack
     property var elem: null
 
@@ -32,7 +33,7 @@ StackLayout {
             }
         }
 
-        StackLayout {
+        AnimatedStackLayout {
             currentIndex: tabs.currentIndex
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -45,64 +46,68 @@ StackLayout {
 
                 GridLayout {
                     id: gridLayout
-                    property int cellSize: Math.min(Math.max(250, window.height / 3), 400)
+                    property int cellSize: Math.min(Math.max(500, window.height / 3), 900)
                     property int padding: 15
                     anchors.centerIn: parent
                     width: parent.width - padding * 2
-                    columns: 1
+                    columns: Math.max(Math.round(width / cellSize), 1)
                     columnSpacing: padding
                     rowSpacing: padding
 
                     Repeater {
-                        id: newsGrid
+                        id: modsGrid
                         model: null
 
                         Rectangle {
                             id: contentBox
-                            Layout.minimumHeight: 300
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             Layout.columnSpan: 1
                             Layout.rowSpan: 1
                             color: "#222"
+                            height: iconImage.height + 20
 
-                            Image {
-                                id: newsImage
-                                property real ratio: 1
-                                anchors.top: parent.top
-                                anchors.bottom: descriptionBox.top
-                                width: parent.width
-                                fillMode: Image.PreserveAspectCrop
-                                source: modelData.image || "qrc:/Resources/icon-home.png"
-                                smooth: false
-                            }
+                            Row {
+                                anchors.fill: parent
+                                anchors.margins: 10
+                                spacing: 10
 
-                            Rectangle {
-                                id: descriptionBox
-                                width: parent.width
-                                height: descriptionContent.height
-                                anchors.bottom: parent.bottom
-                                color: "#111"
+                                Image {
+                                    id: iconImage
+                                    width: 100
+                                    height: 100
+                                    fillMode: Image.PreserveAspectFit
+                                    source: modelData.image || "qrc:/Resources/icon-home.png"
+                                    smooth: false
+                                }
+
                                 Column {
-                                    id: descriptionContent
-                                    width: parent.width
-                                    padding: 15
+                                    anchors.left: iconImage.right + 10
+                                    height: iconImage.height + 20
+                                    width: parent.width - iconImage.width - 30
                                     spacing: 5
 
                                     Text {
+                                        id: titleText
                                         text: modelData.name
-                                        width: parent.width - 2 * parent.padding
+                                        width: parent.width
+                                        font.bold: true
                                         color: "#fff"
                                         font.pointSize: 13
                                         font.weight: Font.Bold
-                                        wrapMode: Text.WordWrap
+                                        wrapMode: Text.Wrap
+                                        elide: Text.ElideRight
                                     }
+
                                     Text {
+                                        id: descriptionText
                                         text: modelData.description
-                                        width: parent.width - 2 * parent.padding
+                                        width: parent.width
+                                        height: parent.height - titleText.height - 20
                                         color: "#bbb"
                                         font.pointSize: 10
-                                        wrapMode: Text.WordWrap
+                                        wrapMode: Text.Wrap
+                                        elide: Text.ElideRight
                                     }
                                 }
                             }
@@ -176,30 +181,39 @@ StackLayout {
 
                 MBusyIndicator {
                     anchors.centerIn: parent
-                    visible: newsGrid.model === null
+                    visible: modsGrid.model === null
                 }
             }
 
-            MText {
+            MText {}
 
-            }
+            CenteredScrollView {
+                content: ColumnLayout {
+                    width: parent.width
+                    spacing: 16
+                    MText {
+                        text: qsTr("Welcome to our experimental mods section.")
+                        font.bold: true
+                        font.pointSize: 12
+                    }
+                    TextEdit {
+                        focus: true
+                        Layout.fillWidth: true
+                        textFormat: Text.RichText
+                        wrapMode: Text.WordWrap
+                        text: "<style type=\"text/css\">a { color: #6af; }</style>" + qsTr("Managing mods is not yet supported. To contribute your mod, please open a pull request on <a href=\"https://github.com/minecraft-linux/mcpelauncher-moddb\">minecraft-linux/mcpelauncher-moddb</a>.<br/><br/>Mods are a collection of .so files (also on macOS) placed inside the `mods` folder. This folder is located within your data root, which you can find in Settings > Storage. The `mods` folder does not exist by default, so you'll need to create it. Extract zip files directly into the `mods` folder without creating subfolders.  .so files should be directly below the `mods` folder.<br/><br/><font color=\"#f66\">Do not report crashes to the launcher's issue tracker when mods are enabled.</font>")
+                        font.pointSize: 10
+                        color: "#fff"
+                        readOnly: true
+                        selectByMouse: true
+                        onLinkActivated: Qt.openUrlExternally(link)
 
-            TextEdit {
-                focus: true
-                Layout.fillWidth: true
-                wrapMode: "WordWrap"
-                text: "<style type=\"text/css\">a { color: lightblue; }</style>" + qsTr("Welcome to our experimental mods section, managing mods is not supported yet.<br/>To contribute your mod open a PR to <a href=\"https://github.com/minecraft-linux/mcpelauncher-moddb\">minecraft-linux/mcpelauncher-moddb</a><br/>Mods are a collection of .so (also on macOS) files placed inside the mods folder under the data root found in Settings>Storage \"data root\" button, you have to create this folder and it doesn't exist by default. Zips needs to be extracted into the mods folder without creating subfolders, .so files must be directly below the mods folder.<br/><font color=\"#f66\">Do not report crashs to the issue tracker of the launcher with enabled mods.</font>")
-
-                color: "white"
-                textFormat: Text.RichText
-                readOnly: true
-                selectByMouse: true
-                onLinkActivated: Qt.openUrlExternally(link)
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    acceptedButtons: Qt.NoButton
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                            acceptedButtons: Qt.NoButton
+                        }
+                    }
                 }
             }
         }
@@ -241,117 +255,133 @@ StackLayout {
             list.articlesCount = resp.length
             list.articlesOffset = resp.length + 1
             list.articlesPerPage = resp.length
-            if (newsGrid.model === null) {
-                newsGrid.model = resp
+            if (modsGrid.model === null) {
+                modsGrid.model = resp
             } else {
-                var model = newsGrid.model;
+                var model = modsGrid.model
                 model.push.apply(model, resp)
-                newsGrid.model = model
+                modsGrid.model = model
             }
         }
 
         Component.onCompleted: loadMods()
     }
-    ColumnLayout{
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            spacing: 0
 
-            RowLayout {
-                MButton {
-                    text: qsTr("Back")
-                    onClicked: {
-                        stack.currentIndex = 0
-                    }
+    ColumnLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        spacing: 0
+
+        RowLayout {
+            Layout.margins: 15
+            spacing: 15
+            MButton {
+                text: qsTr("Back")
+                onClicked: {
+                    stack.currentIndex = 0
+                }
+            }
+            MText {
+                font.bold: true
+                font.pointSize: 17
+                text: qsTr("Mods") + " / " + (stack.elem && stack.elem.name || qsTr("Untitled Mod"))
+            }
+        }
+
+        CenteredScrollView {
+            content: ColumnLayout {
+                width: parent.width
+                spacing: 10
+
+                Image {
+                    Layout.fillWidth: true
+                    Layout.maximumHeight: 200
+                    Layout.bottomMargin: 30
+                    fillMode: Image.PreserveAspectFit
+                    source: stack.elem && stack.elem.image || "qrc:/Resources/icon-home.png"
+                    smooth: false
                 }
 
                 MText {
-                    font.bold: true
-                    font.pointSize: 20
-                    text: stack.elem && stack.elem.name || qsTr("Untitled Mod")
+                    Layout.fillWidth: true
+                    wrapMode: TextEdit.Wrap
+                    text: stack.elem && stack.elem.description || ""
                 }
-            }
 
-            Image {
-                width: parent.width
-                fillMode: Image.PreserveAspectCrop
-                source: stack.elem && stack.elem.image || "qrc:/Resources/icon-home.png"
-                smooth: false
-            }
-
-            MText {
-                text: stack.elem && stack.elem.description || ""
-            }
-
-            MText {
-                text: stack.elem && stack.elem.url || ""
-
-            }
-
-            TextEdit {
-                id: edit
-                focus: true
-                wrapMode: TextEdit.Wrap
-                text: "<style type=\"text/css\">a { color: lightblue; }</style><a href=\"" + (stack.elem && stack.elem.url && stack.elem.url.indexOf("\"") === -1 && stack.elem.url || "") + "\">Homepage</a>"
-                color: "white"
-                textFormat: Text.RichText
-                readOnly: true
-                selectByMouse: true
-                onLinkActivated: Qt.openUrlExternally(link)
-
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    acceptedButtons: Qt.NoButton
+                MText {
+                    Layout.fillWidth: true
+                    wrapMode: TextEdit.Wrap
+                    color: "#bbb"
+                    text: stack.elem && stack.elem.url || ""
                 }
-            }
 
-            ListView {
-                activeFocusOnTab: true
-                id: downloads
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                anchors.margins: 4
-                clip: true
-                flickableDirection: Flickable.VerticalFlick
-                model: {
-                    if(!stack.elem) {
-                        return [];
+                TextEdit {
+                    id: edit
+                    focus: true
+                    Layout.fillWidth: true
+                    wrapMode: TextEdit.Wrap
+                    text: "<style type=\"text/css\">a { color: lightblue; }</style><a href=\"" + (stack.elem && stack.elem.url && stack.elem.url.indexOf("\"") === -1 && stack.elem.url || "") + "\">Homepage</a>"
+                    color: "white"
+                    textFormat: Text.RichText
+                    readOnly: true
+                    selectByMouse: true
+                    onLinkActivated: Qt.openUrlExternally(link)
+                    font.pointSize: 10
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        acceptedButtons: Qt.NoButton
                     }
-                    return stack.elem.versions
                 }
-                delegate: ItemDelegate {
-                    id: control
-                    width: parent.width
-                    font.pointSize: 11
-                    contentItem: RowLayout {
-                        MText {
-                            text: modelData.version
-                            Layout.fillWidth: true
+
+                ListView {
+                    id: downloads
+                    activeFocusOnTab: true
+                    Layout.fillWidth: true
+                    Layout.minimumHeight: 60 * count
+                    anchors.margins: 4
+                    clip: true
+                    flickableDirection: Flickable.VerticalFlick
+                    model: {
+                        if (!stack.elem) {
+                            return []
                         }
-                        MButton {
-                            text: qsTr("Download")
-                            property var abis: googleLoginHelperInstance.getAbis(false)
-                            property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
-                            enabled: modelData.assets[arch] && modelData.assets[arch].length > 0 || false
-                            onClicked: {
-                                console.log(JSON.stringify(modelData.assets))
-                                console.log(arch)
-                                Qt.openUrlExternally(modelData.assets[arch])
+                        return stack.elem.versions
+                    }
+                    delegate: ItemDelegate {
+                        id: control
+                        width: parent.width
+                        font.pointSize: 11
+                        contentItem: RowLayout {
+                            MText {
+                                text: modelData.version
+                                Layout.fillWidth: true
+                            }
+                            MButton {
+                                text: qsTr("Download")
+                                property var abis: googleLoginHelperInstance.getAbis(false)
+                                property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
+                                enabled: modelData.assets[arch] && modelData.assets[arch].length > 0 || false
+                                onClicked: {
+                                    console.log(JSON.stringify(modelData.assets))
+                                    console.log(arch)
+                                    Qt.openUrlExternally(modelData.assets[arch])
+                                }
                             }
                         }
-                    }
 
-                    onClicked: downloads.currentIndex = index
-                    highlighted: ListView.isCurrentItem
-                    background: Rectangle {
-                        color: control.highlighted ? "#226322" : (control.down ? "#338833" : (control.hovered ? "#222" : "transparent"))
+                        onClicked: downloads.currentIndex = index
+                        highlighted: ListView.isCurrentItem
+                        background: Rectangle {
+                            color: control.highlighted ? "#226322" : (control.down ? "#338833" : (control.hovered ? "#222" : "transparent"))
+                        }
                     }
+                    highlightResizeVelocity: -1
+                    highlightMoveVelocity: -1
+                    currentIndex: -1
+                    ScrollBar.vertical: ScrollBar {}
                 }
-                highlightResizeVelocity: -1
-                highlightMoveVelocity: -1
-                currentIndex: -1
-                ScrollBar.vertical: ScrollBar {}
             }
 
             MButton {
@@ -361,15 +391,17 @@ StackLayout {
                     progress.indeterminate = true
                 }
             }
+        }
 
-            MProgressBar {
-                visible: false
-                id: progress
-                Layout.fillWidth: true
-                value: 0.8
-                indeterminate: false
-                label: qsTr("Download Progress")
-                width: parent.width
-                Layout.preferredHeight: 20
-            }
-        }}
+        MProgressBar {
+            id: progress
+            visible: false
+            Layout.fillWidth: true
+            value: 0.8
+            indeterminate: false
+            label: qsTr("Download Progress")
+            width: parent.width
+            Layout.preferredHeight: 30
+        }
+    }
+}

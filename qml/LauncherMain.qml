@@ -108,7 +108,10 @@ LauncherBase {
         } else {
             console.log("Bug: No version")
         }
-        return { versionName: "Invalid", versionCode: 0 }
+        return {
+            "versionName": "Invalid",
+            "versionCode": 0
+        }
     }
 
     Rectangle {
@@ -213,10 +216,9 @@ LauncherBase {
                 z: hovered ? 1 : -1
                 Image {
                     anchors.centerIn: parent
-                    source: "qrc:/Resources/icon-edit.png"
-                    height: 20
-                    width: 20
-                    smooth: false
+                    source: "qrc:/Resources/icon-edit.svg"
+                    height: 24
+                    width: 24
                     opacity: enabled ? 1.0 : 0.3
                 }
                 enabled: !(playDownloadTask.active || apkExtractionTask.active || gameLauncher.running)
@@ -236,15 +238,15 @@ LauncherBase {
             property bool canDownload: googleLoginHelper.account !== null && playVerChannel.licenseStatus == 3
 
             text: (isVersionsInitialized && (playVerChannel.licenseStatus !== 0 && playVerChannel.licenseStatus !== 1) /* Fail or Succeeded */
-                   ) ? ((playVerChannel.hasVerifiedLicense || launcherSettings.trialMode || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) && (canDownload || !needsDownload()) ? (gameLauncher.running ? qsTr("Game is running") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : googleLoginHelper.account !== null ? qsTr("Ask Google Again") :  qsTr("Sign In")) : qsTr("Please wait...")
+                   ) ? ((playVerChannel.hasVerifiedLicense || launcherSettings.trialMode || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) && (canDownload || !needsDownload()) ? (gameLauncher.running ? qsTr("Game is running") : (checkSupport() ? (needsDownload() ? (googleLoginHelper.account !== null ? (profileManager.activeProfile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY && googleLoginHelper.hideLatest ? qsTr("Please sign in again") : qsTr("Download and play")) : qsTr("Sign in")) : qsTr("Play")) : qsTr("Unsupported Version"))).toUpperCase() : googleLoginHelper.account !== null ? qsTr("Ask Google Again") : qsTr("Sign In")) : qsTr("Please wait...")
             subText: (isVersionsInitialized && (playVerChannel.licenseStatus !== 0 && playVerChannel.licenseStatus !== 1) /* Fail or Succeeded */
-                                                ) ? ((playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? "" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "Failed to obtain apk url") : "..."
+                      ) ? ((playVerChannel.hasVerifiedLicense || !LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) ? (gameLauncher.running ? "" : (getDisplayedVersionName() ? ("Minecraft " + getDisplayedVersionName()).toUpperCase() : qsTr("Please wait..."))) : "Failed to obtain apk url") : "..."
             enabled: !gameLauncher.running && (isVersionsInitialized && (playVerChannel.licenseStatus !== 0 && playVerChannel.licenseStatus !== 1) /* Fail or Succeeded */
                                                ) && !(playDownloadTask.active || apkExtractionTask.active || updateChecker.active || !checkSupport()) && (getDisplayedVersionName())
 
             onClicked: {
                 if ((!playVerChannel.hasVerifiedLicense || !canDownload && needsDownload()) && LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK) {
-                    if(googleLoginHelper.account !== null) {
+                    if (googleLoginHelper.account !== null) {
                         playVerChannel.playApi = null
                         playVerChannel.playApi = playApiInstance
                     } else {
@@ -312,7 +314,7 @@ LauncherBase {
         }
         allowedPackages: {
             var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
-            if(!launcherSettings.trialMode) {
+            if (!launcherSettings.trialMode) {
                 packages.push("com.mojang.minecraftpe")
             }
             return packages

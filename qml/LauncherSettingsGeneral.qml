@@ -103,11 +103,6 @@ ColumnLayout {
     }
 
     MButton {
-        text: qsTr("Open GameData Folder")
-        onClicked: Qt.openUrlExternally(launcherSettings.gameDataDir)
-    }
-
-    MButton {
         text: qsTr("Open Gamepad Tool")
         onClicked: gamepadTool.show()
     }

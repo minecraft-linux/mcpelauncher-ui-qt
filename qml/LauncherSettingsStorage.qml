@@ -22,7 +22,7 @@ ColumnLayout {
         fileMode: FileDialog.OpenFiles
 
         onAccepted: {
-            for(var i = 0; i < filePicker.currentFiles.length; i++) {
+            for (var i = 0; i < filePicker.currentFiles.length; i++) {
                 gameLauncher.pendingFiles.push(filePicker.currentFiles[i])
             }
             gameLauncher.importFiles()
@@ -31,13 +31,13 @@ ColumnLayout {
 
     RowLayout {
         Layout.fillWidth: true
-
         MTextField {
             id: uri
             Layout.fillWidth: true
             text: "minecraft://"
         }
         MButton {
+            Layout.maximumHeight: uri.height
             text: gameLauncher.running ? qsTr("Open Uri") : qsTr("Open Uri (pending until launch)")
             onClicked: {
                 gameLauncher.pendingFiles.push(uri.text)
@@ -48,69 +48,92 @@ ColumnLayout {
 
     HorizontalDivider {}
 
-    Text {
-        Layout.fillWidth: true
+    MText {
         text: qsTr("Game Directories")
         font.bold: true
-        font.pointSize: 10
-        color: "#fff"
+        font.pointSize: 11
+        Layout.topMargin: 10
     }
 
-    GridLayout {
-        Layout.fillWidth: true
-        columns: parent.width < 600 ? 2 : 4
-
-        MButton {
-            text: qsTr("Open Data Root")
-            Layout.fillWidth: true
-            onClicked: Qt.openUrlExternally(window.getCurrentGameDataDir())
-        }
-        MButton {
-            text: qsTr("Open Worlds")
-            Layout.fillWidth: true
-            onClicked: Qt.openUrlExternally(window.getCurrentGameDataDir() + "/games/com.mojang/minecraftWorlds")
-        }
-        MButton {
-            text: qsTr("Open Resource Packs")
-            Layout.fillWidth: true
-            onClicked: Qt.openUrlExternally(window.getCurrentGameDataDir() + "/games/com.mojang/resource_packs")
-        }
-        MButton {
-            text: qsTr("Open Behavior Packs")
-            Layout.fillWidth: true
-            onClicked: Qt.openUrlExternally(window.getCurrentGameDataDir() + "/games/com.mojang/behavior_packs")
-        }
+    MText {
+        text: qsTr("Game directories for current selected profile: ") + profileManagerInstance.activeProfile.name
+        Layout.bottomMargin: 5
     }
 
-    Flickable {
-        id: flick
+    Repeater {
+        property string gameDataDir: window.getCurrentGameDataDir()
+        model: [{
+                "label": "Data Root",
+                "path": gameDataDir
+            }, {
+                "label": "Worlds",
+                "path": gameDataDir + "/games/com.mojang/minecraftWorlds"
+            }, {
+                "label": "Resource Packs",
+                "path": gameDataDir + "/games/com.mojang/resource_packs"
+            }, {
+                "label": "Behaviour Packs",
+                "path": gameDataDir + "/games/com.mojang/behavior_packs"
+            }]
+        delegate: pathField
+    }
 
-        Layout.fillWidth: true; height: 100;
-        contentWidth: edit.contentWidth
-        contentHeight: edit.contentHeight
-        clip: true
+    HorizontalDivider {}
 
-        function ensureVisible(r)
-        {
-            if (contentX >= r.x)
-                contentX = r.x;
-            else if (contentX+width <= r.x+r.width)
-                contentX = r.x+r.width-width;
-            if (contentY >= r.y)
-                contentY = r.y;
-            else if (contentY+height <= r.y+r.height)
-                contentY = r.y+r.height-height;
-        }
+    MText {
+        text: qsTr("Default Game Directories")
+        font.bold: true
+        font.pointSize: 11
+        Layout.topMargin: 10
+        Layout.bottomMargin: 10
+    }
 
-        TextEdit {
-            id: edit
-            focus: true
-            wrapMode: TextEdit.Wrap
-            onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-            text: qsTr("Data Root: %1\nWorlds: %2\nResource Packs: %3\nBehavior Packs: %4").arg(QmlUrlUtils.urlToLocalFile(window.getCurrentGameDataDir())).arg("games/com.mojang/minecraftWorlds").arg("games/com.mojang/resource_packs").arg("games/com.mojang/behavior_packs")
-            color: "white"
-            readOnly: true
-            selectByMouse: true
+    Repeater {
+        property string gameDataDir: window.getCurrentGameDataDir()
+        model: [{
+                "label": "Game Data",
+                "path": gameDataDir
+            }, {
+                "label": "Versions",
+                "path": gameDataDir + "/versions"
+            }]
+        delegate: pathField
+    }
+
+    Component {
+        id: pathField
+        Column {
+            Layout.fillWidth: true
+            Layout.bottomMargin: 5
+            spacing: 4
+            MText {
+                text: qsTr(modelData.label)
+                font.bold: true
+            }
+            RowLayout {
+                width: parent.width
+                height: 35
+                MTextField {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    text: QmlUrlUtils.urlToLocalFile(modelData.path)
+                    readOnly: true
+                    color: "#aaa"
+                    hoverEnabled: false
+                }
+                MButton {
+                    Layout.minimumWidth: 40
+                    Layout.fillHeight: true
+                    onClicked: Qt.openUrlExternally(modelData.path)
+                    Image {
+                        anchors.centerIn: parent
+                        width: 20
+                        height: 20
+                        source: "qrc:/Resources/icon-folder.png"
+                        smooth: false
+                    }
+                }
+            }
         }
     }
 }
