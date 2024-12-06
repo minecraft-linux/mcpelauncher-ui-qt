@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "ThemedControls"
+import "Components"
 
 ColumnLayout {
     Layout.fillWidth: true

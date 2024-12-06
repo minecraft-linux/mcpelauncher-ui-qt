@@ -40,8 +40,7 @@ Window {
 
     Component {
         id: panelLogin
-
-        LauncherLogin {
+        LoginScreen {
             googleLoginHelper: googleLoginHelperInstance
             versionManager: versionManagerInstance
             onFinished: stackView.replace(panelMain)
@@ -75,14 +74,12 @@ Window {
 
     Component {
         id: panelMain
-
-        Launcher {}
+        MainNavigation {}
     }
 
     Component {
         id: panelError
-
-        LauncherUnsupported {
+        UnsupportedScreen {
             googleLoginHelper: googleLoginHelperInstance
             onFinished: {
                 if (needsToLogIn()) {
@@ -98,19 +95,16 @@ Window {
 
     Component {
         id: panelUnlock
-
-        LauncherUnlock {
+        UnlockScreen {
             onFinished: {
                 next()
             }
         }
     }
 
-
     Component {
         id: panelChangelog
-
-        LauncherChangeLog {
+        ChangelogScreen {
             onFinished: {
                 launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
                 next()
@@ -153,8 +147,6 @@ Window {
         text: qsTr("The Minecraft Version you are trying to run is unsupported.<br/><b>if you wanted to play a new Release please wait patiently for an update,<br/>please choose a compatible version from the profile Editor</b>")
     }
 
-
-
     GameLauncher {
         id: gameLauncher
 
@@ -186,7 +178,7 @@ Window {
         }
         function importFiles() {
             if (running) {
-                if(pendingFiles.length > 0) {
+                if (pendingFiles.length > 0) {
                     var file = pendingFiles.shift()
                     startFile(file)
                 }
@@ -276,7 +268,7 @@ Window {
     function next() {
         if (!googleLoginHelperInstance.isSupported()) {
             stackView.push(panelError)
-        } else if(googleLoginHelperInstance.hasEncryptedCredentials && !hasAskedForKey) {
+        } else if (googleLoginHelperInstance.hasEncryptedCredentials && !hasAskedForKey) {
             hasAskedForKey = true
             stackView.push(panelUnlock)
         } else {

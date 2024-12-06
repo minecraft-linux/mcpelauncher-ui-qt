@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
-import "ThemedControls"
+import "Components"
 import Qt.labs.platform
 import io.mrarm.mcpelauncher 1.0
 

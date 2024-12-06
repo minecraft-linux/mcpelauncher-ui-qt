@@ -1,10 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
-LauncherBase {
+BaseScreen {
     signal finished
     id: unlockLayout
     spacing: 0

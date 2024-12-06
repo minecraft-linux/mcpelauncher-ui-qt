@@ -3,10 +3,10 @@ import QtQuick.Window
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtQuick.Controls
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
-LauncherBase {
+BaseScreen {
     property GoogleLoginHelper googleLoginHelper
     signal finished
     id: rowLayout

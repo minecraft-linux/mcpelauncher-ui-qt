@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import "ThemedControls"
+import "Components"
 
 MComboBox {
     property var profiles: profileManager.profiles

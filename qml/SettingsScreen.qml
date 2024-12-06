@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {
@@ -46,19 +46,19 @@ ColumnLayout {
         Layout.fillWidth: true
 
         CenteredScrollView {
-            content: LauncherSettingsGeneral {}
+            content: SettingsGeneralSection {}
         }
         CenteredScrollView {
-            content: LauncherSettingsStorage {}
+            content: SettingsStorageSection {}
         }
         CenteredScrollView {
-            content: LauncherSettingsVersions {}
+            content: SettingsVersionsSection {}
         }
         CenteredScrollView {
-            content: LauncherSettingsDev {}
+            content: SettingsDevSection {}
         }
         CenteredScrollView {
-            content: LauncherSettingsAbout {}
+            content: SettingsAboutSection {}
         }
     }
 }

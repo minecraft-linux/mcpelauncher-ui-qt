@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Dialogs
 import Qt.labs.platform
-import "ThemedControls"
+import "Components"
 
 ColumnLayout {
     id: columnlayout

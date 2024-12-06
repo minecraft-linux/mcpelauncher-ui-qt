@@ -1,41 +1,51 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/ThemedControls/TransparentButton.qml</file>
-        <file>qml/ThemedControls/PlayButton.qml</file>
-        <file>qml/ThemedControls/MComboBox.qml</file>
-        <file>qml/ThemedControls/MProgressBar.qml</file>
-        <file>qml/ThemedControls/MTextField.qml</file>
-        <file>qml/ThemedControls/MBusyIndicator.qml</file>
-        <file>qml/ThemedControls/MButton.qml</file>
-        <file>qml/ThemedControls/MCheckBox.qml</file>
-        <file>qml/ThemedControls/BaseHeader.qml</file>
-        <file>qml/ThemedControls/HorizontalDivider.qml</file>
-        <file>qml/ThemedControls/MSideBarItem.qml</file>
-        <file>qml/ThemedControls/CenteredScrollView.qml</file>
-        <file>qml/ThemedControls/AnimatedStackLayout.qml</file>
-        <file>qml/ThemedControls/FocusBorder.qml</file>
-        <file>qml/ThemedControls/MText.qml</file>
-        <file>qml/MinecraftNews.qml</file>
-        <file>qml/Launcher.qml</file>
-        <file>qml/LauncherMain.qml</file>
-        <file>qml/LauncherBase.qml</file>
-        <file>qml/LauncherLogin.qml</file>
+        <file>qml/MainNavigation.qml</file>
+        <file>qml/ProfileEditPopup.qml</file>
         <file>qml/ProfileComboBox.qml</file>
+        <file>qml/GamepadTool.qml</file>
         <file>qml/GoogleTosApprovalWindow.qml</file>
-        <file>qml/EditProfileWindow.qml</file>
-        <file>qml/LauncherUnsupported.qml</file>
-        <file>qml/LauncherSettingsDev.qml</file>
-        <file>qml/LauncherSettingsStorage.qml</file>
-        <file>qml/LauncherSettingsAbout.qml</file>
-        <file>qml/LauncherChangeLog.qml</file>
-        <file>qml/LauncherSettingsWindow.qml</file>
-        <file>qml/GameLogWindow.qml</file>
-        <file>Resources/noise.png</file>
+        <file>qml/TroubleshooterWindow.qml</file>
+        <file>qml/ApkImportWindow.qml</file>
+        <file>qml/ApkImportHelper.qml</file>
+        <file>qml/GamepadInputField.qml</file>
+        <file>qml/BaseScreen.qml</file>
+        <file>qml/LoginScreen.qml</file>
+        <file>qml/ChangelogScreen.qml</file>
+        <file>qml/UnsupportedScreen.qml</file>
+        <file>qml/UnlockScreen.qml</file>
+        <file>qml/HomeScreen.qml</file>
+        <file>qml/NewsScreen.qml</file>
+        <file>qml/ModsScreen.qml</file>
+        <file>qml/GameLogScreen.qml</file>
+        <file>qml/SettingsScreen.qml</file>
+        <file>qml/SettingsAboutSection.qml</file>
+        <file>qml/SettingsDevSection.qml</file>
+        <file>qml/SettingsGeneralSection.qml</file>
+        <file>qml/SettingsStorageSection.qml</file>
+        <file>qml/SettingsVersionsSection.qml</file>
+        <file>qml/Components/AnimatedStackLayout.qml</file>
+        <file>qml/Components/BaseHeader.qml</file>
+        <file>qml/Components/CenteredScrollView.qml</file>
+        <file>qml/Components/FocusBorder.qml</file>
+        <file>qml/Components/HorizontalDivider.qml</file>
+        <file>qml/Components/MBusyIndicator.qml</file>
+        <file>qml/Components/MButton.qml</file>
+        <file>qml/Components/MCheckBox.qml</file>
+        <file>qml/Components/MComboBox.qml</file>
+        <file>qml/Components/MProgressBar.qml</file>
+        <file>qml/Components/MSideBarItem.qml</file>
+        <file>qml/Components/MTabButton.qml</file>
+        <file>qml/Components/MText.qml</file>
+        <file>qml/Components/MTextField.qml</file>
+        <file>qml/Components/PlayButton.qml</file>
+        <file>qml/Components/TransparentButton.qml</file>
         <file>Resources/mcpelauncher-logo.svg</file>
         <file>Resources/mcpelauncher-icon.svg</file>
         <file>Resources/green-button.png</file>
         <file>Resources/check.png</file>
+        <file>Resources/noise.png</file>
         <file>Resources/icon-edit.png</file>
         <file>Resources/icon-settings.png</file>
         <file>Resources/icon-copy.png</file>
@@ -46,16 +56,6 @@
         <file>Resources/icon-delete.png</file>
         <file>Resources/icon-folder.png</file>
         <file>Resources/icon-edit.svg</file>
-        <file>qml/ThemedControls/MTabButton.qml</file>
-        <file>qml/LauncherSettingsGeneral.qml</file>
-        <file>qml/TroubleshooterWindow.qml</file>
-        <file>qml/LauncherSettingsVersions.qml</file>
-        <file>qml/ApkImportWindow.qml</file>
-        <file>qml/ApkImportHelper.qml</file>
-        <file>qml/GampadTool.qml</file>
-        <file>qml/GamepadInputField.qml</file>
-        <file>qml/Mods.qml</file>
         <file>LICENSE</file>
-        <file>qml/LauncherUnlock.qml</file>
     </qresource>
 </RCC>

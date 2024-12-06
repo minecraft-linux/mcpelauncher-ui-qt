@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {

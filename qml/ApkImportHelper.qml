@@ -5,7 +5,7 @@ import QtQuick.Dialogs
 import QtQuick.Controls
 import Qt.labs.platform
 import io.mrarm.mcpelauncher 1.0
-import "ThemedControls"
+import "Components"
 
 Item {
     signal started
@@ -64,7 +64,7 @@ Item {
         allowIncompatible: root.allowIncompatible
         allowedPackages: {
             var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
-            if(!root.trialMode) {
+            if (!root.trialMode) {
                 packages.push("com.mojang.minecraftpe")
             }
             return packages

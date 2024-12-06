@@ -4,7 +4,7 @@ import QtQuick.Window
 import QtQuick.Dialogs
 import QtQuick.Controls
 import Qt.labs.platform
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 Popup {

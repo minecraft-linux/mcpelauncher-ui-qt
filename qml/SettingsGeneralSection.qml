@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
-import "ThemedControls"
+import "Components"
 
 ColumnLayout {
     width: parent.width
@@ -107,7 +107,7 @@ ColumnLayout {
         onClicked: gamepadTool.show()
     }
 
-    GampadTool {
+    GamepadTool {
         id: gamepadTool
     }
 

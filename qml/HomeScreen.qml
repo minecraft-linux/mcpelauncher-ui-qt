@@ -5,10 +5,10 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Qt.labs.platform
 import Qt.labs.folderlistmodel
-import "ThemedControls"
+import "Components"
 import io.mrarm.mcpelauncher 1.0
 
-LauncherBase {
+BaseScreen {
     property GoogleLoginHelper googleLoginHelper
     property VersionManager versionManager
     property ProfileManager profileManager
@@ -166,7 +166,7 @@ LauncherBase {
         }
     }
 
-    EditProfileWindow {
+    ProfileEditPopup {
         id: profileEditPopup
         onAboutToHide: profileComboBox.onAddProfileResult(profileEditPopup.profile)
         versionManager: rowLayout.versionManager

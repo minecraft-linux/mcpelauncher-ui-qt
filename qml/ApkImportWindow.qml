@@ -4,7 +4,7 @@ import QtQuick.Window
 import QtQuick.Dialogs
 import QtQuick.Controls
 import io.mrarm.mcpelauncher 1.0
-import "ThemedControls"
+import "Components"
 
 Window {
     property VersionManager versionManager

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import "ThemedControls"
+import "Components"
 
 RowLayout {
     spacing: 0
@@ -70,7 +70,7 @@ RowLayout {
 
     Component {
         id: launcherHomePage
-        LauncherMain {
+        HomeScreen {
             googleLoginHelper: googleLoginHelperInstance
             versionManager: versionManagerInstance
             profileManager: profileManagerInstance
@@ -84,12 +84,12 @@ RowLayout {
 
     Component {
         id: launcherNewsPage
-        MinecraftNews {}
+        NewsScreen {}
     }
 
     Component {
         id: launcherModsPage
-        Mods {}
+        ModsScreen {}
     }
 
     ListModel {
@@ -99,19 +99,21 @@ RowLayout {
     Connections {
         target: gameLauncher
         onLogCleared: gameLog.clear()
-        onLogAppended: gameLog.append({ display: text.substring(0, text.length - 1) })
+        onLogAppended: gameLog.append({
+                                          "display": text.substring(0, text.length - 1)
+                                      })
     }
 
     Component {
         id: gameLogPage
-        GameLogWindow {
+        GameLogScreen {
             launcher: gameLauncher
         }
     }
 
     Component {
         id: launcherSettingsPage
-        LauncherSettingsWindow {
+        SettingsScreen {
             googleLoginHelper: googleLoginHelperInstance
             versionManager: versionManagerInstance
             playVerChannel: playVerChannelInstance
