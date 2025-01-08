@@ -56,6 +56,13 @@ RowLayout {
                 onClicked: updateIndex(4)
                 checked: currentIndex == 4
             }
+            MSideBarItem {
+                text: qsTr("Exit")
+                iconSource: "qrc:/Resources/icon-exit.png"
+                showText: useWideLayout
+                onClicked: Qt.quit()
+                checked: false
+            }
         }
     }
 
