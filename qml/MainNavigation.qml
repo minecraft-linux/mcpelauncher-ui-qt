@@ -57,6 +57,7 @@ RowLayout {
                 checked: currentIndex == 4
             }
             MSideBarItem {
+                visible: launcherSettings.showExitButton
                 text: qsTr("Exit")
                 iconSource: "qrc:/Resources/icon-exit.png"
                 showText: useWideLayout

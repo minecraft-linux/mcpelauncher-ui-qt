@@ -79,6 +79,12 @@ ColumnLayout {
     }
 
     MCheckBox {
+        text: qsTr("Show exit button in navigation bar")
+        Component.onCompleted: checked = launcherSettings.showExitButton
+        onCheckedChanged: launcherSettings.showExitButton = checked
+    }
+
+    MCheckBox {
         text: qsTr("ChromeOS Mode")
         Component.onCompleted: checked = launcherSettings.chromeOSMode
         onCheckedChanged: launcherSettings.chromeOSMode = checked

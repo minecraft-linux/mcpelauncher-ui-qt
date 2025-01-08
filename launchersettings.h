@@ -16,6 +16,7 @@ class LauncherSettings : public QObject {
     Q_PROPERTY(bool startOpenLog READ startOpenLog WRITE setStartOpenLog NOTIFY settingsChanged)
     Q_PROPERTY(bool disableGameLog READ disableGameLog WRITE setDisableGameLog NOTIFY settingsChanged)
     Q_PROPERTY(bool checkForUpdates READ checkForUpdates WRITE setCheckForUpdates NOTIFY settingsChanged)
+    Q_PROPERTY(bool showExitButton READ showExitButton WRITE setShowExitButton NOTIFY settingsChanged)
     Q_PROPERTY(bool showUnverified READ showUnverified WRITE setShowUnverified NOTIFY settingsChanged)
     Q_PROPERTY(bool showUnsupported READ showUnsupported WRITE setShowUnsupported NOTIFY settingsChanged)
     Q_PROPERTY(bool showBetaVersions READ showBetaVersions WRITE setShowBetaVersions NOTIFY settingsChanged)
@@ -35,7 +36,7 @@ private:
 
 public:
     static bool disableDevMode;
-    
+
     explicit LauncherSettings(QObject *parent = nullptr) : QObject(parent), settings() {}
 
     bool startHideLauncher() const { return settings.value("startHideLauncher", true).toBool(); }
@@ -49,6 +50,9 @@ public:
 
     bool checkForUpdates() const { return settings.value("checkForUpdates", true).toBool(); }
     void setCheckForUpdates(bool value) { settings.setValue("checkForUpdates", value); emit settingsChanged(); }
+
+    bool showExitButton() const { return settings.value("showExitButton", false).toBool(); }
+    void setShowExitButton(bool value) { settings.setValue("showExitButton", value); emit settingsChanged(); }
 
     bool showUnverified() const { return !disableDevMode && settings.value("showUnverified", false).toBool(); }
     void setShowUnverified(bool value) { settings.setValue("showUnverified", value); emit settingsChanged(); }
