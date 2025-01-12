@@ -9,17 +9,6 @@ ScrollView {
     contentHeight: item.height + 30
     Keys.forwardTo: item.children[0]
 
-    //ScrollBar.vertical.palette.dark: "white"
-    // ScrollBar.vertical: ScrollBar {
-    //     id: control
-    //     orientation: Qt.Vertical
-    //     contentItem: Rectangle {
-    //         implicitWidth: 6
-    //         implicitHeight: 100
-    //         radius: width / 2
-    //         color: control.pressed ? "#81e889" : "#c2f4c6"
-    //     }
-    // }
     Component.onCompleted: {
         ScrollBar.vertical.contentItem.color = Qt.binding(function () {
             return ScrollBar.vertical.pressed ? "#ffffff" : "#bfbfbf"
