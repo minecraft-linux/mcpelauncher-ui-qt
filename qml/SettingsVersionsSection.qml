@@ -133,7 +133,7 @@ ColumnLayout {
                     packageName: packageField.text
                     keepApks: false
                     dryrun: true
-                    versionCode: Number.parseInt(versionsCodeField.text) //(manualgoogleLoginHelperInstance.chromeOS ? 1000000000 : 0) + versionBox.codes[versionBox.currentIndex]
+                    versionCode: Number.parseInt(versionsCodeField.text)
                     onActiveChanged: {
                         if (manualPlayDownloadTask.active) {
                             scope.apkUrls = ""
@@ -150,11 +150,6 @@ ColumnLayout {
                     }
                 }
 
-
-                /*GoogleVersionChannel {
-                    id: manualplayVerChannelInstance
-                    playApi: manualplayApi
-                }*/
                 MTextField {
                     id: versionsCodeField
                     Layout.fillWidth: true
