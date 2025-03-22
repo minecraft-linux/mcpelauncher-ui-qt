@@ -60,6 +60,7 @@ void ApkExtractionTask::run() {
         apkInfo.versionCode = 0;
         for (auto && source : sources()) {
             ZipExtractor extractor (source.toStdString());
+            bool isBaseApk;
             {
                 auto manifest = extractor.readFile("AndroidManifest.xml");
                 axml::AXMLFile manifestFile (manifest.data(), manifest.size());
@@ -77,11 +78,12 @@ void ApkExtractionTask::run() {
                 } else if(apkInfo.versionName.empty()) {
                     apkInfo.versionName = capkInfo.versionName;
                 }
+                isBaseApk = capkInfo.split.empty();
             }
             qDebug() << "Apk info: versionCode=" << apkInfo.versionCode
                     << " versionName=" << QString::fromStdString(apkInfo.versionName);
 
-            extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path),
+            extractor.extractTo(MinecraftExtractUtils::filterMinecraftFiles(path, isBaseApk),
                     [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
                 emit progress((float)  current / max);
             });
