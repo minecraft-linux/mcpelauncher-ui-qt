@@ -108,7 +108,7 @@ RowLayout {
         function onLogCleared() {
             gameLog.clear()
         }
-        function onLogAppended() {
+        function onLogAppended(text) {
             gameLog.append({
                                "display": text.substring(0, text.length - 1)
                            })

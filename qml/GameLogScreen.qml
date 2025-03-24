@@ -114,7 +114,7 @@ ColumnLayout {
 
             Connections {
                 target: selectionArea
-                onSelectionChanged: {
+                function onSelectionChanged() {
                     updateSelection()
                 }
             }
