@@ -5,9 +5,9 @@ import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 BaseScreen {
+    id: unlockScreen
+
     signal finished
-    id: unlockLayout
-    spacing: 0
 
     headerContent: TabBar {
         background: null
@@ -108,7 +108,7 @@ BaseScreen {
     function attemptUnlock() {
         googleLoginHelperInstance.unlockkey = pwd.text
         if (googleLoginHelperInstance.account && !googleLoginHelperInstance.hasEncryptedCredentials || continueInvalidCredentials.checked) {
-            unlockLayout.finished()
+            unlockScreen.finished()
         } else {
             warning.opacity = 1
             warningAnim.restart()

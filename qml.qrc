@@ -38,11 +38,13 @@
         <file>qml/Components/MTabButton.qml</file>
         <file>qml/Components/MText.qml</file>
         <file>qml/Components/MTextField.qml</file>
+        <file>qml/Components/NotifyBanner.qml</file>
         <file>qml/Components/PlayButton.qml</file>
         <file>qml/Components/TransparentButton.qml</file>
         <file>Resources/mcpelauncher-logo.svg</file>
         <file>Resources/mcpelauncher-icon.svg</file>
         <file>Resources/green-button.png</file>
+        <file>Resources/artwork0.png</file>
         <file>Resources/check.png</file>
         <file>Resources/noise.png</file>
         <file>Resources/icon-edit.png</file>

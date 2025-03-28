@@ -4,6 +4,7 @@ import QtQuick.Controls
 import "Components"
 
 RowLayout {
+    id: mainNavigation
     spacing: 0
     property int currentIndex: 0
     property bool useWideLayout: window.width > 720
@@ -81,7 +82,7 @@ RowLayout {
             googleLoginHelper: googleLoginHelperInstance
             versionManager: versionManagerInstance
             profileManager: profileManagerInstance
-            playApiInstance: playApi
+            playApi: playApiInstance
             playVerChannel: playVerChannelInstance
             hasUpdate: window.hasUpdate
             updateDownloadUrl: window.updateDownloadUrl

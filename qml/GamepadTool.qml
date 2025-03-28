@@ -79,7 +79,7 @@ ApplicationWindow {
                     MTextField {
                         Layout.fillWidth: true
                         readOnly: true
-                        text: currentGamepad.guid
+                        text: currentGamepad ? currentGamepad.guid : ""
                         color: "#888"
                     }
                 }
@@ -94,7 +94,7 @@ ApplicationWindow {
                         Layout.fillWidth: true
                         readOnly: true
                         color: "#888"
-                        text: currentGamepad.hasMapping ? "True" : "False"
+                        text: currentGamepad && currentGamepad.hasMapping ? "True" : "False"
                     }
                 }
             }
@@ -214,6 +214,8 @@ ApplicationWindow {
                 readOnly: true
                 color: "#888"
                 text: {
+                    if (!currentGamepad)
+                        return ""
                     var fields = [currentGamepad.guid, currentGamepad.name]
                     for (var i = 0; i < inputRepeater.count; i++) {
                         const it = inputRepeater.itemAt(i)

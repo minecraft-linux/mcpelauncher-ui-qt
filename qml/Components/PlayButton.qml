@@ -36,32 +36,36 @@ T.Button {
 
     contentItem: Item {
         implicitWidth: content.implicitWidth
-        implicitHeight: content.implicitHeight
+        implicitHeight: Math.max(content.implicitHeight, 40)
 
         ColumnLayout {
             id: content
-            spacing: 0
+            spacing: control.text ? 0 : 5
             anchors.centerIn: parent
+            opacity: enabled ? 1.0 : 0.3
             Text {
-                id: textItem
                 text: control.text
-                font {
-                    pointSize: 14
-                    bold: true
-                }
-                opacity: enabled ? 1.0 : 0.3
+                visible: control.text
+                font.pointSize: 14
+                font.bold: true
                 color: "#fff"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 Layout.fillWidth: true
                 elide: Text.ElideRight
             }
+            MBusyIndicator {
+                visible: !control.text
+                implicitHeight: 10
+                implicitWidth: 80
+                Layout.alignment: Qt.AlignHCenter
+                primaryColor: "#fff"
+            }
             Text {
                 id: subTextItem
-                visible: control.subText.length > 0
+                visible: control.subText
                 text: control.subText
                 font.pointSize: 9
-                opacity: enabled ? 1.0 : 0.3
                 color: "#fff"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

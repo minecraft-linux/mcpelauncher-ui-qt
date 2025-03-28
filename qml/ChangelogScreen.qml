@@ -5,9 +5,9 @@ import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 BaseScreen {
+    id: changelogScreen
+
     signal finished
-    id: changelogLayout
-    spacing: 0
 
     headerContent: TabBar {
         background: null
@@ -42,7 +42,7 @@ BaseScreen {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.rightMargin: 10
-            onClicked: changelogLayout.finished()
+            onClicked: changelogScreen.finished()
         }
     }
 }

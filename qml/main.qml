@@ -38,6 +38,10 @@ Window {
         id: profileManagerInstance
     }
 
+    GamepadTool {
+        id: gamepadTool
+    }
+
     Component {
         id: panelLogin
         LoginScreen {
@@ -48,27 +52,27 @@ Window {
     }
 
     GooglePlayApi {
-        id: playApi
+        id: playApiInstance
         login: googleLoginHelperInstance
 
         property string googleLoginError: ""
 
         onAppInfoReceived: function (app, det) {
-            playApi.googleLoginError = ""
+            playApiInstance.googleLoginError = ""
         }
 
         onInitError: function (err) {
-            playApi.googleLoginError = qsTr("<b>Cannot initialize Google Play Access</b>, Details:<br/>%1").arg(err)
+            playApiInstance.googleLoginError = qsTr("<b>Cannot initialize Google Play Access</b>, Details:<br/>%1").arg(err)
         }
 
         onAppInfoFailed: function (app, err) {
-            playApi.googleLoginError = qsTr("<b>Cannot Access App Details</b> (%1), Details:<br/>%2").arg(app).arg(err)
+            playApiInstance.googleLoginError = qsTr("<b>Cannot Access App Details</b> (%1), Details:<br/>%2").arg(app).arg(err)
         }
     }
 
     GoogleVersionChannel {
         id: playVerChannelInstance
-        playApi: playApi
+        playApi: playApiInstance
         trialMode: launcherSettings.trialMode
     }
 
@@ -81,15 +85,7 @@ Window {
         id: panelError
         UnsupportedScreen {
             googleLoginHelper: googleLoginHelperInstance
-            onFinished: {
-                if (needsToLogIn()) {
-                    stackView.push(panelLogin)
-                } else {
-                    stackView.push(panelMain)
-                }
-            }
-            hasUpdate: window.hasUpdate
-            updateDownloadUrl: window.updateDownloadUrl
+            onFinished: defaultnext()
         }
     }
 
@@ -109,8 +105,6 @@ Window {
                 launcherSettings.lastVersion = LAUNCHER_VERSION_CODE
                 next()
             }
-            hasUpdate: window.hasUpdate
-            updateDownloadUrl: window.updateDownloadUrl
         }
     }
 
@@ -132,13 +126,14 @@ Window {
         id: troubleshooterWindow
         googleLoginHelper: googleLoginHelperInstance
         playVerChannel: playVerChannelInstance
+        playApi: playApiInstance
         modality: Qt.ApplicationModal
     }
 
     GoogleTosApprovalWindow {
         id: googleTosApprovalWindow
         onDone: function (approved, marketing) {
-            playApi.setTosApproved(approved, marketing)
+            playApiInstance.setTosApproved(approved, marketing)
         }
     }
 

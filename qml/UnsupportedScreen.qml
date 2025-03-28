@@ -7,10 +7,17 @@ import "Components"
 import io.mrarm.mcpelauncher 1.0
 
 BaseScreen {
+    id: unsupportedScreen
+
     property GoogleLoginHelper googleLoginHelper
     signal finished
-    id: rowLayout
-    spacing: 0
+
+    headerContent: TabBar {
+        background: null
+        MTabButton {
+            text: qsTr("Info")
+        }
+    }
 
     TextEdit {
         Layout.fillHeight: true
@@ -37,7 +44,7 @@ BaseScreen {
             anchors.margins: 10
             text: qsTr("I know what I'm doing")
             onClicked: {
-                rowLayout.finished()
+                unsupportedScreen.finished()
             }
         }
     }
