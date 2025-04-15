@@ -37,59 +37,59 @@ ColumnLayout {
     }
 
     Rectangle {
-        property int horizontalPadding: 20
-        property int verticalPadding: 10
-        z: 2
-
         id: rectangle
-        color: "#ffbb84"
+        property int padding: 20
+        color: "#821"
         Layout.fillWidth: true
-        Layout.preferredHeight: children[0].implicitHeight + verticalPadding * 2
+        Layout.preferredHeight: children[0].implicitHeight + padding * 2
         Layout.alignment: Qt.AlignTop
         visible: launcher.crashed
+        z: 2
 
         ColumnLayout {
-            x: rectangle.horizontalPadding
-            y: rectangle.verticalPadding
-            width: parent.width - rectangle.horizontalPadding * 2
-
-            Text {
-                text: qsTr("Minecraft stopped working")
+            x: rectangle.padding
+            y: rectangle.padding
+            width: parent.width - rectangle.padding * 2
+            MText {
                 Layout.fillWidth: true
+                Layout.bottomMargin: 4
+                wrapMode: Text.WordWrap
                 font.weight: Font.Bold
-                wrapMode: Text.WordWrap
+                text: qsTr("Minecraft stopped working")
             }
-            Text {
-                id: tpanel
+            MText {
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
-                linkColor: "#593b00"
+                text: (launcherSettings.disableGameLog || incompatibleStateText.visible) ? qsTr("Please don't report this error.") : qsTr("Game has exited with a non-zero error code. <a href='%1'>Click here if you would like to open an issue.</a>").arg("https://github.com/minecraft-linux/mcpelauncher-manifest/issues/new/choose")
+                linkColor: hoveredLink ? "#acf" : "#9bf"
                 onLinkActivated: Qt.openUrlExternally(link)
-                visible: !launcherSettings.disableGameLog && !launcherSettings.showUnsupported && !launcherSettings.showUnverified && !launcherSettings.showBetaVersions
+                HoverHandler {
+                    enabled: parent.hoveredLink
+                    cursorShape: Qt.PointingHandCursor
+                }
             }
-            Text {
-                text: qsTr("Please don't report this error. Reenable Gamelog in Settings and reopen the Game to report an error")
+            MText {
+                id: incompatibleStateText
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
+                text: {
+                    var msg = qsTr("You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: ")
+                    var toggles = []
+                    if (launcherSettings.showUnsupported)
+                        toggles.push(qsTr("Show incompatible versions"))
+                    if (launcherSettings.showUnverified)
+                        toggles.push(qsTr("Show unverified versions"))
+                    if (launcherSettings.BetaVersions)
+                        toggles.push(qsTr("Show beta versions"))
+                    return msg + toggles.join(", ") + "."
+                }
+                visible: launcherSettings.showUnsupported || launcherSettings.showUnverified || launcherSettings.showBetaVersions
+            }
+            MText {
+                Layout.fillWidth: true
+                wrapMode: Text.WordWrap
+                text: qsTr("Enable game log in settings and relaunch the game to get error log.")
                 visible: launcherSettings.disableGameLog
-            }
-            Text {
-                text: qsTr("Please don't report this error. Disable show incompatible Versions and reopen the Game to report an error, because you may ran an incompatible version")
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                visible: launcherSettings.showUnsupported
-            }
-            Text {
-                text: qsTr("Please don't report this error. Disable show unverified Versions and reopen the Game to report an error, because you may ran an incompatible version")
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                visible: launcherSettings.showUnverified
-            }
-            Text {
-                text: qsTr("Please don't report this error. Disable show beta Versions and reopen the Game to report an error, because you may ran an incompatible version")
-                Layout.fillWidth: true
-                wrapMode: Text.WordWrap
-                visible: launcherSettings.showBetaVersions
             }
         }
     }

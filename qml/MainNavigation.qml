@@ -150,4 +150,12 @@ RowLayout {
 
         currentIndex = index
     }
+
+    Connections {
+        target: gameLauncher
+        function onCrashedChanged() {
+            if (gameLauncher.crashed || !(launcherSettings.startHideLauncher || launcherSettings.disableGameLog))
+                updateIndex(3)
+        }
+    }
 }
