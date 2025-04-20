@@ -72,7 +72,7 @@ void GoogleVersionChannel::onAppInfoReceived(const QString &packageName, const Q
             } else {
                 this->m_hasVerifiedLicense |= hasVerifiedLicense;
                 licenseStatus = hasVerifiedLicense ? GoogleVersionChannelLicenceStatus::SUCCEDED : GoogleVersionChannelLicenceStatus::FAILED;
-                m_settings.setValue("latest_version_id", hasVerifiedLicense ? (m_latestVersion + QChar((char)m_latestVersionCode) + QChar(m_latestVersionIsBeta)) : "");
+                m_settings.setValue("latest_version_id", hasVerifiedLicense ? (m_latestVersion + QChar((char)m_latestVersionCode) + QChar((char)m_latestVersionIsBeta)) : "");
             }
             statusChanged();
         });
@@ -89,7 +89,7 @@ void GoogleVersionChannel::onAppInfoFailed(QString const& packageName, const QSt
             if(!trialMode) {
                 m_settings.setValue("latest_version_id", "");
             }
-        } else if(trialMode || m_settings.value("latest_version_id").toString() == (m_latestVersion + QChar((char)m_latestVersionCode) + QChar(m_latestVersionIsBeta))) {
+        } else if(trialMode || m_settings.value("latest_version_id").toString() == (m_latestVersion + QChar((char)m_latestVersionCode) + QChar((char)m_latestVersionIsBeta))) {
             m_hasVerifiedLicense = true;
             licenseStatus = GoogleVersionChannelLicenceStatus::OFFLINE;
         }
