@@ -157,7 +157,7 @@ ColumnLayout {
     function loadNews() {
         articlesLoading = true
         var req = new XMLHttpRequest()
-        req.open("GET", `https://www.minecraft.net/content/minecraftnet/language-masters/en-us/articles/jcr:content/root/container/image_grid_a.articles.page-${articlesPage}.json`, true)
+        req.open("GET", `https://www.minecraft.net/content/minecraftnet/language-masters/en-us/jcr:content/root/container/image_grid_a_copy_64.articles.page-${articlesPage}.json`, true)
         req.onerror = function (error) {
             console.error("Failed to load news:", error)
             articlesLoading = false
