@@ -177,7 +177,6 @@ int main(int argc, char *argv[])
 
 #ifdef LAUNCHER_ENABLE_GLFW
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
-    glfwInit();
     std::vector<std::string> controllerDbPaths;
     PathHelper::findAllDataFiles("gamecontrollerdb.txt", [&controllerDbPaths](std::string const& path) {
         controllerDbPaths.push_back(path);
@@ -256,7 +255,31 @@ int main(int argc, char *argv[])
             addRemoveGamePad(i, GLFW_CONNECTED);
         }
     }
+    bool glfwNeedsInit = true;
     QObject::connect(timer, &QTimer::timeout, [&]() {
+        // qt6.7 macOS app does not close workaround
+        bool hasVisibleWindow = false;
+        for(auto&& window : QGuiApplication::topLevelWindows()) {
+            if(window->isVisible()) {
+                hasVisibleWindow = true;
+                break;
+            }
+        }
+        if(!hasVisibleWindow && !gamepadManager->gameRunning()) {
+            if(!glfwNeedsInit) {
+                glfwTerminate();
+                glfwNeedsInit = true;
+            }
+            app.quit();
+            return;
+        }
+        if(!hasVisibleWindow) {
+            return; // No windows, no need to poll events
+        }
+        if(glfwNeedsInit) {
+            glfwInit();
+            glfwNeedsInit = false;
+        }
         glfwPollEvents();
         if(gamepadManager->enabled()) {
             for(auto&& gamepad : gamepadManager->gamepads()) {

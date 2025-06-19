@@ -180,6 +180,12 @@ Window {
                 }
             }
         }
+
+        Component.onCompleted: {
+            GamepadManager.gameRunning = Qt.binding(function() {
+                return gameLauncher.running
+            });
+        }
     }
 
     MessageDialog {

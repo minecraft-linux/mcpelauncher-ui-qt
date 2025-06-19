@@ -110,8 +110,10 @@ class GamepadManager : public QObject {
     //  QList<Gamepad*> works in qt5.15+
     Q_PROPERTY(QList<QObject*> gamepads READ gamepads NOTIFY gamepadsChanged)
 
+    Q_PROPERTY(bool gameRunning READ gameRunning WRITE setGameRunning)
 private:
     bool m_enabled = true;
+    bool m_gameRunning = true;
     QStringList m_errors;
     QList<QObject*> m_gamepads;
 
@@ -124,6 +126,14 @@ public:
 
     QStringList errors() {
         return m_errors;
+    }
+
+    bool gameRunning() {
+        return m_gameRunning;
+    }
+
+    void setGameRunning(bool running) {
+        m_gameRunning = running;
     }
 
     bool enabled() {
