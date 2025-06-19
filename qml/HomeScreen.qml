@@ -218,6 +218,59 @@ BaseScreen {
                         return msg
                     }
                 }
+
+                NotifyBanner {
+                    id: banner
+                    color: "#382"
+                    dismissible: true
+                    title: qsTr("Update")
+                    visible: false
+
+                    Component.onCompleted: {
+                        if(!LAUNCHER_FLATPAK_CONFIG_URL || !launcherSettings.checkForUpdates || !launcherSettings.showNotifications) {
+                            return;
+                        }
+                        var xhr = new XMLHttpRequest()
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === XMLHttpRequest.DONE) {
+                                if (xhr.status === 200) {
+                                    try {
+                                        var json = JSON.parse(xhr.responseText)
+                                        var modules = json["modules"] || []
+                                        for (var i = 0; i < modules.length; i++) {
+                                            var module = modules[i]
+                                            if (module.name === "mcpelauncher-ui-manifest") {
+                                                var opts = module["build-options"]?.["config-opts"] || []
+                                                for (var j = 0; j < opts.length; j++) {
+                                                    var match = opts[j].match(/-DLAUNCHER_VERSION_NAME=([^\s]+)/)
+                                                    if (match && LAUNCHER_VERSION_NAME !== match[1]) {
+                                                        banner.title = qsTr("Update available")
+                                                        banner.description = "Available " + match[1] + " installed " + LAUNCHER_VERSION_NAME
+                                                        banner.visible = true
+                                                        return
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        console.log("Version name not found")
+                                    } catch (e) {
+                                        console.log("Failed to parse JSON:", e)
+                                    }
+                                } else {
+                                    console.log("HTTP error:", xhr.status)
+                                }
+                            }
+                        }
+
+                        xhr.open("GET", LAUNCHER_FLATPAK_CONFIG_URL)
+                        xhr.send()
+                    }
+
+                    actionText: qsTr("Update")
+                    onClicked: {
+                        Qt.openUrlExternally("https://minecraft-linux.github.io/#flatpak")
+                    }
+                }
             }
         }
     }

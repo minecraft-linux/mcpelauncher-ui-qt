@@ -144,6 +144,11 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_NAME", QVariant(""));
 #endif
+#ifdef LAUNCHER_FLATPAK_CONFIG_URL
+    engine.rootContext()->setContextProperty("LAUNCHER_FLATPAK_CONFIG_URL", QVariant(LAUNCHER_FLATPAK_CONFIG_URL));
+#else
+    engine.rootContext()->setContextProperty("LAUNCHER_FLATPAK_CONFIG_URL", QVariant(""));
+#endif
 #ifdef LAUNCHER_VERSION_CODE
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(LAUNCHER_VERSION_CODE));
 #else
