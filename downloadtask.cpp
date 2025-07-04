@@ -180,6 +180,20 @@ bool DownloadTask::curlDoZlibInflate(z_stream &zs, int file, char *data, size_t 
     return true;
 }
 
+static std::string getLastUrlPart(const std::string& url) {
+    size_t pos = url.find_last_of('/');
+    if (pos != std::string::npos && pos + 1 < url.length())
+        return url.substr(pos + 1);
+    return ""; // or return url if '/' wasn't found
+}
+
+static std::string getSuffix(const std::string& url) {
+    size_t pos = url.find_last_of('.');
+    if (pos != std::string::npos && pos + 1 < url.length())
+        return url.substr(pos + 1);
+    return ""; // or return url if '/' wasn't found
+}
+
 void DownloadTask::downloadFile(DownloadData const&dd, std::function<void()> success, std::function<void()> _error, std::shared_ptr<DownloadProgress> _progress, std::string componentName, size_t id) {
     auto apkUrl = dd.isGzipped ? dd.gzippedUrl : dd.url;
     emit downloadInfo(QString::fromStdString(apkUrl));
@@ -189,7 +203,7 @@ void DownloadTask::downloadFile(DownloadData const&dd, std::function<void()> suc
     }
     auto apksdir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/downloads");
     QDir().mkpath(apksdir);
-    auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath(/*m_keepDownload ? (m_packageName.toStdString() + "-" + componentName + "-XXXXXX.apk").data() :*/ "temp-XXXXXX.zip"));
+    auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath(/*m_keepDownload ? (m_packageName.toStdString() + "-" + componentName + "-XXXXXX.apk").data() :*/ ("temp-XXXXXX." + getSuffix(getLastUrlPart(apkUrl))).c_str()));
     if(m_keepDownload) {
         file->setAutoRemove(false);
     }

@@ -26,6 +26,13 @@ public slots:
     QUrl localFileToUrl(QString const& path) {
         return QUrl::fromLocalFile(path);
     }
+    
+    Q_INVOKABLE bool moveFile(const QString &sourcePath, const QString &destinationFolder) {
+        QFile file(sourcePath);
+        QString fileName = QFileInfo(file).fileName();
+        QString destinationPath = QDir(destinationFolder).filePath(fileName);
+        return file.rename(destinationPath);
+    }
 };
 
 #endif // QMLPATHUTILS_H

@@ -610,13 +610,22 @@ AnimatedStackLayout {
         DownloadTask {
             id: downloadTask
             property var activemod: null
-            keepDownload: true
+            keepDownload: false
             onProgress: {
                 progress.value = progress
             }
             onFinished: {
                 console.log("Download finished: " + JSON.stringify(downloadTask.activemod))
-                zipTask.sources = downloadTask.filePaths
+                for (var i = 0; i < downloadTask.filePaths.length; ++i) {
+                    if(!downloadTask.filePaths[i].endsWith(".zip")) {
+                        QmlUrlUtils.moveFile(downloadTask.filePaths[i], zipTask.targetDir)
+                    }
+                }
+                zipTask.sources = downloadTask.filePaths.filter(function (s) { return s.endsWith(".zip") })
+                if (zipTask.sources.length === 0) {
+                    console.log("No zip files found in download")
+                    return
+                }
                 zipTask.start()
             }
         }
