@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
+import io.mrarm.mcpelauncher 1.0
 
 import "Components"
 
@@ -24,13 +25,16 @@ AnimatedStackLayout {
                     text: qsTr("Mods")
                 }
                 MTabButton {
-                    enabled: false
                     text: qsTr("Installed Mods")
                 }
                 MTabButton {
                     text: qsTr("FAQ")
                 }
             }
+        }
+        
+        ModManager {
+            id: modManager
         }
 
         AnimatedStackLayout {
@@ -187,7 +191,155 @@ AnimatedStackLayout {
                 }
             }
 
-            MText {}
+            ScrollView {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: Math.max(gridLayout2.implicitHeight + 2 * gridLayout2.padding, parent.height)
+
+                GridLayout {
+                    id: gridLayout2
+                    property int cellSize: Math.min(Math.max(500, stackLayout.height / 3), 900)
+                    property int padding: 15
+                    x: padding
+                    y: padding
+                    width: parent.width - padding * 2
+                    columns: Math.max(Math.round(width / cellSize), 1)
+                    columnSpacing: padding
+                    rowSpacing: padding
+
+                    Repeater {
+                        id: modsGrid2
+                        model: {
+                            reload();
+                        }
+
+                        property var reload: function () {
+                            var ret = [];
+                            const mods = modManager.listMods()
+                            var modByName = {};
+                            for (let i = 0; i < mods.length; ++i) {
+                                modByName[mods[i].name] = mods[i].metadata.metadata || {
+                                    name: mods[i].name,
+                                    version: mods[i].version,
+                                    arch: mods[i].arch,
+                                    description: "",
+                                    image: "qrc:/Resources/icon-home.png"
+                                };
+                            }
+                            modsGrid2.model = Object.values(modByName);
+                        }
+
+                        Rectangle {
+                            id: contentBox
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            Layout.columnSpan: 1
+                            Layout.rowSpan: 1
+                            color: "#222"
+                            height: iconImage2.height + 20
+
+                            Item {
+                                anchors.fill: parent
+                                anchors.margins: 10
+
+                                Image {
+                                    id: iconImage2
+                                    width: 100
+                                    height: 100
+                                    fillMode: Image.PreserveAspectFit
+                                    source: modelData.image || "qrc:/Resources/icon-home.png"
+                                    smooth: false
+                                }
+
+                                Column {
+                                    anchors.left: iconImage2.right
+                                    anchors.leftMargin: 10
+                                    height: iconImage2.height + 20
+                                    width: parent.width - iconImage2.width - 30
+                                    spacing: 5
+
+                                    Text {
+                                        id: titleText2
+                                        text: modelData.name
+                                        width: parent.width
+                                        font.bold: true
+                                        color: "#fff"
+                                        font.pointSize: 13
+                                        font.weight: Font.Bold
+                                        wrapMode: Text.Wrap
+                                        elide: Text.ElideRight
+                                    }
+
+                                    Text {
+                                        text: modelData.description
+                                        width: parent.width
+                                        height: parent.height - titleText2.height - 20
+                                        color: "#bbb"
+                                        font.pointSize: 10
+                                        wrapMode: Text.Wrap
+                                        elide: Text.ElideRight
+                                    }
+                                }
+                            }
+
+                            FocusBorder {
+                                visible: mouseArea2.activeFocus
+                            }
+
+                            states: State {
+                                name: "hovered"
+                                when: mouseArea2.hovered
+                            }
+
+                            transitions: [
+                                Transition {
+                                    to: "hovered"
+                                    NumberAnimation {
+                                        target: contentBox
+                                        property: "scale"
+                                        to: 1.0 + (12 / contentBox.width)
+                                        duration: 180
+                                        easing.type: Easing.OutCubic
+                                    }
+                                },
+                                Transition {
+                                    to: "*"
+                                    NumberAnimation {
+                                        target: contentBox
+                                        property: "scale"
+                                        to: 1.0
+                                        duration: 100
+                                        easing.type: Easing.OutSine
+                                    }
+                                }
+                            ]
+
+                            MouseArea {
+                                id: mouseArea2
+                                property bool hovered: false
+                                cursorShape: Qt.PointingHandCursor
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                focus: true
+                                activeFocusOnTab: true
+
+                                onEntered: hovered = true
+                                onExited: hovered = false
+                                onClicked: {
+                                    hovered = false
+                                    openArticle()
+                                }
+                                Keys.onSpacePressed: openArticle()
+
+                                function openArticle() {
+                                    stack.elem = modelData
+                                    stack.currentIndex = 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             CenteredScrollView {
                 content: ColumnLayout {
@@ -361,6 +513,7 @@ AnimatedStackLayout {
                                 Layout.fillWidth: true
                             }
                             MButton {
+                                visible: !modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
                                 text: qsTr("Download")
                                 property var abis: googleLoginHelperInstance.getAbis(false)
                                 property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
@@ -368,7 +521,51 @@ AnimatedStackLayout {
                                 onClicked: {
                                     console.log(JSON.stringify(modelData.assets))
                                     console.log(arch)
-                                    Qt.openUrlExternally(modelData.assets[arch])
+                                    //Qt.openUrlExternally(modelData.assets[arch])
+                                    modManager.saveMod(stack.elem.name, modelData.version, arch, {
+                                        metadata: stack.elem,
+                                        version: modelData,
+                                        arch: arch
+                                    })
+                                    modsGrid2.reload();
+                                    var s = stack;
+                                    var bck = s.elem;
+                                    s.elem = {};
+                                    s.elem = bck;
+                                    s.currentIndex = 1
+                                }
+                            }
+                            MButton {
+                                property var prefix: modManager.getRoot() + stack.elem.name + "/"
+                                visible: modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
+                                text: profileManagerInstance.activeProfile.mods.includes(entry) ? qsTr("Disable") : qsTr("Activate")
+                                property var abis: googleLoginHelperInstance.getAbis(false)
+                                property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
+                                enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false)
+                                property var entry: prefix + modelData.version + "/" + arch
+                                onClicked: {
+                                    var has = profileManagerInstance.activeProfile.mods.includes(entry)
+                                    profileManagerInstance.activeProfile.mods = profileManagerInstance.activeProfile.mods.filter(function (e) {
+                                        return !e.startsWith(prefix)
+                                    })
+                                    if(!has) {
+                                        profileManagerInstance.activeProfile.mods.push(entry)
+                                    }
+                                    console.log("Mods: " + JSON.stringify(profileManagerInstance.activeProfile.mods))
+                                    profileManagerInstance.activeProfile.save()
+                                }
+                            }
+                            MButton {
+                                visible: modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
+                                text: qsTr("Delete")
+                                onClicked: {
+                                    modManager.removeMod(stack.elem.name, modelData.version, modelData.arch)
+                                    modsGrid2.reload();
+                                    var s = stack;
+                                    var bck = s.elem;
+                                    s.elem = {};
+                                    s.elem = bck;
+                                    s.currentIndex = 1
                                 }
                             }
                         }

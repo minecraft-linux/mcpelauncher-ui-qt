@@ -15,6 +15,7 @@
 #include "launcherapp.h"
 #include "troubleshooter.h"
 #include "updatechecker.h"
+#include "modmanager.h"
 
 #include <QTranslator>
 #include <QCommandLineParser>
@@ -135,6 +136,8 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType<GamepadManager>("io.mrarm.mcpelauncher", 1, 0, "GamepadManager", +[](QQmlEngine*, QJSEngine*) -> QObject* {
         return gamepadManager;
     });
+    qRegisterMetaType<ModInfo>("ModInfo");
+    qmlRegisterType<ModManager>("io.mrarm.mcpelauncher", 1, 0, "ModManager");
     QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).mkpath("mcpelauncher/background_art");
 
     QQmlApplicationEngine engine;
