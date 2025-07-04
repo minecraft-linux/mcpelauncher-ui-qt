@@ -513,20 +513,29 @@ AnimatedStackLayout {
                                 Layout.fillWidth: true
                             }
                             MButton {
-                                visible: !modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
                                 text: qsTr("Download")
                                 property var abis: googleLoginHelperInstance.getAbis(false)
                                 property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
-                                enabled: modelData.assets[arch] && modelData.assets[arch].length > 0 || false
+                                visible: !modManager.modExists(stack.elem.name, modelData.version, arch)
+                                enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false) && !progress.active
                                 onClicked: {
                                     console.log(JSON.stringify(modelData.assets))
                                     console.log(arch)
-                                    //Qt.openUrlExternally(modelData.assets[arch])
                                     modManager.saveMod(stack.elem.name, modelData.version, arch, {
                                         metadata: stack.elem,
                                         version: modelData,
                                         arch: arch
                                     })
+                                    downloadTask.activemod = {
+                                        name: stack.elem.name,
+                                        version: modelData.version,
+                                        arch: arch
+                                    }
+
+                                    download1.url = modelData.assets[arch]
+                                    download1.componentName = stack.elem.name
+                                    downloadTask.startDownload([download1])
+                                    zipTask.targetDir = modManager.getFolderPathForMod(stack.elem.name, modelData.version, arch);
                                     modsGrid2.reload();
                                     var s = stack;
                                     var bck = s.elem;
@@ -536,13 +545,13 @@ AnimatedStackLayout {
                                 }
                             }
                             MButton {
-                                property var prefix: modManager.getRoot() + stack.elem.name + "/"
-                                visible: modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
-                                text: profileManagerInstance.activeProfile.mods.includes(entry) ? qsTr("Disable") : qsTr("Activate")
+                                property var prefix: modManager.getRoot() + "/" + stack.elem.name + "/"
                                 property var abis: googleLoginHelperInstance.getAbis(false)
                                 property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
+                                visible: modManager.modExists(stack.elem.name, modelData.version, arch)
                                 enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false)
-                                property var entry: prefix + modelData.version + "/" + arch
+                                property var entry: prefix + modelData.version + "/" + arch + "/"
+                                text: profileManagerInstance.activeProfile.mods.includes(entry) ? qsTr("Disable") : qsTr("Activate")
                                 onClicked: {
                                     var has = profileManagerInstance.activeProfile.mods.includes(entry)
                                     profileManagerInstance.activeProfile.mods = profileManagerInstance.activeProfile.mods.filter(function (e) {
@@ -556,10 +565,12 @@ AnimatedStackLayout {
                                 }
                             }
                             MButton {
-                                visible: modManager.modExists(stack.elem.name, modelData.version, modelData.arch)
+                                property var abis: googleLoginHelperInstance.getAbis(false)
+                                property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
+                                visible: modManager.modExists(stack.elem.name, modelData.version, arch)
                                 text: qsTr("Delete")
                                 onClicked: {
-                                    modManager.removeMod(stack.elem.name, modelData.version, modelData.arch)
+                                    modManager.removeMod(stack.elem.name, modelData.version, arch)
                                     modsGrid2.reload();
                                     var s = stack;
                                     var bck = s.elem;
@@ -592,12 +603,54 @@ AnimatedStackLayout {
             }
         }
 
+        DownloadDataWrapper {
+            id: download1
+        }
+
+        DownloadTask {
+            id: downloadTask
+            property var activemod: null
+            keepDownload: true
+            onProgress: {
+                progress.value = progress
+            }
+            onFinished: {
+                console.log("Download finished: " + JSON.stringify(downloadTask.activemod))
+                zipTask.sources = downloadTask.filePaths
+                zipTask.start()
+            }
+        }
+
+        ZipExtractionTask {
+            id: zipTask
+            onProgress: {
+                progress.value = progress
+            }
+            onFinished: {
+                console.log("Zip extraction finished")
+                // if (downloadTask.activemod) {
+                //     modManager.reloadMod(downloadTask.activemod.name, downloadTask.activemod.version, downloadTask.activemod.arch)
+                //     modsGrid2.reload();
+                //     var s = stack;
+                //     var bck = s.elem;
+                //     s.elem = {};
+                //     s.elem = bck;
+                //     s.currentIndex = 1
+                // }
+            }
+            onError: function (err) {
+                console.log("Zip extraction error: " + err)
+                progress.indeterminate = false
+                progress.value = 0
+            }
+        }
+
         MProgressBar {
             id: progress
-            visible: false
+            visible: downloadTask.active || zipTask.active
             Layout.fillWidth: true
             value: 0.8
-            indeterminate: false
+            indeterminate: value < 0.01
             label: qsTr("Download Progress")
             width: parent.width
             Layout.preferredHeight: 30

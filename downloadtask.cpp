@@ -9,6 +9,97 @@
 #endif
 #include <unistd.h>
 
+DownloadDataWrapper::DownloadDataWrapper(QObject *parent)
+    : QObject(parent) {}
+
+QString DownloadDataWrapper::url() const {
+    return m_url;
+}
+
+void DownloadDataWrapper::setUrl(const QString &value) {
+    if (m_url != value) {
+        m_url = value;
+        emit urlChanged();
+    }
+}
+
+QString DownloadDataWrapper::gzippedUrl() const {
+    return m_gzippedUrl;
+}
+
+void DownloadDataWrapper::setGzippedUrl(const QString &value) {
+    if (m_gzippedUrl != value) {
+        m_gzippedUrl = value;
+        emit gzippedUrlChanged();
+    }
+}
+
+QString DownloadDataWrapper::cookie() const {
+    return m_cookie;
+}
+
+void DownloadDataWrapper::setCookie(const QString &value) {
+    if (m_cookie != value) {
+        m_cookie = value;
+        emit cookieChanged();
+    }
+}
+
+QString DownloadDataWrapper::componentName() const {
+    return m_componentName;
+}
+
+void DownloadDataWrapper::setComponentName(const QString &value) {
+    if (m_componentName != value) {
+        m_componentName = value;
+        emit componentNameChanged();
+    }
+}
+
+bool DownloadDataWrapper::isGzipped() const {
+    return m_isGzipped;
+}
+
+void DownloadDataWrapper::setIsGzipped(bool value) {
+    if (m_isGzipped != value) {
+        m_isGzipped = value;
+        emit isGzippedChanged();
+    }
+}
+
+size_t DownloadDataWrapper::id() const {
+    return m_id;
+}
+
+void DownloadDataWrapper::setId(size_t value) {
+    if (m_id != value) {
+        m_id = value;
+        emit idChanged();
+    }
+}
+
+size_t DownloadDataWrapper::downloadSize() const {
+    return m_downloadSize;
+}
+
+void DownloadDataWrapper::setDownloadSize(size_t value) {
+    if (m_downloadSize != value) {
+        m_downloadSize = value;
+        emit downloadSizeChanged();
+    }
+}
+
+size_t DownloadDataWrapper::gzippedDownloadSize() const {
+    return m_gzippedDownloadSize;
+}
+
+void DownloadDataWrapper::setGzippedDownloadSize(size_t value) {
+    if (m_gzippedDownloadSize != value) {
+        m_gzippedDownloadSize = value;
+        emit gzippedDownloadSizeChanged();
+    }
+}
+
 DownloadTask::DownloadTask(QObject *parent) : QObject(parent), m_active(false) {
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
     connect(this, &DownloadTask::queueDownload, this, &DownloadTask::startDownload);
@@ -96,9 +187,9 @@ void DownloadTask::downloadFile(DownloadData const&dd, std::function<void()> suc
         std::thread(success).detach();
         return;
     }
-    auto apksdir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/apks");
+    auto apksdir = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/downloads");
     QDir().mkpath(apksdir);
-    auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath(/*m_keepDownload ? (m_packageName.toStdString() + "-" + componentName + "-XXXXXX.apk").data() :*/ "temp-XXXXXX.apk"));
+    auto file = std::make_shared<QTemporaryFile>(QDir(apksdir).filePath(/*m_keepDownload ? (m_packageName.toStdString() + "-" + componentName + "-XXXXXX.apk").data() :*/ "temp-XXXXXX.zip"));
     if(m_keepDownload) {
         file->setAutoRemove(false);
     }
@@ -163,7 +254,9 @@ void DownloadTask::downloadFile(DownloadData const&dd, std::function<void()> suc
     if (isGzipped)
         req.set_encoding("gzip,deflate");
     req.add_header("Accept-Encoding", "identity");
-    req.add_header("Cookie", dd.cookie);
+    if(dd.cookie != "") {
+        req.add_header("Cookie", dd.cookie);
+    }
     // auto& device = m_playApi->getLogin()->getDevice();
     // req.set_user_agent("AndroidDownloadManager/" + device.build_version_string + " (Linux; U; Android " +
     //                    device.build_version_string + "; " + device.build_model + " Build/" + device.build_id + ")");
@@ -196,6 +289,13 @@ void DownloadTask::downloadFile(DownloadData const&dd, std::function<void()> suc
 
     req.set_progress_callback([this, _progress, id](curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow) {
         std::lock_guard<std::mutex> guard(_progress->mtx);
+        if(_progress->downloadedSizes[id] < dltotal) {
+            _progress->downloadedSizes[id] = dltotal;
+            auto nsize = std::accumulate(_progress->downloadedSizes.begin(), _progress->downloadedSizes.end(), 0);
+            if(nsize > _progress->downloadsize) {
+                _progress->downloadsize = nsize;
+            }
+        }
         if(_progress->downloadsize > 0) {
             _progress->progress[id] = dlnow;
             emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
@@ -246,6 +346,7 @@ void DownloadTask::startDownload(std::vector<DownloadData> const& dd) {
     std::lock_guard<std::mutex> guard(progress->mtx);
     progress->downloads = dd.size();
     progress->progress.resize(progress->downloads);
+    progress->downloadedSizes.resize(progress->downloads);
     progress->downloadsize = 0;
     auto cleanup = [this, progress]() {
         std::lock_guard<std::mutex> guard(progress->mtx);
@@ -271,4 +372,18 @@ void DownloadTask::startDownload(std::vector<DownloadData> const& dd) {
         downloadFile(data, success, cleanup, progress, data.componentName, id++);
     }
     progress->downloads = id;
+}
+
+void DownloadTask::startDownload(const QList<DownloadDataWrapper*> &downloadList) {
+    m_active.store(true);
+    emit activeChanged();
+    std::vector<DownloadData> dd;
+    for(auto && data : downloadList) {
+        dd.push_back(data->toNative());
+    }
+#ifdef GOOGLEPLAYDOWNLOADER_USEQT
+    emit queueDownload(dd);
+#else
+    startDownload(dd);
+#endif
 }

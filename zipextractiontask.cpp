@@ -52,7 +52,7 @@ static bool mergeDirsRecusive(QString from, QString to) {
 }
 
 void ZipExtractionTask::run() {
-    QTemporaryDir dir(m_tempTemplate);
+    QTemporaryDir dir;//(m_tempTemplate);
     try {
         std::string path = dir.path().toStdString();
         ApkInfo apkInfo;
@@ -60,7 +60,8 @@ void ZipExtractionTask::run() {
         for (auto && source : sources()) {
             ZipExtractor extractor (source.toStdString());
             extractor.extractTo(
-                [](const char* filename, std::string& outName) -> bool {
+                [&path](const char* filename, std::string& outName) -> bool {
+                    outName = path + "/" + filename;
                     return true; // Extract all files
                 },
                 [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {

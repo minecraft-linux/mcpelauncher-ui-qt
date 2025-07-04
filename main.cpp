@@ -16,6 +16,8 @@
 #include "troubleshooter.h"
 #include "updatechecker.h"
 #include "modmanager.h"
+#include "zipextractiontask.h"
+#include "downloadtask.h"
 
 #include <QTranslator>
 #include <QCommandLineParser>
@@ -138,6 +140,9 @@ int main(int argc, char *argv[])
     });
     qRegisterMetaType<ModInfo>("ModInfo");
     qmlRegisterType<ModManager>("io.mrarm.mcpelauncher", 1, 0, "ModManager");
+    qmlRegisterType<ZipExtractionTask>("io.mrarm.mcpelauncher", 1, 0, "ZipExtractionTask");
+    qmlRegisterType<DownloadTask>("io.mrarm.mcpelauncher", 1, 0, "DownloadTask");
+    qmlRegisterType<DownloadDataWrapper>("io.mrarm.mcpelauncher", 1, 0, "DownloadDataWrapper");
     QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).mkpath("mcpelauncher/background_art");
 
     QQmlApplicationEngine engine;

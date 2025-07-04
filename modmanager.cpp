@@ -10,13 +10,7 @@
 ModManager::ModManager(QObject* parent)
     : QObject(parent)
 {
-    // // Define root folder: <appdir>/mcpelauncher/mods
-    // QString base = QCoreApplication::applicationDirPath()
-    //              + QDir::separator()
-    //              + "mcpelauncher"
-    //              + QDir::separator()
-    //              + "mods";
-    QString base = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/mods");
+    QString base = QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/mods/");
     m_root = QDir(base);
     if (!m_root.exists())
         m_root.mkpath(".");
@@ -111,9 +105,11 @@ bool ModManager::modExists(const QString& name,
     return QDir(modFolderPath(name, version, arch)).exists();
 }
 
-QString ModManager::getFolderPathForMod(const ModInfo& info) const
+QString ModManager::getFolderPathForMod(const QString& name,
+                                        const QString& version,
+                                        const QString& arch) const
 {
-    return modFolderPath(info.name, info.version, info.arch);
+    return modFolderPath(name, version, arch);
 }
 
 QString ModManager::getRoot() const

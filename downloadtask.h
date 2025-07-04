@@ -32,6 +32,75 @@ struct DownloadData {
         : url(std::move(url)), cookie(std::move(cookie)), progress(std::move(progress)), componentName(std::move(componentName)), id(id) {}
 };
 
+#include <QObject>
+#include <QString>
+#include <memory>
+
+class DownloadDataWrapper : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QString url READ url WRITE setUrl NOTIFY urlChanged)
+    Q_PROPERTY(QString gzippedUrl READ gzippedUrl WRITE setGzippedUrl NOTIFY gzippedUrlChanged)
+    Q_PROPERTY(QString cookie READ cookie WRITE setCookie NOTIFY cookieChanged)
+    Q_PROPERTY(QString componentName READ componentName WRITE setComponentName NOTIFY componentNameChanged)
+    Q_PROPERTY(bool isGzipped READ isGzipped WRITE setIsGzipped NOTIFY isGzippedChanged)
+    Q_PROPERTY(size_t id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(size_t downloadSize READ downloadSize WRITE setDownloadSize NOTIFY downloadSizeChanged)
+    Q_PROPERTY(size_t gzippedDownloadSize READ gzippedDownloadSize WRITE setGzippedDownloadSize NOTIFY gzippedDownloadSizeChanged)
+
+public:
+    explicit DownloadDataWrapper(QObject *parent = nullptr);
+
+    // Getters
+    QString url() const;
+    QString gzippedUrl() const;
+    QString cookie() const;
+    QString componentName() const;
+    bool isGzipped() const;
+    size_t id() const;
+    size_t downloadSize() const;
+    size_t gzippedDownloadSize() const;
+
+    // Setters
+    void setUrl(const QString &value);
+    void setGzippedUrl(const QString &value);
+    void setCookie(const QString &value);
+    void setComponentName(const QString &value);
+    void setIsGzipped(bool value);
+    void setId(size_t value);
+    void setDownloadSize(size_t value);
+    void setGzippedDownloadSize(size_t value);
+
+    DownloadData toNative() {
+        return DownloadData(
+            this->url().toStdString(),
+            this->cookie().toStdString(),
+            nullptr, // You'd need logic for wrapping/unwrapping progress
+            this->componentName().toStdString(),
+            this->id()
+        );
+    }
+
+signals:
+    void urlChanged();
+    void gzippedUrlChanged();
+    void cookieChanged();
+    void componentNameChanged();
+    void isGzippedChanged();
+    void idChanged();
+    void downloadSizeChanged();
+    void gzippedDownloadSizeChanged();
+
+private:
+    QString m_url;
+    QString m_gzippedUrl;
+    QString m_cookie;
+    QString m_componentName;
+    bool m_isGzipped = false;
+    size_t m_id = 0;
+    size_t m_downloadSize = 0;
+    size_t m_gzippedDownloadSize = 0;
+};
+
 class DownloadTask : public QObject {
     Q_OBJECT
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
@@ -58,6 +127,8 @@ public:
 
     bool keepApks() const { return m_keepDownload; }
     void setKeepApks(bool keepApks) { m_keepDownload = keepApks; }
+
+    Q_INVOKABLE void startDownload(const QList<DownloadDataWrapper*> &downloadList);
 
     QStringList filePaths();
 

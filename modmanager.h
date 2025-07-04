@@ -53,7 +53,9 @@ public:
                                const QString& version,
                                const QString& arch) const;
     
-    Q_INVOKABLE QString         getFolderPathForMod(const ModInfo& info) const;
+    Q_INVOKABLE QString         getFolderPathForMod(const QString& name,
+                                                    const QString& version,
+                                                    const QString& arch) const;
 
     Q_INVOKABLE QString         getRoot() const;
 
