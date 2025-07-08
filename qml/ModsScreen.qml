@@ -59,13 +59,13 @@ AnimatedStackLayout {
             ModsGrid {
                 id: installedModsGrid
                 model: {
-                    reload();
+                    reload()
                 }
 
                 function reload() {
-                    var ret = [];
+                    var ret = []
                     const mods = modManager.listMods()
-                    var modByName = {};
+                    var modByName = {}
                     for (let i = 0; i < mods.length; ++i) {
                         modByName[mods[i].name] = mods[i].metadata.metadata || {
                             name: mods[i].name,
@@ -73,9 +73,9 @@ AnimatedStackLayout {
                             arch: mods[i].arch,
                             description: "",
                             image: "qrc:/Resources/icon-home.png"
-                        };
+                        }
                     }
-                    installedModsGrid.model = Object.values(modByName);
+                    installedModsGrid.model = Object.values(modByName)
                 }
             }
 
@@ -272,8 +272,9 @@ AnimatedStackLayout {
 
                                     download1.url = modelData.assets[arch]
                                     download1.componentName = stack.elem.name
+                                    progress.value = 0
                                     downloadTask.startDownload([download1])
-                                    zipTask.targetDir = modManager.getFolderPathForMod(stack.elem.name, modelData.version, arch);
+                                    zipTask.targetDir = modManager.getFolderPathForMod(stack.elem.name, modelData.version, arch)
                                 }
                             }
                             MButton {
@@ -303,8 +304,8 @@ AnimatedStackLayout {
                                 text: qsTr("Delete")
                                 onClicked: {
                                     modManager.removeMod(stack.elem.name, modelData.version, arch)
-                                    installedModsGrid.reload();
-                                    stack.reload();
+                                    installedModsGrid.reload()
+                                    stack.reload()
                                 }
                             }
                         }
@@ -355,12 +356,12 @@ AnimatedStackLayout {
 
             onError: function(err) {
                 console.log("Download failed: " + err)
-                modDownloadExtractError.title = qsTr("Download failed");
-                modDownloadExtractError.text = err;
-                modDownloadExtractError.open();
+                modDownloadExtractError.title = qsTr("Download failed")
+                modDownloadExtractError.text = err
+                modDownloadExtractError.open()
                 progress.value = 0
-                installedModsGrid.reload();
-                stack.reload();
+                installedModsGrid.reload()
+                stack.reload()
             }
         }
 
@@ -371,18 +372,18 @@ AnimatedStackLayout {
             }
             onFinished: {
                 console.log("Zip extraction finished")
-                installedModsGrid.reload();
-                stack.reload();
+                installedModsGrid.reload()
+                stack.reload()
             }
             onError: function (err) {
                 console.log("Zip extraction failed: " + err)
-                modDownloadExtractError.title = qsTr("Zip extraction failed");
-                modDownloadExtractError.text = err;
-                modDownloadExtractError.open();
+                modDownloadExtractError.title = qsTr("Zip extraction failed")
+                modDownloadExtractError.text = err
+                modDownloadExtractError.open()
                 progress.value = 0
                 QmlUrlUtils.deleteFolder(zipTask.targetDir)
-                installedModsGrid.reload();
-                stack.reload();
+                installedModsGrid.reload()
+                stack.reload()
             }
         }
 
