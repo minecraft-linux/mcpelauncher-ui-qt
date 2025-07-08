@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Dialogs
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import io.mrarm.mcpelauncher 1.0
@@ -336,6 +337,10 @@ AnimatedStackLayout {
             id: download1
         }
 
+        MessageDialog {
+            id: modDownloadExtractError
+        }
+
         DownloadTask {
             id: downloadTask
             property var activemod: null
@@ -357,6 +362,15 @@ AnimatedStackLayout {
                 }
                 zipTask.start()
             }
+
+            onError: function(err) {
+                console.log("Download failed: " + err)
+                modDownloadExtractError.title = qsTr("Download failed");
+                modDownloadExtractError.text = err;
+                modDownloadExtractError.open();
+                progress.indeterminate = false
+                progress.value = 0
+            }
         }
 
         ZipExtractionTask {
@@ -366,20 +380,15 @@ AnimatedStackLayout {
             }
             onFinished: {
                 console.log("Zip extraction finished")
-                // if (downloadTask.activemod) {
-                //     modManager.reloadMod(downloadTask.activemod.name, downloadTask.activemod.version, downloadTask.activemod.arch)
-                //     installedModsGrid.reload();
-                //     var s = stack;
-                //     var bck = s.elem;
-                //     s.elem = {};
-                //     s.elem = bck;
-                //     s.currentIndex = 1
-                // }
             }
             onError: function (err) {
-                console.log("Zip extraction error: " + err)
+                console.log("Zip extraction failed: " + err)
+                modDownloadExtractError.title = qsTr("Zip extraction failed");
+                modDownloadExtractError.text = err;
+                modDownloadExtractError.open();
                 progress.indeterminate = false
                 progress.value = 0
+                QmlUrlUtils.deleteFolder(zipTask.targetDir)
             }
         }
 
@@ -387,7 +396,7 @@ AnimatedStackLayout {
             id: progress
             visible: downloadTask.active || zipTask.active
             Layout.fillWidth: true
-            value: 0.8
+            value: 0
             indeterminate: value < 0.01
             label: qsTr("Download Progress")
             width: parent.width
