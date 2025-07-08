@@ -10,6 +10,14 @@ AnimatedStackLayout {
     id: stack
     property var elem: null
 
+    function reload() {
+        var s = stack
+        var bck = s.elem
+        s.elem = {}
+        s.elem = bck
+        s.currentIndex = 1
+    }
+
     ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
@@ -54,7 +62,7 @@ AnimatedStackLayout {
                     reload();
                 }
 
-                property var reload: function () {
+                function reload() {
                     var ret = [];
                     const mods = modManager.listMods()
                     var modByName = {};
@@ -247,7 +255,7 @@ AnimatedStackLayout {
                                 property var abis: googleLoginHelperInstance.getAbis(false)
                                 property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
                                 visible: !modManager.modExists(stack.elem.name, modelData.version, arch)
-                                enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false) && !progress.active
+                                enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false) && !progress.visible
                                 onClicked: {
                                     console.log(JSON.stringify(modelData.assets))
                                     console.log(arch)
@@ -266,12 +274,6 @@ AnimatedStackLayout {
                                     download1.componentName = stack.elem.name
                                     downloadTask.startDownload([download1])
                                     zipTask.targetDir = modManager.getFolderPathForMod(stack.elem.name, modelData.version, arch);
-                                    installedModsGrid.reload();
-                                    var s = stack;
-                                    var bck = s.elem;
-                                    s.elem = {};
-                                    s.elem = bck;
-                                    s.currentIndex = 1
                                 }
                             }
                             MButton {
@@ -302,11 +304,7 @@ AnimatedStackLayout {
                                 onClicked: {
                                     modManager.removeMod(stack.elem.name, modelData.version, arch)
                                     installedModsGrid.reload();
-                                    var s = stack;
-                                    var bck = s.elem;
-                                    s.elem = {};
-                                    s.elem = bck;
-                                    s.currentIndex = 1
+                                    stack.reload();
                                 }
                             }
                         }
@@ -321,14 +319,6 @@ AnimatedStackLayout {
                     highlightMoveVelocity: -1
                     currentIndex: -1
                     ScrollBar.vertical: ScrollBar {}
-                }
-            }
-
-            MButton {
-                visible: false
-                text: qsTr("Download")
-                onClicked: {
-                    progress.indeterminate = true
                 }
             }
         }
@@ -368,8 +358,9 @@ AnimatedStackLayout {
                 modDownloadExtractError.title = qsTr("Download failed");
                 modDownloadExtractError.text = err;
                 modDownloadExtractError.open();
-                progress.indeterminate = false
                 progress.value = 0
+                installedModsGrid.reload();
+                stack.reload();
             }
         }
 
@@ -380,15 +371,18 @@ AnimatedStackLayout {
             }
             onFinished: {
                 console.log("Zip extraction finished")
+                installedModsGrid.reload();
+                stack.reload();
             }
             onError: function (err) {
                 console.log("Zip extraction failed: " + err)
                 modDownloadExtractError.title = qsTr("Zip extraction failed");
                 modDownloadExtractError.text = err;
                 modDownloadExtractError.open();
-                progress.indeterminate = false
                 progress.value = 0
                 QmlUrlUtils.deleteFolder(zipTask.targetDir)
+                installedModsGrid.reload();
+                stack.reload();
             }
         }
 
