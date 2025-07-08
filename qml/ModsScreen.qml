@@ -43,301 +43,30 @@ AnimatedStackLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
 
-            ScrollView {
-                id: scrollView
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                contentHeight: Math.max(gridLayout.implicitHeight + 2 * gridLayout.padding, parent.height)
-
-                GridLayout {
-                    id: gridLayout
-                    property int cellSize: Math.min(Math.max(500, stackLayout.height / 3), 900)
-                    property int padding: 15
-                    x: padding
-                    y: padding
-                    width: parent.width - padding * 2
-                    columns: Math.max(Math.round(width / cellSize), 1)
-                    columnSpacing: padding
-                    rowSpacing: padding
-
-                    Repeater {
-                        id: modsGrid
-                        model: null
-
-                        Rectangle {
-                            id: contentBox
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-                            Layout.columnSpan: 1
-                            Layout.rowSpan: 1
-                            color: "#222"
-                            height: iconImage.height + 20
-
-                            Item {
-                                anchors.fill: parent
-                                anchors.margins: 10
-
-                                Image {
-                                    id: iconImage
-                                    width: 100
-                                    height: 100
-                                    fillMode: Image.PreserveAspectFit
-                                    source: modelData.image || "qrc:/Resources/icon-home.png"
-                                    smooth: false
-                                }
-
-                                Column {
-                                    anchors.left: iconImage.right
-                                    anchors.leftMargin: 10
-                                    height: iconImage.height + 20
-                                    width: parent.width - iconImage.width - 30
-                                    spacing: 5
-
-                                    Text {
-                                        id: titleText
-                                        text: modelData.name
-                                        width: parent.width
-                                        font.bold: true
-                                        color: "#fff"
-                                        font.pointSize: 13
-                                        font.weight: Font.Bold
-                                        wrapMode: Text.Wrap
-                                        elide: Text.ElideRight
-                                    }
-
-                                    Text {
-                                        id: descriptionText
-                                        text: modelData.description
-                                        width: parent.width
-                                        height: parent.height - titleText.height - 20
-                                        color: "#bbb"
-                                        font.pointSize: 10
-                                        wrapMode: Text.Wrap
-                                        elide: Text.ElideRight
-                                    }
-                                }
-                            }
-
-                            FocusBorder {
-                                visible: mouseArea.activeFocus
-                            }
-
-                            states: State {
-                                name: "hovered"
-                                when: mouseArea.hovered
-                            }
-
-                            transitions: [
-                                Transition {
-                                    to: "hovered"
-                                    NumberAnimation {
-                                        target: contentBox
-                                        property: "scale"
-                                        to: 1.0 + (12 / contentBox.width)
-                                        duration: 180
-                                        easing.type: Easing.OutCubic
-                                    }
-                                },
-                                Transition {
-                                    to: "*"
-                                    NumberAnimation {
-                                        target: contentBox
-                                        property: "scale"
-                                        to: 1.0
-                                        duration: 100
-                                        easing.type: Easing.OutSine
-                                    }
-                                }
-                            ]
-
-                            MouseArea {
-                                id: mouseArea
-                                property bool hovered: false
-                                cursorShape: Qt.PointingHandCursor
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                focus: true
-                                activeFocusOnTab: true
-
-                                onEntered: hovered = true
-                                onExited: hovered = false
-                                onClicked: {
-                                    hovered = false
-                                    openArticle()
-                                }
-                                Keys.onSpacePressed: openArticle()
-
-                                function openArticle() {
-                                    stack.elem = modelData
-                                    stack.currentIndex = 1
-                                }
-                            }
-                        }
-                    }
-
-                    MButton {
-                        Layout.columnSpan: parent.columns
-                        Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Load more Mods")
-                        onClicked: list.loadMods()
-                        visible: list.articlesCount > 0 && list.articlesOffset < list.articlesCount && false
-                        enabled: !list.articlesLoading
-                    }
-                }
-
-                MBusyIndicator {
-                    anchors.centerIn: parent
-                    visible: modsGrid.model === null
-                }
+            ModsGrid {
+                id: modsGrid
             }
 
-            ScrollView {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                contentHeight: Math.max(gridLayout2.implicitHeight + 2 * gridLayout2.padding, parent.height)
+            ModsGrid {
+                id: installedModsGrid
+                model: {
+                    reload();
+                }
 
-                GridLayout {
-                    id: gridLayout2
-                    property int cellSize: Math.min(Math.max(500, stackLayout.height / 3), 900)
-                    property int padding: 15
-                    x: padding
-                    y: padding
-                    width: parent.width - padding * 2
-                    columns: Math.max(Math.round(width / cellSize), 1)
-                    columnSpacing: padding
-                    rowSpacing: padding
-
-                    Repeater {
-                        id: modsGrid2
-                        model: {
-                            reload();
-                        }
-
-                        property var reload: function () {
-                            var ret = [];
-                            const mods = modManager.listMods()
-                            var modByName = {};
-                            for (let i = 0; i < mods.length; ++i) {
-                                modByName[mods[i].name] = mods[i].metadata.metadata || {
-                                    name: mods[i].name,
-                                    version: mods[i].version,
-                                    arch: mods[i].arch,
-                                    description: "",
-                                    image: "qrc:/Resources/icon-home.png"
-                                };
-                            }
-                            modsGrid2.model = Object.values(modByName);
-                        }
-
-                        Rectangle {
-                            id: contentBox
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-                            Layout.columnSpan: 1
-                            Layout.rowSpan: 1
-                            color: "#222"
-                            height: iconImage2.height + 20
-
-                            Item {
-                                anchors.fill: parent
-                                anchors.margins: 10
-
-                                Image {
-                                    id: iconImage2
-                                    width: 100
-                                    height: 100
-                                    fillMode: Image.PreserveAspectFit
-                                    source: modelData.image || "qrc:/Resources/icon-home.png"
-                                    smooth: false
-                                }
-
-                                Column {
-                                    anchors.left: iconImage2.right
-                                    anchors.leftMargin: 10
-                                    height: iconImage2.height + 20
-                                    width: parent.width - iconImage2.width - 30
-                                    spacing: 5
-
-                                    Text {
-                                        id: titleText2
-                                        text: modelData.name
-                                        width: parent.width
-                                        font.bold: true
-                                        color: "#fff"
-                                        font.pointSize: 13
-                                        font.weight: Font.Bold
-                                        wrapMode: Text.Wrap
-                                        elide: Text.ElideRight
-                                    }
-
-                                    Text {
-                                        text: modelData.description
-                                        width: parent.width
-                                        height: parent.height - titleText2.height - 20
-                                        color: "#bbb"
-                                        font.pointSize: 10
-                                        wrapMode: Text.Wrap
-                                        elide: Text.ElideRight
-                                    }
-                                }
-                            }
-
-                            FocusBorder {
-                                visible: mouseArea2.activeFocus
-                            }
-
-                            states: State {
-                                name: "hovered"
-                                when: mouseArea2.hovered
-                            }
-
-                            transitions: [
-                                Transition {
-                                    to: "hovered"
-                                    NumberAnimation {
-                                        target: contentBox
-                                        property: "scale"
-                                        to: 1.0 + (12 / contentBox.width)
-                                        duration: 180
-                                        easing.type: Easing.OutCubic
-                                    }
-                                },
-                                Transition {
-                                    to: "*"
-                                    NumberAnimation {
-                                        target: contentBox
-                                        property: "scale"
-                                        to: 1.0
-                                        duration: 100
-                                        easing.type: Easing.OutSine
-                                    }
-                                }
-                            ]
-
-                            MouseArea {
-                                id: mouseArea2
-                                property bool hovered: false
-                                cursorShape: Qt.PointingHandCursor
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                focus: true
-                                activeFocusOnTab: true
-
-                                onEntered: hovered = true
-                                onExited: hovered = false
-                                onClicked: {
-                                    hovered = false
-                                    openArticle()
-                                }
-                                Keys.onSpacePressed: openArticle()
-
-                                function openArticle() {
-                                    stack.elem = modelData
-                                    stack.currentIndex = 1
-                                }
-                            }
-                        }
+                property var reload: function () {
+                    var ret = [];
+                    const mods = modManager.listMods()
+                    var modByName = {};
+                    for (let i = 0; i < mods.length; ++i) {
+                        modByName[mods[i].name] = mods[i].metadata.metadata || {
+                            name: mods[i].name,
+                            version: mods[i].version,
+                            arch: mods[i].arch,
+                            description: "",
+                            image: "qrc:/Resources/icon-home.png"
+                        };
                     }
+                    installedModsGrid.model = Object.values(modByName);
                 }
             }
 
@@ -536,7 +265,7 @@ AnimatedStackLayout {
                                     download1.componentName = stack.elem.name
                                     downloadTask.startDownload([download1])
                                     zipTask.targetDir = modManager.getFolderPathForMod(stack.elem.name, modelData.version, arch);
-                                    modsGrid2.reload();
+                                    installedModsGrid.reload();
                                     var s = stack;
                                     var bck = s.elem;
                                     s.elem = {};
@@ -571,7 +300,7 @@ AnimatedStackLayout {
                                 text: qsTr("Delete")
                                 onClicked: {
                                     modManager.removeMod(stack.elem.name, modelData.version, arch)
-                                    modsGrid2.reload();
+                                    installedModsGrid.reload();
                                     var s = stack;
                                     var bck = s.elem;
                                     s.elem = {};
@@ -639,7 +368,7 @@ AnimatedStackLayout {
                 console.log("Zip extraction finished")
                 // if (downloadTask.activemod) {
                 //     modManager.reloadMod(downloadTask.activemod.name, downloadTask.activemod.version, downloadTask.activemod.arch)
-                //     modsGrid2.reload();
+                //     installedModsGrid.reload();
                 //     var s = stack;
                 //     var bck = s.elem;
                 //     s.elem = {};
