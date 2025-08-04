@@ -6,7 +6,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="57"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>指定的文件与启动器不兼容&lt;br/&gt;请使用拥有《Minecraft》（Play 商店）的账号登录Google Play，让启动器下载兼容版本，包括《Minecraft》的旧版本&lt;br/&gt;详情：&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -22,28 +22,28 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="22"/>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑配置文件</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="32"/>
         <source>Delete profile</source>
-        <translation type="unfinished"></translation>
+        <translation>删除配置文件</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="56"/>
         <source>Profile Name</source>
-        <translation type="unfinished"></translation>
+        <translation>配置名称</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="66"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="92"/>
         <source>Latest %1 (%2)</source>
         <oldsource>Latest</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>最新版 %1 (%2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="92"/>
@@ -58,18 +58,18 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="92"/>
         <source>Google Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="101"/>
         <source>%1 (installed, %2)</source>
         <oldsource>installed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>%1 (已安装, %2)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="116"/>
         <source>%1 (%2%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2%3)</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="116"/>
@@ -84,22 +84,22 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="174"/>
         <source>Texture Patch</source>
-        <translation type="unfinished"></translation>
+        <translation>纹理补丁</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="231"/>
         <source>Data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>数据目录</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="262"/>
         <source>Window size</source>
-        <translation type="unfinished"></translation>
+        <translation>窗口分辨率</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="294"/>
         <source>Commandline</source>
-        <translation type="unfinished"></translation>
+        <translation>命令行</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="305"/>
@@ -109,7 +109,7 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="375"/>
         <source>New Environment Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>环境变量</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="410"/>
@@ -119,7 +119,7 @@
     <message>
         <location filename="qml/EditProfileWindow.qml" line="418"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="qml/EditProfileWindow.qml" line="406"/>
@@ -159,7 +159,11 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>不兼容的《Minecraft》安装包，请选择其他版本或旧版本
+此启动器是一款免费的开源软件，通常会落后于Google Play的官方更新
+在某些情况下，可能出现游戏文件缺失、
+启动器本应通过更新提供的关键程序组件缺失，
+或启动器发生其他故障</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="233"/>
@@ -293,7 +297,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/Launcher.qml" line="29"/>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>新闻</translation>
     </message>
     <message>
         <location filename="qml/Launcher.qml" line="39"/>
@@ -303,7 +307,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/Launcher.qml" line="46"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
@@ -363,7 +367,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/LauncherLogin.qml" line="49"/>
         <source>To use this launcher, you must purchase Minecraft on Google Play and sign in.</source>
-        <translation type="unfinished"></translation>
+        <translation>要使用此启动器，你必须在Google Play购买《Minecraft》并登录账号。</translation>
     </message>
     <message>
         <location filename="qml/LauncherLogin.qml" line="61"/>
@@ -407,13 +411,13 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/LauncherMain.qml" line="144"/>
         <source>Download and play</source>
-        <translation type="unfinished"></translation>
+        <translation>下载并开始游戏</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="33"/>
         <location filename="qml/LauncherMain.qml" line="144"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>开始游戏</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="144"/>
@@ -450,7 +454,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/LauncherMain.qml" line="21"/>
         <source>Downloading Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在下载《Minecraft》...</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="23"/>
@@ -465,7 +469,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/LauncherMain.qml" line="199"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>下载失败</translation>
     </message>
     <message>
         <location filename="qml/LauncherMain.qml" line="208"/>
@@ -488,27 +492,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>启动器</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>版本: %1&lt;br/&gt;构建版本: %2</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>源代码</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>文档</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsAbout.qml" line="68"/>
@@ -609,48 +613,48 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="17"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Google 账号</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="37"/>
         <source>Sign out</source>
-        <translation type="unfinished"></translation>
+        <translation>退出登录</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="37"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>登录</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="50"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>启动器</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="57"/>
         <source>Hide the launcher when starting the game</source>
         <oldsource>Show log when starting the game</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>游戏启动时隐藏启动器</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="64"/>
         <source>Disable the GameLog</source>
-        <translation type="unfinished"></translation>
+        <translation>禁用游戏日志</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="70"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 “打开时自动检查更新”</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="76"/>
         <source>Show Notification banner</source>
-        <translation type="unfinished"></translation>
+        <translation>显示通知横幅</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="83"/>
         <source>Run troubleshooter</source>
-        <translation type="unfinished"></translation>
+        <translation>运行故障排除程序</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsGeneral.qml" line="88"/>
@@ -726,22 +730,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/LauncherSettingsWindow.qml" line="15"/>
         <source>Settings</source>
         <oldsource>Launcher Settings</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="21"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="24"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>存储</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="27"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="qml/LauncherSettingsWindow.qml" line="30"/>
