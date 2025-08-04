@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+jobs:
+  sync:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Pull translations from Weblate
+        run: |
+          git pull https://hosted.weblate.org/git/minecraft-linux/mcpelauncher-ui-qt/
+
+      - name: Push changes
+        run: |
+          git push
