@@ -174,7 +174,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation>你可能正在运行不兼容的版本。请在设置中取消勾选以下选项，然后重新启动游戏:</translation>
+        <translation>你可能正在运行不兼容的版本。请在设置中取消勾选以下选项，然后重新启动游戏: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
@@ -189,7 +189,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation>显示 beta 版</translation>
+        <translation>显示测试版</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
@@ -270,12 +270,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>兼容</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>不兼容</translation>
     </message>
 </context>
 <context>
@@ -328,7 +328,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
         <source>Please sign into your Google Play account.</source>
-        <translation>请登录您的 Google Play 账号</translation>
+        <translation>请登录您的 Google Play 账号。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="109"/>
@@ -408,12 +408,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
         <source>Disable trial mode from settings to launch the full version instead. </source>
-        <translation>从设置中禁用试用模式以启动完整版本。</translation>
+        <translation>从设置中禁用试用模式以启动完整版本。 </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
         <source>You must first buy &quot;Minecraft Trial&quot; on an Android device or VM to download it here. </source>
-        <translation>你必须首先在安卓设备或虚拟机上购买《Minecraft Trial》才能在此处下载它。</translation>
+        <translation>你必须首先在安卓设备或虚拟机上购买《Minecraft Trial》才能在此处下载它。 </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
@@ -455,7 +455,8 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="217"/>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
-        <translation>你可以通过启用试用模式来免费试用此启动器。</translation>
+        <translation>
+你可以通过启用试用模式来免费试用此启动器。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
@@ -874,7 +875,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation>，</translation>
+        <translation>， </translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
@@ -1031,7 +1032,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation>启动器无法更新&lt;br/&gt;你需要检查包管理器以获取更新，或者使用更新的源代码重新编译你的开源版本。</translation>
+        <translation>启动器无法更新&lt;br/&gt;你需要检查包管理器以获取更新，或者使用更新的源代码重新编译你的开源版本</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
@@ -1056,7 +1057,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
         <source>This Launcher cannot load Minecraft (%1) on this PC:&lt;br/&gt;%2&lt;br/&gt;</source>
-        <translation>该启动器无法在这台电脑上加载《Minecraft》(%1):&lt;br/&gt;%2</translation>
+        <translation>该启动器无法在这台电脑上加载《Minecraft》(%1):&lt;br/&gt;%2&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
@@ -1071,7 +1072,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation>此电脑 / 启动器支持的有效《Minecraft》APK CPU 架构为</translation>
+        <translation>此电脑 / 启动器支持的有效《Minecraft》APK CPU 架构为 </translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
@@ -1195,7 +1196,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation>您安装的启动器版本 %1 (版本号 %2) 目前已是最新版本。</translation>
+        <translation>您安装的启动器版本 %1 (版本号 %2) 目前已是最新版本</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
@@ -1369,7 +1370,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
 </context>
 <context>
@@ -1402,7 +1403,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation>当前所选配置文件的游戏目录:</translation>
+        <translation>当前所选配置文件的游戏目录: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
@@ -1549,7 +1550,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>&lt;br/&gt;Enable &quot;Show incompatible Versions&quot; would show more, but they won&apos;t launch on your PC see the compatibility report of the TroubleShooter for more Information</source>
-        <translation>启用 “显示不兼容版本” 会显示更多内容，但它们无法在你的电脑上启动。有关更多信息，请查看故障排除程序的兼容性报告。</translation>
+        <translation>&lt;br/&gt;启用 “显示不兼容版本” 会显示更多内容，但它们无法在你的电脑上启动。有关更多信息，请查看故障排除程序的兼容性报告</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
@@ -1607,27 +1608,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnlockScreen.qml" line="15"/>
         <source>Unlock Credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>解锁凭据</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="27"/>
         <source>This is not your Google Account Password. If you don&apos;t want to type it every time you open this Launcher, check &quot;Continue with invalid credentials&quot;, then open Settings, press logout and finally login without providing your own encryption password.</source>
-        <translation type="unfinished"></translation>
+        <translation>这不是你的 Google 账户密码。如果你不想每次打开这个启动器时都输入它，可以勾选 “使用无效凭据继续”，然后打开设置，点击退出登录，最后登录时无需提供你自己的加密密码。</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="35"/>
         <source>Continue with invalid credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>使用无效凭据继续</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="54"/>
         <source>Password is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>密码无效</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="100"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>继续</translation>
     </message>
 </context>
 <context>
