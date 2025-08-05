@@ -6,7 +6,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation>指定的文件与启动器不兼容&lt;br/&gt;请使用拥有《Minecraft》（Play 商店）的账号登录Google Play，让启动器下载兼容版本，包括《Minecraft》的旧版本&lt;br/&gt;详情：&lt;br/&gt;%1</translation>
+        <translation>指定的文件与启动器不兼容&lt;br/&gt;请使用拥有《Minecraft》 (Play 商店) 的账号登录 Google Play，让启动器下载兼容版本，包括《Minecraft》的旧版本&lt;br/&gt;详情:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -22,12 +22,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>非官方类 Unix《Minecraft》启动器</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (版本号 %2)</translation>
     </message>
 </context>
 <context>
@@ -35,12 +35,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>更新日志</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>继续</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@ In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
         <translation>不兼容的《Minecraft》安装包，请选择其他版本或旧版本
-此启动器是一款免费的开源软件，通常会落后于Google Play的官方更新
+此启动器是一款免费的开源软件，通常会落后于 Google Play 的官方更新
 在某些情况下，可能出现游戏文件缺失、
 启动器本应通过更新提供的关键程序组件缺失，
 或启动器发生其他故障</translation>
@@ -154,47 +154,47 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏日志</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>《Minecraft》停止运行</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>请不要报告此错误。</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏已退出，错误代码非零。&lt;a href=&apos;%1&apos;&gt;如果您想提交问题，请点击此处。&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>你可能正在运行不兼容的版本。请在设置中取消勾选以下选项，然后重新启动游戏:</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>显示不兼容的版本</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>显示未经验证的版本</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>显示 beta 版</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation type="unfinished"></translation>
+        <translation>在设置中启用游戏日志，然后重新启动游戏以获取错误日志。</translation>
     </message>
 </context>
 <context>
@@ -202,62 +202,62 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏手柄工具</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到游戏手柄！</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
         <source>Ensure the gamepad is connected correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>请确保游戏手柄已正确连接。</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>输入</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
         <source>GUID</source>
-        <translation type="unfinished"></translation>
+        <translation>GUID</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>启用映射</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>设置映射</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>请稍等</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>映射</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>保存到当前配置文件</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>保存到默认目录</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
@@ -307,28 +307,28 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏正在运行中</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
         <source>Exit game to edit or change profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>退出游戏以编辑或更改配置文件。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>查看日志</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
         <location filename="qml/HomeScreen.qml" line="130"/>
         <source>Action required</source>
-        <translation type="unfinished"></translation>
+        <translation>需执行操作</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
         <source>Please sign into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>请登录您的 Google Play 账号</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="109"/>
@@ -339,127 +339,129 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="114"/>
         <source>Can&apos;t verify license</source>
-        <translation type="unfinished"></translation>
+        <translation>无法验证许可证</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="115"/>
         <source>You should have purchased Minecraft%1 in your Google Play account to download it here. If you have used a wrong account, please sign out and sign in again.</source>
-        <translation type="unfinished"></translation>
+        <translation>您需要在自己的 Google Play 账号中购买过《Minecraft%1》，才能在此处下载。如果您使用了错误的账户，请先退出登录，再重新登录。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="116"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>重试</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="123"/>
         <source>Unsupported version</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持的版本</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="124"/>
         <source>The Minecraft version you have selected for the current profile is unsupported or untested. Support for new version is a feature request.</source>
-        <translation type="unfinished"></translation>
+        <translation>当前配置文件所选的《Minecraft》版本不受支持或未经测试。对新版本的支持属于功能需求范畴。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>查看维基</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
         <source>Please sign in again into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>请重新登录您的 Google Play 账号。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="152"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>查看维基</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
         <source>Unconfigured Joysticks Found</source>
-        <translation type="unfinished"></translation>
+        <translation>检测到未配置的摇杆</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="168"/>
         <source>One Joystick cannot be used as Gamepad Input:
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>有一个摇杆无法用作游戏手柄输入:
+%1。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="169"/>
         <source>%1 Joysticks cannot be used as Gamepad Input:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 个摇杆无法用作游戏手柄输入:
+%2。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>已启用试用模式</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
         <source>Disable trial mode from settings to launch the full version instead. </source>
-        <translation type="unfinished"></translation>
+        <translation>从设置中禁用试用模式以启动完整版本。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
         <source>You must first buy &quot;Minecraft Trial&quot; on an Android device or VM to download it here. </source>
-        <translation type="unfinished"></translation>
+        <translation>你必须首先在安卓设备或虚拟机上购买《Minecraft Trial》才能在此处下载它。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
         <source>Play Version is behind</source>
-        <translation type="unfinished"></translation>
+        <translation>Play 版本过低</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="190"/>
         <source>Google Play Version Channel is behind. Got %1. Expected %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play 渠道版本过低。当前版本为 %1，所需版本为 %2。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="196"/>
         <location filename="qml/HomeScreen.qml" line="247"/>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>有可用更新</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="197"/>
         <source>A new version of the launcher is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>启动器有新版本可用。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="198"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="212"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="215"/>
         <source>Access to the Google Play Apk Library has been rejected.</source>
-        <translation type="unfinished"></translation>
+        <translation>对 Google Play Apk 库的访问已被拒绝。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="217"/>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>你可以通过启用试用模式来免费试用此启动器。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
         <location filename="qml/HomeScreen.qml" line="269"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>更新</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="348"/>
@@ -469,7 +471,7 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="353"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="382"/>
@@ -479,12 +481,12 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="384"/>
         <source>Extracting Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>正在解压《Minecraft》...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="385"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>请稍等...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="459"/>
@@ -494,27 +496,27 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="470"/>
         <source>Error while extracting the downloaded file(s), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;please report this error&lt;/a&gt;: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>解压已下载文件时出错，&lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;请报告此错误&lt;/a&gt;: %1</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="595"/>
         <source>%1  (%2, %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1  (%2, %3)</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="643"/>
         <source>mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.</source>
-        <translation type="unfinished"></translation>
+        <translation>mcpelauncher-versiondb 未加载。无法检查《Minecraft》版本兼容性。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation type="unfinished"></translation>
+        <translation>最新的《Minecraft》版本 %1 为测试版，默认处于隐藏状态。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
         <source>Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.</source>
-        <translation type="unfinished"></translation>
+        <translation>最新《Minecraft》版本 %1 的兼容性未知。对新《Minecraft》版本的支持属于功能需求范畴。</translation>
     </message>
 </context>
 <context>
@@ -683,7 +685,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="22"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>主页</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="29"/>
@@ -693,12 +695,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="36"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>模组</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="46"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏日志</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="53"/>
@@ -708,7 +710,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="61"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>退出</translation>
     </message>
 </context>
 <context>
@@ -716,7 +718,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/Components/ModsGrid.qml" line="143"/>
         <source>Load more Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>加载更多模组</translation>
     </message>
 </context>
 <context>
@@ -726,57 +728,57 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/ModsScreen.qml" line="34"/>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>模组</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="37"/>
         <source>Installed Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>已安装的模组</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="40"/>
         <source>FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation>常见问题</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="87"/>
         <source>Welcome to our experimental mods section.</source>
-        <translation type="unfinished"></translation>
+        <translation>欢迎来到我们的实验性模组专区。</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="96"/>
         <source>Managing mods is not yet supported. To contribute your mod, please open a pull request on &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;Mods are a collection of .so files (also on macOS) placed inside the `mods` folder. This folder is located within your data root, which you can find in Settings &gt; Storage. The `mods` folder does not exist by default, so you&apos;ll need to create it. Extract zip files directly into the `mods` folder without creating subfolders.  .so files should be directly below the `mods` folder.&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;Do not report crashes to the launcher&apos;s issue tracker when mods are enabled.&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>目前尚不支持模组管理功能。若您想分享自己的模组，请在 &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt; 上发起拉取请求。&lt;br/&gt;&lt;br/&gt;模组是一组 .so 文件 (在 macOS 系统上也是如此) ，需放置在 mods 文件夹中。该文件夹位于您的数据根目录下，您可在 “设置&gt; 存储” 中找到数据根目录。mods 文件夹默认不存在，因此需要您手动创建。请将压缩包直接解压到 mods 文件夹中，无需创建子文件夹。.so 文件应直接放在 mods 文件夹下。&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;启用模组时若发生崩溃，请勿向启动器的 issue tracker 报告。&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="171"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Untitled Mod</source>
-        <translation type="unfinished"></translation>
+        <translation>未命名的模组</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="254"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>下载</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>激活</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="304"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="359"/>
@@ -786,12 +788,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ModsScreen.qml" line="380"/>
         <source>Zip extraction failed</source>
-        <translation type="unfinished"></translation>
+        <translation>压缩包解压失败</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="396"/>
         <source>Download Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>下载进度</translation>
     </message>
 </context>
 <context>
@@ -804,12 +806,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/NewsScreen.qml" line="22"/>
         <source>Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
         <source>Load more articles</source>
-        <translation type="unfinished"></translation>
+        <translation>加载更多文章</translation>
     </message>
 </context>
 <context>
@@ -817,7 +819,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Create profile</source>
-        <translation type="unfinished"></translation>
+        <translation>创建配置文件</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
@@ -827,12 +829,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="84"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="114"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="127"/>
@@ -847,7 +849,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
@@ -857,7 +859,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>兼容</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="164"/>
@@ -872,12 +874,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>，</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>beta</source>
-        <translation type="unfinished"></translation>
+        <translation>beta</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="242"/>
@@ -902,32 +904,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="383"/>
         <source>Environment Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>环境变量</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="456"/>
         <source>Add New Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>添加新变量</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Collapse advanced  🞁</source>
-        <translation type="unfinished"></translation>
+        <translation>折叠高级选项 🞁</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Expand advanced  🞃</source>
-        <translation type="unfinished"></translation>
+        <translation>展开高级选项 🞃</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="493"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="497"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="506"/>
@@ -937,18 +939,18 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="681"/>
         <source>A profile with the specified name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>该名称的配置文件已存在</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="682"/>
         <location filename="qml/ProfileEditPopup.qml" line="688"/>
         <source>Profile Edit Error</source>
-        <translation type="unfinished"></translation>
+        <translation>配置文件编辑错误</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="687"/>
         <source>The specified profile name is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>该配置文件名称无效</translation>
     </message>
 </context>
 <context>
@@ -959,173 +961,173 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="supportedandroidabis.cpp" line="103"/>
         <location filename="supportedandroidabis.cpp" line="150"/>
         <source>Disabled in this Launcher Release, please download a different distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>在这个启动器版本中已禁用，请下载不同的发行版</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="66"/>
         <source>Your Computer is to old for running Android x86_64 64bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>你的电脑太旧，无法运行 Android x86_64 64位游戏</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="70"/>
         <location filename="supportedandroidabis.cpp" line="115"/>
         <source>Android expect the following unavailable Instruction Sets to be available:</source>
-        <translation type="unfinished"></translation>
+        <translation>Android 需要以下这些不可用的指令集:</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="108"/>
         <source>Your Operating System doesn&apos;t support (old) x86 32bit games</source>
-        <translation type="unfinished"></translation>
+        <translation>你的操作系统不支持 (旧的) x86 32位游戏</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="111"/>
         <source>Your Computer is to old for running Android x86 32bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>你的电脑太旧，无法运行 Android x86 32位游戏</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="121"/>
         <source>Not an armv7 System</source>
-        <translation type="unfinished"></translation>
+        <translation>不是 armv7 系统</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="122"/>
         <location filename="supportedandroidabis.cpp" line="142"/>
         <source>Not an aarch64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>不是 aarch64 系统</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="137"/>
         <source>Disabled in this Launcher Release</source>
-        <translation type="unfinished"></translation>
+        <translation>在这个启动器版本中已禁用</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="139"/>
         <location filename="supportedandroidabis.cpp" line="143"/>
         <source>Not a x86 System</source>
-        <translation type="unfinished"></translation>
+        <translation>不是 x86 系统</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="140"/>
         <location filename="supportedandroidabis.cpp" line="144"/>
         <source>Not a x86_64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>不是 x86_64 系统</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="34"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage 无法更新&lt;br/&gt;需要将环境变量 “APPIMAGE” 设置为 AppImage 的路径</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="54"/>
         <location filename="updatechecker.cpp" line="155"/>
         <source>Appimage cannot be updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage 无法更新</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="66"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage 无法更新&lt;br/&gt;未知错误</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation type="unfinished"></translation>
+        <translation>启动器无法更新&lt;br/&gt;你需要检查包管理器以获取更新，或者使用更新的源代码重新编译你的开源版本。</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
-        <translation type="unfinished"></translation>
+        <translation>检查更新失败&lt;br/&gt;F无法连接到更新服务器</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="72"/>
         <source>Trying to import a forbidden apk</source>
-        <translation type="unfinished"></translation>
+        <translation>尝试导入一个被禁止的 apk</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="75"/>
         <source>Trying to extract multiple apks with different versionsCodes is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>尝试提取多个具有不同版本号的 apk 是被禁止的</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>尝试提取多个不同包名的 apk 是被禁止的</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
         <source>This Launcher cannot load Minecraft (%1) on this PC:&lt;br/&gt;%2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>该启动器无法在这台电脑上加载《Minecraft》(%1):&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
         <source>The specified file is not a valid Minecraft apk, it doesn&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>指定的文件不是有效的《Minecraft》APK，它不包含 libminecraftpe.so 文件</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="110"/>
         <source>The specified files are not a valid collection of Minecraft apks, they don&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>指定的文件不是有效的《Minecraft》APKS，它不包含 libminecraftpe.so 文件</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation type="unfinished"></translation>
+        <translation>此电脑 / 启动器支持的有效《Minecraft》APK CPU 架构为</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
         <source>No Minecraft apk&apos;s are valid for this pc / launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>没有适用于此电脑 / 启动器的有效《Minecraft》APK</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="136"/>
         <source>unsupported, versionsname of the apk is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持，该 APK 的版本名称为空</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="34"/>
         <location filename="zipextractiontask.cpp" line="33"/>
         <source>renaming versionsfolder failed</source>
-        <translation type="unfinished"></translation>
+        <translation>重命名版本文件夹失败</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
         <location filename="googleapkdownloadtask.cpp" line="118"/>
         <source>Downloading file failed %1</source>
-        <translation type="unfinished"></translation>
+        <translation>文件下载失败 %1</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="333"/>
         <location filename="googleapkdownloadtask.cpp" line="204"/>
         <source>Downloading file failed: Status[%1] &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>文件下载失败: 状态 [%1] &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>未知错误</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CURL 网络错误: %1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>Cannot find &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versions requires sign up&lt;/a&gt;%3</source>
-        <translation type="unfinished"></translation>
+        <translation>在 Google Play 上找不到版本为 %2 的 &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt;，&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;测试版需要注册&lt;/a&gt;%3</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation type="unfinished"></translation>
+        <translation>，&lt;br/&gt;你可能需要尝试禁用 ChromeOS 模式来解决此问题</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -1138,7 +1140,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation>版本: %1&lt;br/&gt;构建版本: %2</translation>
+        <translation>版本: %1&lt;br/&gt;版本号: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
@@ -1158,52 +1160,52 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>该项目允许你启动《Minecraft: Bedrock Edition》 (即不带 “Edition” 后缀的那个版本，此前名为《Minecraft: Pocket Edition》)。该启动器支持 Linux 和 OS X 系统。&lt;br/&gt;&lt;br/&gt; © 版权所有 2018-2024，MrARM 及贡献者</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>检查更新</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>重置启动器设置</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>请重新打开启动器以查看更改</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>有新版本的启动器可供下载</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>你可以在这里下载新版本: %1</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>你现在要更新吗？</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>您安装的启动器版本 %1 (版本号 %2) 目前已是最新版本。</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>更新失败</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
         <source>Update Information</source>
-        <translation type="unfinished"></translation>
+        <translation>更新说明</translation>
     </message>
 </context>
 <context>
@@ -1259,7 +1261,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation>(按住显示)</translation>
+        <translation>(点击显示)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
@@ -1289,32 +1291,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="95"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation>启用 “打开时自动检查更新”</translation>
+        <translation>启用自动检查更新 (启动时)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>显示所有通知横幅</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>在导航栏中显示退出按钮</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
         <source>ChromeOS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ChromeOS 模式</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>试用模式 (含 ChromeOS 模式)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
         <source>Keep Apks in &lt;GameData&gt;/apks</source>
-        <translation type="unfinished"></translation>
+        <translation>将 APK 文件保留在&lt;GameData&gt;/apks 目录中</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="132"/>
@@ -1324,17 +1326,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="137"/>
         <source>Open Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>打开游戏手柄工具</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="142"/>
         <source>Refresh Google Play Version Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新 Google Play 渠道版本</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="151"/>
         <source>Refresh Google Play Checkin</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新 Google Play 验证信息</translation>
     </message>
 </context>
 <context>
@@ -1375,37 +1377,37 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>导入世界或资源包</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>导入世界或资源包 (等待启动时处理)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 Url</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 Url (等待启动时处理)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
         <source>Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏目录</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>当前所选配置文件的游戏目录:</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
         <source>Default Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>默认游戏目录</translation>
     </message>
 </context>
 <context>
@@ -1413,42 +1415,42 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="85"/>
         <source>IsChromeOS</source>
-        <translation type="unfinished"></translation>
+        <translation>ChromeOS 版本</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="159"/>
         <source>Get Download Info</source>
-        <translation type="unfinished"></translation>
+        <translation>获取下载信息</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="217"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>删除所选内容</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="234"/>
         <source>Download .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>下载 APK</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>导入试用版 APK</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>导入 APK</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
         <source>Remove Incompatible Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>移除不兼容的版本</translation>
     </message>
 </context>
 <context>
@@ -1511,93 +1513,93 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>故障排除</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
         <source>&lt;a href=&quot;%1&quot;&gt;Go to wiki&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;前往维基&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
         <source>I cannot select / see the latest Version of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>我无法选择 / 看到游戏的最新版本？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>你需要使用拥有该游戏的 Google 账号登录</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>你需要重新登录或重启启动器来修复它。</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>我无法选择 / 看到游戏的旧版本？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1</source>
-        <translation type="unfinished"></translation>
+        <translation>您需要重新登录或重启启动器或检查您与 github 的网络连接以修复此问题。%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>&lt;br/&gt;Enable &quot;Show incompatible Versions&quot; would show more, but they won&apos;t launch on your PC see the compatibility report of the TroubleShooter for more Information</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 “显示不兼容版本” 会显示更多内容，但它们无法在你的电脑上启动。有关更多信息，请查看故障排除程序的兼容性报告。</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
         <source>&quot;Show Beta Versions&quot; is disabled or greyed out?</source>
-        <translation type="unfinished"></translation>
+        <translation>“显示测试版”被禁用或呈灰色状态了吗？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
         <source>You need to own the game and sign up for the &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft beta program on Google Play&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>你需要拥有这款游戏，并注册 Google Play 上的&lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;《Minecraft》测试计划&lt;/a&gt;。</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="123"/>
         <source>Failed to initialize Google Play API</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play API 初始化失败</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>请检查您的网络连接，或者重新登录 Google Play&lt;br/&gt;playApi 的状态码为 %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
         <source>Failed to obtain the gameversion</source>
-        <translation type="unfinished"></translation>
+        <translation>获取游戏版本失败</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>请检查您的网络连接，或者重新登录 Google Play&lt;br/&gt;playApi 的状态码为 %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation type="unfinished"></translation>
+        <translation>为什么某些版本的播放开始游戏是禁用的？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>此启动器不使用模拟器，且需要特定版本的安卓应用&lt;br/&gt;&lt; 安卓应用兼容性报告:&lt;br/&gt;如果您在以下列表中看到至少一项&lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;兼容&lt;/font&gt;&lt;/b&gt;的 CPU 架构，那么您应该可以使用此启动器&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>未发现问题</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
         <source>No launcher installation issues were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>未发现启动器安装问题。</translation>
     </message>
 </context>
 <context>
