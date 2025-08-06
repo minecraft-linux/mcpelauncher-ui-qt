@@ -14,7 +14,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>提取 APK 文件</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
         <source>Sign in with Google</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 Google 登录</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
@@ -667,12 +667,12 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
         <source>Get help</source>
-        <translation type="unfinished"></translation>
+        <translation>获得帮助</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="111"/>
         <source>Extracting apk</source>
-        <translation type="unfinished"></translation>
+        <translation>提取 APK</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="133"/>
@@ -925,7 +925,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="493"/>
         <source>Cancel</source>
-        <translation>返回</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="497"/>
@@ -1219,12 +1219,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="30"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>显示未验证版本</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>显示不兼容的版本</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
@@ -1388,7 +1388,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation>打开 Url</translation>
+        <translation>打开 Uri</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
@@ -1694,7 +1694,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>游戏正在运行中</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
