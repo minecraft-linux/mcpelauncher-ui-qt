@@ -5,7 +5,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>O arquivo especificado não é compatível com o launcher&lt;br/&gt;Faça login na Google Play com uma conta que possua o Minecraft (Play Store) e permita que o launcher baixe versões compatíveis, incluindo versões anteriores do Minecraft&lt;br/&gt;Detalhes:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Extraindo o .apk</translation>
     </message>
 </context>
 <context>
@@ -21,7 +21,7 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher não oficial do Minecraft para sistemas nix</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Histórico de alterações</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível encontrar o gamelauncher do Minecraft (%1)
+Adicione o launcher &apos;%2&apos; à sua variável de ambiente &apos;PATH&apos; e reinicie o launcher
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -58,29 +60,35 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Instalação do Minecraft incompatível, selecione uma versão diferente ou mais antiga
+Este Launcher é um software gratuito e de código aberto, que geralmente fica atrás das atualizações oficiais da Google Play
+Em alguns casos, podem faltar arquivos do jogo,
+símbolos esperados que deveriam ser fornecidos por este Launcher através de atualizações
+ou outros problemas que acabam quebrando o Launcher</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
         <source>Missing launcher dependencies, please install all missing libraries in their right version</source>
-        <translation type="unfinished"></translation>
+        <translation>Faltam dependências do launcher, instale todas as bibliotecas ausentes nas versões corretas</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="244"/>
         <source>Process exited with unexpected exit code: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>O processo foi encerrado com um código de saída inesperado: %1
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="247"/>
         <source>Process exited normally
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Processo encerrado normalmente
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Seu sistema não consegue executar o launcher</translation>
     </message>
 </context>
 <context>
@@ -88,47 +96,47 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Log do jogo</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft deixou de funcionar</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, não reporte este erro.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>O jogo foi encerrado com um código de erro diferente de zero. &lt;a href=&apos;%1&apos;&gt;Clique aqui para reportar o problema.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>Você pode estar executando uma versão incompatível. Desmarque as opções a seguir nas configurações e reinicie o jogo: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versões incompatíveis</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versões não verificadas</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar versões beta</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ative o log do jogo nas configurações e reinicie o jogo para capturar o log de erros.</translation>
     </message>
 </context>
 <context>
@@ -136,17 +144,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferramenta de Gamepad</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhum gamepad encontrado!</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
         <source>Ensure the gamepad is connected correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifique se o controle está conectado corretamente.</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
@@ -161,37 +169,37 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapeamento disponível</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir mapeamento</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>Esperando</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapeamento</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar no perfil atual</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar no diretório padrão</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar</translation>
     </message>
 </context>
 <context>
@@ -204,12 +212,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Compatível</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Incompatível</translation>
     </message>
 </context>
 <context>
@@ -217,17 +225,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>GooglePlayApi não está pronto, status=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O GooglePlayApi já está em andamento; o relatório de status não está funcionando, status=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O GooglePlayApi precisa do loginHelper</translation>
     </message>
 </context>
 <context>
@@ -236,89 +244,89 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogar</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>O jogo está rodando</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
         <source>Exit game to edit or change profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Saia do jogo para editar ou alterar o perfil.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Ver log</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
         <location filename="qml/HomeScreen.qml" line="130"/>
         <source>Action required</source>
-        <translation type="unfinished"></translation>
+        <translation>Ação necessária</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
         <source>Please sign into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Entre na sua conta do Google Play.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="109"/>
         <location filename="qml/HomeScreen.qml" line="132"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrar</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="114"/>
         <source>Can&apos;t verify license</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível verificar a licença</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="115"/>
         <source>You should have purchased Minecraft%1 in your Google Play account to download it here. If you have used a wrong account, please sign out and sign in again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Você deve ter comprado o Minecraft%1 em sua conta do Google Play para baixá-lo aqui. Se você usou uma conta incorreta, faça logout e entre novamente.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="116"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentar novamente</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="123"/>
         <source>Unsupported version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão não suportada</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="124"/>
         <source>The Minecraft version you have selected for the current profile is unsupported or untested. Support for new version is a feature request.</source>
-        <translation type="unfinished"></translation>
+        <translation>A versão do Minecraft que você selecionou para o perfil atual não é suportada ou não foi testada. O suporte para novas versões depende de solicitação de recurso.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulte a wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
         <source>Please sign in again into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, faça login novamente na sua conta do Google Play.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="152"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulte a wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
         <source>Unconfigured Joysticks Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Joysticks não configurados encontrados</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="168"/>
