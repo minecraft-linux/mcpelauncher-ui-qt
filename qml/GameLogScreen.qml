@@ -79,7 +79,7 @@ ColumnLayout {
                         toggles.push(qsTr("Show incompatible versions"))
                     if (launcherSettings.showUnverified)
                         toggles.push(qsTr("Show unverified versions"))
-                    if (launcherSettings.BetaVersions)
+                    if (launcherSettings.showBetaVersions)
                         toggles.push(qsTr("Show beta versions"))
                     return msg + toggles.join(", ") + "."
                 }
