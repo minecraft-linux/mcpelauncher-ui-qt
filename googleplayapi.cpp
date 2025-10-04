@@ -41,7 +41,7 @@ void GooglePlayApi::requestAppInfo(const QString &packageName) {
 
 QString GooglePlayApi::CheckinInfoGroup() {
     std::stringstream ss;
-    ss << "checkin_";
+    ss << "checkin_2025_09_";
     for (auto&& abi : loginHelper->getDevice().config_native_platforms) {
         ss << "__" << abi;
     }
