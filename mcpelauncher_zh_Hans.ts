@@ -652,7 +652,9 @@ You can try this launcher for free by enabling the trial mode.</source>
         <source>To use this launcher, you must either purchase Minecraft Android or claim the free Minecraft Trial on Google Play and sign in.
 
 The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>想要使用这个启动器，你有两种选择：要么购买《Minecraft》安卓版，要么在 Google Play 领取免费的《Minecraft》试用版并登录账号。
+
+至于免费的《Minecraft》（ChromeOS 版）试用模式，你可以在登录后，进入 “设置” 页面开启它。</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
@@ -662,7 +664,7 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
         <source>Use trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>使用试用版 APK</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
@@ -678,7 +680,8 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
         <location filename="qml/LoginScreen.qml" line="133"/>
         <source>This is an unofficial Linux launcher for the Minecraft Bedrock codebase.
 This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
-        <translation type="unfinished"></translation>
+        <translation>这是一款适用于《Minecraft》基岩版代码库的非官方 Linux 启动器。
+本项目与 Minecraft 、Mojang 及 Microsoft 均无关联。</translation>
     </message>
 </context>
 <context>
@@ -1032,7 +1035,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation>启动器无法更新&lt;br/&gt;你需要检查包管理器以获取更新，或者使用更新的源代码重新编译你的开源版本</translation>
+        <translation>启动器无法更新&lt;br/&gt;你需要检查包管理器以获取更新，或者使用新的源代码重新编译你的开源版本</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
