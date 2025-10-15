@@ -5,7 +5,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>指定したファイルは、ランチャー&lt;br/&gt;と互換性がありません。Minecraft(Playstore)を所有しているアカウントでGoogle Playにログインし、Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1の以前のバージョンを含むランチャーのダウンロード互換性のあるバージョンを許可します</translation>
     </message>
 </context>
 <context>
@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>.apkを抽出中</translation>
     </message>
 </context>
 <context>
@@ -21,12 +21,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">非公式のMinecraft用*nixランチャー</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (構築 %2)</translation>
     </message>
 </context>
 <context>
@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>アップデート履歴</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>続行する</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft (%1) のゲームランチャーが見つかりませんでした
+ランチャー 『%2』 を 『PATH』 (環境変数) に追加し、ランチャーを再起動してください
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -58,29 +60,35 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>互換性のないMinecraftです。別のバージョンまたは古いバージョンを選択してください
+このランチャーは無料のオープンソースソフトウェアであり、Google Playからの公式アップデートから数日遅れて配信される場合があります
+場合によってはゲームファイルが不足している、
+本来はこのランチャーのアップデートによって提供されるはずの機能が見つからない、
+ランチャー自体に不具合が生じている可能性などがあります</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
         <source>Missing launcher dependencies, please install all missing libraries in their right version</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャーの依存関係を戻すには、適切なバージョンのすべての足りないライブラリをインストールしてください</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="244"/>
         <source>Process exited with unexpected exit code: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>予期しないエラーで終了: %1
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="247"/>
         <source>Process exited normally
 </source>
-        <translation type="unfinished"></translation>
+        <translation>プロセスは正常に終了しました
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>あなたのシステムではランチャーを実行できません</translation>
     </message>
 </context>
 <context>
@@ -88,22 +96,22 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームログ</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraftが停止しました</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>このエラーは報告しないでください。</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームがエラーコード&lt;a href=&apos;%1&apos;&gt;で終了しました&lt;/a&gt;をクリックして問題を報告してください</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
@@ -113,17 +121,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>互換性のないバージョンを表示する</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>未検証バージョンを表示</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>ベータ版を表示</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
