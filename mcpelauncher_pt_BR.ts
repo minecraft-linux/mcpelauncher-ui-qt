@@ -21,12 +21,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation>Launcher não oficial do Minecraft para sistemas nix</translation>
+        <translation>Launcher não oficial Nix para Minecraft</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation>%1 (construção %2)</translation>
+        <translation>%1 (build %2)</translation>
     </message>
 </context>
 <context>
@@ -49,8 +49,8 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation>Não foi possível encontrar o gamelauncher do Minecraft (%1)
-Adicione o launcher &apos;%2&apos; à sua variável de ambiente &apos;PATH&apos; e reinicie o launcher
+        <translation>Não foi possível encontrar o Launcher do Minecraft (%1)
+Adicione o Launcher &apos;%2&apos; à sua variável de ambiente &apos;PATH&apos; e reinicie o launcher
 </translation>
     </message>
     <message>
@@ -61,15 +61,15 @@ In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
         <translation>Instalação do Minecraft incompatível, selecione uma versão diferente ou mais antiga
-Este Launcher é um software gratuito e de código aberto, que geralmente fica atrás das atualizações oficiais da Google Play
+Este Launcher é um software gratuito e de código aberto, que geralmente fica desatualizado das versões oficiais da Google Play
 Em alguns casos, podem faltar arquivos do jogo,
-símbolos esperados que deveriam ser fornecidos por este Launcher através de atualizações
+Faltando símbolos esperados que deveriam ser fornecidos por este Launcher através de atualizações
 ou outros problemas que acabam quebrando o Launcher</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
         <source>Missing launcher dependencies, please install all missing libraries in their right version</source>
-        <translation>Faltam dependências do launcher, instale todas as bibliotecas ausentes nas versões corretas</translation>
+        <translation>Faltam dependências do Launcher, instale todas as bibliotecas ausentes nas versões corretas</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="244"/>
@@ -88,7 +88,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation>Seu sistema não consegue executar o launcher</translation>
+        <translation>Seu sistema não consegue executar o Launcher</translation>
     </message>
 </context>
 <context>
@@ -144,12 +144,12 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation>Ferramenta de Gamepad</translation>
+        <translation>Ferramenta de controle</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation>Nenhum gamepad encontrado!</translation>
+        <translation>Nenhum controle encontrado!</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
@@ -179,7 +179,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation>Esperando</translation>
+        <translation>Aguardando</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
@@ -249,7 +249,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation>O jogo está rodando</translation>
+        <translation>O jogo está sendo executado</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
@@ -276,7 +276,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
         <location filename="qml/HomeScreen.qml" line="109"/>
         <location filename="qml/HomeScreen.qml" line="132"/>
         <source>Sign in</source>
-        <translation>Entrar</translation>
+        <translation>Logar</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="114"/>
@@ -632,7 +632,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/NewsScreen.qml" line="22"/>
         <source>Minecraft</source>
-        <translation type="unfinished">Minecraft</translation>
+        <translation>Minecraft</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
@@ -700,7 +700,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation type="unfinished">, </translation>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
