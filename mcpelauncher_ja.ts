@@ -116,7 +116,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>互換性の問題があるかもしれません。設定を開き、以下の項目をオフにしてから、ゲームを再起動してください。 </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
@@ -136,7 +136,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation type="unfinished"></translation>
+        <translation>エラーの詳細を確認するために、設定からゲームログを有効にして、ゲームを再起動してください。</translation>
     </message>
 </context>
 <context>
@@ -144,62 +144,62 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームパッド ツール</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームパッドが見つかりません！</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
         <source>Ensure the gamepad is connected correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームパッドが正しく接続されているか確認してください。</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>入力</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
         <source>GUID</source>
-        <translation type="unfinished"></translation>
+        <translation>GUID</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>マッピングの有無</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>マッピングを設定</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>待機中</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>マッピング</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のプロファイルに保存</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>既定のディレクトリに保存</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる</translation>
     </message>
 </context>
 <context>
@@ -212,12 +212,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>互換性あり</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>互換性なし</translation>
     </message>
 </context>
 <context>
@@ -225,17 +225,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>GooglePlayApi が利用可能な状態ではありません。ステータス: %1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play API はすでに処理中です。ステータス報告機能が動作していません。ステータス: %1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation type="unfinished"></translation>
+        <translation>このエラーを報告してください。Google Play API には loginHelper（ログインヘルパー）が必要です。</translation>
     </message>
 </context>
 <context>
