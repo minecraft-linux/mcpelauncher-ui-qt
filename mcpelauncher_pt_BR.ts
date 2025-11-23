@@ -26,7 +26,7 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation>%1 (build %2)</translation>
+        <translation>%1 (compilação %2)</translation>
     </message>
 </context>
 <context>
@@ -306,7 +306,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation>Consulte a wiki</translation>
+        <translation>Ver wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
@@ -321,7 +321,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation>Consulte a wiki</translation>
+        <translation>Ver Wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
@@ -536,7 +536,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/MainNavigation.qml" line="61"/>
         <source>Exit</source>
-        <translation>Saír</translation>
+        <translation>Sair</translation>
     </message>
 </context>
 <context>
@@ -877,7 +877,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation>Tentar extrair vários apks com versões diferentes é proibido</translation>
+        <translation>Tentar extrair vários apks com pacotes diferentes é proibido</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
@@ -961,7 +961,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation>Launcher</translation>
+        <translation>Inicializador</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
@@ -1102,7 +1102,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation>Launcher</translation>
+        <translation>Inicializador</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
@@ -1480,7 +1480,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation>Linux Minecraft Launcher</translation>
+        <translation>Inicializador Linux de Minecraft</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
