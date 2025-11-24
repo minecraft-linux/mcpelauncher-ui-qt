@@ -82,28 +82,23 @@ int main(int argc, char *argv[])
         QCoreApplication::translate("main", "Verbose log Qt Messages to stdout"));
     parser.addOption(verboseOption);
 
-    QCommandLineOption profileOptionLegacy(QStringList() << "p" << "profile", 
-        QCoreApplication::translate("main", "directly start the game launcher with the specified profile"));
-
     QCommandLineOption profileOption(QStringList() << "p" << "profile", 
         QCoreApplication::translate("main", "directly start the game launcher with the specified profile"), "profileName", "");
     parser.addOption(profileOption);
 
-    // TODO remove legacyParser once the old -p flag is deprecated
-    if(!parser.parse(app.arguments())) {
-        parser.~QCommandLineParser();
-        new (&parser) QCommandLineParser();
-        parser.addPositionalArgument("file", "file or uri to open with the default profile");
-        parser.addHelpOption();
-        parser.addOption(devmodeOption);
-        parser.addOption(verboseOption);
-        parser.addOption(profileOptionLegacy);
-    }
+    QCommandLineOption requestGoogleCredentialsOption(QStringList() << "request-google-credentials", 
+        QCoreApplication::translate("main", "Request Google Play Services credentials"));
+    parser.addOption(requestGoogleCredentialsOption);
+
+    QCommandLineOption modOption(QStringList() << "mod", 
+        QCoreApplication::translate("main", "The mod requesting Google Play Services credentials"), "modPath", "");
+    parser.addOption(modOption);
+
     parser.process(app);
     
     bool hasFileOrUri = parser.positionalArguments().count() == 1;
 
-    if(parser.isSet(profileOption) || parser.isSet(profileOptionLegacy) || hasFileOrUri) {
+    if(parser.isSet(profileOption) || hasFileOrUri) {
         return app.launchProfileFile(parser.value(profileOption), hasFileOrUri ? parser.positionalArguments().at(0) : "");
     }
 
@@ -184,10 +179,14 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("SHOW_ANGLEBACKEND", QVariant(false));
 #endif
     engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(LauncherSettings::disableDevMode &= !parser.isSet(devmodeOption)));
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
+    engine.rootContext()->setContextProperty("SOURCE_MOD", QVariant(parser.isSet(modOption) ? parser.value(modOption) : ""));
+
+    engine.load(QUrl(parser.isSet(requestGoogleCredentialsOption) ? QStringLiteral("qrc:/qml/RequestGoogleCredentials.qml") : QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 
+    if(!parser.isSet(requestGoogleCredentialsOption)) {
 #ifdef LAUNCHER_ENABLE_GLFW
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
     std::vector<std::string> controllerDbPaths;
@@ -336,6 +335,7 @@ int main(int argc, char *argv[])
     timer->setInterval(50);
     timer->start();
 #endif
+    }
 
     return app.exec();
 }

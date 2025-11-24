@@ -13,6 +13,8 @@
         <file>qml/LoginScreen.qml</file>
         <file>qml/ChangelogScreen.qml</file>
         <file>qml/UnsupportedScreen.qml</file>
+        <file>qml/RequestGoogleCredentials.qml</file>
+        <file>qml/ErrorScreen.qml</file>
         <file>qml/UnlockScreen.qml</file>
         <file>qml/HomeScreen.qml</file>
         <file>qml/NewsScreen.qml</file>
