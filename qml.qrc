@@ -25,6 +25,8 @@
         <file>qml/GoogleTosApprovalWindow.qml</file>
         <file>qml/EditProfileWindow.qml</file>
         <file>qml/LauncherUnsupported.qml</file>
+        <file>qml/RequestGoogleCredentials.qml</file>
+        <file>qml/ErrorScreen.qml</file>
         <file>qml/LauncherSettingsDev.qml</file>
         <file>qml/LauncherSettingsStorage.qml</file>
         <file>qml/LauncherSettingsAbout.qml</file>
