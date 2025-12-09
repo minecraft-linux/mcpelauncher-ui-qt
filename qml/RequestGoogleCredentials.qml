@@ -37,13 +37,17 @@ Window {
         }
     }
 
+    StdioHelper {
+        id: stdio
+    }
+
     Component {
         id: panelDefault
         ErrorScreen {
             message: qsTr("A mod at '%1'<br/>is requesting access to your google credentials,<br/>to reject this request close this window").arg(SOURCE_MOD)
             onFinished: {
-                console.log("CRED=" + googleLoginHelperInstance.account.accountIdentifier + ":" + googleLoginHelperInstance.account.accountToken)
-                console.log("CREDB64=" + Qt.btoa(JSON.stringify(googleLoginHelperInstance.account)))
+                stdio.error("CRED=" + googleLoginHelperInstance.account.accountIdentifier + ":" + googleLoginHelperInstance.account.accountToken)
+                stdio.error("CREDB64=" + Qt.btoa(JSON.stringify(googleLoginHelperInstance.account)))
                 window.close()
                 application.quit()
             }
