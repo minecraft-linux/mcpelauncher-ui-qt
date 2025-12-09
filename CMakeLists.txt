@@ -34,7 +34,11 @@ find_package(Qt6LinguistTools)
 set(LAUNCHER_LINGUIST_RESOURCES "")
 if (Qt6LinguistTools_FOUND)
     file(GLOB TS_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.ts")
-    qt6_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+    if(UPDATE_TRANSLATIONS)
+        qt6_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+    else()
+        qt6_add_translation(QM_FILES ${TS_FILES})
+    endif()
     # Generate a .qrc file dynamically
     set(QRC_FILE "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
 
