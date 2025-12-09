@@ -34,6 +34,7 @@
 #include <sstream>
 #include <mcpelauncher/path_helper.h>
 #include "encryption.h"
+#include "stdio_helper.h"
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -133,6 +134,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Troubleshooter>("io.mrarm.mcpelauncher", 1, 0, "Troubleshooter");
     qmlRegisterType<UpdateChecker>("io.mrarm.mcpelauncher", 1, 0, "UpdateChecker");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
+    qmlRegisterType<StdioHelper>("io.mrarm.mcpelauncher", 1, 0, "StdioHelper");
     static GamepadManager* gamepadManager = new GamepadManager();
     qmlRegisterSingletonType<GamepadManager>("io.mrarm.mcpelauncher", 1, 0, "GamepadManager", +[](QQmlEngine*, QJSEngine*) -> QObject* {
         return gamepadManager;
