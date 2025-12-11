@@ -35,7 +35,7 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation>更新日志</translation>
+        <translation>更新日誌</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
@@ -89,7 +89,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation>游戲日志</translation>
+        <translation>遊戲日誌</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
@@ -252,7 +252,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation>檢視日志</translation>
+        <translation>檢視日誌</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
@@ -299,7 +299,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation>參閱維基</translation>
+        <translation>參閱wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
@@ -314,7 +314,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation>參閱維基</translation>
+        <translation>參閱wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
@@ -513,7 +513,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="46"/>
         <source>Game Log</source>
-        <translation>游戲日志</translation>
+        <translation>遊戲日誌</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="53"/>
@@ -581,7 +581,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Disable</source>
-        <translation>禁用</translation>
+        <translation>停用</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
@@ -968,7 +968,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation>文件</translation>
+        <translation>說明文件</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
@@ -1069,7 +1069,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation>Google 賬戶</translation>
+        <translation>Google 帳戶</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
