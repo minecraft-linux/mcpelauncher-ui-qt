@@ -364,7 +364,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation>查看维基</translation>
+        <translation>查看wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
@@ -379,7 +379,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation>查看维基</translation>
+        <translation>查看wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
