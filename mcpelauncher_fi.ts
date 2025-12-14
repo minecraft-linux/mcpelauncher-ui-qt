@@ -5,7 +5,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Valittu tiedosto ei ole yhteensopiva käynnistysohjelman kanssa&lt;br/&gt;Kirjaudu sisään Google Play -palveluun käyttäjällä, joka omistaa Minecraftin ( Playkauppa ) ja mahdollista käynnistimen ladata yhteensopivia versioita, mukaanlukien vanhempia Minecraftin julkaisuja&lt;br/&gt;Details:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Puretaan .apk-tiedostoa</translation>
     </message>
 </context>
 <context>
@@ -21,12 +21,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Epävirallinen Minecraftin *nix käynnistin</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (käännös %2)</translation>
     </message>
 </context>
 <context>
@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Muutosloki</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatka</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ei voitu löytää Minecraftin pelikäynnistintä (%1)
+Ole hyvä ja lisää käynnistin &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) ja käynnistä ohjelma uudelleen
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -58,29 +60,35 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhteensopimaton Minecraft-asennus. Valitse erilainen tai vanhempi versio.
+Tämä käynnistin on ilmainen, vapaa ja avoimen lähdekoodin ohjelma, joka usein jää jälkeen virallisista päivityksistä Google Playssa
+Joissakin tapauksissa saattaa ilmetä puuttuvia pelitiedostoja,
+puuttuvia symboleja, jotka on odotettavissa lisättäväksi päivitysten myötä
+ tai muuten vain käynnistin on rikki</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
         <source>Missing launcher dependencies, please install all missing libraries in their right version</source>
-        <translation type="unfinished"></translation>
+        <translation>Puuttuvia käynnistimen riippuvuuksia, ole hyvä ja asenna kaikki puuttuvat kirjastot niiden oikeaan versioon</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="244"/>
         <source>Process exited with unexpected exit code: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Prosessi päättyi odottamattomalla lopetusavaimella: %1
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="247"/>
         <source>Process exited normally
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Prosessi päättyi normaalisti
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Järjestelmäsi ei voi suorittaa käynnistintä</translation>
     </message>
 </context>
 <context>
@@ -88,47 +96,47 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Peliloki</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft lopetti toiminnan</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ole hyvä äläkä raportoi tätä virhettä.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Peli päättyi ei-nolla virhekoodilla. &lt;a href=&apos;%1&apos;&gt;Paina tästä jos tahdot avata ongelman GitHubissa&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>Saatat suorittaa yhteensopimatonta versiota. Poista seuraavat valinnat asetuksissa ja käynnistä peli uudelleen: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä yhteensopimattomat versiot</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä vahvistamattomat versiot</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä beetaversiot</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota peliloki käyttöön asetuksista ja käynnistä peli uudelleen saadaksesi virhelokin.</translation>
     </message>
 </context>
 <context>
@@ -171,7 +179,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>Odotetaan</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
@@ -204,12 +212,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhteensopiva</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhteensopimaton</translation>
     </message>
 </context>
 <context>
@@ -236,59 +244,59 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelaa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Peli pyörii</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
         <source>Exit game to edit or change profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulje peli muokataksesi tai vaihtaaksesi profiilia.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Katso loki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
         <location filename="qml/HomeScreen.qml" line="130"/>
         <source>Action required</source>
-        <translation type="unfinished"></translation>
+        <translation>Toimenpide vaaditaan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
         <source>Please sign into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ole hyvä ja kirjaudu Google Play -tilillesi.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="109"/>
         <location filename="qml/HomeScreen.qml" line="132"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu sisään</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="114"/>
         <source>Can&apos;t verify license</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisenssiä ei voitu vahvistaa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="115"/>
         <source>You should have purchased Minecraft%1 in your Google Play account to download it here. If you have used a wrong account, please sign out and sign in again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinun on pitänyt ostaa Minecraft%1 Google Play -tililläsi ladataksesi sen täällä. Jos käytit väärää tiliä, kirjaudu ulos ja uudelleen sisään.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="116"/>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Uudelleen</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="123"/>
         <source>Unsupported version</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei tuettu versio</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="124"/>
@@ -298,22 +306,22 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Katso wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
         <source>Please sign in again into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu uudelleen sisään Google Play -tilillesi.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="152"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Varoitus</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Katso Wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
@@ -361,69 +369,70 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="196"/>
         <location filename="qml/HomeScreen.qml" line="247"/>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitys saatavilla</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="197"/>
         <source>A new version of the launcher is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uusi versio käynnistimestä on saatavilla.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="198"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="212"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="215"/>
         <source>Access to the Google Play Apk Library has been rejected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pääsy Google Playn apk-kirjastoon on evätty.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="217"/>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Voit kokeilla tätä käynnistintä ilmaiseksi ottamalla kokeilutilan käyttöön.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
         <location filename="qml/HomeScreen.qml" line="269"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitä</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Download and play</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa ja pelaa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="353"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei tiedossa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="382"/>
         <source>Downloading Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladataan Minecraftia...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="384"/>
         <source>Extracting Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Puretaan Minecraftia...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="385"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odota...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="459"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataus epäonnistui</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="470"/>
@@ -438,17 +447,17 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="643"/>
         <source>mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mcpelauncher-versiondb ei ladattu. Minecraft-version yhteensopivuutta ei voida tarkistaa.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimeisin Minecraft-versio %1 on beetaversio, joka on oletusarvoisesti piilotettu.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
         <source>Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhteensopivuus viimeisimmän Minecraft-version kanssa %1 on tuntematon. Tuki uusille Minecraft-versioille on ominaisuuspyyntö GitHubissa.</translation>
     </message>
 </context>
 <context>
@@ -456,7 +465,7 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/LoginScreen.qml" line="44"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu sisään</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="54"/>
@@ -468,28 +477,29 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
         <source>Sign in with Google</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu sisään Google-tilillä</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
         <source>Use trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytä kokeiluversiota</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
         <source>Get help</source>
-        <translation type="unfinished"></translation>
+        <translation>Löydä apua</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="111"/>
         <source>Extracting apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Puretaan apk:ta</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="133"/>
         <source>This is an unofficial Linux launcher for the Minecraft Bedrock codebase.
 This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä on epävirallinen Minecraft Bedrock käynnistysohjelma Linuxille.
+Tämä projekti ei ole yhteydessä Minecraftiin, Mojangiin tai Microsoftiin.</translation>
     </message>
 </context>
 <context>
@@ -497,32 +507,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="22"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Koti</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="29"/>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>Uutiset</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="36"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Modit</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="46"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Peliloki</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="61"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Poistu</translation>
     </message>
 </context>
 <context>
@@ -530,7 +540,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/Components/ModsGrid.qml" line="143"/>
         <source>Load more Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa lisää modeja</translation>
     </message>
 </context>
 <context>
@@ -540,22 +550,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/ModsScreen.qml" line="34"/>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Modit</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="37"/>
         <source>Installed Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Asennetut modit</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="40"/>
         <source>FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation>UKK</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="87"/>
         <source>Welcome to our experimental mods section.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tervetuloa kokeilulliseen modiosioon.</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="96"/>
@@ -565,47 +575,47 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ModsScreen.qml" line="171"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Takaisin</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Untitled Mod</source>
-        <translation type="unfinished"></translation>
+        <translation>Otsikoimaton modi</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="254"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista käytöstä</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota käyttöön</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="304"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="359"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataus epäonnistui</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="380"/>
         <source>Zip extraction failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Zip-tiedoston purkaminen epäonnistui</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="396"/>
         <source>Download Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Latauksen edistyminen</translation>
     </message>
 </context>
 <context>
@@ -613,17 +623,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/NewsScreen.qml" line="17"/>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>Uutiset</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="22"/>
         <source>Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
         <source>Load more articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa lisää artikkeleita</translation>
     </message>
 </context>
 <context>
@@ -631,138 +641,138 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Create profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo profiili</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Muokkaa profiilia</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="84"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="114"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="127"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Vesio</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>Latest %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Viimeisin %1 (%2)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>versio</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>Google Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>yhteensopiva</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="164"/>
         <source>%1 (installed, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (asennettuna, %2)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>%1 (%2%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2%3)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>beta</source>
-        <translation type="unfinished"></translation>
+        <translation>beeta</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="242"/>
         <source>Data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennussijainti</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="286"/>
         <source>Texture Patch</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstuurien paikka</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="340"/>
         <source>Window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikkunan koko</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="373"/>
         <source>Commandline</source>
-        <translation type="unfinished"></translation>
+        <translation>Komentorivi</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="383"/>
         <source>Environment Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Ympäristömuuttujat</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="456"/>
         <source>Add New Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää uusi muuttuja</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Collapse advanced  🞁</source>
-        <translation type="unfinished"></translation>
+        <translation>Pienennä edistyneet  🞁</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Expand advanced  🞃</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä edistyneet  🞃</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="493"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="497"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna nimellä</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="506"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="681"/>
         <source>A profile with the specified name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Profiili kyseisellä nimellä on jo olemassa</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="682"/>
         <location filename="qml/ProfileEditPopup.qml" line="688"/>
         <source>Profile Edit Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Profiilin muokkaamisessa tapahtui virhe</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="687"/>
         <source>The specified profile name is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyseinen nimi profiilille ei ole sallittu</translation>
     </message>
 </context>
 <context>
@@ -778,7 +788,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="supportedandroidabis.cpp" line="66"/>
         <source>Your Computer is to old for running Android x86_64 64bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietokoneesi on liian vanha suorittaakseen Android x86 64-bittisiä pelejä</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="70"/>
@@ -794,18 +804,18 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="supportedandroidabis.cpp" line="111"/>
         <source>Your Computer is to old for running Android x86 32bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietokoneesi on liian vanha suorittaakseen Android x86 32-bittisiä pelejä</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="121"/>
         <source>Not an armv7 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei armv7 järjestelmä</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="122"/>
         <location filename="supportedandroidabis.cpp" line="142"/>
         <source>Not an aarch64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei aarch64 järjestelmä</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="137"/>
@@ -833,22 +843,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="updatechecker.cpp" line="54"/>
         <location filename="updatechecker.cpp" line="155"/>
         <source>Appimage cannot be updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimagea ei voitu päivittää</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="66"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimagea ei voida päivittää&lt;br/&gt;Tuntematon virhe</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Käynnistintä ei voida päivittää&lt;br/&gt;Sinun täytyy tarkistaa päivitykset pakentinhallinnastasi tai kääntää uudelleen (re-compile) avoimen lähdekoodin käännöksesi uudemmalla lähdekoodilla</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitysten tarkistaminen epäonnistui&lt;br/&gt;Yhteys päivitysten palvelimeen epäonnistui</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="72"/>
@@ -927,19 +937,19 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuntematon virhe</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CURL yhteysvirhe: %1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -947,27 +957,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Käynnistin</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Versio: %1&lt;br/&gt;Käännös: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähdekoodi</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentaatio</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
@@ -977,47 +987,47 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarkista päivitysten varalta</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Palauta käynnistimen oletusasetukset</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa käynnistin uudelleen nähdäksesi muutokset</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitys käynnistimelle on saatavilla</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Voit ladata uuden päivityksen täältä: %1</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Haluatko päivittää nyt?</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>Asennetun käynnistimen versio %1 (käännös %2) näyttäisi olevan ajan tasalla</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitys epäonnistui</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
         <source>Update Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivityksen tiedot</translation>
     </message>
 </context>
 <context>
@@ -1025,17 +1035,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="21"/>
         <source>Warning: This Section is for Launcher Developers and are not documented. Do not use Developer Settings without deep understanding how they impact the Launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Varoitus: tämä osio on käynnistimen kehittäjille, eikä sitä ole dokumentoitu. Älä käytä kehittäjäasetuksia ilman syvää ymmärrystä niiden vaikutuksesta käynnistimeen.</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="30"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä vahvistamattomat versiot</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä yhteensopimattomat versiot</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
@@ -1045,7 +1055,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä beetaversiot</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
@@ -1060,7 +1070,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="134"/>
         <source>Download only the apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa ainoastaan apk</translation>
     </message>
 </context>
 <context>
@@ -1068,72 +1078,72 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Google-tili</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Paina näyttääksesi)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign out</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu ulos</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirjaudu sisään</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Käynnistin</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
         <source>Hide the launcher when starting the game</source>
-        <translation type="unfinished"></translation>
+        <translation>Piilota käynnistin peliä käynnistettäessä</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="89"/>
         <source>Disable the GameLog</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista peliloki käytöstä</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="95"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota päivitysten tarkistaminen käyttöön (avattaessa)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä kaikki ilmoituspalkit</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä lopetuksen painike navigointipalkissa</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
         <source>ChromeOS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ChromeOS-tila</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kokeiluversio (koskee ChromeOS-tilaa)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
         <source>Keep Apks in &lt;GameData&gt;/apks</source>
-        <translation type="unfinished"></translation>
+        <translation>Pidä apk:t sijainnissa &lt;GameData&gt;/apks</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="132"/>
         <source>Run troubleshooter</source>
-        <translation type="unfinished"></translation>
+        <translation>Aja vianetsintä</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="137"/>
@@ -1156,32 +1166,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Asetukset</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="21"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Yleiset</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="24"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennustila</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="27"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Versiot</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="30"/>
         <source>Dev</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehittäjä</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietoa</translation>
     </message>
 </context>
 <context>
@@ -1189,32 +1199,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo maailma tai paketti</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo maailma tai paketti (odottaa käynnistykseen saakka)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa URI</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa URI (odottaa käynnistykseen saakka)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
         <source>Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Pelin hakemistot</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pelin hakemistot nykyiselle valitulle profiilille: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
@@ -1237,32 +1247,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sulje</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="217"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valitut</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="234"/>
         <source>Download .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo kokeiluversion .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
         <source>Remove Incompatible Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista yhteensopimattomat versiot</translation>
     </message>
 </context>
 <context>
@@ -1325,7 +1335,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>Vianetsintä</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
@@ -1406,7 +1416,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ongelmia ei löydetty</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
@@ -1419,27 +1429,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnlockScreen.qml" line="15"/>
         <source>Unlock Credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Avaa tunnusten lukitus</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="27"/>
         <source>This is not your Google Account Password. If you don&apos;t want to type it every time you open this Launcher, check &quot;Continue with invalid credentials&quot;, then open Settings, press logout and finally login without providing your own encryption password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä ei ole Google-tilisi salasana. Jos et tahdo kirjoittaa sitä joka kerta kun avaat käynnistimen, valitse &quot;Jatka virheellisillä tunnuksilla&quot;, avaa asetukset, kirjaudu ulos ja viimein kirjaudu sisään antamatta omaa salasanaa tietojen kryptaamiseen.</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="35"/>
         <source>Continue with invalid credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatka virheellisillä tunnuksilla</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="54"/>
         <source>Password is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Salasana on virheellinen</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="100"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatka</translation>
     </message>
 </context>
 <context>
@@ -1447,17 +1457,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="18"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietoa</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="26"/>
         <source>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Sorry your Computer cannot run Minecraft with this Launcher&lt;/font&gt;&lt;/b&gt;, this CPU is too old.&lt;br/&gt;&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Oijoi, tietokoneesi ei voi suorittaa Minecraftia tällä käynnistimellä&lt;/font&gt;&lt;/b&gt;, tämä keskusprosessori on liian vanha.&lt;br/&gt;&lt;br/&gt;Details:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="45"/>
         <source>I know what I&apos;m doing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedän mitä olen tekemässä</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1475,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft käynnistin Linuxille</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
@@ -1505,23 +1515,24 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Peli on pyörimässä</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft on pyörimässä. Tahdotko pakottaa sen sulkemisen?
+Vihje: paina &quot;sivuuta&quot; sulkeaksesi vain käynnistimen näkymän</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="212"/>
         <source>Please restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Ole hyvä ja käynnistä uudelleen</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="213"/>
         <source>Update finished, please restart the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Päivitys valmistui, ole hyvä ja käynnistä Appimage uudelleen</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="231"/>
@@ -1533,7 +1544,7 @@ Please login again
     <message>
         <location filename="main.cpp" line="78"/>
         <source>Developer Mode - Enable unsafe Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehittäjätila - Ota käyttöön käynnistysohjelman turvattomia asetuksia</translation>
     </message>
     <message>
         <location filename="main.cpp" line="82"/>
