@@ -1397,7 +1397,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
         <source>This Launcher cannot load Minecraft (%1) on this PC:&lt;br/&gt;%2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Launcher kann Minecraft (%1) nicht auf diesem PC laden:&lt;br/&gt;%2&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
@@ -1437,13 +1437,13 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">,&lt;br/&gt;versuche, den ChromeOS Modus zu deaktivieren, um das Problem zu beheben</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>Cannot find &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versions requires sign up&lt;/a&gt;%3</source>
         <oldsource>Cannot find %1 with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft Beta Versions requires sign up&lt;/a&gt;%3</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; kann in der Version %2 auf Google Play nicht gefunden werden, &lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versionen benötigen eine Registrierung&lt;/a&gt;%3</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
@@ -1564,7 +1564,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
@@ -1604,12 +1604,12 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte öffne den Launcher erneut, um Änderungen zu sehen</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Update des Launchers steht zur Verfügung</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
@@ -1690,7 +1690,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Zum Anzeigen klicken)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
@@ -1730,7 +1730,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Den Beenden-Knopf in der Navigationsleiste anzeigen</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
@@ -1831,12 +1831,12 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spielverzeichnisse für das ausgewählte Profil: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
         <source>Default Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Standart Spielverzeichnisse</translation>
     </message>
 </context>
 <context>
@@ -1892,7 +1892,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>You may be unable to pick files in the launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Möglicherweise kannst du im Launcher keine Dateien auswählen.</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
@@ -1924,7 +1924,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="troubleshooter.cpp" line="55"/>
         <source>Software rendering</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Darstellung der Software</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
@@ -1934,7 +1934,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>The MSA component has not been installed properly. Xbox Live login may not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der MSA Komponent wurde noch nicht installiert. Eine Xbox Live Anmeldung funktioniert vielleicht nicht.</translation>
     </message>
 </context>
 <context>
@@ -1952,7 +1952,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
         <source>I cannot select / see the latest Version of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich kann die neueste Version des Spiels nicht auswählen / sehen?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
@@ -1963,17 +1963,17 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Melde dich erneut an, oder starte den Launcher neu, um das Problem zu beheben.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ich kann ältere Versionen des Spiels nicht auswählen / sehen?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Du musst dich erneut anmelden, den Launcher neu starten und / oder deine Internetverbindung zu GitHub überprüfen, um das Problem zu beheben.%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
