@@ -22,7 +22,7 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation>非官方类 Unix《Minecraft》启动器</translation>
+        <translation>非官方类 *nix《Minecraft》启动器</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
@@ -664,7 +664,7 @@ The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Set
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
         <source>Use trial .apk</source>
-        <translation>使用试用版 APK</translation>
+        <translation>使用试用版 .apk</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
