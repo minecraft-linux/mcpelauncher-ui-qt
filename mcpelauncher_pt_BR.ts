@@ -21,7 +21,7 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation>Launcher não oficial Nix para Minecraft</translation>
+        <translation>Launcher não oficial *nix para Minecraft</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
@@ -101,7 +101,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation>Minecraft deixou de funcionar</translation>
+        <translation>Minecraft parou de funcionar</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
@@ -136,7 +136,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation>Ative o log do jogo nas configurações e reinicie o jogo para capturar o log de erros.</translation>
+        <translation>Ative o relatório do jogo nas configurações e reinicie o jogo para capturar o log de erros.</translation>
     </message>
 </context>
 <context>
@@ -225,17 +225,17 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation>GooglePlayApi não está pronto, status=%1</translation>
+        <translation>O API da Google Play não está pronto, status=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O GooglePlayApi já está em andamento; o relatório de status não está funcionando, status=%1</translation>
+        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O API da Google Play já está em andamento; o relatório de status não está funcionando, status=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O GooglePlayApi precisa do loginHelper</translation>
+        <translation>&lt;b&gt;Por favor, reporte este erro&lt;/b&gt;&lt;br&gt;O API Google Play precisa do auxiliar de login</translation>
     </message>
 </context>
 <context>
@@ -259,7 +259,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation>Ver log</translation>
+        <translation>Ver registro</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
@@ -301,12 +301,12 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="124"/>
         <source>The Minecraft version you have selected for the current profile is unsupported or untested. Support for new version is a feature request.</source>
-        <translation>A versão do Minecraft que você selecionou para o perfil atual não é suportada ou não foi testada. O suporte para novas versões depende de solicitação de recurso.</translation>
+        <translation>A versão do Minecraft que você selecionou para o perfil atual não é suportada ou não foi testada. O suporte para novas versões depende de uma solicitação de recurso.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
         <source>See wiki</source>
-        <translation>Ver wiki</translation>
+        <translation>Ver a wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="131"/>
@@ -321,25 +321,25 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation>Ver Wiki</translation>
+        <translation>Ver a Wiki</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
         <source>Unconfigured Joysticks Found</source>
-        <translation>Joysticks não configurados encontrados</translation>
+        <translation>Controle analógico não configurado; encontrado</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="168"/>
         <source>One Joystick cannot be used as Gamepad Input:
 %1.</source>
-        <translation>Um Joystick não pode ser usado como entrada de controle de videogame:
+        <translation>Um Controle analógico não pode ser usado como entrada de controle de videogame:
 %1.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="169"/>
         <source>%1 Joysticks cannot be used as Gamepad Input:
 %2.</source>
-        <translation>%1 Joysticks não podem ser usados como controle de videogame:
+        <translation>%1 Controles analógicos não podem ser usados como controle de videogame:
 %2.</translation>
     </message>
     <message>
@@ -360,7 +360,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
         <source>Play Version is behind</source>
-        <translation>Iniciar versão antiga</translation>
+        <translation>A versão Play está desatualizada</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="190"/>
@@ -398,7 +398,7 @@ ou outros problemas que acabam quebrando o Launcher</translation>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
         <translation>
-Você pode tentar esse launcher gratuitamente apenas ativando o modo de teste.</translation>
+Você pode testar este launcher gratuitamente, ativando o modo de teste.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
@@ -424,7 +424,7 @@ Você pode tentar esse launcher gratuitamente apenas ativando o modo de teste.</
     <message>
         <location filename="qml/HomeScreen.qml" line="384"/>
         <source>Extracting Minecraft...</source>
-        <translation>Extraindo Minecraft...</translation>
+        <translation>Extraindo o Minecraft...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="385"/>
@@ -434,7 +434,7 @@ Você pode tentar esse launcher gratuitamente apenas ativando o modo de teste.</
     <message>
         <location filename="qml/HomeScreen.qml" line="459"/>
         <source>Download failed</source>
-        <translation>O Download falhou</translation>
+        <translation>O download falhou</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="470"/>
@@ -459,7 +459,7 @@ Você pode tentar esse launcher gratuitamente apenas ativando o modo de teste.</
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
         <source>Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.</source>
-        <translation>A compatibilidade da versão mais recente do Minecraft %1 é desconhecida. O suporte para novas versões do Minecraft é uma solicitação de recurso.</translation>
+        <translation>A compatibilidade da versão mais recente do Minecraft %1 não é reconhecida. O suporte para novas versões do Minecraft é uma solicitação de recurso.</translation>
     </message>
 </context>
 <context>
@@ -467,7 +467,7 @@ Você pode tentar esse launcher gratuitamente apenas ativando o modo de teste.</
     <message>
         <location filename="qml/LoginScreen.qml" line="44"/>
         <source>Sign in</source>
-        <translation>Registrar</translation>
+        <translation>Logar</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="54"/>
@@ -481,7 +481,7 @@ O Modo de Teste gratuito do Minecraft (ChromeOS) pode ser ativado após o login 
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
         <source>Sign in with Google</source>
-        <translation>Entrar com o Google</translation>
+        <translation>Logar no Google</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
@@ -496,7 +496,7 @@ O Modo de Teste gratuito do Minecraft (ChromeOS) pode ser ativado após o login 
     <message>
         <location filename="qml/LoginScreen.qml" line="111"/>
         <source>Extracting apk</source>
-        <translation>Extraindo apk</translation>
+        <translation>Extraindo o apk</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="133"/>
@@ -650,7 +650,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Edit profile</source>
-        <translation>Editar Perfil</translation>
+        <translation>Editar perfil</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="84"/>
@@ -923,7 +923,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation>,&lt;br/&gt;você deveria querer desativar o modo ChomeOS para corrigir isso</translation>
+        <translation>,&lt;br/&gt;você deveria desativar o modo ChomeOS para corrigir isso</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
@@ -961,12 +961,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation>Inicializador</translation>
+        <translation>Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation>Versão: %1&lt;br/&gt;Construção: %2</translation>
+        <translation>Versão: %1&lt;br/&gt;Compilação: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
@@ -981,22 +981,22 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation>Docs</translation>
+        <translation>Documentação</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation>Este projeto permite que você inicie o Minecraft: Bedrock Edition (anteriormente conhecido como Minecraft: Pocket Edition). O Launcher é compatível com Linux e OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM e colaboradores</translation>
+        <translation>Este projeto permite que você inicie o Minecraft: Bedrock Edition (antigamente conhecido como Minecraft: Pocket Edition). O Launcher é compatível com Linux e OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM e colaboradores</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation>Checar por Atualizações</translation>
+        <translation>Buscar Atualizações</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation>Resetar as Configurações do Launcher</translation>
+        <translation>Zerar as Configurações do Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
@@ -1021,12 +1021,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation>Esta é versão instalada %1 (contrução %2) parece ser a mais atualizada</translation>
+        <translation>Esta é versão instalada %1 (compilação %2) parece ser a mais atualizada</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation>Falha na Atualização</translation>
+        <translation>A atualização falhou</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
@@ -1059,12 +1059,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation>Mostrar versões Beta</translation>
+        <translation>Mostrar Versões Beta</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
         <source>Single arch mode</source>
-        <translation>Modo de arco único</translation>
+        <translation>Modo de arquitetura única</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="116"/>
@@ -1087,7 +1087,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation>(Pressione para revelar)</translation>
+        <translation>(Aperte para exibir)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
@@ -1102,12 +1102,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation>Inicializador</translation>
+        <translation>Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
         <source>Hide the launcher when starting the game</source>
-        <translation>Esconder o Launcher quando iniciar um jogo</translation>
+        <translation>Ocultar o launcher quando iniciar um jogo</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="89"/>
@@ -1213,12 +1213,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation>Abrir Uri</translation>
+        <translation>Abrir URI</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation>Abrir Uri (pendente até iniciar)</translation>
+        <translation>Abrir URI (pendente até iniciar)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
@@ -1271,7 +1271,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation>Importe .apk</translation>
+        <translation>Importe o .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
@@ -1396,7 +1396,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation>Verifique sua conexão com a internet e/ou faça login no Google Play novamente&lt;br/&gt;O código de status do playApi é %1</translation>
+        <translation>Verifique sua conexão com a internet e/ou faça login no Google Play novamente&lt;br/&gt;O código de status do API Google Play é %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
@@ -1406,12 +1406,12 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation>Verifique sua conexão com a internet e/ou faça login no Google Play novamente&lt;br/&gt;O código de status do playVerChannel é %1</translation>
+        <translation>Verifique sua conexão com a internet e/ou faça login no Google Play novamente&lt;br/&gt;O código de status do Canal do Google Play é %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation>Por que o botão de reprodução está desabilitado em algumas versões?</translation>
+        <translation>Por que o botão de jogar está desabilitado em algumas versões?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
@@ -1485,7 +1485,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/main.qml" line="65"/>
         <source>&lt;b&gt;Cannot initialize Google Play Access&lt;/b&gt;, Details:&lt;br/&gt;%1</source>
-        <translation>&lt;b&gt;Não é possível inicializar o Google Play Access&lt;/b&gt;, Detalhes:&lt;br/&gt;%1</translation>
+        <translation>&lt;b&gt;Não é possível inicializar o acesso à Google Play&lt;/b&gt;, Detalhes:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="69"/>
@@ -1520,7 +1520,7 @@ Este projeto não é afiliado ao Minecraft, Mojang ou Microsoft.</translation>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation>O jogo está rodando</translation>
+        <translation>O jogo está sendo executado</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
