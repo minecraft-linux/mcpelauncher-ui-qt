@@ -61,6 +61,9 @@ void ZipExtractionTask::run() {
             ZipExtractor extractor (source.toStdString());
             extractor.extractTo(
                 [&path](const char* filename, std::string& outName) -> bool {
+                    if(filename[strlen(filename) - 1] == '/') {
+                        return false; // Skip directories
+                    }
                     outName = path + "/" + filename;
                     return true; // Extract all files
                 },
