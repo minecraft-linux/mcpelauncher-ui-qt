@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Stuf dat got changed</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Git Goin</translation>
     </message>
 </context>
 <context>
@@ -75,12 +75,13 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="gamelauncher.cpp" line="247"/>
         <source>Process exited normally
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Prosess exited normully
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Ur systum kan&apos;t run de lanchur</translation>
     </message>
 </context>
 <context>
@@ -88,17 +89,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaym Fax</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft ain&apos;t wurkin</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>Plees don&apos;t report dis problum.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
@@ -113,12 +114,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Show vursuns dat ain&apos;t wurkun</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Show vursuns dat we don&apos;t no bout</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
@@ -166,7 +167,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett Mapin</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
@@ -204,12 +205,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Wurkin</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Not Wurkin</translation>
     </message>
 </context>
 <context>
@@ -236,12 +237,12 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Pley</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Gam ees runin</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
@@ -262,7 +263,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
         <source>Please sign into your Google Play account.</source>
-        <translation type="unfinished"></translation>
+        <translation>U ned Google for dis.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="109"/>
@@ -313,7 +314,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="154"/>
         <source>See Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Chek de fax</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="164"/>
