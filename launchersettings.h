@@ -53,17 +53,17 @@ public:
     bool showUnverified() const { return !disableDevMode && settings.value("showUnverified", false).toBool(); }
     void setShowUnverified(bool value) { settings.setValue("showUnverified", value); emit settingsChanged(); }
 
-    bool showUnsupported() const { return !disableDevMode && settings.value("showUnsupported", false).toBool(); }
+    bool showUnsupported() const { return !disableDevMode && !singleArch().isEmpty(); }
     void setShowUnsupported(bool value) { settings.setValue("showUnsupported", value); emit settingsChanged(); }
 
-    bool downloadOnly() const { return !disableDevMode && settings.value("downloadOnly", false).toBool(); }
-    void setDownloadOnly(bool value) { settings.setValue("downloadOnly", value); emit settingsChanged(); }
+    bool downloadOnly() const { return false; }
+    void setDownloadOnly(bool value) { emit settingsChanged(); }
 
     QString singleArch() const { return !disableDevMode ? settings.value("singleArch", "").toString() : ""; }
     void setSingleArch(QString value) { settings.setValue("singleArch", value); emit settingsChanged(); }
 
-    bool showBetaVersions() const { return !disableDevMode && settings.value("showBetaVersions", false).toBool(); }
-    void setShowBetaVersions(bool value) { settings.setValue("showBetaVersions", value); emit settingsChanged(); }
+    bool showBetaVersions() const { return !disableDevMode; }
+    void setShowBetaVersions(bool value) { emit settingsChanged(); }
 
     long long lastVersion() const { return settings.value("lastVersion", 0).toLongLong(); }
     void setLastVersion(long long value) { settings.setValue("lastVersion", QVariant(value)); emit settingsChanged(); }
@@ -75,7 +75,16 @@ public:
         return QUrl::fromLocalFile(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher"));
     }
 
-    QString versionsFeedBaseUrl() const { return !disableDevMode ? settings.value("versionsFeedBaseUrl", "").toString() : ""; }
+    QString versionsFeedBaseUrl() const {
+        if(disableDevMode) {
+            return "";
+        }
+        auto val = settings.value("versionsFeedBaseUrl", "").toString();
+        if(val.isEmpty()) {
+            return showUnverified() ? "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master" : "";
+        }
+        return val;
+    }
     void setVersionsFeedBaseUrl(QString value) { settings.setValue("versionsFeedBaseUrl", value); emit settingsChanged(); }
 
     QString clipboard() const {
