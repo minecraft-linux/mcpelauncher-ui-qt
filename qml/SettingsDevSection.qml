@@ -34,29 +34,6 @@ ColumnLayout {
         Layout.bottomMargin: 10
     }
 
-    MCheckBox {
-        text: qsTr("Show incompatible versions")
-        font.pointSize: parent.labelFontSize
-        Component.onCompleted: checked = launcherSettings.showUnsupported
-        onCheckedChanged: launcherSettings.showUnsupported = checked
-    }
-    Text {
-        text: qsTr("Do not enable this Setting, if you don't want to download x86/x86_64 binaries on arm hardware or download armeabi-v7a/arm64-v8a binaries on intel or amd hardware. Google Play Latest will always download x86_64 builds as long the Google Play Store doesn't change it's undefined behavior")
-        color: labelColor
-        font.pointSize: labelFontSize
-        wrapMode: Text.WordWrap
-        Layout.fillWidth: true
-        Layout.bottomMargin: 10
-    }
-
-    MCheckBox {
-        text: qsTr("Show Beta Versions")
-        font.pointSize: parent.labelFontSize
-        Component.onCompleted: checked = launcherSettings.showBetaVersions
-        onCheckedChanged: launcherSettings.showBetaVersions = checked
-        enabled: playVerChannel.latestVersionIsBeta
-    }
-
     GridLayout {
         columns: 2
         columnSpacing: 10
@@ -128,12 +105,5 @@ ColumnLayout {
                 versionManager.downloadLists(googleLoginHelper.getAbis(true), launcherSettings.versionsFeedBaseUrl)
             }
         }
-    }
-
-    MCheckBox {
-        text: qsTr("Download only the apk")
-        font.pointSize: labelFontSize
-        Component.onCompleted: checked = launcherSettings.downloadOnly
-        onCheckedChanged: launcherSettings.downloadOnly = checked
     }
 }
