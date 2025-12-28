@@ -37,6 +37,8 @@ public:
                                     const QString& version,
                                     const QString& arch) const;
 
+    Q_INVOKABLE ModInfo loadModInfoByPath(const QString& path) const;
+
     // Save or overwrite metadata for one mod.
     Q_INVOKABLE bool saveMod(const QString& name,
                              const QString& version,
@@ -59,6 +61,14 @@ public:
 
     Q_INVOKABLE QString         getRoot() const;
 
+    Q_INVOKABLE void downloadModList();
+    
+    Q_INVOKABLE QVector<ModInfo> remoteMods();
+
+    Q_PROPERTY(QVector<ModInfo> remoteMods READ remoteMods NOTIFY modListUpdated)
+signals:
+    void modListUpdated();
+    
 private:
     QDir    m_root;            // points to .../mcpelauncher/mods
     QString modFolderPath(const QString& name,
@@ -67,4 +77,6 @@ private:
     QString modJsonPath(const QString& name,
                         const QString& version,
                         const QString& arch) const;
+
+    QVector<ModInfo> m_remoteMods;
 };
