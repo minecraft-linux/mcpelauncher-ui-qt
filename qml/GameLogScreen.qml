@@ -109,6 +109,7 @@ ColumnLayout {
             selectByKeyboard: false
             property int myIndex: index
             color: "#ddd"
+            background: null
             selectionColor: "#842"
             font.family: "monospace"
 
