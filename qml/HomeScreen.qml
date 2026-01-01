@@ -303,16 +303,48 @@ BaseScreen {
                     profileEditPopup.reset()
                     profileEditPopup.open()
                 }
+                ModManager {
+                    id: modManager
+                }
+                function updateProfile(profile) {
+                    var profile = profileManager.activeProfile;
+                    console.log("Profile mods " + JSON.stringify(profile.mods))
+                    for(var i = 0; i < profile.mods.length; i++) {
+                        console.log(" - " + profile.mods[i]);
+                        var modInfo = modManager.loadModInfoByPath(profile.mods[i]);
+                        console.log(JSON.stringify(modInfo));
+                        if(modInfo.metadata && modInfo.metadata.version && modInfo.metadata.version.extraVersions) {
+                            const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
+                            var extraVersions = [];
+                            for(var abi of abis) {
+                                extraVersions.push(...modInfo.metadata.version.extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
+                                {
+                                    versionName: v.version_name,
+                                    versionCode: v.codes[abi],
+                                    abi: abi,
+                                    isBeta: v.beta
+                                })))
+                            }
+                            versionManager.archivalVersions.setExtraVersions(extraVersions);
+                        }
+                    }
+                }
                 Component.onCompleted: {
                     setProfile(profileManager.activeProfile)
                     window.currentGameDataDir = Qt.binding(function () {
                         return (profileManager.activeProfile && profileManager.activeProfile.dataDirCustom) ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : ""
                     })
+                    profileManager.activeProfile.changed.connect(updateProfile);
+                    updateProfile();
                     loaded = true
                 }
                 onCurrentProfileChanged: {
-                    if (loaded && currentProfile !== null)
+                    if (loaded && currentProfile !== null) {
+                        profileManager.activeProfile.changed.disconnect(updateProfile);
                         profileManager.activeProfile = currentProfile
+                        currentProfile.changed.connect(updateProfile);
+                        updateProfile();
+                    }
                 }
                 enabled: !(progressbarVisible || gameLauncher.running || googleLoginHelper.account === null)
             }

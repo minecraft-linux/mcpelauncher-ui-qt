@@ -5,6 +5,7 @@
 #include <QDir>
 #include "supportedandroidabis.h"
 #include <sstream>
+#include <modmanager.h>
 
 GameLauncher::GameLauncher(QObject *parent) : QObject(parent) {
 }
@@ -57,8 +58,18 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
             args.append(QString::number(m_profile->texturePatch == 1));
         }
         if(m_profile->mods.size()) {
+            ModManager manager;
             args.append("-m");
-            args.append(m_profile->mods.join(','));
+            QList<QString> mods;
+            for(const QString& mod : m_profile->mods) {
+                auto modInfo = manager.loadModInfoByPath(mod);
+                if(modInfo.name.isEmpty()) {
+                    mods.append(mod);
+                    continue;
+                }
+                mods.append(manager.getFolderPathForMod(modInfo.name, modInfo.version, modInfo.arch));
+            }
+            args.append(mods.join(','));
         }
 #ifdef __APPLE__
         if (m_profile->graphicsAPI == 1) {
