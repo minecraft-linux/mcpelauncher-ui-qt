@@ -15,6 +15,46 @@ ArchivalVersionList::ArchivalVersionList(QString baseUrl) {
     m_netManager->setCache(cache);
 }
 
+void ArchivalVersionList::updateExtraVersions(QList<QObject*>& versions) {
+    for(auto&& extraVer : m_extraVersions) {
+        ArchivalVersionInfo* info = qobject_cast<ArchivalVersionInfo*>(extraVer);
+        if(!info) continue;
+        bool found = false;
+        for(int i = 0; i < versions.size(); i++) {
+            ArchivalVersionInfo* ver = qobject_cast<ArchivalVersionInfo*>(versions.at(i));
+            if(!ver) continue;
+            if(ver->versionCode == info->versionCode && ver->abi == info->abi) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            versions.push_front(extraVer);
+        }
+    }
+}
+
+void ArchivalVersionList::setExtraVersions(QVariantList extraVersions) {
+    if(m_extraVersions.size() > 0) {
+        m_versions.removeIf([this](QObject* obj) {
+            return m_extraVersions.contains(obj);
+        });
+        m_extraVersions.clear();
+    }
+    for(auto&& ver : extraVersions) {
+        auto entry = new ArchivalVersionInfo(this);
+        entry->versionCode = ver.toMap().value("versionCode").toInt();
+        entry->versionName = ver.toMap().value("versionName").toString();
+        entry->isBeta = ver.toMap().value("isBeta").toBool();
+        entry->abi = ver.toMap().value("abi").toString();
+        m_extraVersions.append(entry);
+    }
+
+    updateExtraVersions(m_versions);
+
+    emit versionsChanged();
+}
+
 void ArchivalVersionList::downloadLists(QStringList abis, QString baseUrl) {
     m_versionsnext.clear();
     m_rollforwardVersionRange.clear();
@@ -25,6 +65,7 @@ void ArchivalVersionList::downloadLists(QStringList abis, QString baseUrl) {
         QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(versiondburl)));
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(abis.size() - 1), abis));
     } else {
+        updateExtraVersions(m_versionsnext);
         m_versions = m_versionsnext;
         emit versionsChanged();
     }
@@ -79,6 +120,7 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
     }
     auto i = abis.indexOf(abi);
     if(i == 0) {
+        updateExtraVersions(m_versionsnext);
         m_versions = m_versionsnext;
         qDebug() << "Version list loaded, entry count:" << m_versions.size();
         emit versionsChanged();

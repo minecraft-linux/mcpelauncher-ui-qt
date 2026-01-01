@@ -40,6 +40,7 @@ class ArchivalVersionList : public QObject {
 
 private:
     QNetworkAccessManager* m_netManager;
+    QList<QObject*> m_extraVersions;
     QList<QObject*> m_versions;
     QList<QObject*> m_versionsnext;
     QList<QObject*> m_rollforwardVersionRange;
@@ -47,6 +48,7 @@ private:
     QString m_defBaseUrl;
 
     void onListDownloaded(QNetworkReply* reply, QString abi, QStringList abis);
+    void updateExtraVersions(QList<QObject*>& versions);
 
 public:
     ArchivalVersionList(QString baseUrl);
@@ -56,6 +58,7 @@ public:
 
     void downloadLists(QStringList abis, QString versionDBUrl);
 
+    Q_INVOKABLE void setExtraVersions(QList<QVariant> extraVersions);
 signals:
     void versionsChanged();
 
