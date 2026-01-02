@@ -309,13 +309,13 @@ BaseScreen {
                 function updateProfile(profile) {
                     var profile = profileManager.activeProfile;
                     console.log("Profile mods " + JSON.stringify(profile.mods))
+                    var extraVersions = [];
                     for(var i = 0; i < profile.mods.length; i++) {
                         console.log(" - " + profile.mods[i]);
                         var modInfo = modManager.loadModInfoByPath(profile.mods[i]);
                         console.log(JSON.stringify(modInfo));
                         if(modInfo.metadata && modInfo.metadata.version && modInfo.metadata.version.extraVersions) {
                             const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
-                            var extraVersions = [];
                             for(var abi of abis) {
                                 extraVersions.push(...modInfo.metadata.version.extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
                                 {
@@ -325,9 +325,9 @@ BaseScreen {
                                     isBeta: v.beta
                                 })))
                             }
-                            versionManager.archivalVersions.setExtraVersions(extraVersions);
                         }
                     }
+                    versionManager.archivalVersions.setExtraVersions(extraVersions);
                 }
                 Component.onCompleted: {
                     setProfile(profileManager.activeProfile)
