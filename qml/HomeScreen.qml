@@ -35,6 +35,10 @@ BaseScreen {
         }
     }
 
+    ModManager {
+        id: modManager
+    }
+
     Image {
         id: backgroundArt
         Layout.fillWidth: true
@@ -206,6 +210,66 @@ BaseScreen {
                     }
                 }
 
+                UpdateManager {
+                    id: updateManager
+
+                    versionList: versionManager.archivalVersions
+                    profileManager: profileManager
+                    maxCompatVersion: 1
+
+                    property var hasUpdate: false
+                    property var update: null
+
+                    Component.onCompleted: {
+                        updateManager.checkForUpdates();
+                    }
+
+                    onUpdateFailed: {
+                        updateManager.checkForUpdates();
+                    }
+                    onUpdateAvailable: (mod, version, arch, url , metadata) => {
+                        hasUpdate = true;
+                        update = {mod, version, arch, url, metadata};
+                    }
+
+                    onFinished: {
+                        activateMod();
+                    }
+
+                    function activateMod() {
+                        var profileManager = playScreen.profileManager
+                        var prefix = modManager.getRoot() + "/" + updateManager.update.mod + "/"
+                        var abis = googleLoginHelper.getAbis(false)
+                        var arch = profileManager.activeProfile.arch || abis.length > 0 && abis[0]
+                        var entry = prefix + updateManager.update.version + "/" + arch + "/"
+
+                        var has = profileManager.activeProfile.mods.includes(entry)
+                        profileManager.activeProfile.mods = profileManager.activeProfile.mods.filter(function (e) {
+                            return !e.startsWith(prefix)
+                        })
+                        if(!has) {
+                            profileManager.activeProfile.mods.push(entry)
+                        }
+                        console.log("Mods: " + JSON.stringify(profileManager.activeProfile.mods))
+                        profileManager.activeProfile.save()
+                    }
+                }
+
+                NotifyBanner {
+                    visible: updateManager.hasUpdate && !(progressbarVisible || updateChecker.active) && launcherSettings.showNotifications
+                    title: qsTr("DRM Update Available")
+                    description: qsTr("To support additional versions up to %1.").arg(updateManager.update.version)
+                    actionText: updateManager.update.url ? qsTr("Download") : qsTr("Activate")
+                    onClicked: {
+                        updateManager.hasUpdate = false;
+                        if(updateManager.update.url) {
+                            updateManager.downloadUpdate(updateManager.update.mod, updateManager.update.version, updateManager.update.arch, updateManager.update.url, updateManager.update.metadata);
+                        } else {
+                            updateManager.activateMod();
+                        }
+                    }
+                }
+
                 NotifyBanner {
                     color: "#832"
                     dismissible: false
@@ -302,9 +366,6 @@ BaseScreen {
                 onAddProfileSelected: {
                     profileEditPopup.reset()
                     profileEditPopup.open()
-                }
-                ModManager {
-                    id: modManager
                 }
                 function updateProfile(profile) {
                     var profile = profileManager.activeProfile;

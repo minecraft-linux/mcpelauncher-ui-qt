@@ -282,7 +282,6 @@ AnimatedStackLayout {
                                 property var abis: googleLoginHelperInstance.getAbis(false)
                                 property var arch: profileManagerInstance.activeProfile.arch || abis.length > 0 && abis[0]
                                 visible: modManager.modExists(stack.elem.name, modelData.version, arch)
-                                enabled: (modelData.assets[arch] && modelData.assets[arch].length > 0 || false)
                                 property var entry: prefix + modelData.version + "/" + arch + "/"
                                 text: profileManagerInstance.activeProfile.mods.includes(entry) ? qsTr("Disable") : qsTr("Activate")
                                 onClicked: {
