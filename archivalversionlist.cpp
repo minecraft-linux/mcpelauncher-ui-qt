@@ -36,9 +36,11 @@ void ArchivalVersionList::updateExtraVersions(QList<QObject*>& versions) {
 
 void ArchivalVersionList::setExtraVersions(QVariantList extraVersions) {
     if(m_extraVersions.size() > 0) {
-        m_versions.removeIf([this](QObject* obj) {
-            return m_extraVersions.contains(obj);
-        });
+        for (int i = m_versions.size() - 1; i >= 0; --i) {
+            if (m_extraVersions.contains(m_versions[i])) {
+                m_versions.removeAt(i);
+            }
+        }
         m_extraVersions.clear();
     }
     for(auto&& ver : extraVersions) {
