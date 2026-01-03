@@ -82,7 +82,7 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
     auto m_latestVersion = m_settings.value("latest_version").toString();
     auto m_latestVersionCode = m_settings.value("latest_version_code").toInt();
     auto m_latestVersionIsBeta = m_settings.value("latest_version_isbeta").toBool();
-    if(!trialMode && m_settings.value("latest_version_id").toString() != (m_latestVersion + QChar((char)m_latestVersionCode) + QChar(m_latestVersionIsBeta))) {
+    if(!trialMode && m_settings.value("latest_version_id").toString() != (m_latestVersion + QChar((char)m_latestVersionCode) + QChar((char)m_latestVersionIsBeta))) {
         printf("Something went wrong\n");
         shouldExit(1);
     }

@@ -97,6 +97,14 @@ void ProfileManager::loadProfiles() {
             }
         }
         settings.endArray();
+        size = settings.beginReadArray("mods");
+        if (size >= 0) {
+            for (int i = 0; i < size; i++) {
+                settings.setArrayIndex(i);
+                profile->mods.append(settings.value("path").toString());
+            }
+        }
+        settings.endArray();
         settings.endGroup();
     }
 }
@@ -137,6 +145,13 @@ void ProfileInfo::save() {
         settings.setArrayIndex(i);
         settings.setValue("name", *it);
         settings.setValue("value", env->value(*it));
+    }
+    settings.endArray();
+
+    settings.beginWriteArray("mods", mods.size());
+    for (int i = 0; i < mods.size(); i++, it++) {
+        settings.setArrayIndex(i);
+        settings.setValue("path", mods[i]);
     }
     settings.endArray();
     settings.endGroup();

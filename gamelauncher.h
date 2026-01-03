@@ -3,8 +3,7 @@
 
 #include <QObject>
 #include <QProcess>
-
-class ProfileInfo;
+#include "profilemanager.h"
 
 class GameLauncher : public QObject {
     Q_OBJECT

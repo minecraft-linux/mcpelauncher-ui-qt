@@ -22,6 +22,7 @@ class ProfileInfo : public QObject {
     Q_PROPERTY(int windowHeight MEMBER windowHeight NOTIFY changed)
     Q_PROPERTY(QString arch MEMBER arch NOTIFY changed)
     Q_PROPERTY(int texturePatch MEMBER texturePatch WRITE setTexturePatch NOTIFY changed)
+    Q_PROPERTY(QStringList mods MEMBER mods NOTIFY changed)
     Q_PROPERTY(QString commandline MEMBER commandline NOTIFY changed)
     Q_PROPERTY(QQmlPropertyMap* env MEMBER env NOTIFY changed)
 #ifdef __APPLE__
@@ -57,6 +58,8 @@ public:
     QString arch;
 
     int texturePatch = 0;
+
+    QStringList mods;
 
     QString commandline;
 

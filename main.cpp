@@ -15,6 +15,9 @@
 #include "launcherapp.h"
 #include "troubleshooter.h"
 #include "updatechecker.h"
+#include "modmanager.h"
+#include "zipextractiontask.h"
+#include "downloadtask.h"
 
 #include <QTranslator>
 #include <QCommandLineParser>
@@ -134,11 +137,16 @@ int main(int argc, char *argv[])
     qmlRegisterType<Troubleshooter>("io.mrarm.mcpelauncher", 1, 0, "Troubleshooter");
     qmlRegisterType<UpdateChecker>("io.mrarm.mcpelauncher", 1, 0, "UpdateChecker");
     qmlRegisterSingletonType<QmlUrlUtils>("io.mrarm.mcpelauncher", 1, 0, "QmlUrlUtils", &QmlUrlUtils::createInstance);
-    qmlRegisterType<StdioHelper>("io.mrarm.mcpelauncher", 1, 0, "StdioHelper");
     static GamepadManager* gamepadManager = new GamepadManager();
     qmlRegisterSingletonType<GamepadManager>("io.mrarm.mcpelauncher", 1, 0, "GamepadManager", +[](QQmlEngine*, QJSEngine*) -> QObject* {
         return gamepadManager;
     });
+    qRegisterMetaType<ModInfo>("ModInfo");
+    qmlRegisterType<ModManager>("io.mrarm.mcpelauncher", 1, 0, "ModManager");
+    qmlRegisterType<ZipExtractionTask>("io.mrarm.mcpelauncher", 1, 0, "ZipExtractionTask");
+    qmlRegisterType<DownloadTask>("io.mrarm.mcpelauncher", 1, 0, "DownloadTask");
+    qmlRegisterType<DownloadDataWrapper>("io.mrarm.mcpelauncher", 1, 0, "DownloadDataWrapper");
+    qmlRegisterType<StdioHelper>("io.mrarm.mcpelauncher", 1, 0, "StdioHelper");
     QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).mkpath("mcpelauncher/background_art");
 
     QQmlApplicationEngine engine;

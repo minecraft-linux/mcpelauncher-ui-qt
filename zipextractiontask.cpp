@@ -1,0 +1,84 @@
+#include "zipextractiontask.h"
+
+#include <QUrl>
+#include <QDebug>
+#include <mcpelauncher/zip_extractor.h>
+#include <mcpelauncher/minecraft_extract_utils.h>
+#include <mcpelauncher/apkinfo.h>
+#include <sstream>
+#include "versionmanager.h"
+#include "supportedandroidabis.h"
+
+ZipExtractionTask::ZipExtractionTask(QObject *parent) : QThread(parent) {
+    connect(this, &QThread::started, this, &ZipExtractionTask::emitActiveChanged);
+    connect(this, &QThread::finished, this, &ZipExtractionTask::emitActiveChanged);
+}
+
+bool ZipExtractionTask::setSourceUrls(QList<QUrl> const& urls) {
+    QStringList list;
+    for (auto&& url : urls) {
+        if (!url.isLocalFile()) {
+            return false;
+        }
+        list.append(url.toLocalFile());
+    }
+    setSources(list);
+    return true;
+}
+
+static bool mergeDirsRecusive(QString from, QString to) {
+    if (!QDir(to).exists()) {
+        qDebug() << "Moving " << from << " to " << to;
+        if (!QDir().rename(from, to))
+            throw std::runtime_error(QObject::tr("renaming versionsfolder failed").toStdString());
+        return true;
+    } else {
+        qDebug() << "Merging " << from << " to " << to;
+        for (auto&& item : QDir(from).entryList()) {
+            auto f = from + "/" + item;
+            auto t = to + "/" + item;
+            qDebug() << "Checking " << f << " to " << t << " Isdir=" << QDir(f).exists() << " IsFile=" << QFile(f).exists();
+            if (item == "." || item == "..") {
+                continue;
+            }
+            if (QDir(f).exists()) {
+                mergeDirsRecusive(f, t);
+            } else if (QFile(f).exists()) {
+                QFile().rename(f, t);
+            }
+        }
+        return false;
+    }
+}
+
+void ZipExtractionTask::run() {
+    QTemporaryDir dir;//(m_tempTemplate);
+    try {
+        std::string path = dir.path().toStdString();
+        ApkInfo apkInfo;
+        apkInfo.versionCode = 0;
+        for (auto && source : sources()) {
+            ZipExtractor extractor (source.toStdString());
+            extractor.extractTo(
+                [&path](const char* filename, std::string& outName) -> bool {
+                    if(filename[strlen(filename) - 1] == '/') {
+                        return false; // Skip directories
+                    }
+                    outName = path + "/" + filename;
+                    return true; // Extract all files
+                },
+                [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
+                    emit progress((float)  current / max);
+                }
+            );
+        }
+        QString targetDir = m_targetDir;
+        if (mergeDirsRecusive(dir.path(), targetDir)) {
+            dir.setAutoRemove(false);
+        }
+    } catch (std::exception& e) {
+        emit error(e.what());
+        return;
+    }
+    emit finished();
+}

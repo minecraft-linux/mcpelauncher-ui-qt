@@ -7,14 +7,14 @@
 #include <zlib.h>
 #include <playapi/api.h>
 #include <utility>
-
-class GooglePlayApi;
+#include "googleplayapi.h"
 
 struct DownloadProgress {
     std::mutex mtx;
     size_t downloadsize;
     size_t downloads;
     std::vector<size_t> progress;
+    std::vector<size_t> downloadedSizes;
 };
 
 class GoogleApkDownloadTask : public QObject {
