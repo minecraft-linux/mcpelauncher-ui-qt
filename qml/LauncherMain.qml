@@ -14,7 +14,7 @@ LauncherBase {
     property GoogleVersionChannel playVerChannel
     property GooglePlayApi playApiInstance
     property bool isVersionsInitialized: false
-    progressbarVisible: playDownloadTask.active || apkExtractionTask.active
+    progressbarVisible: playDownloadTask.active || updateManager.active || apkExtractionTask.active
     progressbarText: {
         if (playDownloadTask.active)
             return qsTr("Downloading Minecraft...")
@@ -58,6 +58,140 @@ LauncherBase {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.Wrap
+        }
+    }
+
+    ModManager {
+        id: modManager
+
+        Component.onCompleted: {
+            modManager.downloadModList();
+        }
+
+        onModListUpdated: {
+            console.log("mod list")
+            console.log(modManager.remoteMods)
+        }
+    }
+
+    UpdateManager {
+        id: updateManager
+
+        property var active: false;
+
+        onProgress: function(p) {
+            setProgressbarValue(p)
+        }
+
+        versionList: versionManager.archivalVersions
+        profileManager: profileManager
+        maxCompatVersion: 0
+
+        property var hasUpdate: false
+        property var update: null
+
+        Component.onCompleted: {
+            console.log("check for updates")
+            updateManager.checkForUpdates();
+        }
+
+        onUpdateFailed: function(msg) {
+            console.log("check for updates due to failure " + msg)
+            updateManager.hasUpdate = false;
+            updateManager.checkForUpdates();
+        }
+        onUpdateAvailable: (mod, version, arch, url , metadata) => {
+            console.log("has update")
+            hasUpdate = true;
+            update = {mod, version, arch, url, metadata};
+        }
+        onNoUpdateAvailable: {
+            console.log("no updates found")
+
+        }
+
+        onFinished: {
+            activateMod();
+            updateManager.active = false;
+        }
+
+        function activateMod() {
+            var toggle = false;
+            var profileManager = rowLayout.profileManager
+            var prefix = modManager.getRoot() + "/" + updateManager.update.mod + "/"
+            var abis = rowLayout.googleLoginHelper.getAbis(false)
+            var arch = profileManager.activeProfile.arch || abis.length > 0 && abis[0]
+            var entry = prefix + updateManager.update.version + "/" + arch + "/"
+
+            var has = profileManager.activeProfile.mods.includes(entry)
+            profileManager.activeProfile.mods = profileManager.activeProfile.mods.filter(function (e) {
+                return !e.startsWith(prefix)
+            })
+            if(!has || !toggle) {
+                profileManager.activeProfile.mods.push(entry)
+            }
+            console.log("Mods: " + JSON.stringify(profileManager.activeProfile.mods))
+            profileManager.activeProfile.save()
+        }
+    }
+
+    Connections {
+        target: profileManager.activeProfile
+        onChanged: {
+            console.log("check for updates onChanged")
+            updateManager.hasUpdate = false;
+            updateManager.checkForUpdates();
+        }
+    }
+    Connections {
+        target: profileManager
+        onActiveProfileChanged: {
+            console.log("check for updates onActiveProfileChanged")
+            updateManager.hasUpdate = false;
+            updateManager.checkForUpdates();
+        }
+    }
+    Connections {
+        target: versionManager.archivalVersions
+        onVersionsChanged: {
+            console.log("check for updates onVersionsChanged")
+            updateManager.hasUpdate = false;
+            updateManager.checkForUpdates();
+        }
+    }
+
+    Rectangle {
+        Layout.alignment: Qt.AlignTop
+        Layout.fillWidth: true
+        Layout.preferredHeight: children[0].implicitHeight + 20
+        color: "#2262bbff"
+        visible: updateManager.hasUpdate && !(progressbarVisible || updateChecker.active) && launcherSettings.showNotifications
+        z: 2
+
+        Text {
+            width: parent.width
+            height: parent.height
+            text: qsTr("DRM Update Available") + "<br/>" + qsTr("To support additional versions up to %1.").arg(updateManager.update && updateManager.update.version) + "<br/>" + (updateManager.update.url ? qsTr("Download") : qsTr("Activate"))
+            color: "#fff"
+            font.pointSize: 9
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.Wrap
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: updateManager.hasUpdate && !(progressbarVisible || updateChecker.active) && launcherSettings.showNotifications ? Qt.PointingHandCursor : Qt.Pointer
+            onClicked: {
+                updateManager.hasUpdate = false;
+                if(updateManager.update.url) {
+                    updateManager.active = true;
+                    updateManager.downloadUpdate(updateManager.update.mod, updateManager.update.version, updateManager.update.arch, updateManager.update.url, updateManager.update.metadata);
+                } else {
+                    updateManager.activateMod();
+                }
+            }
         }
     }
 
@@ -169,6 +303,47 @@ LauncherBase {
         versionManager: rowLayout.versionManager
         profileManager: rowLayout.profileManager
         playVerChannel: rowLayout.playVerChannel
+    }
+
+    function onProfileChanged() {
+        var profileManager = rowLayout.profileManager;
+        var profile = profileManager.activeProfile;
+        console.log("Profile mods " + JSON.stringify(profile.mods))
+        var extraVersions = [];
+        for(var i = 0; i < profile.mods.length; i++) {
+            console.log(" - " + profile.mods[i]);
+            var modInfo = modManager.loadModInfoByPath(profile.mods[i]);
+            console.log(JSON.stringify(modInfo));
+            if(modInfo.metadata && modInfo.metadata.version && modInfo.metadata.version.extraVersions) {
+                const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
+                for(var abi of abis) {
+                    extraVersions.push(...modInfo.metadata.version.extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
+                    {
+                        versionName: v.version_name,
+                        versionCode: v.codes[abi],
+                        abi: abi,
+                        isBeta: v.beta
+                    })))
+                }
+            }
+        }
+        versionManager.archivalVersions.setExtraVersions(extraVersions);
+    }
+
+    Connections {
+        target: rowLayout.profileManager.activeProfile
+        function onChanged() {
+            onProfileChanged();
+        }
+    }
+    Connections {
+        target: rowLayout.profileManager
+        function onActiveProfileChanged() {
+            onProfileChanged();
+        }
+        Component.onCompleted: {
+            onProfileChanged()
+        }
     }
 
     Rectangle {
