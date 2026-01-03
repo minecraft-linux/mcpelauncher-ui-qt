@@ -17,7 +17,7 @@ BaseScreen {
     property GoogleVersionChannel playVerChannel
 
     property bool isVersionsInitialized: false
-    property bool progressbarVisible: playDownloadTask.active || apkExtractionTask.active
+    property bool progressbarVisible: playDownloadTask.active || apkExtractionTask.active || updateManager.active
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
     property string warnMessage: ""
@@ -213,6 +213,12 @@ BaseScreen {
                 UpdateManager {
                     id: updateManager
 
+                    property var active: false
+
+                    onProgress: function(p) {
+                        progressBar.value = p
+                    }
+
                     versionList: versionManager.archivalVersions
                     profileManager: profileManager
                     maxCompatVersion: 1
@@ -234,10 +240,12 @@ BaseScreen {
                     }
 
                     onFinished: {
+                        updateManager.active = false;
                         activateMod();
                     }
 
                     function activateMod() {
+                        var toggle = false;
                         var profileManager = playScreen.profileManager
                         var prefix = modManager.getRoot() + "/" + updateManager.update.mod + "/"
                         var abis = googleLoginHelper.getAbis(false)
@@ -248,7 +256,7 @@ BaseScreen {
                         profileManager.activeProfile.mods = profileManager.activeProfile.mods.filter(function (e) {
                             return !e.startsWith(prefix)
                         })
-                        if(!has) {
+                        if(!has || !toggle) {
                             profileManager.activeProfile.mods.push(entry)
                         }
                         console.log("Mods: " + JSON.stringify(profileManager.activeProfile.mods))
@@ -279,6 +287,7 @@ BaseScreen {
                     onClicked: {
                         updateManager.hasUpdate = false;
                         if(updateManager.update.url) {
+                            updateManager.active = true;
                             updateManager.downloadUpdate(updateManager.update.mod, updateManager.update.version, updateManager.update.arch, updateManager.update.url, updateManager.update.metadata);
                         } else {
                             updateManager.activateMod();
