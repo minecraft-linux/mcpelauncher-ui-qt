@@ -68,6 +68,7 @@ void UpdateChecker::checkForUpdates() {
     });
 #elif defined(UPDATE_CHECK)
     QNetworkRequest request(QStringLiteral(UPDATE_CHECK_URL));
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
     netAccessManager.get(request);
 #else
         emit updateError(QObject::tr("Launcher cannot be updated<br/>You have to check your packagemanager for updates or recompile your Open Source build with newer sources"));

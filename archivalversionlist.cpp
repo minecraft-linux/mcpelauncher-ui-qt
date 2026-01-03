@@ -64,7 +64,9 @@ void ArchivalVersionList::downloadLists(QStringList abis, QString baseUrl) {
     if (abis.size()) {
         auto && versiondburl = m_baseUrl + "/versions." + abis.at(abis.size() - 1) + ".json.min";
         qDebug() << "Downloading Versionsdb" << versiondburl;
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(versiondburl)));
+        QNetworkRequest request{QUrl(versiondburl)};
+        request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+        QNetworkReply* reply = m_netManager->get(request);
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(abis.size() - 1), abis));
     } else {
         updateExtraVersions(m_versionsnext);
@@ -129,7 +131,9 @@ void ArchivalVersionList::onListDownloaded(QNetworkReply* reply, QString abi, QS
     } else {
         auto && versiondburl = m_baseUrl + "/versions." + abis.at(i - 1) + ".json.min";
         qDebug() << "Downloading Versionsdb" << versiondburl;
-        QNetworkReply* reply = m_netManager->get(QNetworkRequest(QUrl(versiondburl)));
+        QNetworkRequest request{QUrl(versiondburl)};
+        request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+        QNetworkReply* reply = m_netManager->get(request);
         connect(reply, &QNetworkReply::finished, std::bind(&ArchivalVersionList::onListDownloaded, this, reply, abis.at(i - 1), abis));
     }
 }

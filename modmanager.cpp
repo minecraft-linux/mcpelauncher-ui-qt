@@ -142,6 +142,7 @@ void ModManager::downloadModList() {
     QString url = "https://github.com/minecraft-linux/mcpelauncher-moddb/raw/main/moddb.json";
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QNetworkRequest request({QUrl(url)});
+    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
     QNetworkReply* reply = manager->get(request);
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
         if (reply->error() == QNetworkReply::NoError) {
