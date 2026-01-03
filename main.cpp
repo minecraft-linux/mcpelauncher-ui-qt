@@ -38,6 +38,7 @@
 #include <mcpelauncher/path_helper.h>
 #include "encryption.h"
 #include "stdio_helper.h"
+#include "updatemanager.h"
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -140,6 +141,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<DownloadTask>("io.mrarm.mcpelauncher", 1, 0, "DownloadTask");
     qmlRegisterType<DownloadDataWrapper>("io.mrarm.mcpelauncher", 1, 0, "DownloadDataWrapper");
     qmlRegisterType<StdioHelper>("io.mrarm.mcpelauncher", 1, 0, "StdioHelper");
+    qmlRegisterType<UpdateManager>("io.mrarm.mcpelauncher", 1, 0, "UpdateManager");
     QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).mkpath("mcpelauncher/background_art");
 
     QQmlApplicationEngine engine;
