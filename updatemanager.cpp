@@ -119,6 +119,8 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
             emit progress(p);
         }));
         connections->append(connect(extractTask, &ZipExtractionTask::error, this, [this, extractTask, connections](const QString &err) {
+            QDir targetDir(extractTask->targetDir());
+            targetDir.removeRecursively();
             emit updateFailed(err);
             extractTask->deleteLater();
             delete connections;
