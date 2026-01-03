@@ -119,7 +119,9 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
         task->deleteLater();
         ZipExtractionTask* extractTask = new ZipExtractionTask(this);
         extractTask->setSources(files);
-        extractTask->setTargetDir(m_modManager.getRoot() + "/" + mod + "/" + version + "/" + arch);
+        auto baseDir = m_modManager.getRoot() + "/" + mod + "/" + version + "/" + arch;
+        QDir(baseDir).mkpath(".");
+        extractTask->setTargetDir(baseDir);
         connections->append(connect(extractTask, &ZipExtractionTask::progress, this, [this](qreal p) {
             emit progress(p);
         }));
@@ -127,15 +129,15 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
             QDir targetDir(extractTask->targetDir());
             targetDir.removeRecursively();
             emit updateFailed(err);
-            extractTask->deleteLater();
             delete connections;
+            extractTask->deleteLater();
         }));
         connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, extractTask, connections, mod, version, arch, metadata]() {
             emit progress(1.0);
-            extractTask->deleteLater();
-            delete connections;
             m_modManager.saveMod(mod, version, arch, metadata);
             emit finished();
+            delete connections;
+            extractTask->deleteLater();
         }));
         extractTask->start();
     }));

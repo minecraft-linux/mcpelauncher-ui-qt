@@ -225,6 +225,7 @@ BaseScreen {
                     }
 
                     onUpdateFailed: {
+                        updateManager.hasUpdate = false;
                         updateManager.checkForUpdates();
                     }
                     onUpdateAvailable: (mod, version, arch, url , metadata) => {
@@ -252,6 +253,21 @@ BaseScreen {
                         }
                         console.log("Mods: " + JSON.stringify(profileManager.activeProfile.mods))
                         profileManager.activeProfile.save()
+                    }
+                }
+
+                Connections {
+                    target: profileManager.activeProfile
+                    function onChanged() {
+                        updateManager.hasUpdate = false;
+                        updateManager.checkForUpdates();
+                    }
+                }
+                Connections {
+                    target: profileManager
+                    function onActiveProfileChanged() {
+                        updateManager.hasUpdate = false;
+                        updateManager.checkForUpdates();
                     }
                 }
 
@@ -347,6 +363,46 @@ BaseScreen {
         playVerChannel: playScreen.playVerChannel
     }
 
+    function onProfileChanged() {
+        var profile = profileManager.activeProfile;
+        console.log("Profile mods " + JSON.stringify(profile.mods))
+        var extraVersions = [];
+        for(var i = 0; i < profile.mods.length; i++) {
+            console.log(" - " + profile.mods[i]);
+            var modInfo = modManager.loadModInfoByPath(profile.mods[i]);
+            console.log(JSON.stringify(modInfo));
+            if(modInfo.metadata && modInfo.metadata.version && modInfo.metadata.version.extraVersions) {
+                const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
+                for(var abi of abis) {
+                    extraVersions.push(...modInfo.metadata.version.extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
+                    {
+                        versionName: v.version_name,
+                        versionCode: v.codes[abi],
+                        abi: abi,
+                        isBeta: v.beta
+                    })))
+                }
+            }
+        }
+        versionManager.archivalVersions.setExtraVersions(extraVersions);
+    }
+
+    Connections {
+        target: profileManager.activeProfile
+        function onChanged() {
+            onProfileChanged();
+        }
+    }
+    Connections {
+        target: profileManager
+        function onActiveProfileChanged() {
+            onProfileChanged();
+        }
+        Component.onCompleted: {
+            onProfileChanged()
+        }
+    }
+
     Rectangle {
         color: '#282828'
         Layout.fillWidth: true
@@ -367,44 +423,16 @@ BaseScreen {
                     profileEditPopup.reset()
                     profileEditPopup.open()
                 }
-                function updateProfile(profile) {
-                    var profile = profileManager.activeProfile;
-                    console.log("Profile mods " + JSON.stringify(profile.mods))
-                    var extraVersions = [];
-                    for(var i = 0; i < profile.mods.length; i++) {
-                        console.log(" - " + profile.mods[i]);
-                        var modInfo = modManager.loadModInfoByPath(profile.mods[i]);
-                        console.log(JSON.stringify(modInfo));
-                        if(modInfo.metadata && modInfo.metadata.version && modInfo.metadata.version.extraVersions) {
-                            const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported);
-                            for(var abi of abis) {
-                                extraVersions.push(...modInfo.metadata.version.extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
-                                {
-                                    versionName: v.version_name,
-                                    versionCode: v.codes[abi],
-                                    abi: abi,
-                                    isBeta: v.beta
-                                })))
-                            }
-                        }
-                    }
-                    versionManager.archivalVersions.setExtraVersions(extraVersions);
-                }
                 Component.onCompleted: {
                     setProfile(profileManager.activeProfile)
                     window.currentGameDataDir = Qt.binding(function () {
                         return (profileManager.activeProfile && profileManager.activeProfile.dataDirCustom) ? QmlUrlUtils.localFileToUrl(profileManager.activeProfile.dataDir) : ""
                     })
-                    profileManager.activeProfile.changed.connect(updateProfile);
-                    updateProfile();
                     loaded = true
                 }
                 onCurrentProfileChanged: {
                     if (loaded && currentProfile !== null) {
-                        profileManager.activeProfile.changed.disconnect(updateProfile);
                         profileManager.activeProfile = currentProfile
-                        currentProfile.changed.connect(updateProfile);
-                        updateProfile();
                     }
                 }
                 enabled: !(progressbarVisible || gameLauncher.running || googleLoginHelper.account === null)
