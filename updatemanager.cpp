@@ -25,7 +25,10 @@ UpdateManager::UpdateManager(QObject *parent)
         // for(auto&& path : m_profileManager.activeProfile()->mods) {
         //     //m_modManager.loadMod(path);
         // }
-
+        if(m_versionList->versions().isEmpty()) {
+            emit noUpdateAvailable();
+            return;
+        }
         auto&& maxKnownVersion = m_versionList->versions().first()->property("versionCode").toInt();
         auto&& maxKnownVersionAbi = m_versionList->versions().first()->property("abi").toString();
 
@@ -56,8 +59,10 @@ UpdateManager::UpdateManager(QObject *parent)
                 auto result = m_modManager.loadMod(mod.name, version, maxKnownVersionAbi);
                 if (result.value("metadata").isNull()) {
                     QString downloadUrl = it->toMap().value("assets").toMap().value(maxKnownVersionAbi).toString();
-                    QVariantMap metadata = mod.metadata;
+                    QVariantMap metadata;
+                    metadata["metadata"] = mod.metadata;
                     metadata["version"] = it->toMap();
+                    metadata["arch"] = maxKnownVersionAbi;
                     emit updateAvailable(mod.name, version, maxKnownVersionAbi, downloadUrl, metadata);
                     return;
                 } else {
