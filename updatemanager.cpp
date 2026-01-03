@@ -109,14 +109,14 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
     connections->append(connect(task, &DownloadTask::progress, this, [this](qreal u) {
         emit progress(u);
     }));
-    connections->append(connect(task, &DownloadTask::error, this, [this, connections](const QString &err) {
+    connections->append(connect(task, &DownloadTask::error, this, [this, task, connections](const QString &err) {
         emit updateFailed(err);
         delete connections;
+        task->deleteLater();
     }));
     connections->append(connect(task, &DownloadTask::finished, this, [this, task, connections, mod, version, arch, metadata]() {
         connections->clear();
         auto files = task->filePaths();
-        task->deleteLater();
         ZipExtractionTask* extractTask = new ZipExtractionTask(this);
         extractTask->setSources(files);
         auto baseDir = m_modManager.getRoot() + "/" + mod + "/" + version + "/" + arch;
@@ -125,19 +125,21 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
         connections->append(connect(extractTask, &ZipExtractionTask::progress, this, [this](qreal p) {
             emit progress(p);
         }));
-        connections->append(connect(extractTask, &ZipExtractionTask::error, this, [this, extractTask, connections](const QString &err) {
+        connections->append(connect(extractTask, &ZipExtractionTask::error, this, [this, task, extractTask, connections](const QString &err) {
             QDir targetDir(extractTask->targetDir());
             targetDir.removeRecursively();
             emit updateFailed(err);
             delete connections;
             extractTask->deleteLater();
+            task->deleteLater();
         }));
-        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, extractTask, connections, mod, version, arch, metadata]() {
+        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, task, extractTask, connections, mod, version, arch, metadata]() {
             emit progress(1.0);
             m_modManager.saveMod(mod, version, arch, metadata);
             emit finished();
             delete connections;
             extractTask->deleteLater();
+            task->deleteLater();
         }));
         extractTask->start();
     }));
