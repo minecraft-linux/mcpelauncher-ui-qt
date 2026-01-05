@@ -133,10 +133,15 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
             targetDir.removeRecursively();
             emit updateFailed(err);
         }));
-        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, mod, version, arch, metadata]() {
+        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, mod, version, arch, metadata, extractTask]() {
             emit progress(1.0);
-            m_modManager.saveMod(mod, version, arch, metadata);
-            emit finished();
+            if(!m_modManager.saveMod(mod, version, arch, metadata)) {
+                QDir targetDir(extractTask->targetDir());
+                targetDir.removeRecursively();
+                emit updateFailed(QObject::tr("Failed to save mod %1 version %2 for arch %3").arg(mod, version, arch));
+            } else {
+                emit finished();
+            }
         }));
         connections->append(QObject::connect(extractTask, &QThread::finished, extractTask, [connections, extractTask]() {
             QtConcurrent::run([connections, extractTask]() {
