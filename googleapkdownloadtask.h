@@ -15,6 +15,7 @@ struct DownloadProgress {
     size_t downloads;
     std::vector<size_t> progress;
     std::vector<size_t> downloadedSizes;
+    bool failed;
 };
 
 class GoogleApkDownloadTask : public QObject {
