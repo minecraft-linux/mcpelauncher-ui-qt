@@ -67,7 +67,7 @@ AnimatedStackLayout {
                     const mods = modManager.listMods()
                     var modByName = {}
                     for (let i = 0; i < mods.length; ++i) {
-                        modByName[mods[i].name] = mods[i].metadata.metadata || {
+                        modByName[mods[i].name] = modByName[mods[i].name] || mods[i].metadata.metadata || {
                             name: mods[i].name,
                             version: mods[i].version,
                             arch: mods[i].arch,
@@ -259,11 +259,20 @@ AnimatedStackLayout {
                                 onClicked: {
                                     console.log(JSON.stringify(modelData.assets))
                                     console.log(arch)
-                                    modManager.saveMod(stack.elem.name, modelData.version, arch, {
+                                    if(!modManager.saveMod(stack.elem.name, modelData.version, arch, {
                                         metadata: stack.elem,
                                         version: modelData,
                                         arch: arch
-                                    })
+                                    })) {
+                                        console.log("ModManager.saveMod Failed")
+                                        modDownloadExtractError.title = qsTr("ModManager.saveMod Failed")
+                                        modDownloadExtractError.text = qsTr("Could not save mod %1 with version %2 and arch %3").arg(stack.elem.name).arg(modelData.version).arg(arch)
+                                        modDownloadExtractError.open()
+                                        progress.value = 0
+                                        installedModsGrid.reload()
+                                        stack.reload()
+                                        return;
+                                    }
                                     downloadTask.activemod = {
                                         name: stack.elem.name,
                                         version: modelData.version,
