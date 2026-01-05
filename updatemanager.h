@@ -12,6 +12,7 @@ class UpdateManager : public QObject {
     ModManager m_modManager;
     ProfileManager* m_profileManager;
     ArchivalVersionList* m_versionList;
+    
     int m_maxCompatVersion;
 public:
     Q_PROPERTY(ProfileManager* profileManager MEMBER m_profileManager)

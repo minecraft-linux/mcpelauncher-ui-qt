@@ -27,12 +27,18 @@ bool ZipExtractionTask::setSourceUrls(QList<QUrl> const& urls) {
 }
 
 static bool mergeDirsRecusive(QString from, QString to) {
-    if (!QDir(to).exists()) {
-        qDebug() << "Moving " << from << " to " << to;
-        if (!QDir().rename(from, to))
-            throw std::runtime_error(QObject::tr("renaming versionsfolder failed").toStdString());
-        return true;
-    } else {
+    if (QDir(from).exists()) {
+        if (!QDir(to).exists()) {
+            qDebug() << "Moving " << from << " to " << to;
+            if (QFile::rename(from, to)) {
+                return true;
+            }
+            // Fallback to manual copy / move
+        }
+        if(!QDir(to).mkpath(".")) {
+            qDebug() << "Failed to create directory " << to;
+            throw std::runtime_error(QObject::tr("creating directory %1 failed").arg(to).toStdString());
+        }
         qDebug() << "Merging " << from << " to " << to;
         for (auto&& item : QDir(from).entryList()) {
             auto f = from + "/" + item;
@@ -41,13 +47,19 @@ static bool mergeDirsRecusive(QString from, QString to) {
             if (item == "." || item == "..") {
                 continue;
             }
-            if (QDir(f).exists()) {
-                mergeDirsRecusive(f, t);
-            } else if (QFile(f).exists()) {
-                QFile().rename(f, t);
-            }
+            mergeDirsRecusive(f, t);
         }
         return false;
+    }
+    if (QFile::exists(from)) {
+        if(!QFile::rename(from, to)) {
+            if(QFile::copy(from, to)) {
+                QFile::remove(from);
+            } else {
+                qDebug() << "Failed to move file " << from << " to " << to;
+                throw std::runtime_error(QObject::tr("moving file from %1 to %2 failed").arg(from).arg(to).toStdString());
+            }
+        }
     }
 }
 

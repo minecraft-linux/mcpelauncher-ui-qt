@@ -248,16 +248,18 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
     progress->downloads = 1 + dd.splitdeliverydata().Capacity();
     progress->progress.resize(progress->downloads);
     progress->downloadsize = 0;
+    progress->failed = false;
     auto cleanup = [this, progress]() {
         std::lock_guard<std::mutex> guard(progress->mtx);
         if(!--progress->downloads) {
+            progress->failed = true;
             m_active.store(false);
             emit activeChanged();
         }
     };
-    auto success = [this, cleanup, dd, cookie, progress]() {
+    auto success = [this, cleanup, progress]() {
         std::lock_guard<std::mutex> guard(progress->mtx);
-        if(!--progress->downloads) {
+        if(!--progress->downloads && !progress->failed) {
             m_active.store(false);
             emit activeChanged();
             emit finished();

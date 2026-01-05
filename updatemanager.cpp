@@ -4,6 +4,7 @@
 #include "zipextractiontask.h"
 #include <QtCore/qstandardpaths.h>
 #include <QVersionNumber>
+#include <QtConcurrent>
 
 UpdateManager::UpdateManager(QObject *parent)
     : QObject(parent)
@@ -99,9 +100,11 @@ Q_INVOKABLE void UpdateManager::checkForUpdates()
 
 Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString& version, const QString& arch, const QString& url, const QVariantMap& metadata)
 {
-    DownloadTask* task = new DownloadTask(this);
+    ZipExtractionTask* extractTask = new ZipExtractionTask();
+    extractTask->moveToThread(extractTask);
+    DownloadTask* task = new DownloadTask();
     QList<DownloadDataWrapper*> downloadList;
-    auto entry = new DownloadDataWrapper(this);
+    auto entry = new DownloadDataWrapper(task);
     entry->setUrl(url);
     entry->setComponentName(mod + "-" + version);
     downloadList.append(entry);
@@ -109,15 +112,15 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
     connections->append(connect(task, &DownloadTask::progress, this, [this](qreal u) {
         emit progress(u);
     }));
-    connections->append(connect(task, &DownloadTask::error, this, [this, task, connections](const QString &err) {
+    connections->append(connect(task, &DownloadTask::error, this, [this, extractTask, connections](const QString &err) {
         emit updateFailed(err);
         delete connections;
-        task->deleteLater();
+        extractTask->deleteLater();
     }));
-    connections->append(connect(task, &DownloadTask::finished, this, [this, task, connections, mod, version, arch, metadata]() {
+    connections->append(connect(task, &DownloadTask::finished, this, [this, extractTask, task, connections, mod, version, arch, metadata]() {
         connections->clear();
         auto files = task->filePaths();
-        ZipExtractionTask* extractTask = new ZipExtractionTask(this);
+        // Make QThread::finished delete the thread once done
         extractTask->setSources(files);
         auto baseDir = m_modManager.getRoot() + "/" + mod + "/" + version + "/" + arch;
         QDir(baseDir).mkpath(".");
@@ -125,21 +128,22 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
         connections->append(connect(extractTask, &ZipExtractionTask::progress, this, [this](qreal p) {
             emit progress(p);
         }));
-        connections->append(connect(extractTask, &ZipExtractionTask::error, this, [this, task, extractTask, connections](const QString &err) {
+        connections->append(connect(extractTask, &ZipExtractionTask::error, this, [this, extractTask](const QString &err) {
             QDir targetDir(extractTask->targetDir());
             targetDir.removeRecursively();
             emit updateFailed(err);
-            delete connections;
-            extractTask->deleteLater();
-            task->deleteLater();
         }));
-        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, task, extractTask, connections, mod, version, arch, metadata]() {
+        connections->append(connect(extractTask, &ZipExtractionTask::finished, this, [this, mod, version, arch, metadata]() {
             emit progress(1.0);
             m_modManager.saveMod(mod, version, arch, metadata);
             emit finished();
-            delete connections;
-            extractTask->deleteLater();
-            task->deleteLater();
+        }));
+        connections->append(QObject::connect(extractTask, &QThread::finished, extractTask, [connections, extractTask]() {
+            QtConcurrent::run([connections, extractTask]() {
+                extractTask->wait();
+                delete extractTask;
+                delete connections;
+            });
         }));
         extractTask->start();
     }));
