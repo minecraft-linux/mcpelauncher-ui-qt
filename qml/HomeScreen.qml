@@ -231,6 +231,7 @@ BaseScreen {
                     }
 
                     onUpdateFailed: {
+                        updateManager.active = false;
                         updateManager.hasUpdate = false;
                         updateManager.checkForUpdates();
                     }
