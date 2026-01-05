@@ -6,6 +6,7 @@
 #include <mcpelauncher/minecraft_extract_utils.h>
 #include <mcpelauncher/apkinfo.h>
 #include <sstream>
+#include <fstream>
 #include "versionmanager.h"
 #include "supportedandroidabis.h"
 
@@ -29,8 +30,12 @@ bool ZipExtractionTask::setSourceUrls(QList<QUrl> const& urls) {
 static bool mergeDirsRecusive(QString from, QString to) {
     if (QDir(from).exists()) {
         if (!QDir(to).exists()) {
+            QFile fDir{from};
+            if (fDir.exists()) {
+                fDir.remove();
+            }
             qDebug() << "Moving " << from << " to " << to;
-            if (QFile::rename(from, to)) {
+            if (QDir().rename(from, to) || QFile::rename(from, to)) {
                 return true;
             }
             // Fallback to manual copy / move
@@ -51,16 +56,25 @@ static bool mergeDirsRecusive(QString from, QString to) {
         }
         return false;
     }
-    if (QFile::exists(from)) {
-        if(!QFile::rename(from, to)) {
-            if(QFile::copy(from, to)) {
-                QFile::remove(from);
-            } else {
-                qDebug() << "Failed to move file " << from << " to " << to;
-                throw std::runtime_error(QObject::tr("moving file from %1 to %2 failed").arg(from).arg(to).toStdString());
+    QFile f{from};
+    if (f.exists()) {
+        qDebug() << "Moving file " << from << " to " << to;
+        QFile::remove(to);
+        QDir(to).removeRecursively();
+        if(!f.rename(to)) {
+            qDebug() << "Failed to rename file " << from << " to " << to << " due to " << f.errorString() << ". Trying copy + delete.";
+            if(!f.copy(to)) {
+                qDebug() << "Failed to copy file " << from << " to " << to << " due to " << f.errorString() << ". Trying to use plain c++.";
+                std::ifstream src(from.toStdString(), std::ios::binary);
+                std::ofstream dst(to.toStdString(), std::ios::binary);
+                dst << src.rdbuf();
+                if(!src.good() || !dst.good()) {
+                    throw std::runtime_error(QObject::tr("copying file from %1 to %2 failed").arg(from).arg(to).toStdString());
+                }
             }
         }
     }
+    return false;
 }
 
 void ZipExtractionTask::run() {
