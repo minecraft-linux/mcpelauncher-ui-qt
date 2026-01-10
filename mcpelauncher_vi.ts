@@ -116,7 +116,7 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể đang chạy một phiên bản không tương thích.Bỏ các tùy chọn sau trong cài đặt và khởi động lại trò chơi: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
@@ -212,12 +212,12 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Tương thích</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tương thích</translation>
     </message>
 </context>
 <context>
@@ -339,105 +339,108 @@ hoặc nếu không thì Launcher hỏng</translation>
         <location filename="qml/HomeScreen.qml" line="169"/>
         <source>%1 Joysticks cannot be used as Gamepad Input:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Cần điều khiển không thể dùng giống đầu vào Gamepad :
+
+%2.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Chế độ Trial đang bật</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
         <source>Disable trial mode from settings to launch the full version instead. </source>
-        <translation type="unfinished"></translation>
+        <translation>Tắt chế độ trial từ cài đặt để khởi chạy phiên bản đầy đủ. </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
         <source>You must first buy &quot;Minecraft Trial&quot; on an Android device or VM to download it here. </source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần mua &quot;Minecraft Trial&quot; ở một thiết bị Android hoặc một máy ảo để tải xuống nó ở đây. </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
         <source>Play Version is behind</source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản Play đã lỗi thời</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="190"/>
         <source>Google Play Version Channel is behind. Got %1. Expected %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản Google Play đã lỗi thời. Got %1. Expected %2.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="196"/>
         <location filename="qml/HomeScreen.qml" line="247"/>
         <source>Update available</source>
-        <translation type="unfinished"></translation>
+        <translation>Cập nhật có sẵn</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="197"/>
         <source>A new version of the launcher is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Một phiên bản mới của Launcher đã có sẵn.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="198"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="212"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="215"/>
         <source>Access to the Google Play Apk Library has been rejected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Truy cập vào thư viện Google Play Apk đã bị từ chối.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="217"/>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế độ trial</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
         <location filename="qml/HomeScreen.qml" line="269"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Cập nhật</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Download and play</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống và chơi</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="353"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Không biết</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="382"/>
         <source>Downloading Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang tải xuống Minecraft...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="384"/>
         <source>Extracting Minecraft...</source>
-        <translation type="unfinished"></translation>
+        <translation>Đang giải nén Minecraft...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="385"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vui lòng đợi...</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="459"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống thất bại</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="470"/>
         <source>Error while extracting the downloaded file(s), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;please report this error&lt;/a&gt;: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi khi giải nén file đã tải , &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;vui lòng báo cáo lỗi này&lt;/a&gt;: %1</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="595"/>
@@ -447,7 +450,7 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="643"/>
         <source>mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.</source>
-        <translation type="unfinished"></translation>
+        <translation>mcpelauncher-versiondb không được load. không thể kiểm tra phiên bản Minecraft tương thích.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
