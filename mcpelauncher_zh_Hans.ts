@@ -512,7 +512,7 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation>最新的《Minecraft》版本 %1 为测试版，默认处于隐藏状态。</translation>
+        <translation type="unfinished">最新的《Minecraft》版本 %1 为测试版，默认处于隐藏状态。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
