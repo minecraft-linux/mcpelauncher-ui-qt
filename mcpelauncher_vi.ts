@@ -106,7 +106,7 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation>Vui lòng không báo cáo lỗi này</translation>
+        <translation>Vui lòng không báo cáo lỗi này.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
@@ -164,17 +164,17 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
         <source>GUID</source>
-        <translation type="unfinished"></translation>
+        <translation>GUID</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Có Bản đồ</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Có bản đồ</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
@@ -184,22 +184,22 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Bản đồ</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Lưu vào hồ sơ người dùng hiện tại</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Lưu ở đường dẫn mặc định</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Đóng</translation>
     </message>
 </context>
 <context>
@@ -207,7 +207,7 @@ hoặc nếu không thì Launcher hỏng</translation>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
@@ -340,7 +340,6 @@ hoặc nếu không thì Launcher hỏng</translation>
         <source>%1 Joysticks cannot be used as Gamepad Input:
 %2.</source>
         <translation>%1 Cần điều khiển không thể dùng giống đầu vào Gamepad :
-
 %2.</translation>
     </message>
     <message>
@@ -399,7 +398,7 @@ hoặc nếu không thì Launcher hỏng</translation>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
         <translation>
-Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế độ trial</translation>
+Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế độ trial.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
@@ -445,7 +444,7 @@ Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế 
     <message>
         <location filename="qml/HomeScreen.qml" line="595"/>
         <source>%1  (%2, %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1  (%2, %3)</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="643"/>
@@ -455,12 +454,12 @@ Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế 
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation type="unfinished"></translation>
+        <translation> Phiên bản Minecraft mới nhất %1 là một phiên bản beta , hoặc bị ẩn.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
         <source>Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tương thích phiên bản Minecraft mới nhất %1 chưa rõ. Yêu cầu một tính năng hỗ trợ cho phiên bản Minecraft.</translation>
     </message>
 </context>
 <context>
@@ -468,40 +467,42 @@ Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế 
     <message>
         <location filename="qml/LoginScreen.qml" line="44"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Đăng nhập</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="54"/>
         <source>To use this launcher, you must either purchase Minecraft Android or claim the free Minecraft Trial on Google Play and sign in.
 
 The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Để sử dụng Laucher này , bạn cần mua phiên bản Minecraft dành cho Android hoặc tải xuống Minecraft Trial ở trên Google Play và đăng nhập.
+Phiên bản Minecraft (ChromeOS) chế độ Trial có thể bật sau khi đăng nhập trong cài đặt.</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
         <source>Sign in with Google</source>
-        <translation type="unfinished"></translation>
+        <translation>Đăng nhập với Google</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="81"/>
         <source>Use trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Dùng trial .apk</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
         <source>Get help</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhận trợ giúp</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="111"/>
         <source>Extracting apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Giải nén apk</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="133"/>
         <source>This is an unofficial Linux launcher for the Minecraft Bedrock codebase.
 This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
-        <translation type="unfinished"></translation>
+        <translation>Đây là Launcher cho Linux không chính thức cho cơ sở mã Minecraft Bedrock.
+Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</translation>
     </message>
 </context>
 <context>
@@ -509,32 +510,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="22"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Trang chủ</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="29"/>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>Tin tức</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="36"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Mods</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="46"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhật ký game</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="53"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Cài đặt</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="61"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Thoát</translation>
     </message>
 </context>
 <context>
@@ -542,7 +543,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/Components/ModsGrid.qml" line="143"/>
         <source>Load more Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải thêm Mods</translation>
     </message>
 </context>
 <context>
@@ -552,72 +553,72 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/ModsScreen.qml" line="34"/>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Mods</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="37"/>
         <source>Installed Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Mods đã cài đặt</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="40"/>
         <source>FAQ</source>
-        <translation type="unfinished"></translation>
+        <translation>Câu hỏi thường gặp</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="87"/>
         <source>Welcome to our experimental mods section.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chào mừng đến phần thử nghiệm Mods của chúng tôi.</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="96"/>
         <source>Managing mods is not yet supported. To contribute your mod, please open a pull request on &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;Mods are a collection of .so files (also on macOS) placed inside the `mods` folder. This folder is located within your data root, which you can find in Settings &gt; Storage. The `mods` folder does not exist by default, so you&apos;ll need to create it. Extract zip files directly into the `mods` folder without creating subfolders.  .so files should be directly below the `mods` folder.&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;Do not report crashes to the launcher&apos;s issue tracker when mods are enabled.&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Quản lý mods hiện chưa được hỗ trợ. Để đóng góp mods của bạn, vui lòng mở một pull request tại &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;Mods là tập hợp các tệp .so (cũng có trên macOS) được đặt bên trong thư mục `mods`. Thư mục này nằm trong thư mục dữ liệu gốc của bạn, bạn có thể tìm thấy trong Cài đặt &gt; Bộ nhớ. Thư mục `mods` không tồn tại theo mặc định, vì vậy bạn sẽ cần tạo nó. Giải nén các tệp tin zip trực tiếp vào thư mục `mods` mà không tạo thư mục con. Các tệp .so nên nằm trực tiếp dưới thư mục `mods`.&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;Không báo cáo lỗi sập Launcher khi mods đang được kích hoạt.&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="171"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Trở về</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Untitled Mod</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod chưa được đặt tên</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="254"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Tắt</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="287"/>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>kích hoạt</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="304"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="359"/>
         <source>Download failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống thất bại</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="380"/>
         <source>Zip extraction failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Giải nén Zip thất bại</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="396"/>
         <source>Download Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Quá trình tải xuống</translation>
     </message>
 </context>
 <context>
@@ -625,17 +626,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/NewsScreen.qml" line="17"/>
         <source>News</source>
-        <translation type="unfinished"></translation>
+        <translation>Tin tức</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="22"/>
         <source>Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft</translation>
     </message>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
         <source>Load more articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải thêm bài viết</translation>
     </message>
 </context>
 <context>
@@ -643,138 +644,138 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Create profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Tạo hồ sơ</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="82"/>
         <source>Edit profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Chỉnh sửa hồ sơ</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="84"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Xóa</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="114"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tên</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="127"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>Latest %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mới nhất %1 (%2)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>version</source>
-        <translation type="unfinished"></translation>
+        <translation>phiên bản</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>Google Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Cửa hàng Play</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="155"/>
         <source>compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>tương thích</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="164"/>
         <source>%1 (installed, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (đã cài đặt, %2)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>%1 (%2%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2%3)</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>beta</source>
-        <translation type="unfinished"></translation>
+        <translation>beta</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="242"/>
         <source>Data directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Địa chỉ dữ liệu</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="286"/>
         <source>Texture Patch</source>
-        <translation type="unfinished"></translation>
+        <translation>Vá kết cấu</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="340"/>
         <source>Window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kích thước cửa sổ</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="373"/>
         <source>Commandline</source>
-        <translation type="unfinished"></translation>
+        <translation>Câu lệnh</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="383"/>
         <source>Environment Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Biến môi trường</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="456"/>
         <source>Add New Variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Thêm biến mới</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Collapse advanced  🞁</source>
-        <translation type="unfinished"></translation>
+        <translation>Thu gọn nâng cao  🞁</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Expand advanced  🞃</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở rộng nâng cao  🞃</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="493"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Hủy</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="497"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Lưu như</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="506"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Lưu</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="681"/>
         <source>A profile with the specified name already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Một hồ sơ khác đã cùng tên</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="682"/>
         <location filename="qml/ProfileEditPopup.qml" line="688"/>
         <source>Profile Edit Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Sửa hồ sơ lỗi</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="687"/>
         <source>The specified profile name is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>Hồ sơ được chỉ định không hợp lệ</translation>
     </message>
 </context>
 <context>
@@ -785,12 +786,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="supportedandroidabis.cpp" line="103"/>
         <location filename="supportedandroidabis.cpp" line="150"/>
         <source>Disabled in this Launcher Release, please download a different distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Vô hiệu hóa ở Laucher được phát hành này, vui lòng tải xuống một bản phân phối khác</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="66"/>
         <source>Your Computer is to old for running Android x86_64 64bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy tính của bạn quá cũ để chạy những trò chơi trên Android x86_64 64bit</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="70"/>
@@ -801,71 +802,71 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="supportedandroidabis.cpp" line="108"/>
         <source>Your Operating System doesn&apos;t support (old) x86 32bit games</source>
-        <translation type="unfinished"></translation>
+        <translation>Hệ điều hành của bạn không hỗ trợ(cũ) x86 32bit games</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="111"/>
         <source>Your Computer is to old for running Android x86 32bit Games</source>
-        <translation type="unfinished"></translation>
+        <translation>Máy tính của bạn quá cũ để chạy Games Android x86 32bit</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="121"/>
         <source>Not an armv7 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phải là một hệ thống armv7</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="122"/>
         <location filename="supportedandroidabis.cpp" line="142"/>
         <source>Not an aarch64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phải một hệ thống aarch64</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="137"/>
         <source>Disabled in this Launcher Release</source>
-        <translation type="unfinished"></translation>
+        <translation>Vô hiệu hóa Launcher này</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="139"/>
         <location filename="supportedandroidabis.cpp" line="143"/>
         <source>Not a x86 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phải hệ thống x86</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="140"/>
         <location filename="supportedandroidabis.cpp" line="144"/>
         <source>Not a x86_64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phải hệ thống x86_64</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="34"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage không thể cập nhật&lt;br/&gt;Biến môi trường dự kiến&apos;APPIMAGE&apos; sẽ được đặt ở địa chỉ của Appimage</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="54"/>
         <location filename="updatechecker.cpp" line="155"/>
         <source>Appimage cannot be updated</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage không thể cập nhật</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="66"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimage không thể cập nhật&lt;br/&gt;Lỗi không rõ</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher không thể cập nhật&lt;br/&gt;Bạn cần kiểm tra trình quản lý gói của bạn để cập nhật hoặcbiên dịch lại phần build mã nguồn mở của bạn với nguồn mới hơn</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
-        <translation type="unfinished"></translation>
+        <translation>Thất bại kiểm tra cập nhật&lt;br/&gt;Thất bại kết nối với máy chủ</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="72"/>
         <source>Trying to import a forbidden apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Thử nhập một apk bị cấm</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="75"/>
@@ -880,22 +881,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
         <source>This Launcher cannot load Minecraft (%1) on this PC:&lt;br/&gt;%2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher này không thể tải Minecraft (%1) trên máy tính này:&lt;br/&gt;%2&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
         <source>The specified file is not a valid Minecraft apk, it doesn&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>File được chỉ định không phải một phiên bản Minecraft hợp lệ, nó không gồm có libminecraftpe.so</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="110"/>
         <source>The specified files are not a valid collection of Minecraft apks, they don&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>File được chỉ định không phải một phiên bản hợp lệ, nó không có libminecraftpe.so</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản Minecraft apk này không hợp lệ với cấu trúc CPU máy tính này / launcher là </translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
@@ -905,47 +906,47 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="136"/>
         <source>unsupported, versionsname of the apk is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>không hỗ trợ, tên phiên bản của apk là trống</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="34"/>
         <location filename="zipextractiontask.cpp" line="33"/>
         <source>renaming versionsfolder failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Đổi tên phiên bản thư mục thư mục thất bại</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>Cannot find &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versions requires sign up&lt;/a&gt;%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tìm &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt; với phiên bản %2 trên Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Phiên bản Beta cần đăng ký tài khoản</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation type="unfinished"></translation>
+        <translation>,&lt;br/&gt;bạn có thể thử vô hiệu hóa chế độ ChromeOS để sửa nó</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
         <location filename="googleapkdownloadtask.cpp" line="118"/>
         <source>Downloading file failed %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống file thất bại %1</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="333"/>
         <location filename="googleapkdownloadtask.cpp" line="204"/>
         <source>Downloading file failed: Status[%1] &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tải xuống thất bại: Trạng thái [%1] &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Lỗi không rõ</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CURL lỗi mạng:%1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
@@ -959,7 +960,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
@@ -969,7 +970,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Nguồn</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
@@ -979,7 +980,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Tài liệu</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
@@ -989,32 +990,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiểm tra cập nhật</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Đặt lại cài đặt Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Vui lòng mở lại Launcher này để thấy sự thay đổi</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Một cập nhật mới đã có sẵn và sẵn sàng để tải</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể tải cập nhật ở đây: %1</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có muốn cập nhật không?</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
