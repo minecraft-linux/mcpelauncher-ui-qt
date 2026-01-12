@@ -452,7 +452,7 @@ Voit kokeilla tätä käynnistintä ilmaiseksi ottamalla kokeilutilan käyttöö
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation>Viimeisin Minecraft-versio %1 on beetaversio, joka on oletusarvoisesti piilotettu.</translation>
+        <translation type="unfinished">Viimeisin Minecraft-versio %1 on beetaversio, joka on oletusarvoisesti piilotettu.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
