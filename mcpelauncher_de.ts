@@ -550,7 +550,7 @@ Du kannst den Launcher über den Test Modus ausprobieren durch &quot;Minecraft T
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation>Neuste Minecraft Version %1 ist eine beta version, welche standardmäßig versteckt werden.</translation>
+        <translation type="unfinished">Neuste Minecraft Version %1 ist eine beta version, welche standardmäßig versteckt werden.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
