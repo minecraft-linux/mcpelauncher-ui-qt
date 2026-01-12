@@ -454,7 +454,7 @@ Você pode testar este launcher gratuitamente, ativando o modo de teste.</transl
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation>A versão mais recente do Minecraft %1 é uma versão beta, que é oculta por padrão.</translation>
+        <translation type="unfinished">A versão mais recente do Minecraft %1 é uma versão beta, que é oculta por padrão.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
