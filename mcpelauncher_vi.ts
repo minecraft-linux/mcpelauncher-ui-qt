@@ -474,8 +474,9 @@ Bạn có thể thử launcher này miễn phí bằng cách kích hoạt chế 
         <source>To use this launcher, you must either purchase Minecraft Android or claim the free Minecraft Trial on Google Play and sign in.
 
 The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Settings.</source>
-        <translation>Để sử dụng Laucher này , bạn cần mua phiên bản Minecraft dành cho Android hoặc tải xuống Minecraft Trial ở trên Google Play và đăng nhập.
-Phiên bản Minecraft  miễn phí (ChromeOS) chế độ Trial có thể bật sau khi đăng nhập trong cài đặt.</translation>
+        <translation>Để sử dụng trình khởi chạy này, bạn phải mua Minecraft Android hoặc đăng ký dùng thử Minecraft miễn phí trên Google Play và đăng nhập.
+
+Chế độ dùng thử Minecraft (ChromeOS) miễn phí có thể được kích hoạt sau khi đăng nhập trong Cài đặt.</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
@@ -797,7 +798,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
         <location filename="supportedandroidabis.cpp" line="70"/>
         <location filename="supportedandroidabis.cpp" line="115"/>
         <source>Android expect the following unavailable Instruction Sets to be available:</source>
-        <translation type="unfinished"></translation>
+        <translation>Android yêu cầu các tập lệnh sau đây phải khả dụng:</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="108"/>
@@ -871,12 +872,12 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="apkextractiontask.cpp" line="75"/>
         <source>Trying to extract multiple apks with different versionsCodes is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Việc cố gắng trích xuất nhiều tệp APK có phiên bản khác nhau là bị cấm.</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Việc cố gắng giải nén nhiều tệp APK với các gói khác nhau là bị cấm</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
@@ -901,7 +902,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
         <source>No Minecraft apk&apos;s are valid for this pc / launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Không có file apk Minecraft nào khả thi cho máy tính này / launcher</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="136"/>
@@ -952,7 +953,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -965,7 +966,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản: %1&lt;br/&gt;Bản dựng: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
@@ -975,7 +976,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
@@ -985,7 +986,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Dự án này cho phép bạn khởi chạy Minecraft: Bedrock Edition (phiên bản không có hậu tố Edition, trước đây được gọi là Minecraft: Pocket Edition). Trình khởi chạy hỗ trợ Linux và OS X.&lt;br/&gt;&lt;br/&gt; © Bản quyền 2018-2024, MrARM &amp; những người đóng góp</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
@@ -1020,17 +1021,17 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>Phiên bản Launcher đã cài đặt của bạn %1 (bản dựng %2) có vẻ đã được cập nhật</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Cập nhật thất bại</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
         <source>Update Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Thông tin cập nhật</translation>
     </message>
 </context>
 <context>
@@ -1038,42 +1039,42 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsDevSection.qml" line="21"/>
         <source>Warning: This Section is for Launcher Developers and are not documented. Do not use Developer Settings without deep understanding how they impact the Launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cảnh báo: Phần này dành cho các nhà phát triển trình khởi chạy và không được ghi chép lại. Không sử dụng Cài đặt dành cho nhà phát triển nếu không hiểu rõ tác động của chúng đến trình khởi chạy.</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="30"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem phiên bản chưa xác thực</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem phiên bản không tương thích</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
         <source>Do not enable this Setting, if you don&apos;t want to download x86/x86_64 binaries on arm hardware or download armeabi-v7a/arm64-v8a binaries on intel or amd hardware. Google Play Latest will always download x86_64 builds as long the Google Play Store doesn&apos;t change it&apos;s undefined behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Không nên bật cài đặt này nếu bạn không muốn tải xuống các tệp nhị phân x86/x86_64 trên phần cứng ARM hoặc tải xuống các tệp nhị phân armeabi-v7a/arm64-v8a trên phần cứng Intel hoặc AMD. Google Play Latest sẽ luôn tải xuống các bản dựng x86_64 miễn là Google Play Store không thay đổi hành vi không xác định của nó</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem phiên bản Beta</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
         <source>Single arch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Chế độ vòm đơn</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="116"/>
         <source>Versions feed base url</source>
-        <translation type="unfinished"></translation>
+        <translation>Url cơ sở của nguồn cấp dữ liệu phiên bản</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="134"/>
         <source>Download only the apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Chỉ tải file apk</translation>
     </message>
 </context>
 <context>
@@ -1081,12 +1082,12 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Taì khoản Google</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nhấn để hiển thị)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
@@ -1101,7 +1102,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation>Launcher</translation>
+        <translation>Trình chạy</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
@@ -1121,12 +1122,12 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiển thị tất cả các biểu ngữ thông báo</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Xem nút đóng ở thanh điều hướng</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
@@ -1136,7 +1137,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Chế độ dùng thử (chỉ Chế độ ChromeOS)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
@@ -1161,7 +1162,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="151"/>
         <source>Refresh Google Play Checkin</source>
-        <translation type="unfinished"></translation>
+        <translation>Làm mới trang Google Play để đăng nhập</translation>
     </message>
 </context>
 <context>
@@ -1207,17 +1208,17 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nhập Thế giới hoặc Gói tài nguyên (đang chờ xác nhận cho đến khi chạy)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở Uri</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở Uri (chờ đến khi chạy)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
@@ -1240,7 +1241,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="85"/>
         <source>IsChromeOS</source>
-        <translation type="unfinished"></translation>
+        <translation>IsChromeOs</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="159"/>
@@ -1283,54 +1284,55 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>Zenity utility not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Công cụ Zenity không tìm thấy</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>You may be unable to pick files in the launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn có thể không chọn được tệp trong trình khởi chạy.</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Game launcher not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy Game launcher</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Could not find the game launcher. Please make sure it&apos;s properly installed (it must exist in the PATH variable used when starting this program).</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy trình khởi chạy trò chơi. Vui lòng đảm bảo rằng nó đã được cài đặt đúng cách (nó phải tồn tại trong biến PATH được sử dụng khi khởi chạy chương trình này).</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>Failed to query game launcher version information</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể truy vấn thông tin phiên bản trình khởi chạy trò chơi</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v`: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra lỗi khi cố gắng chạy `mcpelauncher-client -v`: %1</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Đã xảy ra lỗi khi cố gắng chạy `mcpelauncher-client -v`, mã lỗi: %1, nhật ký
+%2</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="55"/>
         <source>Software rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>Kết xuất phần mềm</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>MSA daemon could not be found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không tìm thấy tiến trình nền MSA</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>The MSA component has not been installed properly. Xbox Live login may not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Thành phần MSA chưa được cài đặt đúng cách. Việc đăng nhập Xbox Live có thể không hoạt động.</translation>
     </message>
 </context>
 <context>
@@ -1338,93 +1340,93 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>Khắc phục sự cố</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
         <source>&lt;a href=&quot;%1&quot;&gt;Go to wiki&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;Đến wiki&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
         <source>I cannot select / see the latest Version of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tôi không thể chọn/xem phiên bản mới nhất của trò chơi?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần đăng nhập bằng tài khoản Google sở hữu trò chơi này</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần đăng nhập lại và/hoặc khởi động lại trình khởi chạy để khắc phục sự cố.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tôi không thể chọn/xem các phiên bản cũ hơn của trò chơi?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần đăng nhập lại và/hoặc khởi động lại trình khởi chạy và/hoặc kiểm tra kết nối Internet của bạn với github để khắc phục sự cố.%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>&lt;br/&gt;Enable &quot;Show incompatible Versions&quot; would show more, but they won&apos;t launch on your PC see the compatibility report of the TroubleShooter for more Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;Bật tùy chọn &quot;Hiển thị các phiên bản không tương thích&quot; sẽ hiển thị thêm thông tin, nhưng chúng sẽ không khởi chạy trên máy tính của bạn. Vui lòng xem báo cáo tương thích của Trình khắc phục sự cố để biết thêm thông tin</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
         <source>&quot;Show Beta Versions&quot; is disabled or greyed out?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tùy chọn &quot;Hiển thị phiên bản Beta&quot; bị vô hiệu hóa hoặc mờ đi?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
         <source>You need to own the game and sign up for the &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft beta program on Google Play&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bạn cần sở hữu trò chơi và đăng ký tham gia &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;chương trình thử nghiệm Minecraft trên Google Play&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="123"/>
         <source>Failed to initialize Google Play API</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể khởi tạo API Google Play</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vui lòng kiểm tra kết nối internet và/hoặc đăng nhập lại vào Google Play.&lt;br/&gt;Mã trạng thái của playApi là %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
         <source>Failed to obtain the gameversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể tải xuống phiên bản trò chơi</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vui lòng kiểm tra kết nối internet và/hoặc đăng nhập lại vào Google Play.&lt;br/&gt;Mã trạng thái của playVerChannel là %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tại sao nút Chơi bị vô hiệu hóa ở một số phiên bản?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trình khởi chạy này không sử dụng trình giả lập và cần một phiên bản ứng dụng Android cụ thể.&lt;br/&gt;&lt;Báo cáo khả năng tương thích ứng dụng Android:&lt;br/&gt;Nếu bạn thấy một kiến trúc CPU tương thích trong danh sách sau, thì bạn có thể sử dụng Trình khởi chạy này.&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phát hiện vấn đề nào</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
         <source>No launcher installation issues were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Không phát hiện thấy vấn đề nào trong quá trình cài đặt trình khởi chạy.</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1434,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/UnlockScreen.qml" line="15"/>
         <source>Unlock Credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Mở khóa thông tin đăng nhập</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="27"/>
@@ -1478,12 +1480,12 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft Launcher cho Linux</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
         <source>&lt;b&gt;Cannot initialize Google Play Access&lt;/b&gt;, Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Không thể khởi tạo quyền truy cập Google Play&lt;/b&gt;, Chi tiết:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="69"/>
@@ -1513,7 +1515,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/main.qml" line="153"/>
         <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Click here for more information Linux&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Không thể khởi chạy trình khởi động trò chơi. Vui lòng đảm bảo rằng các thành phần phụ thuộc đã được cài đặt đúng cách.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Nhấp vào đây để biết thêm thông tin về Linux&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="193"/>
@@ -1524,7 +1526,8 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
         <location filename="qml/main.qml" line="194"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft hiện đang chạy. Bạn có muốn buộc đóng nó không?
+Gợi ý: Nhấn &quot;bỏ qua&quot; để chỉ đóng giao diện người dùng của trình khởi chạy</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="212"/>
@@ -1541,7 +1544,9 @@ Hint: Press ignore to just close the Launcher UI</source>
         <source>The Launcher failed to sign you in
 Please login again
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ứng dụng đăng nhập không thành công
+Vui lòng đăng nhập lại
+%1</translation>
     </message>
     <message>
         <location filename="main.cpp" line="78"/>
@@ -1551,7 +1556,7 @@ Please login again
     <message>
         <location filename="main.cpp" line="82"/>
         <source>Verbose log Qt Messages to stdout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ghi nhật ký chi tiết các thông báo Qt ra stdout</translation>
     </message>
     <message>
         <location filename="main.cpp" line="86"/>
