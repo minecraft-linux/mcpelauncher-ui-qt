@@ -76,6 +76,7 @@ Window {
         target: versionManagerInstance.archivalVersions
         onVersionsChanged: {
             versionManagerInstance._archival = versionManagerInstance.archivalVersions.versions.slice();
+            updateAvailableArchivalVersions();
         }
     }
 
