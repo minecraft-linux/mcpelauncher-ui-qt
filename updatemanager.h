@@ -11,12 +11,14 @@ class UpdateManager : public QObject {
 
     ModManager m_modManager;
     ProfileManager* m_profileManager;
-    ArchivalVersionList* m_versionList;
+    QVariantList m_versionList;
     
     int m_maxCompatVersion;
+private:
+    void checkForUpdatesInModDb();
 public:
     Q_PROPERTY(ProfileManager* profileManager MEMBER m_profileManager)
-    Q_PROPERTY(ArchivalVersionList* versionList MEMBER m_versionList)
+    Q_PROPERTY(QVariantList versionList MEMBER m_versionList)
     Q_PROPERTY(int maxCompatVersion MEMBER m_maxCompatVersion)
     explicit UpdateManager(QObject* parent = nullptr);
     Q_INVOKABLE void checkForUpdates();

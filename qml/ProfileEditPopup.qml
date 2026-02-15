@@ -134,7 +134,7 @@ Popup {
                             property var versions: versionManager.versions.getAll().sort(function (a, b) {
                                 return b.versionCode - a.versionCode
                             })
-                            property var archivalVersions: excludeInstalledVersions(versionManager.archivalVersions.versions)
+                            property var archivalVersions: excludeInstalledVersions(versionManager.availableArchivalVersions)
                             property var extraVersionName: null
                             property var hideLatest: googleLoginHelper.hideLatest
                             property var data: []

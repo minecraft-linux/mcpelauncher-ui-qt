@@ -219,7 +219,7 @@ BaseScreen {
                         progressBar.value = p
                     }
 
-                    versionList: versionManager.archivalVersions
+                    versionList: versionManager.availableArchivalVersions
                     profileManager: profileManager
                     maxCompatVersion: 1
 
@@ -394,7 +394,7 @@ BaseScreen {
                 }
             }
         }
-        versionManager.archivalVersions.setExtraVersions(extraVersions);
+        versionManager.setExtraVersions(extraVersions);
     }
 
     Connections {
@@ -632,7 +632,7 @@ BaseScreen {
     /* utility functions */
     function launcherLatestVersion() {
         const showBeta = playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions
-        const versions = showBeta ? versionManager.archivalVersions.versions : versionManager.archivalVersions.versions.filter(ver => !ver.isBeta)
+        const versions = showBeta ? versionManager.availableArchivalVersions : versionManager.availableArchivalVersions.filter(ver => !ver.isBeta)
 
         const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
         console.log("launcherAbis: " + JSON.stringify(abis))
@@ -705,7 +705,7 @@ BaseScreen {
     }
 
     function findArchivalVersion(code) {
-        const versions = versionManager.archivalVersions.versions
+        const versions = versionManager.availableArchivalVersions
         for (var i = versions.length - 1; i >= 0; --i) {
             if (versions[i].versionCode === code || versions[i].versionCode === (code - 1000000000))
                 return versions[i]
@@ -760,7 +760,7 @@ BaseScreen {
     // Tests if it really works
     function checkLauncherLatestSupport() {
         const latestCode = launcherLatestVersionscode()
-        return versionManager.archivalVersions.versions.length === 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) !== null || checkRollForward(latestCode))
+        return versionManager.availableArchivalVersions.length === 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) !== null || checkRollForward(latestCode))
     }
 
     function checkRollForward(code) {
@@ -769,14 +769,14 @@ BaseScreen {
 
     // Tests for raw Google Play latest (previous default, always true)
     function checkGooglePlayLatestSupport() {
-        if (versionManager.archivalVersions.versions.length === 0) {
+        if (versionManager.availableArchivalVersions.length === 0) {
             console.log("Bug errata 1")
             playScreen.warnMessage = qsTr("mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.")
             playScreen.warnUrl = ""
             return true
         }
 
-        if (launcherSettings.showUnsupported || versionManager.archivalVersions.versions.length === 0) {
+        if (launcherSettings.showUnsupported || versionManager.availableArchivalVersions.length === 0) {
             console.log("Bug errata 2")
             return true
         }

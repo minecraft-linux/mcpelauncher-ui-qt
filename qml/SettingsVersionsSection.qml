@@ -62,8 +62,8 @@ ColumnLayout {
                             ncodes.push(scope.playVersion.versionCode)
                         }
                         if (downloadApk.showVersionList) {
-                            for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-                                var ver = versionManager.archivalVersions.versions[i]
+                            for (var i = 0; i < versionManager.availableArchivalVersions.length; i++) {
+                                var ver = versionManager.availableArchivalVersions[i]
                                 if ((scope.playVersion && scope.playVersion.isBeta || !ver.isBeta) && (!downloadApk.showVersionListTrial || ver.abi.indexOf("x86") !== -1)) {
                                     ret.push(ver.versionName + " (" + ver.abi + ")")
                                     ncodes.push(ver.versionCode)
