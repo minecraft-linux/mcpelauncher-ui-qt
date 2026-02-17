@@ -39,6 +39,7 @@
 #include "encryption.h"
 #include "stdio_helper.h"
 #include "updatemanager.h"
+#include "crash_handler.h"
 
 #ifdef LAUNCHER_DISABLE_DEV_MODE
 bool LauncherSettings::disableDevMode = 1;
@@ -52,6 +53,8 @@ Q_DECLARE_METATYPE(playapi::proto::finsky::download::AndroidAppDeliveryData)
 
 int main(int argc, char *argv[])
 {
+    bool isSafeMode = getenv("SAFE_MODE") != nullptr;
+    CrashHandler::registerCrashHandler(argc, argv);
 #ifdef LAUNCHER_INIT_PATCH
     LAUNCHER_INIT_PATCH
 #endif
@@ -185,12 +188,13 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("DISABLE_DEV_MODE", QVariant(LauncherSettings::disableDevMode &= !parser.isSet(devmodeOption)));
 
     engine.rootContext()->setContextProperty("SOURCE_MOD", QVariant(parser.isSet(modOption) ? parser.value(modOption) : ""));
+    engine.rootContext()->setContextProperty("SAFE_MODE", QVariant(isSafeMode));
 
     engine.load(QUrl(parser.isSet(requestGoogleCredentialsOption) ? QStringLiteral("qrc:/qml/RequestGoogleCredentials.qml") : QStringLiteral("qrc:/qml/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 
-    if(!parser.isSet(requestGoogleCredentialsOption)) {
+    if(!parser.isSet(requestGoogleCredentialsOption) && !isSafeMode) {
 #ifdef LAUNCHER_ENABLE_GLFW
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
     std::vector<std::string> controllerDbPaths;

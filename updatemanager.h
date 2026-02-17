@@ -1,4 +1,6 @@
 #pragma once
+#include <mutex>
+#include <atomic>
 #include <QObject>
 #include <QString>
 #include <QMap>
@@ -12,6 +14,8 @@ class UpdateManager : public QObject {
     ModManager m_modManager;
     ProfileManager* m_profileManager;
     QVariantList m_versionList;
+    std::atomic_bool checkedForUpdates = false;
+    std::mutex sync;
     
     int m_maxCompatVersion;
 private:

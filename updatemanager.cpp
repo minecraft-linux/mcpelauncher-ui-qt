@@ -5,6 +5,7 @@
 #include <QtCore/qstandardpaths.h>
 #include <QVersionNumber>
 #include <QtConcurrent>
+#include <QDebug>
 
 static QVariant versionsInfoProperty(const QVariant& v, const char* n) {
     if(v.canConvert<QObject*>()) {
@@ -21,6 +22,11 @@ UpdateManager::UpdateManager(QObject *parent)
 }
 
 void UpdateManager::checkForUpdatesInModDb() {
+    std::unique_lock<std::mutex> l{sync, std::try_to_lock};
+    if(!l.owns_lock()) {
+        qDebug() << "Cancel concurrent checkForUpdatesInModDb";
+        return;
+    }
     if(m_versionList.empty()) {
         emit noUpdateAvailable();
         return;
@@ -66,10 +72,26 @@ void UpdateManager::checkForUpdatesInModDb() {
 
 Q_INVOKABLE void UpdateManager::checkForUpdates()
 {
-    if(m_modManager.remoteMods().empty()) {
-        m_modManager.downloadModList();
+    qDebug() << "UpdateManager::checkForUpdates()";
+    if(getenv("SAFE_MODE")) {
+        qDebug() << "UpdateManager::checkForUpdates() dropping due to SAFE_MODE";
+        return;
+    }
+    bool e = false;
+    if(checkedForUpdates.compare_exchange_weak(e, true)) {
+        qDebug() << "UpdateManager::checkForUpdates() wait 10s for checking";
+        QTimer::singleShot(30000, this, [this] {
+            qDebug() << "UpdateManager::checkForUpdates() downloadModList for checking";
+            m_modManager.downloadModList();
+        });
+    } else if(!m_modManager.remoteMods().empty()) {
+        qDebug() << "UpdateManager::checkForUpdates() mods loaded wait 10s before checkForUpdatesInModDb";
+        QTimer::singleShot(30000, this, [this] {
+            qDebug() << "UpdateManager::checkForUpdates() checkForUpdatesInModDb";
+            checkForUpdatesInModDb();
+        });
     } else {
-        checkForUpdatesInModDb();
+        qDebug() << "UpdateManager::checkForUpdates() request dropped";
     }
 }
 

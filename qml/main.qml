@@ -62,6 +62,9 @@ Window {
         property var availableArchivalVersions: []
 
         function setExtraVersions(extraVersions) {
+            if(SAFE_MODE) {
+                return;
+            }
             versionManagerInstance.extraVersions = extraVersions;
             updateAvailableArchivalVersions();
         }
@@ -138,6 +141,17 @@ Window {
     Component {
         id: panelUnlock
         UnlockScreen {
+            onFinished: {
+                next()
+            }
+        }
+    }
+
+    Component {
+        id: panelSafeMode
+        ErrorScreen {
+            message: qsTr("UI Crashed :(<br/>Switched to safe mode with limited features<br/>A stack trace might have been written to your console")
+            confirm: qsTr("Continue")
             onFinished: {
                 next()
             }
@@ -306,7 +320,9 @@ Window {
             console.log("Versionslist initialized")
         })
         versionManagerInstance.downloadLists(googleLoginHelperInstance.getAbis(true), launcherSettings.versionsFeedBaseUrl)
-        if (LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
+        if (SAFE_MODE) {
+            stackView.push(panelSafeMode)
+        } else if (LAUNCHER_CHANGE_LOG.length !== 0 && launcherSettings.lastVersion < LAUNCHER_VERSION_CODE) {
             stackView.push(panelChangelog)
         } else {
             next()
