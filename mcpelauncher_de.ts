@@ -550,7 +550,7 @@ Du kannst den Launcher über den Test Modus ausprobieren durch &quot;Minecraft T
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation type="unfinished">Neuste Minecraft Version %1 ist eine beta version, welche standardmäßig versteckt werden.</translation>
+        <translation> Die neuste Minecraft Version %1 ist eine Beta version, welche standardmäßig versteckt werden.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
@@ -1473,7 +1473,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="62"/>
@@ -1569,7 +1569,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Version: %1&lt;br/&gt;Build: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
@@ -1705,7 +1705,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
@@ -1725,7 +1725,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle Benachrichtigungsbanner zeigen</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
@@ -1929,7 +1929,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>MSA daemon could not be found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MSA daemon konnte nicht gefunden werden</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
@@ -1958,7 +1958,7 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Du musst dich mit einem Google Account anmelden, auf dem du das Spiel besitzt.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
