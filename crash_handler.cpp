@@ -10,7 +10,6 @@
 #include <dlfcn.h>
 #include <unistd.h>
 #include <EnvPathUtil.h>
-#include <spawn.h>
 
 bool CrashHandler::hasCrashed = false;
 int CrashHandler::argc = 0;
@@ -50,6 +49,11 @@ void CrashHandler::handleSignal(int signal, void *aptr) {
         printf("Backtrace or dumping stack hung up, aborting\n");
         printf("Signal Number %d\n", signal);
         fflush(stdout);
+        if(getenv("SAFE_MODE") == nullptr) {
+            putenv("USE_WEBENGINE=0");
+            putenv("SAFE_MODE=1");
+            execv(argv[0], argv);
+        }
         _Exit(signal);
     }).detach();
 
@@ -89,6 +93,11 @@ void CrashHandler::handleSignal(int signal, void *aptr) {
     }
     printf("program failed with unix signal number: %d\n", signal);
     fflush(stdout);
+    if(getenv("SAFE_MODE") == nullptr) {
+        putenv("USE_WEBENGINE=0");
+        putenv("SAFE_MODE=1");
+        execv(argv[0], argv);
+    }
     _exit(signal);
 }
 
