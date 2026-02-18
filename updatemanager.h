@@ -12,7 +12,6 @@ class UpdateManager : public QObject {
     Q_OBJECT
 
     ModManager m_modManager;
-    ProfileManager* m_profileManager;
     QVariantList m_versionList;
     std::atomic_bool checkedForUpdates = false;
     std::mutex sync;
@@ -21,7 +20,6 @@ class UpdateManager : public QObject {
 private:
     void checkForUpdatesInModDb();
 public:
-    Q_PROPERTY(ProfileManager* profileManager MEMBER m_profileManager)
     Q_PROPERTY(QVariantList versionList MEMBER m_versionList)
     Q_PROPERTY(int maxCompatVersion MEMBER m_maxCompatVersion)
     explicit UpdateManager(QObject* parent = nullptr);

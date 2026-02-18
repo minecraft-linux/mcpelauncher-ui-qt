@@ -210,6 +210,7 @@ BaseScreen {
                     }
                 }
 
+// UpdateManager
                 UpdateManager {
                     id: updateManager
 
@@ -220,7 +221,8 @@ BaseScreen {
                     }
 
                     versionList: versionManager.availableArchivalVersions
-                    profileManager: profileManager
+                    // Unqualified profileManager here had caused a recursion in some qt releases that may cause a crash
+                    // profileManager: playScreen.profileManager
                     maxCompatVersion: 1
 
                     property var hasUpdate: false
@@ -295,6 +297,7 @@ BaseScreen {
                         }
                     }
                 }
+/// UpdateManager END
 
                 NotifyBanner {
                     color: "#832"
@@ -373,6 +376,7 @@ BaseScreen {
         playVerChannel: playScreen.playVerChannel
     }
 
+// Extra Version Code
     function onProfileChanged() {
         var profile = profileManager.activeProfile;
         console.log("Profile mods " + JSON.stringify(profile.mods))
@@ -412,6 +416,7 @@ BaseScreen {
             onProfileChanged()
         }
     }
+/////
 
     Rectangle {
         color: '#282828'
