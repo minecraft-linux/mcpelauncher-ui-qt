@@ -16,7 +16,17 @@ bool CrashHandler::hasCrashed = false;
 int CrashHandler::argc = 0;
 char** CrashHandler::argv = nullptr;
 
+#define __ASYNC_SAFE_LOG(msg) write(STDERR_FILENO, msg "\n", sizeof(msg "\n"));
+
 void CrashHandler::handleSignal(int signal, void *aptr) {
+    __ASYNC_SAFE_LOG("Please try to restart this application using one of the following methods:");
+    __ASYNC_SAFE_LOG("1. SAFE_MODE=1 USE_WEBENGINE=0 mcpelauncher-ui-qt");
+#ifdef __APPLE__
+    __ASYNC_SAFE_LOG("2. SAFE_MODE=1 USE_WEBENGINE=0 open -a /Applications/Minecraft\\ Bedrock\\ Launcher.app");
+#else
+    __ASYNC_SAFE_LOG("2. flatpak run --env=SAFE_MODE=1 --env=USE_WEBENGINE=0 io.mrarm.mcpelauncher");
+#endif
+
     printf("Signal %i received\n", signal);
 
     struct sigaction act;
