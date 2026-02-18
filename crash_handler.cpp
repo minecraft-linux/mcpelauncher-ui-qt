@@ -79,16 +79,7 @@ void CrashHandler::handleSignal(int signal, void *aptr) {
     }
     printf("program failed with unix signal number: %d\n", signal);
     fflush(stdout);
-
-    // Disable google login webview and v1.6.x code
-    pid_t pid;
-    char* envp[] = { (char*)"SAFE_MODE=1", (char*)"USE_WEBENGINE=0", nullptr };
-
-    posix_spawn(&pid,
-                (EnvPathUtil::getAppDir() + "/mcpelauncher-ui-qt").c_str(),
-                nullptr, nullptr,
-                argv, envp);
-    _exit(127);
+    _exit(signal);
 }
 
 void CrashHandler::registerCrashHandler(int argc, char**argv) {
