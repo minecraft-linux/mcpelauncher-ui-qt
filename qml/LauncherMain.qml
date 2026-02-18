@@ -84,7 +84,6 @@ LauncherBase {
         }
 
         versionList: versionManager.archivalVersions
-        profileManager: profileManager
         maxCompatVersion: 0
 
         property var hasUpdate: false
