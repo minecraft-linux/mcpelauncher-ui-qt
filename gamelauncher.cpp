@@ -178,6 +178,28 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
     }
     args.append(cargs);
 
+    auto getCommandLine = [&](const QString& executable) {
+        std::ostringstream commandline;
+        bool hasElement = false;
+        if(m_profile != nullptr && m_profile->env != nullptr) {
+            for(auto&& k : m_profile->env->keys()) {
+                if(hasElement) {
+                    commandline << " ";
+                }
+                commandline << "\"" << k.toStdString() << "=" << env.value(k).toStdString() << "\"";
+                hasElement = true;
+            }
+        }
+        if(hasElement) {
+            commandline << " ";
+        }
+        commandline << "\"" << executable.toStdString() << "\"";
+        for(auto&& v : args) {
+            commandline << " \"" << v.toStdString() << "\"";
+        }
+        return commandline.str();
+    };
+
     for (auto&& abi : abis) {
         if((_arch.empty() || _arch == abi.first) && QFile(m_gameDir + "/lib/" + QString::fromStdString(abi.first) + "/libminecraftpe.so").exists()) {
             if(!(launcherpath = findLauncher(abi.second.launchername)).empty()) {
@@ -188,6 +210,7 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
                 }
                 process->start(executable, args);
                 emit stateChanged();
+                emit logAppended(QString::fromStdString(getCommandLine(executable)) + "\n");
                 return;
             } else {
                 errormsg << tr("Could not find the gamelauncher for Minecraft (%1)\nPlease add the launcher '%2' to your 'PATH' (environmentvariable) and restart the launcher\n").arg(QString::fromStdString(abi.first)).arg(QString::fromStdString(abi.second.launchername)).toStdString();
@@ -201,6 +224,7 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
     m_crashed = true;
     logAttached();
     emit stateChanged();
+    emit logAppended(QString::fromStdString(getCommandLine("mcpelauncher-client")) + "\n");
     emit logAppended(QString::fromStdString(errormsg.str()));
     emit launchFailed();
 }

@@ -99,7 +99,7 @@ RowLayout {
     Connections {
         target: gameLauncher
         onLogCleared: gameLog.clear()
-        onLogAppended: gameLog.append({ display: text.substring(0, text.length - 1) })
+        onLogAppended: gameLog.append({ display: text.replace(/^\s+|\s+$/g, "") })
     }
 
     Component {
