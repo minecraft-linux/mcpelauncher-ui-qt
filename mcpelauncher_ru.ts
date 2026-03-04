@@ -96,7 +96,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation>Лог Игры</translation>
+        <translation>Игровой Лог</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
@@ -345,12 +345,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation>Пробный Режим Включён</translation>
+        <translation>Тестовый Режим Включён</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
         <source>Disable trial mode from settings to launch the full version instead. </source>
-        <translation>Выключите пробный режим в настройках, чтобы запустить полную версию. </translation>
+        <translation>Выключите тестовый режим в настройках, чтобы запустить полную версию. </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
@@ -398,7 +398,7 @@ missing Symbols expected to be provided by this Launcher via updates
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
         <translation>
-Вы можете попробовать этот лаунчер бесплатно, включив пробный режим.</translation>
+Вы можете попробовать этот лаунчер бесплатно, включив тестовый режим.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
@@ -877,7 +877,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Извлекать несколько apk файлов с другим пакетом запрещено</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
@@ -918,42 +918,42 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>Cannot find &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versions requires sign up&lt;/a&gt;%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно найти &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; с версией %2 в Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Бета Версии обязывают регистрацию&lt;/a&gt;%3</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation type="unfinished"></translation>
+        <translation>,&lt;br/&gt;возможно вам стоит выключить режим ChromeOS для ликвидации этой неполадки</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
         <location filename="googleapkdownloadtask.cpp" line="118"/>
         <source>Downloading file failed %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка файла провалилась %1</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="333"/>
         <location filename="googleapkdownloadtask.cpp" line="204"/>
         <source>Downloading file failed: Status[%1] &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка файла провалилась: Статус[%1] &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка сети CURL: %1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -961,77 +961,77 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Лаунчер</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия: %1&lt;br/&gt;Сборка: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Источник</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Документация</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот проект позволяет вам запускать Minecraft: Bedrock Edition (как и версию без суффикса Edition, раннее известную как Minecraft: Pocket Edition). Лаунчер поддерживает Linux и OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверить наличие Обновлений</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить Настройки Лаунчера</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, перезапустите Лаунчер, чтобы увидеть изменения</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление Лаунчера доступно для загрузки</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы можете загрузить новое Обновление здесь: %1</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите установить обновление сейчас?</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваша Установленная Версия Лаунчера %1 (сборка %2) похожа на актуальную</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление не удалось</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
         <source>Update Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация об Обновлении</translation>
     </message>
 </context>
 <context>
@@ -1039,27 +1039,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="21"/>
         <source>Warning: This Section is for Launcher Developers and are not documented. Do not use Developer Settings without deep understanding how they impact the Launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание: Данный Раздел предназначен для Разработчиков Лаунчера и не документирован. Не используйте Настройки Разработчика без должного понимания как они влияют на Лаунчер.</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="30"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать неподтверждённые версии</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать несовместимые версии</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
         <source>Do not enable this Setting, if you don&apos;t want to download x86/x86_64 binaries on arm hardware or download armeabi-v7a/arm64-v8a binaries on intel or amd hardware. Google Play Latest will always download x86_64 builds as long the Google Play Store doesn&apos;t change it&apos;s undefined behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Не включайте данную Настройку, если не хотите загрузить двоичные файлы x86/x86_64 на arm оборудование или загрузить двоичные файлы armeabi-v7a/arm64-v8a на оборудование intel или amd. Последняя Google Play версия всегда установит сборки x86_64 до тех пор, пока магазин Google Play не изменит его неопределённое поведение</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать Бета Версии</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
@@ -1069,12 +1069,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="116"/>
         <source>Versions feed base url</source>
-        <translation type="unfinished"></translation>
+        <translation>Базовый URL-адрес канала Версий</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="134"/>
         <source>Download only the apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить только apk</translation>
     </message>
 </context>
 <context>
@@ -1082,82 +1082,82 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Аккаунт Google</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Нажмите, чтобы показать)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign out</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из учётной записи</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Войти в учётную запись</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Лаунчер</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
         <source>Hide the launcher when starting the game</source>
-        <translation type="unfinished"></translation>
+        <translation>Свернуть лаунчер при запуске игры</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="89"/>
         <source>Disable the GameLog</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить Игровой Лог</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="95"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить проверку обновлений (при запуске)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать все баннеры с уведомлениями</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать кнопку &quot;Выйти&quot; на панели навигации</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
         <source>ChromeOS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим ChromeOS</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Тестовый Режим (подразумевает Режим ChromeOS)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
         <source>Keep Apks in &lt;GameData&gt;/apks</source>
-        <translation type="unfinished"></translation>
+        <translation>Хранить Apk файлы в &lt;GameData&gt;/apks</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="132"/>
         <source>Run troubleshooter</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить средство устранения неполадок</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="137"/>
         <source>Open Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть Инструмент работы с Геймпадом</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="142"/>
         <source>Refresh Google Play Version Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить канал Версий Google Play</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="151"/>
@@ -1170,22 +1170,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="21"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="24"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Хранилище</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="27"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Версии</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="30"/>
@@ -1195,7 +1195,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Об</translation>
     </message>
 </context>
 <context>
@@ -1203,37 +1203,37 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить Мир или Пакет</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить Мир или Пакет (отложено до запуска)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть Uri</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Открытый Uri (отложено до запуска)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
         <source>Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Директории Игры</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Директории игр для текущего выбранного профиля: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
         <source>Default Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Директории Игры по умолчанию</translation>
     </message>
 </context>
 <context>
@@ -1241,42 +1241,42 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="85"/>
         <source>IsChromeOS</source>
-        <translation type="unfinished"></translation>
+        <translation>IsChromeOS</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="159"/>
         <source>Get Download Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Получить Информацию о Загрузке</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="217"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить выбранное</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="234"/>
         <source>Download .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать тестовый .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
         <source>Remove Incompatible Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить Несовместимые Версии</translation>
     </message>
 </context>
 <context>
@@ -1284,54 +1284,55 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>Zenity utility not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Утилита Zenity не найдена</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>You may be unable to pick files in the launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вам может быть невозможно выбирать файлы в лаунчере.</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Game launcher not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Игровой лаунчер не найден</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Could not find the game launcher. Please make sure it&apos;s properly installed (it must exist in the PATH variable used when starting this program).</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось найти игровой лаунчер. Пожалуйста, убедитесь, что он правильно установлен (он должен быть в переменной PATH при запуске этой программы).</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>Failed to query game launcher version information</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось запросить информацию о версии игрового лаунчера</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v`: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла ошибка при запуске `mcpelauncher-client -v`: %1</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошла ошибка при запуске `mcpelauncher-client -v`код выхода: %1, лог:
+%2</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="55"/>
         <source>Software rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>Програмный рендеринг</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>MSA daemon could not be found</source>
-        <translation type="unfinished"></translation>
+        <translation>MSA daemon не найден</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>The MSA component has not been installed properly. Xbox Live login may not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Компонент MSA не был установлен правильно. Вход с Xbox Live может не работать.</translation>
     </message>
 </context>
 <context>
@@ -1339,48 +1340,48 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>Диагностика</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
         <source>&lt;a href=&quot;%1&quot;&gt;Go to wiki&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;Перейти в вики&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
         <source>I cannot select / see the latest Version of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Я не могу выбрать / посмотреть последнюю Версию Игры?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Вам нужно зайти через аккаунт Google, обладая Игрой</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется заново войти в учётную запись и / или перезапустить лаунчер для ликвидации неполадок.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Я не могу выбрать / посмотреть старые Версии Игры?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется заново войти в учётную запись и / или перезапустить ваше Интернет подключение к github для ликвидации неполадок.%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>&lt;br/&gt;Enable &quot;Show incompatible Versions&quot; would show more, but they won&apos;t launch on your PC see the compatibility report of the TroubleShooter for more Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;При включении &quot;Показать Несовместимые Версии&quot; будет отображаться больше информации, но эти версии не будут запускаться на вашем компьютере. Дополнительную информацию смотрите в отчете о совместимости Средства Устранения Неполадок</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
         <source>&quot;Show Beta Versions&quot; is disabled or greyed out?</source>
-        <translation type="unfinished"></translation>
+        <translation>Кнопка &quot;Показать Бета Версии&quot; выключена или окрашена серым цветом?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
