@@ -79,17 +79,11 @@ Q_INVOKABLE void UpdateManager::checkForUpdates()
     }
     bool e = false;
     if(checkedForUpdates.compare_exchange_weak(e, true)) {
-        qDebug() << "UpdateManager::checkForUpdates() wait 10s for checking";
-        QTimer::singleShot(30000, this, [this] {
-            qDebug() << "UpdateManager::checkForUpdates() downloadModList for checking";
-            m_modManager.downloadModList();
-        });
+        qDebug() << "UpdateManager::checkForUpdates() downloadModList for checking";
+        m_modManager.downloadModList();
     } else if(!m_modManager.remoteMods().empty()) {
-        qDebug() << "UpdateManager::checkForUpdates() mods loaded wait 10s before checkForUpdatesInModDb";
-        QTimer::singleShot(30000, this, [this] {
-            qDebug() << "UpdateManager::checkForUpdates() checkForUpdatesInModDb";
-            checkForUpdatesInModDb();
-        });
+        qDebug() << "UpdateManager::checkForUpdates() checkForUpdatesInModDb";
+        checkForUpdatesInModDb();
     } else {
         qDebug() << "UpdateManager::checkForUpdates() request dropped";
     }
