@@ -144,12 +144,12 @@ puuttuvia symboleja, jotka on odotettavissa lisättäväksi päivitysten myötä
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Gamepad-työkalu</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Gamepadia ei löytynyt!</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
