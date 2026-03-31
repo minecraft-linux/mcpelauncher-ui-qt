@@ -9,6 +9,7 @@ ColumnLayout {
     spacing: 10
     Keys.forwardTo: versions
     id: layout
+    property var outerHeight: parent.height
 
     Component {
         id: downloadApkComponent
@@ -17,7 +18,7 @@ ColumnLayout {
             background: Rectangle {
                 color: "#333"
             }
-            height: scope.implicitHeight + 20
+            height: Math.min(scope.implicitHeight + 20, layout.outerHeight - 20)
             width: layout.width
             modal: true
             clip: true
@@ -34,175 +35,232 @@ ColumnLayout {
                 id: popupOverlay
                 color: "#8f181818"
             }
-            ColumnLayout {
+            ScrollView {
                 anchors.fill: parent
-                id: scope
-                property var playVersion: null
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-                MTextField {
-                    id: packageField
-                    Layout.fillWidth: true
-                    Component.onCompleted: {
-                        packageField.text = launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
-                    }
-                    onEditingFinished: {
-                        manualplayApi.requestAppInfo(packageField.text)
-                    }
-                }
+                ColumnLayout {
+                    id: scope
+                    property var playVersion: null
+                    width: downloadApk.width - 40
 
-                MComboBox {
-                    Layout.fillWidth: true
-                    id: versionBox
-                    property var codes: []
-                    model: {
-                        var ret = []
-                        var ncodes = []
-                        if (scope.playVersion !== null) {
-                            ret.push(scope.playVersion.versionName)
-                            ncodes.push(scope.playVersion.versionCode)
+                    Rectangle {
+                        color: "#53ba1300"
+                        Layout.fillWidth: true
+                        Layout.bottomMargin: 15
+                        Layout.minimumHeight: warningText.height
+                        radius: 4
+                        Text {
+                            id: warningText
+                            padding: 10
+                            text: qsTr("You’re most likely mistaken here — to download and install different versions, open the launcher’s Home page and click the Profile Edit pencil icon.")
+                            color: "#fff"
+                            font.pointSize: labelFontSize
+                            wrapMode: Text.WordWrap
+                            width: parent.width
                         }
-                        if (downloadApk.showVersionList) {
-                            for (var i = 0; i < versionManager.availableArchivalVersions.length; i++) {
-                                var ver = versionManager.availableArchivalVersions[i]
-                                if ((scope.playVersion && scope.playVersion.isBeta || !ver.isBeta) && (!downloadApk.showVersionListTrial || ver.abi.indexOf("x86") !== -1)) {
-                                    ret.push(ver.versionName + " (" + ver.abi + ")")
-                                    ncodes.push(ver.versionCode)
+                    }
+
+                    MTextField {
+                        id: packageField
+                        Layout.fillWidth: true
+                        Component.onCompleted: {
+                            packageField.text = launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
+                        }
+                        onEditingFinished: {
+                            manualplayApi.requestAppInfo(packageField.text)
+                        }
+                    }
+
+                    MComboBox {
+                        Layout.fillWidth: true
+                        id: versionBox
+                        property var codes: []
+                        model: {
+                            var ret = []
+                            var ncodes = []
+                            if (scope.playVersion !== null) {
+                                ret.push(scope.playVersion.versionName)
+                                ncodes.push(scope.playVersion.versionCode)
+                            }
+                            if (downloadApk.showVersionList) {
+                                for (var i = 0; i < versionManager.availableArchivalVersions.length; i++) {
+                                    var ver = versionManager.availableArchivalVersions[i]
+                                    if ((scope.playVersion && scope.playVersion.isBeta || !ver.isBeta) && (!downloadApk.showVersionListTrial || ver.abi.indexOf("x86") !== -1)) {
+                                        ret.push(ver.versionName + " (" + ver.abi + ")")
+                                        ncodes.push(ver.versionCode)
+                                    }
+                                }
+                            }
+                            codes = ncodes
+                            return ret
+                        }
+
+                        onActivated: {
+                            versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                        }
+                        Component.onCompleted: versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                    }
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        MText {
+                            text: "Architecture"
+                            font.bold: true
+                        }
+                        MComboBox {
+                            id: architecture
+                            Layout.fillWidth: true
+                            textRole: "name"
+                            model: architectureModel
+                            ListModel {
+                                id: architectureModel
+                                ListElement {
+                                    name: qsTr("Self")
+                                }
+                                ListElement {
+                                    name: qsTr("All")
+                                }
+                                ListElement {
+                                    name: "x86_64"
+                                }
+                                ListElement {
+                                    name: "arm64-v8a"
+                                }
+                                ListElement {
+                                    name: "x86"
+                                }
+                                ListElement {
+                                    name: "armeabi-v7a"
                                 }
                             }
                         }
-                        codes = ncodes
-                        return ret
                     }
 
-                    onActivated: {
-                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                    }
-                    Component.onCompleted: versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                }
-
-                MCheckBox {
-                    id: isChromeOS
-                    text: qsTr("IsChromeOS")
-                    Layout.bottomMargin: 10
-                    Component.onCompleted: {
-                        packageField.text = launcherSettings.chromeOSMode
-                    }
-                }
-
-                GoogleLoginHelper {
-                    id: manualgoogleLoginHelperInstance
-                    includeIncompatible: true
-                    singleArch: ""
-                    unlockkey: googleLoginHelperInstance.unlockkey
-                    chromeOS: isChromeOS.checked
-                    onAccountInfoChanged: {
-                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                    }
-                }
-
-                GooglePlayApi {
-                    id: manualplayApi
-                    login: manualgoogleLoginHelperInstance
-
-                    onInitError: function (err) {
-                        console.log("Failed " + err)
-                    }
-                    onAppInfoReceived: function (packageName, version, versionCode, isBeta) {
-                        scope.playVersion = {
-                            "versionName": version,
-                            "versionCode": versionCode,
-                            "isBeta": isBeta
-                        }
-                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                    }
-                    onAppInfoFailed: function (packageName, err) {
-                        scope.playVersion = null
-                        versionsCodeField.text = downloadApk.currentVersionCode().toString()
-                    }
-
-                    onReady: {
-                        manualplayApi.requestAppInfo(packageField.text)
-                    }
-                }
-
-                property var apkUrls: ""
-
-                GoogleApkDownloadTask {
-                    id: manualPlayDownloadTask
-                    playApi: manualplayApi
-                    packageName: packageField.text
-                    keepApks: false
-                    dryrun: true
-                    versionCode: Number.parseInt(versionsCodeField.text)
-                    onActiveChanged: {
-                        if (manualPlayDownloadTask.active) {
-                            scope.apkUrls = ""
+                    MCheckBox {
+                        id: isChromeOS
+                        text: qsTr("ChromeOS")
+                        Layout.bottomMargin: 10
+                        Component.onCompleted: {
+                            packageField.text = launcherSettings.chromeOSMode
                         }
                     }
-                    onDownloadInfo: function (url) {
-                        scope.apkUrls = url
-                    }
-                    onError: function (err) {
-                        scope.apkUrls = err
-                    }
-                    onFinished: {
-                        console.log("done")
-                    }
-                }
 
-                MTextField {
-                    id: versionsCodeField
-                    Layout.fillWidth: true
-                }
-
-                MButton {
-                    text: qsTr("Get Download Info")
-                    onClicked: manualPlayDownloadTask.start()
-                }
-
-                Flickable {
-                    id: flick
-
-                    Layout.fillWidth: true
-                    height: 100
-                    contentWidth: edit.contentWidth
-                    contentHeight: edit.contentHeight
-                    clip: true
-
-                    function ensureVisible(r) {
-                        if (contentX >= r.x)
-                            contentX = r.x
-                        else if (contentX + width <= r.x + r.width)
-                            contentX = r.x + r.width - width
-                        if (contentY >= r.y)
-                            contentY = r.y
-                        else if (contentY + height <= r.y + r.height)
-                            contentY = r.y + r.height - height
-                    }
-
-                    TextEdit {
-                        id: edit
-                        focus: true
-                        wrapMode: TextEdit.Wrap
-                        onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
-                        text: "<style type=\"text/css\">a { color: lightblue; }</style>" + scope.apkUrls
-                        color: "white"
-                        textFormat: Text.RichText
-                        readOnly: true
-                        selectByMouse: true
-                        onLinkActivated: Qt.openUrlExternally(link)
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-                            acceptedButtons: Qt.NoButton
+                    GoogleLoginHelper {
+                        id: manualgoogleLoginHelperInstance
+                        includeIncompatible: architecture.currentIndex == 1
+                        singleArch: architecture.currentIndex >= 2 ? architecture.currentText : ""
+                        unlockkey: googleLoginHelperInstance.unlockkey
+                        chromeOS: isChromeOS.checked
+                        onAccountInfoChanged: {
+                            versionsCodeField.text = downloadApk.currentVersionCode().toString()
                         }
                     }
-                }
 
-                MButton {
-                    text: qsTr("Close")
-                    onClicked: downloadApk.close()
+                    GooglePlayApi {
+                        id: manualplayApi
+                        login: manualgoogleLoginHelperInstance
+
+                        onInitError: function (err) {
+                            console.log("Failed " + err)
+                        }
+                        onAppInfoReceived: function (packageName, version, versionCode, isBeta) {
+                            scope.playVersion = {
+                                "versionName": version,
+                                "versionCode": versionCode,
+                                "isBeta": isBeta
+                            }
+                            versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                        }
+                        onAppInfoFailed: function (packageName, err) {
+                            scope.playVersion = null
+                            versionsCodeField.text = downloadApk.currentVersionCode().toString()
+                        }
+
+                        onReady: {
+                            manualplayApi.requestAppInfo(packageField.text)
+                        }
+                    }
+
+                    property var apkUrls: ""
+
+                    GoogleApkDownloadTask {
+                        id: manualPlayDownloadTask
+                        playApi: manualplayApi
+                        packageName: packageField.text
+                        keepApks: false
+                        dryrun: true
+                        versionCode: Number.parseInt(versionsCodeField.text)
+                        onActiveChanged: {
+                            if (manualPlayDownloadTask.active) {
+                                scope.apkUrls = ""
+                            }
+                        }
+                        onDownloadInfo: function (url) {
+                            scope.apkUrls = url
+                        }
+                        onError: function (err) {
+                            scope.apkUrls = err
+                        }
+                        onFinished: {
+                            console.log("done")
+                        }
+                    }
+
+                    MTextField {
+                        id: versionsCodeField
+                        Layout.fillWidth: true
+                    }
+
+                    MButton {
+                        text: qsTr("Get Download Info")
+                        onClicked: manualPlayDownloadTask.start()
+                    }
+
+                    Flickable {
+                        id: flick
+
+                        Layout.fillWidth: true
+                        height: 100
+                        contentWidth: edit.contentWidth
+                        contentHeight: edit.contentHeight
+                        clip: true
+
+                        function ensureVisible(r) {
+                            if (contentX >= r.x)
+                                contentX = r.x
+                            else if (contentX + width <= r.x + r.width)
+                                contentX = r.x + r.width - width
+                            if (contentY >= r.y)
+                                contentY = r.y
+                            else if (contentY + height <= r.y + r.height)
+                                contentY = r.y + r.height - height
+                        }
+
+                        TextEdit {
+                            id: edit
+                            focus: true
+                            wrapMode: TextEdit.Wrap
+                            onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)
+                            text: "<style type=\"text/css\">a { color: lightblue; }</style>" + scope.apkUrls
+                            color: "white"
+                            textFormat: Text.RichText
+                            readOnly: true
+                            selectByMouse: true
+                            onLinkActivated: Qt.openUrlExternally(link)
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                acceptedButtons: Qt.NoButton
+                            }
+                        }
+                    }
+
+                    MButton {
+                        text: qsTr("Close")
+                        onClicked: downloadApk.close()
+                    }
                 }
             }
         }
