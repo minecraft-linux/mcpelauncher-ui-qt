@@ -14,6 +14,7 @@ LauncherBase {
 
     TextEdit {
         Layout.fillHeight: true
+        Layout.fillWidth: true
         Layout.margins: 15
         textFormat: TextEdit.RichText
         text: qsTr("<b><font color=\"#f66\">Sorry your Computer cannot run Minecraft with this Launcher</font></b>, this CPU is too old.<br/><br/>Details:<br/>%1").arg(googleLoginHelper.GetSupportReport())

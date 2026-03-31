@@ -22,6 +22,7 @@ LauncherBase {
 
     TextEdit {
         Layout.fillHeight: true
+        Layout.fillWidth: true
         Layout.margins: 15
         textFormat: TextEdit.RichText
         text: errorScreen.message
