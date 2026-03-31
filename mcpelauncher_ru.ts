@@ -5,7 +5,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation>Указанный файл несовместим с лаунчером.&lt;br/&gt;Войдите в Google Play с учетной записью, в которой есть Minecraft (Playstore), и позвольте лаунчеру загрузить совместимые версии, включая предыдущие версии Minecraft.&lt;br/&gt;Подробности:&lt;br/&gt;%1</translation>
+        <translation>Указанный файл несовместим с лаунчером&lt;br/&gt;Войдите в Google Play с учётной записью, в которой есть Minecraft ( Playstore ), и позвольте лаунчеру загрузить совместимые версии, включая предыдущие версии Minecraft&lt;br/&gt;Подробности:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -60,11 +60,11 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation>Несовместимая установка Minecraft, пожалуйста, выберите другую или более старую версию.
-Этот лаунчер — бесплатное программное обеспечение с открытым исходным кодом, которое обычно отстает от официальных обновлений Google Play.
+        <translation>Несовместимый установщик Minecraft, пожалуйста, выберите другую или более старую версию.
+Этот Лаунчер — бесплатное программное обеспечение с открытым исходным кодом, которое обычно отстает от официальных обновлений Google Play.
 В некоторых случаях отсутствуют игровые файлы,
-отсутствуют символы, которые должны предоставляться этим лаунчером через обновления,
-или иным образом лаунчер поврежден</translation>
+отсутствующие символы должны предоставляться этим Лаунчером через обновления,
+или иным образом Лаунчер поврежден</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
@@ -111,7 +111,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation>Процесс игры завершился с ненулевым кодом.  &lt;a href=&apos;%1&apos;&gt;Нажмите сюда, если хотите сообщить о проблеме.&lt;/a&gt;</translation>
+        <translation>Процесс игры завершился с ненулевым кодом. &lt;a href=&apos;%1&apos;&gt;Нажмите сюда, если хотите сообщить о проблеме.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
@@ -169,7 +169,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished">Хеш-Маппинг</translation>
+        <translation>Хэш-Маппинг</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
@@ -207,7 +207,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; является %2%3&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
@@ -476,7 +476,7 @@ You can try this launcher for free by enabling the trial mode.</source>
 The free Minecraft (ChromeOS) Trial Mode can be enabled after sign in inside Settings.</source>
         <translation>Чтобы использовать этот лаунчер, вы должны либо приобрести Minecraft Android или получить бесплатный Minecraft Trial в Google Play и войти.
 
-Minecraft (ChromeOS) Бесплатный Пробный Режим может быть включён после входа во внутренние настройки.</translation>
+Minecraft (ChromeOS) Бесплатный Тестовый Режим может быть включён после входа во внутренние настройки.</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="66"/>
@@ -808,7 +808,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="supportedandroidabis.cpp" line="111"/>
         <source>Your Computer is to old for running Android x86 32bit Games</source>
-        <translation type="unfinished">Ваш компьютер является слишком старым для запуска Android x86_64 64bit Games</translation>
+        <translation>Ваш компьютер является слишком старым для запуска Android игр архитектуры x86_64 64bit</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="121"/>
@@ -986,7 +986,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation>Этот проект позволяет вам запускать Minecraft: Bedrock Edition (как и версию без суффикса Edition, раннее известную как Minecraft: Pocket Edition). Лаунчер поддерживает Linux и OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</translation>
+        <translation>Этот проект позволяет вам запускать Minecraft: Bedrock Edition (также без суффикса Edition, раннее известную как Minecraft: Pocket Edition). Лаунчер поддерживает Linux и OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
@@ -1064,7 +1064,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
         <source>Single arch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим работы одиночной архитектуры</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="116"/>
@@ -1162,7 +1162,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="151"/>
         <source>Refresh Google Play Checkin</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить Проверку Google Play</translation>
     </message>
 </context>
 <context>
@@ -1190,12 +1190,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="30"/>
         <source>Dev</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки Разработчика</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
         <source>About</source>
-        <translation>Об</translation>
+        <translation>Подробнее</translation>
     </message>
 </context>
 <context>
@@ -1289,7 +1289,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>You may be unable to pick files in the launcher.</source>
-        <translation>Вам может быть невозможно выбирать файлы в лаунчере.</translation>
+        <translation>Возможно вы не можете выбирать файлы в лаунчере.</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
@@ -1356,7 +1356,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation>Вам нужно зайти через аккаунт Google, обладая Игрой</translation>
+        <translation>Вам нужно войти, используя аккаунт Google и обладая Игрой</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
@@ -1386,47 +1386,47 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
         <source>You need to own the game and sign up for the &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft beta program on Google Play&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вам нужно иметь игру и зарегистрироваться на &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft бету программу в Google Play&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="123"/>
         <source>Failed to initialize Google Play API</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось запустить Google Play API</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, проверьте ваше интернет соединение и / или войдите заново в Google Play&lt;br/&gt;Код статуса playApi %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
         <source>Failed to obtain the gameversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось заполучить нужную версию игры</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, проверьте ваше интернет соединение и / или войдите заново в Google Play&lt;br/&gt;Код статуса playVerChannel %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Почему кнопка &quot;Играть&quot; выключена в некоторых версиях?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Данный лаунчер не использует эмулятор, ему необходима определённая версия Андроид приложения&lt;br/&gt;&lt;Отчет о совместимости приложений для Android:&lt;br/&gt;Если вы видите хотя бы одну &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Совместимо&lt;/font&gt;&lt;/b&gt; процессорную архитектуру в данном списке, то вы сможете использовать данный Лаунчер&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>Неполадок не найдено</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
         <source>No launcher installation issues were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неполадок установки лаунчера не найдено.</translation>
     </message>
 </context>
 <context>
@@ -1434,27 +1434,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnlockScreen.qml" line="15"/>
         <source>Unlock Credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Учётные Данные для Разблокировки</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="27"/>
         <source>This is not your Google Account Password. If you don&apos;t want to type it every time you open this Launcher, check &quot;Continue with invalid credentials&quot;, then open Settings, press logout and finally login without providing your own encryption password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это не ваш Пароль от Аккаунта Google. Если вы не желаете писать его каждый раз при открытии Лаунчера, то отметьте &quot;Продолжить с неверными учётными данными&quot;, затем откройте Настройки, нажмите &quot;Выйти из учётной записи&quot; и затем войдите заново, не предоставляя свой собственный ключ шифрования.</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="35"/>
         <source>Continue with invalid credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжить с неверными учётными данными</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="54"/>
         <source>Password is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный пароль</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="100"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжить</translation>
     </message>
 </context>
 <context>
@@ -1462,17 +1462,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="18"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="26"/>
         <source>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Sorry your Computer cannot run Minecraft with this Launcher&lt;/font&gt;&lt;/b&gt;, this CPU is too old.&lt;br/&gt;&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Сожалеем, ваш компьютер не может запускать Minecraft, используя данный Лаунчер&lt;/font&gt;&lt;/b&gt;, ваш процессор слишком старый.&lt;br/&gt;&lt;br/&gt;Details:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="45"/>
         <source>I know what I&apos;m doing</source>
-        <translation type="unfinished"></translation>
+        <translation>Я знаю, что делаю</translation>
     </message>
 </context>
 <context>
@@ -1480,86 +1480,89 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft Лаунчер для Linux</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
         <source>&lt;b&gt;Cannot initialize Google Play Access&lt;/b&gt;, Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Невозможно получить Доступ к Google Play&lt;/b&gt;, Подробности:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="69"/>
         <source>&lt;b&gt;Cannot Access App Details&lt;/b&gt; (%1), Details:&lt;br/&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Невозможно получить доступ к Подробностям Приложения&lt;/b&gt; (%1), Подробности:&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="117"/>
         <source>Connecting to Google Play failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Подключение к Google Play не удалось</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="122"/>
         <source>Launcher Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка Лаунчера</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="142"/>
         <source>Unsupported Minecraft Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Неподдерживаемая версия Minecraft</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="143"/>
         <source>The Minecraft Version you are trying to run is unsupported.&lt;br/&gt;&lt;b&gt;if you wanted to play a new Release please wait patiently for an update,&lt;br/&gt;please choose a compatible version from the profile Editor&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия Minecraft, которую вы пытаетесь запустить, не поддерживается.&lt;br/&gt;&lt;b&gt;если вы хотели запустить новейшую выпущенную версию, то пожалуйста дождитесь обновления,&lt;br/&gt;пожалуйста, выберите совместимую версию из Редактора профиля&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="153"/>
         <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Click here for more information Linux&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось запустить игровой лаунчер. Пожалуйста, убедитесь, что все его зависимости правильно установлены.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Нажмите сюда для более подробной информации Linux&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Игра запущена</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
-        <translation type="unfinished"></translation>
+        <translation>На данный момент Minecraft всё ещё запущен. Вы хотите закрыть его принудительно?
+Подсказка: Нажмите &quot;Игнорировать&quot;, чтобы просто закрыть пользовательский интерфейс Лаунчера</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="212"/>
         <source>Please restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, перезапустите программу</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="213"/>
         <source>Update finished, please restart the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление завершено, пожалуйста перезапустите AppImage</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="231"/>
         <source>The Launcher failed to sign you in
 Please login again
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Лаунчеру не удалось войти в вашу учётную запись
+Пожалуйста, попробуйте войти ещё раз
+%1</translation>
     </message>
     <message>
         <location filename="main.cpp" line="78"/>
         <source>Developer Mode - Enable unsafe Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим Разработчика - Включить небезопасные Настройки Лаунчера</translation>
     </message>
     <message>
         <location filename="main.cpp" line="82"/>
         <source>Verbose log Qt Messages to stdout</source>
-        <translation type="unfinished"></translation>
+        <translation>Записывать подробные логи Qt в stdout</translation>
     </message>
     <message>
         <location filename="main.cpp" line="86"/>
         <location filename="main.cpp" line="89"/>
         <source>directly start the game launcher with the specified profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить игровой лаунчер напрямую с выбранным профилем</translation>
     </message>
 </context>
 </TS>
