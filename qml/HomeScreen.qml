@@ -120,6 +120,12 @@ BaseScreen {
                                 "actionText": qsTr("Retry"),
                                 "action": actionRetryCheck
                             }
+                        if (launcherSettings.chromeOSMode && !googleLoginHelper.chromeOS) {
+                            return {
+                                "title": qsTr("ChromeOS Mode not supported"),
+                                "description": qsTr("Your Google Play account doesn’t have the required license for ChromeOS Mode. If you don’t own a Chromebook, FydeOS may offer a one‑time option to purchase this license. Note that ChromeOS builds currently have Vibrant Visuals permanently disabled."),
+                            }
+                        }
                         if (!playScreen.activeVersionName)
                             return {}
                         if (!playScreen.activeVersionSupported)
