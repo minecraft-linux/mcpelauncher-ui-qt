@@ -641,6 +641,16 @@ BaseScreen {
     }
 
     /* utility functions */
+    function adjustForChromeOSMode(latestVersion) {
+        if(latestVersion && googleLoginHelper.chromeOS) {
+            return {
+                "versionName": latestVersion.versionName,
+                "versionCode": 1000000000 + latestVersion.versionCode
+            }
+        }
+        return latestVersion
+    }
+
     function launcherLatestVersion() {
         const showBeta = playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions
         const versions = showBeta ? versionManager.availableArchivalVersions : versionManager.availableArchivalVersions.filter(ver => !ver.isBeta)
@@ -648,7 +658,7 @@ BaseScreen {
         const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
         console.log("launcherAbis: " + JSON.stringify(abis))
 
-        const latestVersion = versions.find(ver => abis.includes(ver.abi))
+        const latestVersion = adjustForChromeOSMode(versions.find(ver => abis.includes(ver.abi)))
         if (latestVersion) {
             console.log("launcherLatestVersion: " + JSON.stringify(latestVersion))
             return latestVersion
@@ -725,16 +735,17 @@ BaseScreen {
     }
 
     function getDisplayedNameForCode(code) {
+        const suffix = code > 1000000000 ? qsTr(" (ChromeOS)") : launcherSettings.chromeOSMode ? qsTr(" (Android)") : "";
         const archiveInfo = findArchivalVersion(code)
         const ver = versionManager.versions.get(code)
         if (archiveInfo !== null && (ver === null || ver.archs.length === 1 && ver.archs[0] === archiveInfo.abi)) {
-            return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") + ")")
+            return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") + ")") + suffix
         }
         if (code === playScreen.playVerChannel.latestVersionCode)
-            return playScreen.playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "")
+            return playScreen.playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "") + suffix
         if (ver !== null) {
             const profile = profileManager.activeProfile
-            return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(profile.arch.length ? profile.arch : ver.archs.join(", "))
+            return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(profile.arch.length ? profile.arch : ver.archs.join(", ")) + suffix
         }
     }
 
