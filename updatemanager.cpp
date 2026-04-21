@@ -48,7 +48,9 @@ UpdateManager::UpdateManager(QObject *parent)
                 bool isApplicable = false;
                 for(auto et = extraVersions.rbegin(); et != extraVersions.rend(); ++et) {
                     auto codes = et->toMap().value("codes").toMap();
-                    if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
+                    // Keep showing DRM/runtime updates when the launcher DB knows the same
+                    // version code, because those builds can still require update mods.
+                    if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() >= maxKnownVersion) {
                         isApplicable = true;
                         break;
                     }   
