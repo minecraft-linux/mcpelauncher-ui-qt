@@ -5,7 +5,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>해당 파일은 런처와 호환되지 않습니다&lt;br/&gt; 마인크래프트가 결제된 구글 플레이 계정을 통해 로그인하여 과거 버전을 포함한 호환 가능한 마인크래프트를 런처에서 다운로드 할 수 있습니다.&lt;br/&gt;더 자세히:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>.apk 파일을 추출합니다</translation>
     </message>
 </context>
 <context>
@@ -21,12 +21,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>비공식 마인크래프트 *nix 런처</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (빌드 %2)</translation>
     </message>
 </context>
 <context>
@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>체인지로그</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>계속</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation>마인크래프트 게임 런처를 찾지 못했습니다 (%1)
+게임 런처 &apos;%2&apos; 를 &apos;PATH&apos;(환경변수)에 추가하고 런처를 재시작하시길 바랍니다
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -58,29 +60,34 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>호환되지 않는 마인크래프트 설치입니다, 다른 이전 버전을 선택해주세요
+이 런처는 무료 오픈소스 프로그램으로서 구글플레이의 공식 업데이트에 비해 지원이 늦습니다
+이 런처가 업데이트를 통해 제공해야 하는 필수 심볼이 없거나,
+ 기타 이유로 런처가 작동하지 않을 수도 있습니다</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
         <source>Missing launcher dependencies, please install all missing libraries in their right version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">런처 필수 디펜던시(dependencies)가 부족합니다, 필요한 모든 의존성 패키지를 버전에 맞게 설치하세요</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="244"/>
         <source>Process exited with unexpected exit code: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>예키지 못한 코드로 종료됨: %1
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="247"/>
         <source>Process exited normally
 </source>
-        <translation type="unfinished"></translation>
+        <translation>프로세스가 정상적으로 종료됨
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="261"/>
         <source>Your system is unable to execute the launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>해당 시스템에서 런처를 실행할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -88,42 +95,42 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>게임 로그</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
         <source>Minecraft stopped working</source>
-        <translation type="unfinished"></translation>
+        <translation>마인크래프트가 작동을 멈췄습니다</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 에러는 리포트하지 마십시오.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">게임이 non-zero error code로 중단되었습니다.&lt;a href=&apos;%1&apos;&gt; 문제를 제보하려면 이곳을 클릭하세요&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation type="unfinished"></translation>
+        <translation>호환되지 않는 버전을 실행하는 것일 수도 있습니다. 다음에 해당하는 토글을 비활성화 하고 게임을 재시작하시길 바랍니다: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>호환되지 않는 버전 보기</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>unverified 버전 보기</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
         <source>Show beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>베타 버전 보기</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
@@ -136,27 +143,27 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>게임패드 툴</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>인식된 게임패드가 없습니다!</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
         <source>Ensure the gamepad is connected correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>게임패드가 제대로 연결되어 있는 지 확인하십시오.</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>인풋</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
         <source>GUID</source>
-        <translation type="unfinished"></translation>
+        <translation>GUID</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
@@ -176,22 +183,22 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>매핑</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 프로필에 저장하기</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 파일경로에 저장</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
 </context>
 <context>
@@ -199,17 +206,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>호환가능</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>호환불가능</translation>
     </message>
 </context>
 <context>
@@ -217,17 +224,17 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>구글플레이Api 가 준비되지 않음 =%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;이 에러를 보고해주십시오&lt;/b&gt;&lt;br&gt;구글플레이API가 이미 진행 중에 있어 상태보고 기능이 동작하지 않습니다=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;이 에러를 보고해주십시오r&lt;/b&gt;&lt;br&gt;구글플레이API에 loginHelper가 필요합니다</translation>
     </message>
 </context>
 <context>
@@ -236,12 +243,12 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>게임 실행중</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
