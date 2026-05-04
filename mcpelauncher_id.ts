@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation>Mengesktraksi .apk</translation>
+        <translation>Mengekstrak .apk</translation>
     </message>
 </context>
 <context>
@@ -26,7 +26,7 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation>%1 (bangun %2)</translation>
+        <translation>%1 (build %2)</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation>Log Perubahan</translation>
+        <translation>Catatan Perubahan</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
@@ -49,8 +49,8 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation>Tidak dapat menemukan gamelauncher untuk Minecraft (%1)
-Tolong tambahkan peluncur &apos;%2&apos; ke &apos;PATH&apos; (environmentvariable) dan restart peluncur
+        <translation>Tidak dapat menemukan peluncur permainan untuk Minecraft (%1)
+Tolong tambahkan peluncur &apos;%2&apos; ke &apos;PATH&apos; (variabel lingkungan) dan mulai ulang peluncur
 </translation>
     </message>
     <message>
@@ -96,7 +96,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="14"/>
         <source>Game Log</source>
-        <translation>Log Permainan</translation>
+        <translation>Catatan Permainan</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="58"/>
@@ -106,17 +106,17 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Please don&apos;t report this error.</source>
-        <translation>Tolong jangan laporkan error ini.</translation>
+        <translation>Tolong jangan laporkan kesalahan ini.</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation>Permainan telah keluar dengan kode error non-zero. &lt;a href=&apos;%1&apos;&gt;Pencet disini jika mau membuka isu masalah.&lt;/a&gt;</translation>
+        <translation>Permainan telah keluar dengan kode kesalahan bukan nol. &lt;a href=&apos;%1&apos;&gt;Klik disini untuk melaporkan isu.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
         <source>You may be running an incompatible version. Uncheck the following toggles in settings and relaunch the game: </source>
-        <translation>Kamu mungkin menjalankan versi yang tak didukung. Uncek beberapa kotak di setting dan mulai ulang gamenya: </translation>
+        <translation>Anda mungkin sedang menjalankan versi yang tidak didukung. Matikan opsi berikut di Pengaturan dan luncurkan ulang game: </translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="79"/>
@@ -126,7 +126,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="81"/>
         <source>Show unverified versions</source>
-        <translation>Perlihatkan versi tak resmi</translation>
+        <translation>Perlihatkan versi yang belum diverifikasi</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="83"/>
@@ -136,7 +136,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation>Aktifkan log permainan di pengaturan dan mulai ulang permainan untuk mendapatkan log kesalahan.</translation>
+        <translation>Aktifkan catatan permainan di pengaturan dan mulai ulang permainan untuk mendapatkan catatan kesalahan.</translation>
     </message>
 </context>
 <context>
@@ -159,7 +159,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
         <source>Input</source>
-        <translation>Input</translation>
+        <translation>Masukan</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
@@ -174,7 +174,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation>Set Pemetaan</translation>
+        <translation>Atur Pemetaan</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
@@ -189,7 +189,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation>Menyimpan ke profil saat ini</translation>
+        <translation>Simpan ke profil saat ini</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
@@ -230,12 +230,12 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation>&lt;b&gt;Tolong lapor kesalahan ini&lt;/b&gt;&lt;br&gt;GooglePlayApi sudah dalam progres status melaporkan tidak bekerja=%1</translation>
+        <translation>&lt;b&gt;Tolong laporkan kesalahan ini&lt;/b&gt;&lt;br&gt;GooglePlayApi sudah dalam progres status melaporkan tidak bekerja=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation>&lt;b&gt;Tolong lapor error ini&lt;/b&gt;&lt;br&gt;GooglePlayApi membutuhkan loginHelper</translation>
+        <translation>&lt;b&gt;Tolong laporkan kesalahan ini&lt;/b&gt;&lt;br&gt;GooglePlayApi membutuhkan loginHelper</translation>
     </message>
 </context>
 <context>
@@ -259,7 +259,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation>Lihat log</translation>
+        <translation>Lihat catatan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
@@ -291,7 +291,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="116"/>
         <source>Retry</source>
-        <translation>Ulangi</translation>
+        <translation>Coba lagi</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="123"/>
@@ -301,7 +301,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="124"/>
         <source>The Minecraft version you have selected for the current profile is unsupported or untested. Support for new version is a feature request.</source>
-        <translation>Versi Minecraft kamu pilih untuk profil saat ini tak didukung atau belum di tes. Dukungan untuk versi lebih baru diminta.</translation>
+        <translation>Versi Minecraft yang Anda pilih untuk profil saat ini tidak didukung atau belum di tes. Dukungan untuk versi baru adalah permintaan fitur.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="125"/>
@@ -339,28 +339,28 @@ atau mungkin Peluncurnya rusak</translation>
         <location filename="qml/HomeScreen.qml" line="169"/>
         <source>%1 Joysticks cannot be used as Gamepad Input:
 %2.</source>
-        <translation>%1 Joystick tidak bisa digunakan sebagai Gamepat:
+        <translation>%1 Joystick tidak bisa digunakan sebagai Gamepad:
 %2.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation>Mode Sementara Diaktifkan</translation>
+        <translation>Mode Percobaan Diaktifkan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
         <source>Disable trial mode from settings to launch the full version instead. </source>
-        <translation>Nonaktifkan mode sementara dari pengaturan untuk menjalankan versi penuh. </translation>
+        <translation>Nonaktifkan mode percobaan dari pengaturan untuk menjalankan versi penuh. </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
         <source>You must first buy &quot;Minecraft Trial&quot; on an Android device or VM to download it here. </source>
-        <translation>Kamu harus membeli &quot;Minecraft Trial&quot; di perangkat Android atau VM untuk mengunduhnya disini.. </translation>
+        <translation>Kamu harus membeli &quot;Minecraft Trial&quot; di perangkat Android atau VM untuk mengunduhnya disini. </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
         <source>Play Version is behind</source>
-        <translation>Versi dimainkan dibelakang</translation>
+        <translation>Versi Play kedaluwarsa</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="190"/>
@@ -371,12 +371,12 @@ atau mungkin Peluncurnya rusak</translation>
         <location filename="qml/HomeScreen.qml" line="196"/>
         <location filename="qml/HomeScreen.qml" line="247"/>
         <source>Update available</source>
-        <translation>Update tersedia</translation>
+        <translation>Pembaruan tersedia</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="197"/>
         <source>A new version of the launcher is available.</source>
-        <translation>Versi terbaru peluncur tersedia.</translation>
+        <translation>Versi baru peluncur tersedia.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="198"/>
@@ -386,7 +386,7 @@ atau mungkin Peluncurnya rusak</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="212"/>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Kesalahan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="215"/>
@@ -398,18 +398,18 @@ atau mungkin Peluncurnya rusak</translation>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
         <translation>
-Kamu bisa mencoba peluncur ini dengan gratis dengan menggunakan mode sementara.</translation>
+Anda bisa mencoba peluncur ini dengan gratis dengan menggunakan mode percobaan.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
         <location filename="qml/HomeScreen.qml" line="269"/>
         <source>Update</source>
-        <translation>Update</translation>
+        <translation>Pembaruan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Download and play</source>
-        <translation>Unduh dan Main</translation>
+        <translation>Unduh dan Mainkan</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="353"/>
@@ -434,12 +434,12 @@ Kamu bisa mencoba peluncur ini dengan gratis dengan menggunakan mode sementara.<
     <message>
         <location filename="qml/HomeScreen.qml" line="459"/>
         <source>Download failed</source>
-        <translation>Mengunduh gagal</translation>
+        <translation>Gagal mengunduh</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="470"/>
         <source>Error while extracting the downloaded file(s), &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;please report this error&lt;/a&gt;: %1</source>
-        <translation>Kesalahan ketika mengekstrak file unduhan, &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;tolong lapor error ini&lt;/a&gt;: %1</translation>
+        <translation>Kesalahan ketika mengekstrak file unduhan, &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues&quot;&gt;tolong laporkan kesalahan ini&lt;/a&gt;: %1</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="595"/>
@@ -449,17 +449,17 @@ Kamu bisa mencoba peluncur ini dengan gratis dengan menggunakan mode sementara.<
     <message>
         <location filename="qml/HomeScreen.qml" line="643"/>
         <source>mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.</source>
-        <translation>mcpelauncher-versiondb tidak dimuat. Tidak dapat mengecek versi kompatibel Minecraft.</translation>
+        <translation>mcpelauncher-versiondb tidak dimuat. Tidak dapat mengecek dukungan versi Minecraft.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation> Versi terbaru Minecraft %1 adalah versi beta, yang disembunyikan oleh default.</translation>
+        <translation> Versi terbaru Minecraft %1 adalah versi beta, yang disembunyikan secara default.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
         <source>Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.</source>
-        <translation>Kompatibilitas untuk versi Minecraft %1 tidak diketahui. Dukungan untuk versi Minecraft terbaru diminta.</translation>
+        <translation>Kompatibilitas untuk versi Minecraft %1 tidak diketahui. Dukungan untuk versi Minecraft terbaru adalah permintaan fitur.</translation>
     </message>
 </context>
 <context>
@@ -491,19 +491,19 @@ Minecraft (ChromeOS) mode Trial bisa diaktifkan di pengaturan setelah masuk.</tr
     <message>
         <location filename="qml/LoginScreen.qml" line="89"/>
         <source>Get help</source>
-        <translation>Dapatkan dukungan</translation>
+        <translation>Dapatkan bantuan</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="111"/>
         <source>Extracting apk</source>
-        <translation>Mengekstraksi apk</translation>
+        <translation>Mengekstrak apk</translation>
     </message>
     <message>
         <location filename="qml/LoginScreen.qml" line="133"/>
         <source>This is an unofficial Linux launcher for the Minecraft Bedrock codebase.
 This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
-        <translation>Ini adalah peluncur Minecraft linux tak resmi.
-Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
+        <translation>Ini adalah peluncur Linux tidak resmi untuk Minecraft Bedrock.
+Projek ini tidak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     </message>
 </context>
 <context>
@@ -559,7 +559,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ModsScreen.qml" line="37"/>
         <source>Installed Mods</source>
-        <translation>Mod Terinstall</translation>
+        <translation>Mod Terpasang</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="40"/>
@@ -574,7 +574,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ModsScreen.qml" line="96"/>
         <source>Managing mods is not yet supported. To contribute your mod, please open a pull request on &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;Mods are a collection of .so files (also on macOS) placed inside the `mods` folder. This folder is located within your data root, which you can find in Settings &gt; Storage. The `mods` folder does not exist by default, so you&apos;ll need to create it. Extract zip files directly into the `mods` folder without creating subfolders.  .so files should be directly below the `mods` folder.&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;Do not report crashes to the launcher&apos;s issue tracker when mods are enabled.&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitur manajemen mod belum tersedia. Untuk mengkontribusikan mod Anda, tolong buka pull request di &lt;a href=&quot;https://github.com/minecraft-linux/mcpelauncher-moddb&quot;&gt;minecraft-linux/mcpelauncher-moddb&lt;/a&gt;.&lt;br/&gt;&lt;br/&gt;Mod adalah kumpulan file .so (di macOS juga) yang diletakkan di folder `mods`. Folder ini terletak di folder data peluncur, yang dapat Anda temukan di Pengaturan &gt; Penyimpanan. Folder `mods` harus Anda buat secara manual. Ekstrak file zip ke folder `mods` tanpa membuat subfolder. File .so harus diletakkan langsung di folder `mods`.&lt;br/&gt;&lt;br/&gt;&lt;font color=&quot;#f66&quot;&gt;Jangan laporkan crash ke pelacak isu peluncur saat mod digunakan.&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="171"/>
@@ -614,7 +614,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ModsScreen.qml" line="380"/>
         <source>Zip extraction failed</source>
-        <translation>Estraksi Zip gagal</translation>
+        <translation>Ekstraksi Zip gagal</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="396"/>
@@ -637,7 +637,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
         <source>Load more articles</source>
-        <translation>Muat lebih banyak altikel</translation>
+        <translation>Muat lebih banyak artikel</translation>
     </message>
 </context>
 <context>
@@ -700,7 +700,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>, </source>
-        <translation type="unfinished"></translation>
+        <translation>, </translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
@@ -710,7 +710,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="242"/>
         <source>Data directory</source>
-        <translation>Data direktori</translation>
+        <translation>Direktori data</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="286"/>
@@ -720,7 +720,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="340"/>
         <source>Window size</source>
-        <translation>Ukuran Window</translation>
+        <translation>Ukuran Jendela</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="373"/>
@@ -735,17 +735,17 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="456"/>
         <source>Add New Variable</source>
-        <translation>Tambah Variabel baru</translation>
+        <translation>Tambah Variabel Baru</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Collapse advanced  🞁</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciutkan lanjutan</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Expand advanced  🞃</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan lanjutan</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="493"/>
@@ -798,7 +798,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
         <location filename="supportedandroidabis.cpp" line="70"/>
         <location filename="supportedandroidabis.cpp" line="115"/>
         <source>Android expect the following unavailable Instruction Sets to be available:</source>
-        <translation type="unfinished"></translation>
+        <translation>Android memerlukan set instruksi berikut, yang tidak tersedia:</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="108"/>
@@ -841,7 +841,7 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="updatechecker.cpp" line="34"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage tidak dapat diperbarui&lt;br/&gt;Diharapkan variabel lingkungan &apos;APPIMAGE&apos; diatur sesuai lokasi AppImage</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="54"/>
@@ -852,108 +852,108 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="updatechecker.cpp" line="66"/>
         <source>Appimage cannot be updated&lt;br/&gt;Unknown Error</source>
-        <translation type="unfinished"></translation>
+        <translation>AppImage tidak dapat diperbarui&lt;br/&gt;Kesalahan Tidak Diketahui</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="73"/>
         <source>Launcher cannot be updated&lt;br/&gt;You have to check your packagemanager for updates or recompile your Open Source build with newer sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur tidak dapat diperbarui&lt;br/&gt;Anda harus memperbarui pelunjur ini melalui manajer perangkat lunak Anda, atau mengkompilasi ulang peluncur Anda dengan sumber terbaru</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal memeriksa pembaruan&lt;br/&gt;Gagal terhubung ke server pembaruan</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="72"/>
         <source>Trying to import a forbidden apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Mencoba mengimpor apk yang dilarang</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="75"/>
         <source>Trying to extract multiple apks with different versionsCodes is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda tidak dapat mengekstrak beberapa apk dengan kode versi yang berbeda-beda</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda tidak dapat mengekstrak apk dengan paket yang berbeda</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
         <source>This Launcher cannot load Minecraft (%1) on this PC:&lt;br/&gt;%2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur ini tidak dapat memuat Minecraft (%1) di komputer ini:&lt;br/&gt;%2&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
         <source>The specified file is not a valid Minecraft apk, it doesn&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>File ini bukanlah apk Minecraft yang valid, tidak terdapat libminecraftpe.so dalam file ini</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="110"/>
         <source>The specified files are not a valid collection of Minecraft apks, they don&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>File-file ini bukanlah kumpulan apk Minecraft yang valid, libminecraftpe.so tidak dapat ditemukan di dalam file-file ini</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation type="unfinished"></translation>
+        <translation>Arsitektur apk Minecraft yang tepat bagi komputer / peluncur ini adalah </translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
         <source>No Minecraft apk&apos;s are valid for this pc / launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada arsitektur apk Minecraft yang tepat untuk komputer / peluncur ini</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="136"/>
         <source>unsupported, versionsname of the apk is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>tidak didukung, versionsname apk kosong</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="34"/>
         <location filename="zipextractiontask.cpp" line="33"/>
         <source>renaming versionsfolder failed</source>
-        <translation type="unfinished"></translation>
+        <translation>gagal mengganti nama versionsfolder</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>Cannot find &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; with version %2 on Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Beta Versions requires sign up&lt;/a&gt;%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat menemukan &lt;a href=&quot;https://play.google.com/store/apps/details?id=%1&quot;&gt;%1&lt;/a&gt; dengan versi %2 di Google Play,&lt;br/&gt;&lt;a href=&quot;https://play.google.com/apps/testing/%1&quot;&gt;Versi Beta membutuhkan pendaftaran&lt;/a&gt;%3</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="41"/>
         <source>,&lt;br/&gt;you might want to try disabling ChromeOS mode to fix this</source>
-        <translation type="unfinished"></translation>
+        <translation>,&lt;br/&gt;coba matikan mode ChromeOS untuk memperbaiki ini</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="238"/>
         <location filename="googleapkdownloadtask.cpp" line="118"/>
         <source>Downloading file failed %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mengunduh file %1</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="333"/>
         <location filename="googleapkdownloadtask.cpp" line="204"/>
         <source>Downloading file failed: Status[%1] &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mengunduh file: Status[%1] &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan tidak diketahui</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan jaringan CURL: %1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -961,77 +961,77 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi: %1&lt;br/&gt;Build: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumber</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentasi</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
         <source>This project allows you to launch Minecraft: Bedrock Edition (as in the edition w/o the Edition suffix, previously known as Minecraft: Pocket Edition). The launcher supports Linux and OS X.&lt;br/&gt;&lt;br/&gt; © Copyright 2018-2024, MrARM &amp; contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Projek ini memungkinkan Anda untuk memainkan Minecraft: Bedrock Edition (sebelumnya dikenal sebagai Minecraft: Pocket Edition). Peluncur ini mendukung Linux dan OS X.&lt;br/&gt;&lt;br/&gt; © Hak cipta MrARM &amp; para kontributor, 2018-2024</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="80"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Periksa Pembaruan</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Reset Pengaturan Peluncur</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mohon buka kembali peluncur untuk melihat perubahan</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Sebuah pembaruan peluncur tersedia untuk diunduh</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>You can download the new Update here: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda dapat mengunduh pembaruan terbaru disini: %1</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakah Anda ingin memperbarui peluncur sekarang?</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi peluncur Anda (%1 build %2) adalah yang terbaru</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Pembaruan gagal</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
         <source>Update Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informasi pembaruan</translation>
     </message>
 </context>
 <context>
@@ -1039,42 +1039,42 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="21"/>
         <source>Warning: This Section is for Launcher Developers and are not documented. Do not use Developer Settings without deep understanding how they impact the Launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Peringatan: Bagian ini diperuntukkan untuk pengembang peluncur dan tidak didokumentasikan. Jangan menggunakan Pengaturan Pengembang tanpa memahami bagaimana pengaturan ini mempengaruhi peluncur.</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="30"/>
         <source>Show unverified versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan versi yang belum diverifikasi</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan versi yang tidak kompatibel</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
         <source>Do not enable this Setting, if you don&apos;t want to download x86/x86_64 binaries on arm hardware or download armeabi-v7a/arm64-v8a binaries on intel or amd hardware. Google Play Latest will always download x86_64 builds as long the Google Play Store doesn&apos;t change it&apos;s undefined behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Jangan nyalakan pengaturan ini, jika Anda tidak ingin mengunduh build x86/x86_64 di perangkat arm atau mengunduh build armeabi-v7a/arm64-v8a di perangkat intel atau amd. Terbaru Google Play akan selalu mengunduh build x86_64 selama Google Play Store tidak mengubah perilakunya</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan Versi Beta</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
         <source>Single arch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode arsitektur tunggal</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="116"/>
         <source>Versions feed base url</source>
-        <translation type="unfinished"></translation>
+        <translation>Url dasar daftar versi</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="134"/>
         <source>Download only the apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Hanya unduh apk</translation>
     </message>
 </context>
 <context>
@@ -1082,87 +1082,87 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Akun Google</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Tekan untuk melihat)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign out</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>Masuk</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
         <source>Hide the launcher when starting the game</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembunyikan peluncur saat memulai game</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="89"/>
         <source>Disable the GameLog</source>
-        <translation type="unfinished"></translation>
+        <translation>Matikan GameLog</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="95"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cek pembaruan saat peluncur dibuka</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan semua spanduk notifikasi</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan tombol keluar di bar navigasi</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
         <source>ChromeOS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode ChromeOS</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode Percobaan (sama dengan Mode ChromeOS)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
         <source>Keep Apks in &lt;GameData&gt;/apks</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan apk di &lt;DataPermainan&gt;/apks</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="132"/>
         <source>Run troubleshooter</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalankan pemecah masalah</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="137"/>
         <source>Open Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Alat Gamepad</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="142"/>
         <source>Refresh Google Play Version Channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Segarkan Ulang Saluran Versi Google Play</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="151"/>
         <source>Refresh Google Play Checkin</source>
-        <translation type="unfinished"></translation>
+        <translation>Segarkan Ulang Checkin Google Play</translation>
     </message>
 </context>
 <context>
@@ -1170,32 +1170,32 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsScreen.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="21"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Umum</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="24"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Penyimpanan</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="27"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="30"/>
         <source>Dev</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengembang</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang</translation>
     </message>
 </context>
 <context>
@@ -1203,37 +1203,37 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambahkan Dunia atau Paket</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambahkan Dunia atau Paket (tertunda hingga peluncuran)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Uri</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
         <source>Open Uri (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Uri (tertunda hingga peluncuran)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
         <source>Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori Permainan</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori game untuk profil yang terpilih: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
         <source>Default Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori Game Default</translation>
     </message>
 </context>
 <context>
@@ -1241,42 +1241,42 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="85"/>
         <source>IsChromeOS</source>
-        <translation type="unfinished"></translation>
+        <translation>ApakahChromeOS</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="159"/>
         <source>Get Download Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Dapatkan Info Pengunduhan</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="217"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus yang terpilih</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="234"/>
         <source>Download .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Unduk .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambahkan .apk percobaan</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambah .apk</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
         <source>Remove Incompatible Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus Versi Tidak Kompatibel</translation>
     </message>
 </context>
 <context>
@@ -1284,54 +1284,55 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>Zenity utility not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Alat Zenity tidak dapat ditemukan</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>You may be unable to pick files in the launcher.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda mungkin tidak dapat memilih file di peluncur.</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Game launcher not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur permainan tidak ditemukan</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Could not find the game launcher. Please make sure it&apos;s properly installed (it must exist in the PATH variable used when starting this program).</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat menemukan peluncur game. Pastikan peluncur terpasang dengan benar (peluncur harus ada di variabel PATH yang digunakan saat memulai program ini).</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>Failed to query game launcher version information</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mendapatkan informasi versi peluncur game</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v`: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan saat menjalankan `mcpelauncher-client -v`: %1</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan terjadi saat menjalankan `mcpelauncher-client -v` kode keluar: %1, log:
+%2</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="55"/>
         <source>Software rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendering perangkat lunak</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>MSA daemon could not be found</source>
-        <translation type="unfinished"></translation>
+        <translation>Daemon MSA tidak dapat ditemukan</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>The MSA component has not been installed properly. Xbox Live login may not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponen MSA tidak terpasang dengan benar. Anda mungkin tidak dapat masuk ke Xbox Live.</translation>
     </message>
 </context>
 <context>
@@ -1339,93 +1340,93 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>Pemecahan Masalah</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
         <source>&lt;a href=&quot;%1&quot;&gt;Go to wiki&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;Pergi ke wiki&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
         <source>I cannot select / see the latest Version of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Saya tidak dapat memilih / melihat versi terbaru permainan?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda harus masuk dengan Akun Google yang mempunyai permainan</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda harus masuk kembali dan / atau memulai ulang peluncur untuk memperbaikinya.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Saya tidak dapat memilih / melihat versi lama permainan?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in again and / or restart the launcher and / or check your Internet connectivity to github to fix it.%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda harus masuk lagi dan / atau memulai ulang peluncur dan / atau periksa koneksi Internet Anda ke GitHub untuk memperbaikinya</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>&lt;br/&gt;Enable &quot;Show incompatible Versions&quot; would show more, but they won&apos;t launch on your PC see the compatibility report of the TroubleShooter for more Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br/&gt;Menyalakan &quot;Tampilkan Versi Tidak Kompatibel&quot; akan menampilkan lebih banyak versi, tetapi mungkin tidak bisa diluncurkan di komputer Anda. Lihat laporan kompatibilitas Pemecah Masalah untuk informasi lebih lanjut</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
         <source>&quot;Show Beta Versions&quot; is disabled or greyed out?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Tampilkan Versi Beta&quot; dimatikan atau tidak bisa dipilih?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
         <source>You need to own the game and sign up for the &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;Minecraft beta program on Google Play&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda harus sudah membeli permainan dan mendaftarkan diri untuk memasuki &lt;a href=&quot;https://play.google.com/apps/testing/com.mojang.minecraftpe&quot;&gt;program beta Minecraft di Google Play&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="123"/>
         <source>Failed to initialize Google Play API</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal memulai API Google Play</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Periksa koneksi internet Anda dan / atau masuk kembali ke Google Play&lt;br/&gt;Kode status playApi adalah %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
         <source>Failed to obtain the gameversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mendapatkan versi permainan</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Periksa koneksi internet Anda dan / atau masuk kembali ke Google Play&lt;br/&gt;Kode status playVerChannel adalah %1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenapa tombol main dimatikan untuk beberapa versi?</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
         <source>This launcher doesn&apos;t use an emulator and needs a specfic Android App version&lt;br/&gt;&lt;Android App Compatibility Report:&lt;br/&gt;If you see one &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Compatible&lt;/font&gt;&lt;/b&gt; cpu architecture in the following list, then you should be able to use this Launcher&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur ini tidak menggunakan emulator dan membutuhkan sebuah versi spesifik aplikasi Android&lt;br/&gt;&lt;Laporan Kompatibilitas Aplikasi Android&lt;br/&gt;Jika Anda melihat satu arsitektur cpu yang &lt;b&gt;&lt;font color=&quot;#00cc00&quot;&gt;Kompatibel&lt;/font&gt;&lt;/b&gt; di daftar ini, Anda seharusnya bisa menggunakan peluncur ini&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada masalah yang ditemukan</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
         <source>No launcher installation issues were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada masalah pemasangan peluncur yang ditemukan.</translation>
     </message>
 </context>
 <context>
@@ -1433,27 +1434,27 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/UnlockScreen.qml" line="15"/>
         <source>Unlock Credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Kunci Kredensial</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="27"/>
         <source>This is not your Google Account Password. If you don&apos;t want to type it every time you open this Launcher, check &quot;Continue with invalid credentials&quot;, then open Settings, press logout and finally login without providing your own encryption password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ini bukan kata sandi Akun Google Anda. Jika Anda tidak ingin mengetiknya setiap kali peluncur ini dibuka, nyalakan &quot;Lanjutkan dengan kredensial tidak valid&quot;, lalu buka Pengaturan, tekan Keluar dan masuk tanpa memberikan kata sandi enkripsi.</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="35"/>
         <source>Continue with invalid credentials</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan dengan kredensial tidak valid</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="54"/>
         <source>Password is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Kata sandi salah</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="100"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan</translation>
     </message>
 </context>
 <context>
@@ -1461,17 +1462,17 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="18"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informasi</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="26"/>
         <source>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Sorry your Computer cannot run Minecraft with this Launcher&lt;/font&gt;&lt;/b&gt;, this CPU is too old.&lt;br/&gt;&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;&lt;font color=&quot;#f66&quot;&gt;Maaf, komputer Anda tidak dapat menjalankan Minecraft dengan peluncur ini&lt;/font&gt;&lt;/b&gt;, CPU ini terlalu tua.&lt;br/&gt;&lt;br/&gt;Rincian:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="45"/>
         <source>I know what I&apos;m doing</source>
-        <translation type="unfinished"></translation>
+        <translation>Saya tahu apa yang saya lakukan</translation>
     </message>
 </context>
 <context>
@@ -1479,86 +1480,89 @@ Projek ini tak terkait dengan Minecraft, Mojang atau Microsoft.</translation>
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur Minecraft Linux</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
         <source>&lt;b&gt;Cannot initialize Google Play Access&lt;/b&gt;, Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tidak dapat memulai akses Google Play&lt;/b&gt;, Rincian:&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="69"/>
         <source>&lt;b&gt;Cannot Access App Details&lt;/b&gt; (%1), Details:&lt;br/&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tidak dapat mengakses rincian aplikasi&lt;/b&gt; (%1), Rincian:&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="117"/>
         <source>Connecting to Google Play failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal menghubungkan ke Google Play</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="122"/>
         <source>Launcher Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan Peluncur</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="142"/>
         <source>Unsupported Minecraft Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi Minecraft Tidak Didukung</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="143"/>
         <source>The Minecraft Version you are trying to run is unsupported.&lt;br/&gt;&lt;b&gt;if you wanted to play a new Release please wait patiently for an update,&lt;br/&gt;please choose a compatible version from the profile Editor&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Versi Minecraft yang ingin Anda jalankan tidak didukung.&lt;br/&gt;&lt;b&gt;Jika Anda ingin memainkan rilis baru, mohon tunggu hingga pembaruan tersedia,&lt;br/&gt;mohon pilih versi yang kompatibel dari Penyunting profil&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="153"/>
         <source>Could not execute the game launcher. Please make sure it&apos;s dependencies are properly installed.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Click here for more information Linux&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal menjalankan peluncur permainan. Pastikan semua komponen terpasang dengan benar.&lt;br&gt;&lt;a href=&quot;%1&quot;&gt;Klik disini untuk informasi Linux lanjutan&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Permainan sedang berjalan</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
         <source>Minecraft is currently running. Would you like to forcibly close it?
 Hint: Press ignore to just close the Launcher UI</source>
-        <translation type="unfinished"></translation>
+        <translation>Minecraft sedang berjalan. Apakah Anda ingin menutupnya dengan paksa?
+Petunjuk: Tekan abaikan untuk menutup antarmuka peluncur</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="212"/>
         <source>Please restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Mohon mulai ulang</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="213"/>
         <source>Update finished, please restart the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Pembaruan selesai, mohon mulai ulang AppImage</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="231"/>
         <source>The Launcher failed to sign you in
 Please login again
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Peluncur gagal masuk ke akun Anda
+Mohon masuk kembali
+%1</translation>
     </message>
     <message>
         <location filename="main.cpp" line="78"/>
         <source>Developer Mode - Enable unsafe Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode Pengembang - Nyalakan pengaturan tidak aman peluncur</translation>
     </message>
     <message>
         <location filename="main.cpp" line="82"/>
         <source>Verbose log Qt Messages to stdout</source>
-        <translation type="unfinished"></translation>
+        <translation>Catat pesan Qt secara rinci ke stdout</translation>
     </message>
     <message>
         <location filename="main.cpp" line="86"/>
         <location filename="main.cpp" line="89"/>
         <source>directly start the game launcher with the specified profile</source>
-        <translation type="unfinished"></translation>
+        <translation>mulai peluncur langsung dengan profil yang dipilih</translation>
     </message>
 </context>
 </TS>
