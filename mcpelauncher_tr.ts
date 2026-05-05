@@ -49,8 +49,8 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished">Minecraft için oyun launcheri bulunamadı (&amp;1) &#xa0;
-Lütfen launcheri
+        <translation>Minecraft için oyun launcheri bulunamadı (&amp;1) &#xa0;
+Lütfen launcheri yeniden başlatın
 </translation>
     </message>
     <message>
@@ -148,27 +148,27 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="14"/>
         <source>Gamepad Tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolcü Aracısı</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="24"/>
         <source>No Gamepads Found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolcü bulunamadı!</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="30"/>
         <source>Ensure the gamepad is connected correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolcünün iyi bağlı olduğuna iyi bakın.</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="47"/>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="75"/>
         <source>GUID</source>
-        <translation type="unfinished"></translation>
+        <translation>GUID</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
@@ -183,7 +183,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekleniyor</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
@@ -193,17 +193,17 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
         <source>Save to current profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Şimdiki profile kaydet</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="241"/>
         <source>Save to default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasik klasöre kaydet</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="261"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapat</translation>
     </message>
 </context>
 <context>
@@ -216,12 +216,12 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Compatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyumlu</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>Incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklemiyor</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Googleplay API si hazır değil. Durum=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
@@ -248,12 +248,12 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynayamazsın</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>Oyun çalışmıyor</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
@@ -263,13 +263,13 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation type="unfinished"></translation>
+        <translation>Günlüğe bak</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
         <location filename="qml/HomeScreen.qml" line="130"/>
         <source>Action required</source>
-        <translation type="unfinished"></translation>
+        <translation>Aksiyon gerekli</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="108"/>
