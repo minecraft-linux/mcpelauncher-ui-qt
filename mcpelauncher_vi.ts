@@ -976,7 +976,7 @@ Dự án này không liên quan đến Minecraft, Mojang hoặc Microsoft.</tran
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished">Discord</translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
