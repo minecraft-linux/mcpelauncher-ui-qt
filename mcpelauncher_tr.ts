@@ -115,7 +115,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="63"/>
         <source>Game has exited with a non-zero error code. &lt;a href=&apos;%1&apos;&gt;Click here if you would like to open an issue.&lt;/a&gt;</source>
-        <translation>Oyun hata kodu olmadan kapatıldı.&lt;a href=&apos;%1!&gt; Buraya tıklayarak bir ticket açabilirsiniz &lt;/a&gt;</translation>
+        <translation>Oyun hata kodu olmadan kapatıldı.&lt;a href=&apos;%1!&gt; Sorun bildirmek isterseniz buraya tıklayın. &lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/GameLogScreen.qml" line="76"/>
@@ -140,7 +140,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GameLogScreen.qml" line="91"/>
         <source>Enable game log in settings and relaunch the game to get error log.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlardan oyun loglarını etkinleştirin ve hata logunu almak için oyunu yeniden başlatın.</translation>
     </message>
 </context>
 <context>
@@ -173,12 +173,12 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="89"/>
         <source>Has Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritalama Var</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="103"/>
         <source>Set Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritalama Yapılandır</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="139"/>
@@ -188,7 +188,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/GamepadTool.qml" line="206"/>
         <source>Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritalama</translation>
     </message>
     <message>
         <location filename="qml/GamepadTool.qml" line="236"/>
@@ -211,7 +211,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
         <source>&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; is %2%3&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="googleloginhelper.cpp" line="191"/>
@@ -229,17 +229,17 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="googleplayapi.cpp" line="38"/>
         <source>GooglePlayApi not Ready status=%1</source>
-        <translation>Googleplay API si hazır değil. Durum=%1</translation>
+        <translation>GooglePlayApi hazır değil. Durum=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="114"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi already in progress status reporting not working status=%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Lütfen bu hatayı bildirin&lt;/b&gt;&lt;br&gt;GooglePlayApi halihazırda ilerleme sürecindeyken durum raporlama çalışmıyor=%1</translation>
     </message>
     <message>
         <location filename="googleplayapi.cpp" line="120"/>
         <source>&lt;b&gt;Please report this error&lt;/b&gt;&lt;br&gt;GooglePlayApi needs the loginHelper</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Lütfen bu hatayı bildirin&lt;/b&gt;&lt;br&gt;GooglePlayApi&apos;nin loginHelper&apos;e ihtiyacı var</translation>
     </message>
 </context>
 <context>
@@ -248,22 +248,22 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
         <location filename="qml/HomeScreen.qml" line="34"/>
         <location filename="qml/HomeScreen.qml" line="348"/>
         <source>Play</source>
-        <translation>Oynayamazsın</translation>
+        <translation>Oyna</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="99"/>
         <source>Game is running</source>
-        <translation>Oyun çalışmıyor</translation>
+        <translation>Oyun çalışıyor</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="100"/>
         <source>Exit game to edit or change profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profili değiştirmek veya düzenleme yapmak için oyundan çıkın.</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="101"/>
         <source>View log</source>
-        <translation>Günlüğe bak</translation>
+        <translation>Günlüğü incele</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="107"/>
