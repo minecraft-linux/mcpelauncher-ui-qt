@@ -336,7 +336,8 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
         <location filename="qml/HomeScreen.qml" line="168"/>
         <source>One Joystick cannot be used as Gamepad Input:
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir joystick Gamepad Girişi olarak kullanılamaz: &#xa0;
+%1</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="169"/>
@@ -347,7 +348,7 @@ veya Başlatıcının bozulması gibi sorunlar olabilir.</translation>
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneme Modu Aktif</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
