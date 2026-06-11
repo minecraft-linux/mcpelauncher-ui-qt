@@ -13,7 +13,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekhraj l-apk</translation>
     </message>
 </context>
 <context>
@@ -21,12 +21,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>nix machi official l-launcher ta3 Miecraft</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (build %2)</translation>
     </message>
 </context>
 <context>
@@ -34,12 +34,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Changelog</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Kemmel</translation>
     </message>
 </context>
 <context>
@@ -49,7 +49,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Makanch l-launcher l Minecranf
+T3ich zid l-launcher lel-&apos;PATH&apos; w 3awed adkhol lel-launcher
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -58,7 +60,11 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation ta3 Minecraft marahich metwafqa, t3ich khayyer version waħdokhra wla version qdima
+Had l-launcher Meftouħ l-maṡdar w baaŧl win mindak yefsed ida jaw lé mizajours ta3 Google Play
+Mindak win ykouno dossiat l-le3ba naqṡin
+Symbols Naqṡin rahom metwaq3in bch yetwfro hna b lé mizajours
+Wla Kapable l-launcher yeħbes</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
