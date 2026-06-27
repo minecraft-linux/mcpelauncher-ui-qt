@@ -1402,22 +1402,22 @@ Dieses Projekt ist steht nicht im bezug zu Minecraft, Mojang oder Microsoft.</tr
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
         <source>The specified file is not a valid Minecraft apk, it doesn&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Datei ist keine Akzeptierte Minecraft App, weil es kein libminecraftpe.so beinhaltet</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="110"/>
         <source>The specified files are not a valid collection of Minecraft apks, they don&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Dateien sind keine Akzeptierten Minecraft apks, weil sie kein libminecaft.so enthalten</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Akzeptierte Minecraft apk CPU </translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
         <source>No Minecraft apk&apos;s are valid for this pc / launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Minecraft apk‘s für diesen PC/Launcher verfügbar</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="136"/>
