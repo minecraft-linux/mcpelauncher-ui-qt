@@ -6,7 +6,7 @@
     <message>
         <location filename="qml/ApkImportHelper.qml" line="59"/>
         <source>The specified file is not compatible with the launcher&lt;br/&gt;Login to Google Play with an account owning Minecraft ( Playstore ) and let the launcher download compatible versions, including previous versions of Minecraft&lt;br/&gt;Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier spécifié n&apos;est pas compatible avec le launcher&lt;br/&gt;Connectez-vous à Google Play avec un compte possédant Minecraft (Playstore) et laissez le launcher télécharger les versions compatibles, y compris les versions précédentes de Minecraft&lt;br/&gt;Détails&#xa0;:&lt;br/&gt;%1</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
     <message>
         <location filename="qml/ApkImportWindow.qml" line="33"/>
         <source>Extracting the .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>Extraction du .apk</translation>
     </message>
 </context>
 <context>
@@ -22,12 +22,12 @@
     <message>
         <location filename="qml/BaseScreen.qml" line="19"/>
         <source>Unofficial *nix launcher for Minecraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Launcher *nix non-officiel pour Minecraft</translation>
     </message>
     <message>
         <location filename="qml/BaseScreen.qml" line="20"/>
         <source>%1 (build %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (compilation %2)</translation>
     </message>
 </context>
 <context>
@@ -35,12 +35,12 @@
     <message>
         <location filename="qml/ChangelogScreen.qml" line="15"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique des changements</translation>
     </message>
     <message>
         <location filename="qml/ChangelogScreen.qml" line="41"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuer</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,9 @@
         <source>Could not find the gamelauncher for Minecraft (%1)
 Please add the launcher &apos;%2&apos; to your &apos;PATH&apos; (environmentvariable) and restart the launcher
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver le launcher de jeu pour Minecraft (%1)
+Veuillez ajouter le launcher &apos;%2&apos; à votre variable d&apos;environement &apos;PATH&apos; et redémarrer le launcher
+</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="234"/>
@@ -59,7 +61,11 @@ This Launcher is a free Open Source Software which usually fell behind official 
 In some cases there are missing game files,
 missing Symbols expected to be provided by this Launcher via updates
  or otherwise broke the Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Installation Minecraft incompatible, veuillez sélectionner une version différente ou plus ancienne
+Ce launcher est un logiciel Open Source gratuit qui est souvent en retard par rapport aux mises à jour officielles de Google Play
+Dans certains cas il manque des fichiers de jeu,
+ou des symboles qui seront fournis par ce launcher via des mises à jour
+.ou qui d&apos;une autre façon ont causé une interruption du launcher</translation>
     </message>
     <message>
         <location filename="gamelauncher.cpp" line="238"/>
