@@ -344,7 +344,7 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="180"/>
         <source>Trial Mode Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>お試しモードが有効</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="182"/>
@@ -354,12 +354,12 @@ missing Symbols expected to be provided by this Launcher via updates
     <message>
         <location filename="qml/HomeScreen.qml" line="183"/>
         <source>You must first buy &quot;Minecraft Trial&quot; on an Android device or VM to download it here. </source>
-        <translation type="unfinished"></translation>
+        <translation>ダウンロードするためには、まず&quot;Minecraft Trial&quot;をAndroid端末またはVMで購入する必要があります。 </translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="189"/>
         <source>Play Version is behind</source>
-        <translation type="unfinished"></translation>
+        <translation>遊んでいるバージョンは古いです</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="190"/>
@@ -396,7 +396,8 @@ missing Symbols expected to be provided by this Launcher via updates
         <location filename="qml/HomeScreen.qml" line="217"/>
         <source>
 You can try this launcher for free by enabling the trial mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+お試しモードを有効にすることでこのランチャーを無料で試せます。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="226"/>
@@ -452,7 +453,7 @@ You can try this launcher for free by enabling the trial mode.</source>
     <message>
         <location filename="qml/HomeScreen.qml" line="655"/>
         <source>Latest Minecraft Version %1 is a beta version, which is hidden by default.</source>
-        <translation type="unfinished"></translation>
+        <translation> Minecraft 最新バージョン %1 はデフォルトでは隠されているベータ版です。</translation>
     </message>
     <message>
         <location filename="qml/HomeScreen.qml" line="679"/>
@@ -522,7 +523,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/MainNavigation.qml" line="46"/>
         <source>Game Log</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームログ</translation>
     </message>
     <message>
         <location filename="qml/MainNavigation.qml" line="53"/>
@@ -540,7 +541,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/Components/ModsGrid.qml" line="143"/>
         <source>Load more Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>もっとModを見る</translation>
     </message>
 </context>
 <context>
@@ -550,7 +551,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/ModsScreen.qml" line="34"/>
         <location filename="qml/ModsScreen.qml" line="179"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="37"/>
@@ -565,7 +566,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ModsScreen.qml" line="87"/>
         <source>Welcome to our experimental mods section.</source>
-        <translation type="unfinished"></translation>
+        <translation>実験的なModセクションへようこそ。</translation>
     </message>
     <message>
         <location filename="qml/ModsScreen.qml" line="96"/>
@@ -633,7 +634,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/NewsScreen.qml" line="144"/>
         <source>Load more articles</source>
-        <translation type="unfinished"></translation>
+        <translation>もっと記事を見る</translation>
     </message>
 </context>
 <context>
@@ -701,7 +702,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="179"/>
         <source>beta</source>
-        <translation type="unfinished"></translation>
+        <translation>ベータ</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="242"/>
@@ -711,7 +712,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="286"/>
         <source>Texture Patch</source>
-        <translation type="unfinished"></translation>
+        <translation>テクスチャパッチ</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="340"/>
@@ -736,7 +737,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
         <source>Collapse advanced  🞁</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">閉じる  🞁</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="479"/>
@@ -751,7 +752,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="497"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>名前をつけて保存</translation>
     </message>
     <message>
         <location filename="qml/ProfileEditPopup.qml" line="506"/>
@@ -809,35 +810,35 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="supportedandroidabis.cpp" line="121"/>
         <source>Not an armv7 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Armv7 システムではありません</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="122"/>
         <location filename="supportedandroidabis.cpp" line="142"/>
         <source>Not an aarch64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>Aarch64 システムではありません</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="137"/>
         <source>Disabled in this Launcher Release</source>
-        <translation type="unfinished"></translation>
+        <translation>このランチャーリリースでは無効です</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="139"/>
         <location filename="supportedandroidabis.cpp" line="143"/>
         <source>Not a x86 System</source>
-        <translation type="unfinished"></translation>
+        <translation>X86 システムではありません</translation>
     </message>
     <message>
         <location filename="supportedandroidabis.cpp" line="140"/>
         <location filename="supportedandroidabis.cpp" line="144"/>
         <source>Not a x86_64 System</source>
-        <translation type="unfinished"></translation>
+        <translation>x86_64 システムではありません</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="34"/>
         <source>Appimage cannot be updated&lt;br/&gt;Expected Environmentvariable &apos;APPIMAGE&apos; to be set to the path of the AppImage</source>
-        <translation type="unfinished"></translation>
+        <translation>Appimageを更新できません&lt;br/&gt;環境変数 &apos;APPIMAGE&apos; にはAppimageのパスが設定されている必要があります</translation>
     </message>
     <message>
         <location filename="updatechecker.cpp" line="54"/>
@@ -858,22 +859,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="updatechecker.cpp" line="82"/>
         <source>Failed to check for update&lt;br/&gt;Failed to connect to update server</source>
-        <translation type="unfinished"></translation>
+        <translation>更新を確認できませんでした&lt;br/&gt;更新サーバーに接続できません</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="72"/>
         <source>Trying to import a forbidden apk</source>
-        <translation type="unfinished"></translation>
+        <translation>禁止されたapkを取り込もうとしています</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="75"/>
         <source>Trying to extract multiple apks with different versionsCodes is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョンコードの異なるapk群を展開することはできません</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="77"/>
         <source>Trying to extract multiple apks with different package is forbidden</source>
-        <translation type="unfinished"></translation>
+        <translation>異なるパッケージのapk群を同時に展開することはできません</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="99"/>
@@ -883,17 +884,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="apkextractiontask.cpp" line="108"/>
         <source>The specified file is not a valid Minecraft apk, it doesn&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>指定されたファイルにはlibminecraftpe.soが含まれておらず、有効なMinecraft apkではありません</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="110"/>
         <source>The specified files are not a valid collection of Minecraft apks, they don&apos;t contain libminecraftpe.so</source>
-        <translation type="unfinished"></translation>
+        <translation>指定されたファイル群にはlibminecraftpe.soが含まれていないため、有効なMinecraft apksのコレクションではありません</translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="119"/>
         <source>Valid Minecraft apk CPU architectures for this pc / launcher are </source>
-        <translation type="unfinished"></translation>
+        <translation>このPCとランチャーで有効なCPUアーキテクチャは、 </translation>
     </message>
     <message>
         <location filename="apkextractiontask.cpp" line="125"/>
@@ -937,19 +938,19 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>不明なエラー</translation>
     </message>
     <message>
         <location filename="downloadtask.cpp" line="338"/>
         <location filename="googleapkdownloadtask.cpp" line="209"/>
         <source>CURL Network error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CURLネットワークエラー: %1</translation>
     </message>
     <message>
         <location filename="googleapkdownloadtask.cpp" line="235"/>
         <location filename="googleapkdownloadtask.cpp" line="239"/>
         <source>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%2&quot;&gt;%1&lt;/a&gt;: %2&lt;br/&gt;</translation>
     </message>
 </context>
 <context>
@@ -957,27 +958,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="24"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャー</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="33"/>
         <source>Version: %1&lt;br/&gt;Build: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン: %1&lt;br/&gt;ビルド: %2</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="42"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="45"/>
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation>Discord</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="48"/>
         <source>Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="69"/>
@@ -992,17 +993,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="90"/>
         <source>Reset Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャー設定をリセット</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="101"/>
         <source>Please reopen the Launcher to see the changes</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャーを開き直して変更を確認してください</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>An Update of the Launcher is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャーの更新がダウンロード可能です</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
@@ -1012,17 +1013,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="121"/>
         <source>Do you want to update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>今すぐ更新しますか？</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="124"/>
         <source>Your installed Launcher Version %1 (build %2) seems uptodate</source>
-        <translation type="unfinished"></translation>
+        <translation>インストールされたランチャーバージョン %1 (ビルド %2)は最新版です</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="133"/>
         <source>Update failed</source>
-        <translation type="unfinished"></translation>
+        <translation>更新に失敗しました</translation>
     </message>
     <message>
         <location filename="qml/SettingsAboutSection.qml" line="138"/>
@@ -1045,7 +1046,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="38"/>
         <source>Show incompatible versions</source>
-        <translation type="unfinished"></translation>
+        <translation>互換性のないバージョンを表示</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="44"/>
@@ -1055,7 +1056,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="53"/>
         <source>Show Beta Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>ベータ版を表示</translation>
     </message>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="67"/>
@@ -1070,7 +1071,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsDevSection.qml" line="134"/>
         <source>Download only the apk</source>
-        <translation type="unfinished"></translation>
+        <translation>apkだけをダウンロード</translation>
     </message>
 </context>
 <context>
@@ -1078,72 +1079,72 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="18"/>
         <source>Google Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Googleアカウント</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="41"/>
         <source>(Press to reveal)</source>
-        <translation type="unfinished"></translation>
+        <translation>(押して表示)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign out</source>
-        <translation type="unfinished"></translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="64"/>
         <source>Sign in</source>
-        <translation type="unfinished"></translation>
+        <translation>ログイン</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="77"/>
         <source>Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャー</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="82"/>
         <source>Hide the launcher when starting the game</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲーム開始時にランチャーを隠す</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="89"/>
         <source>Disable the GameLog</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームログを無効化</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="95"/>
         <source>Enable checking for updates (on opening)</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時の更新確認を有効化</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="101"/>
         <source>Show all notification banners</source>
-        <translation type="unfinished"></translation>
+        <translation>すべての通知バナーを表示</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="107"/>
         <source>Show exit button in navigation bar</source>
-        <translation type="unfinished"></translation>
+        <translation>ナビゲーションバーに終了ボタンを表示</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="113"/>
         <source>ChromeOS Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ChromeOSモード</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="119"/>
         <source>Trial Mode (implies ChromeOS Mode)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">お試しモード(ChromeOSモード)</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="125"/>
         <source>Keep Apks in &lt;GameData&gt;/apks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;GameData&gt;/apks にapkを保つ</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="132"/>
         <source>Run troubleshooter</source>
-        <translation type="unfinished"></translation>
+        <translation>トラブルシューティングを実行</translation>
     </message>
     <message>
         <location filename="qml/SettingsGeneralSection.qml" line="137"/>
@@ -1166,27 +1167,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsScreen.qml" line="15"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="21"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="24"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>ストレージ</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="27"/>
         <source>Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="30"/>
         <source>Dev</source>
-        <translation type="unfinished"></translation>
+        <translation>開発</translation>
     </message>
     <message>
         <location filename="qml/SettingsScreen.qml" line="35"/>
@@ -1199,12 +1200,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack</source>
-        <translation type="unfinished"></translation>
+        <translation>ワールドかパックを取り込む</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="13"/>
         <source>Import World or Pack (pending until launch)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ワールドかパックを取り込む(起動まで保留)</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="41"/>
@@ -1219,17 +1220,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="52"/>
         <source>Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームディレクトリ</translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="59"/>
         <source>Game directories for current selected profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたプロファイル用のゲームディレクトリ: </translation>
     </message>
     <message>
         <location filename="qml/SettingsStorageSection.qml" line="84"/>
         <source>Default Game Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトのゲームディレクトリ</translation>
     </message>
 </context>
 <context>
@@ -1252,22 +1253,22 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="217"/>
         <source>Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>選択した項目を削除</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="234"/>
         <source>Download .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>apkをダウンロード</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import trial .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>お試し版apkを取り込む</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="247"/>
         <source>Import .apk</source>
-        <translation type="unfinished"></translation>
+        <translation>apkを取り込む</translation>
     </message>
     <message>
         <location filename="qml/SettingsVersionsSection.qml" line="254"/>
@@ -1280,7 +1281,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
         <source>Zenity utility not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenity ユーティリティが見つかりません</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="15"/>
@@ -1290,7 +1291,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
         <source>Game launcher not found</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームランチャーが見つかりません</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="25"/>
@@ -1306,28 +1307,29 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="troubleshooter.cpp" line="32"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v`: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>`mcpelauncher-client -v` の実行でエラーが発生しました: %1</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="38"/>
         <source>An error occurred while trying to run `mcpelauncher-client -v` exit code: %1, log:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>`mcpelauncher-client -v`の実行でエラーが発生しました。 終了コード: %1, ログ:
+%2</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="55"/>
         <source>Software rendering</source>
-        <translation type="unfinished"></translation>
+        <translation>ソフトウェアレンダリング</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>MSA daemon could not be found</source>
-        <translation type="unfinished"></translation>
+        <translation>MSAデーモンが見つかりません</translation>
     </message>
     <message>
         <location filename="troubleshooter.cpp" line="58"/>
         <source>The MSA component has not been installed properly. Xbox Live login may not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>MSAコンポーネントが正しくインストールされていないため、 Xbox Liveのログインは動作しない可能性があります。</translation>
     </message>
 </context>
 <context>
@@ -1335,12 +1337,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="19"/>
         <source>Troubleshooting</source>
-        <translation type="unfinished"></translation>
+        <translation>トラブルシューティング</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="74"/>
         <source>&lt;a href=&quot;%1&quot;&gt;Go to wiki&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;Wikiに移動&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="101"/>
@@ -1351,17 +1353,17 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
         <source>You need to sign in with a Google Account owning the Game</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームを所有しているGoogleアカウントでログインする必要があります</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="102"/>
         <source>You need to sign in again and / or restart the launcher to fix it.</source>
-        <translation type="unfinished"></translation>
+        <translation>再度ログインするか、ランチャーを再起動して修正する必要があります。</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="108"/>
         <source>I cannot select / see older Versions of the Game?</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームの古いバージョンを選択または確認できませんか？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="109"/>
@@ -1376,7 +1378,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="115"/>
         <source>&quot;Show Beta Versions&quot; is disabled or greyed out?</source>
-        <translation type="unfinished"></translation>
+        <translation>「ベータ版を表示」は無効になっていますか、またはグレーアウトしますか？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="116"/>
@@ -1386,27 +1388,27 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="123"/>
         <source>Failed to initialize Google Play API</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Play APIを初期化できません</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="124"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playApi is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>インターネット接続を確認するか、もう一度Google Playにログインしてください&lt;br/&gt;playApiのステータスコードは %1 です</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="131"/>
         <source>Failed to obtain the gameversion</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームバージョンを取得できません</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="132"/>
         <source>Please check your internet connection and / or login to Google Play again&lt;br/&gt;Statuscode of playVerChannel is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>インターネット接続を確認するか、もう一度Google Playにログインしてください&lt;br/&gt;playVerChannelのステータスコードは %1 です</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="137"/>
         <source>Why is the play button disabled for some versions?</source>
-        <translation type="unfinished"></translation>
+        <translation>なぜ一部のバージョンで「プレイ」ボタンが無効になっているのですか？</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="138"/>
@@ -1416,12 +1418,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="144"/>
         <source>No issues found</source>
-        <translation type="unfinished"></translation>
+        <translation>問題が見つかりませんでした</translation>
     </message>
     <message>
         <location filename="qml/TroubleshooterWindow.qml" line="145"/>
         <source>No launcher installation issues were found.</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャーインストールに問題が見つかりませんでした。</translation>
     </message>
 </context>
 <context>
@@ -1444,12 +1446,12 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnlockScreen.qml" line="54"/>
         <source>Password is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>パスワードが無効</translation>
     </message>
     <message>
         <location filename="qml/UnlockScreen.qml" line="100"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>続行</translation>
     </message>
 </context>
 <context>
@@ -1457,7 +1459,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="18"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>情報</translation>
     </message>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="26"/>
@@ -1467,7 +1469,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/UnsupportedScreen.qml" line="45"/>
         <source>I know what I&apos;m doing</source>
-        <translation type="unfinished"></translation>
+        <translation>自分がしていることを理解している</translation>
     </message>
 </context>
 <context>
@@ -1475,32 +1477,32 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="13"/>
         <source>Linux Minecraft Launcher</source>
-        <translation type="unfinished"></translation>
+        <translation>LinuxのMinecraftランチャー</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="65"/>
         <source>&lt;b&gt;Cannot initialize Google Play Access&lt;/b&gt;, Details:&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Google Playアクセスを初期化できません&lt;/b&gt; 詳細：&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="69"/>
         <source>&lt;b&gt;Cannot Access App Details&lt;/b&gt; (%1), Details:&lt;br/&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;アプリの詳細にアクセスできません&lt;/b&gt; (%1) 詳細：&lt;br/&gt;%2</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="117"/>
         <source>Connecting to Google Play failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Playに接続できません</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="122"/>
         <source>Launcher Error</source>
-        <translation type="unfinished"></translation>
+        <translation>ランチャーエラー</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="142"/>
         <source>Unsupported Minecraft Version</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートされていない Minecraft バージョン</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="143"/>
@@ -1515,7 +1517,7 @@ This project is not affiliated with Minecraft, Mojang or Microsoft.</source>
     <message>
         <location filename="qml/main.qml" line="193"/>
         <source>Game is running</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲームを実行中</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="194"/>
@@ -1526,7 +1528,7 @@ Hint: Press ignore to just close the Launcher UI</source>
     <message>
         <location filename="qml/main.qml" line="212"/>
         <source>Please restart</source>
-        <translation type="unfinished"></translation>
+        <translation>再起動してください</translation>
     </message>
     <message>
         <location filename="qml/main.qml" line="213"/>
@@ -1543,7 +1545,7 @@ Please login again
     <message>
         <location filename="main.cpp" line="78"/>
         <source>Developer Mode - Enable unsafe Launcher Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>開発者モード - 安全でないランチャー設定を有効にする</translation>
     </message>
     <message>
         <location filename="main.cpp" line="82"/>
