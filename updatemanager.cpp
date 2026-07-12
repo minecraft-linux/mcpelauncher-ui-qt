@@ -47,24 +47,25 @@ void UpdateManager::checkForUpdatesInModDb() {
                 if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
                     isApplicable = true;
                     break;
-                }   
+                }
             }
             if(!isApplicable) {
                 continue;
             }
             QString version = it->toMap().value("version").toString();
             auto result = m_modManager.loadMod(mod.name, version, maxKnownVersionAbi);
+            QVariantMap metadata;
+            metadata["metadata"] = mod.metadata;
+            metadata["version"] = it->toMap();
+            metadata["arch"] = maxKnownVersionAbi;
             if (result.value("metadata").isNull()) {
                 QString downloadUrl = it->toMap().value("assets").toMap().value(maxKnownVersionAbi).toString();
-                QVariantMap metadata;
-                metadata["metadata"] = mod.metadata;
-                metadata["version"] = it->toMap();
-                metadata["arch"] = maxKnownVersionAbi;
                 emit updateAvailable(mod.name, version, maxKnownVersionAbi, downloadUrl, metadata);
-                return;
             } else {
-                emit updateAvailable(mod.name, version, maxKnownVersionAbi, QString(), result);
+                m_modManager.saveMod(mod.name, version, maxKnownVersionAbi, metadata);
+                emit updateAvailable(mod.name, version, maxKnownVersionAbi, QString(), metadata);
             }
+            return;
         }
     }
     emit noUpdateAvailable();
