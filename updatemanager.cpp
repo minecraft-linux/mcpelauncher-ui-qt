@@ -5,97 +5,89 @@
 #include <QtCore/qstandardpaths.h>
 #include <QVersionNumber>
 #include <QtConcurrent>
+#include <QDebug>
+
+static QVariant versionsInfoProperty(const QVariant& v, const char* n) {
+    if(v.canConvert<QObject*>()) {
+        QObject *obj = qvariant_cast<QObject*>(v);
+        return obj ? obj->property(n) : QVariant();
+    }
+    return v.toMap()[n];
+}
 
 UpdateManager::UpdateManager(QObject *parent)
     : QObject(parent)
 {
-    connect(&m_modManager, &ModManager::modListUpdated, this, [this]() {
-        // QMap<QString, ModInfo> currentVersions;
-        // for (const ModInfo& mod : m_modManager.listMods()) {
-        //     // if (mod.name == "mcpelauncher-update") {
-        //     //     // Current version is up-to-date
-        //     //     return;
-        //     // }
-        //     auto&& previousVersion = currentVersions[mod.name];
-        //     if (previousVersion.version.isEmpty() || previousVersion.version < mod.version) {
-        //         currentVersions[mod.name] = mod;
-        //     }
-        //     QVersionNumber::fromString(mod.version);
-        // }
+    connect(&m_modManager, &ModManager::modListUpdated, this, &UpdateManager::checkForUpdatesInModDb);
+}
 
-        // for(auto&& path : m_profileManager.activeProfile()->mods) {
-        //     //m_modManager.loadMod(path);
-        // }
-        if(m_versionList->versions().isEmpty()) {
-            emit noUpdateAvailable();
-            return;
-        }
-        auto&& maxKnownVersion = m_versionList->versions().first()->property("versionCode").toInt();
-        auto&& maxKnownVersionAbi = m_versionList->versions().first()->property("abi").toString();
+void UpdateManager::checkForUpdatesInModDb() {
+    std::unique_lock<std::mutex> l{sync, std::try_to_lock};
+    if(!l.owns_lock()) {
+        qDebug() << "Cancel concurrent checkForUpdatesInModDb";
+        return;
+    }
+    if(m_versionList.empty()) {
+        emit noUpdateAvailable();
+        return;
+    }
+    auto&& maxKnownVersion = versionsInfoProperty(m_versionList.first(), "versionCode").toInt();
+    auto&& maxKnownVersionAbi = versionsInfoProperty(m_versionList.first(), "abi").toString();
 
-        // for(auto&& path : m_profileManager.activeProfile()->mods) {
-        //     //m_modManager.loadMod(path);
-        // }
-
-        // For simplicity, we assume the first mod named "mcpelauncher-update" is the update mod.
-        for (const ModInfo& mod : m_modManager.remoteMods()) {
-            auto vList = mod.metadata.value("versions").toList();
-            for(auto it = vList.rbegin(); it != vList.rend(); ++it) {
-                if(it->toMap().value("compatVersion").toInt() > maxKnownVersion) {
-                    continue;
-                }
-                auto extraVersions = it->toMap().value("extraVersions").toList();
-                bool isApplicable = false;
-                for(auto et = extraVersions.rbegin(); et != extraVersions.rend(); ++et) {
-                    auto codes = et->toMap().value("codes").toMap();
-                    if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
-                        isApplicable = true;
-                        break;
-                    }   
-                }
-                if(!isApplicable) {
-                    continue;
-                }
-                QString version = it->toMap().value("version").toString();
-                auto result = m_modManager.loadMod(mod.name, version, maxKnownVersionAbi);
-                if (result.value("metadata").isNull()) {
-                    QString downloadUrl = it->toMap().value("assets").toMap().value(maxKnownVersionAbi).toString();
-                    QVariantMap metadata;
-                    metadata["metadata"] = mod.metadata;
-                    metadata["version"] = it->toMap();
-                    metadata["arch"] = maxKnownVersionAbi;
-                    emit updateAvailable(mod.name, version, maxKnownVersionAbi, downloadUrl, metadata);
-                    return;
-                } else {
-                    emit updateAvailable(mod.name, version, maxKnownVersionAbi, QString(), result);
+    for (const ModInfo& mod : m_modManager.remoteMods()) {
+        auto vList = mod.metadata.value("versions").toList();
+        for(auto it = vList.rbegin(); it != vList.rend(); ++it) {
+            if(it->toMap().value("compatVersion").toInt() > maxKnownVersion) {
+                continue;
+            }
+            auto extraVersions = it->toMap().value("extraVersions").toList();
+            bool isApplicable = false;
+            for(auto et = extraVersions.rbegin(); et != extraVersions.rend(); ++et) {
+                auto codes = et->toMap().value("codes").toMap();
+                if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
+                    isApplicable = true;
+                    break;
                 }
             }
-
-            // if (mod.name == "mcpelauncher-updates") {
-            //     auto vList = mod.metadata.value("versions").toList();
-                
-            //     for(auto it = vList.rbegin(); it != vList.rend(); ++it) {
-            //         QString version = it->toMap().value("version").toString();
-            //         if (availableVersion > currentVersion) {
-            //             QString downloadUrl = it->toMap().value("assets").toMap().value("arm64-v8a").toString();
-            //             emit updateAvailable(mod.name, version, {{"arm64-v8a", downloadUrl}}, it->toMap());
-            //             return;
-            //         }
-            //     }
-
-            //     QString latestVersion = vList.rbegin()->toMap().value("version").toString();
-            //     QString downloadUrl = vList.rbegin()->toMap().value("assets").toMap().value("arm64-v8a").toString();
-            //     emit updateAvailable(latestVersion, downloadUrl);
-            //     return;
-            // }
+            if(!isApplicable) {
+                continue;
+            }
+            QString version = it->toMap().value("version").toString();
+            auto result = m_modManager.loadMod(mod.name, version, maxKnownVersionAbi);
+            QVariantMap metadata;
+            metadata["metadata"] = mod.metadata;
+            metadata["version"] = it->toMap();
+            metadata["arch"] = maxKnownVersionAbi;
+            if (result.value("metadata").isNull()) {
+                QString downloadUrl = it->toMap().value("assets").toMap().value(maxKnownVersionAbi).toString();
+                emit updateAvailable(mod.name, version, maxKnownVersionAbi, downloadUrl, metadata);
+            } else {
+                m_modManager.saveMod(mod.name, version, maxKnownVersionAbi, metadata);
+                emit updateAvailable(mod.name, version, maxKnownVersionAbi, QString(), metadata);
+            }
+            return;
         }
-        emit noUpdateAvailable();
-    });
+    }
+    emit noUpdateAvailable();
 }
 
 Q_INVOKABLE void UpdateManager::checkForUpdates()
 {
-    m_modManager.downloadModList();
+    qDebug() << "UpdateManager::checkForUpdates()";
+    if(getenv("SAFE_MODE")) {
+        qDebug() << "UpdateManager::checkForUpdates() dropping due to SAFE_MODE";
+        return;
+    }
+    bool e = false;
+    if(checkedForUpdates.compare_exchange_weak(e, true)) {
+        qDebug() << "UpdateManager::checkForUpdates() downloadModList for checking";
+        m_modManager.downloadModList();
+    } else if(!m_modManager.remoteMods().empty()) {
+        qDebug() << "UpdateManager::checkForUpdates() checkForUpdatesInModDb";
+        checkForUpdatesInModDb();
+    } else {
+        qDebug() << "UpdateManager::checkForUpdates() request dropped";
+    }
 }
 
 Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString& version, const QString& arch, const QString& url, const QVariantMap& metadata)
@@ -144,7 +136,7 @@ Q_INVOKABLE void UpdateManager::downloadUpdate(const QString& mod, const QString
             }
         }));
         connections->append(QObject::connect(extractTask, &QThread::finished, extractTask, [connections, extractTask]() {
-            QtConcurrent::run([connections, extractTask]() {
+            QThreadPool::globalInstance()->start([connections, extractTask]() {
                 extractTask->wait();
                 delete extractTask;
                 delete connections;

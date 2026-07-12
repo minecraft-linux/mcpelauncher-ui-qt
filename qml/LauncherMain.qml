@@ -83,7 +83,7 @@ LauncherBase {
             setProgressbarValue(p)
         }
 
-        versionList: versionManager.archivalVersions
+        versionList: versionManager.availableArchivalVersions
         maxCompatVersion: 0
 
         property var hasUpdate: false
@@ -96,6 +96,7 @@ LauncherBase {
 
         onUpdateFailed: function(msg) {
             console.log("check for updates due to failure " + msg)
+            updateManager.active = false;
             updateManager.hasUpdate = false;
             updateManager.checkForUpdates();
         }
@@ -225,8 +226,8 @@ LauncherBase {
     /* utility functions */
     function launcherLatestVersionBase() {
         var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
-        for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-            var ver = versionManager.archivalVersions.versions[i]
+        for (var i = 0; i < versionManager.availableArchivalVersions.length; i++) {
+            var ver = versionManager.availableArchivalVersions[i]
             if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !ver.isBeta) {
                 for (var j = 0; j < abis.length; j++) {
                     if (ver.abi === abis[j]) {
@@ -326,7 +327,7 @@ LauncherBase {
                 }
             }
         }
-        versionManager.archivalVersions.setExtraVersions(extraVersions);
+        versionManager.setExtraVersions(extraVersions);
     }
 
     Connections {
@@ -507,8 +508,8 @@ LauncherBase {
     function launcherLatestVersion() {
         var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
         console.log("launcherLatestVersion: " + JSON.stringify(abis))
-        for (var i = 0; i < versionManager.archivalVersions.versions.length; i++) {
-            var ver = versionManager.archivalVersions.versions[i]
+        for (var i = 0; i < versionManager.availableArchivalVersions.length; i++) {
+            var ver = versionManager.availableArchivalVersions[i]
             if (playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions || !ver.isBeta) {
                 for (var j = 0; j < abis.length; j++) {
                     if (ver.abi === abis[j]) {
@@ -582,7 +583,7 @@ LauncherBase {
     }
 
     function findArchivalVersion(code) {
-        var versions = versionManager.archivalVersions.versions
+        var versions = versionManager.availableArchivalVersions
         for (var i = versions.length - 1; i >= 0; --i) {
             if (versions[i].versionCode === code || versions[i].versionCode === (code - 1000000000))
                 return versions[i]
@@ -640,7 +641,7 @@ LauncherBase {
     // Tests if it really works
     function checkLauncherLatestSupport() {
         var latestCode = launcherLatestVersionscode()
-        return versionManager.archivalVersions.versions.length == 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) != null || checkRollForward(latestCode))
+        return versionManager.availableArchivalVersions.length == 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) != null || checkRollForward(latestCode))
     }
 
     function checkRollForward(code) {
@@ -656,13 +657,13 @@ LauncherBase {
 
     // Tests for raw Google Play latest (previous default, always true)
     function checkGooglePlayLatestSupport() {
-        if (versionManager.archivalVersions.versions.length == 0) {
+        if (versionManager.availableArchivalVersions.length == 0) {
             console.log("Bug errata 1")
             rowLayout.warnMessage = qsTr("No mcpelauncher-versiondb loaded cannot check support")
             rowLayout.warnUrl = ""
             return true
         }
-        if (launcherSettings.showUnsupported || versionManager.archivalVersions.versions.length === 0) {
+        if (launcherSettings.showUnsupported || versionManager.availableArchivalVersions.length === 0) {
             console.log("Bug errata 2")
             return true
         }

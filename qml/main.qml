@@ -29,8 +29,58 @@ Window {
         chromeOS: launcherSettings.chromeOSMode || launcherSettings.trialMode
     }
 
+    function mergeVersions(versions, extraVersions) {
+        for (var i = 0; i < extraVersions.length; i++) {
+            var extra = extraVersions[i];
+            var found = false;
+
+            for (var j = 0; j < versions.length; j++) {
+                var v = versions[j];
+                if (v.versionCode === extra.versionCode &&
+                    v.abi === extra.abi) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                versions.unshift(extra);
+        }
+
+        return versions;
+    }
+
+    function updateAvailableArchivalVersions() {
+        versionManagerInstance.availableArchivalVersions = mergeVersions(versionManagerInstance._archival.slice(), versionManagerInstance.extraVersions);
+    }
+
     VersionManager {
         id: versionManagerInstance
+        property var extraVersions: [];
+        property var _archival: []
+        property var availableArchivalVersions: []
+
+        function setExtraVersions(extraVersions) {
+            if (SAFE_MODE) {
+                return;
+            }
+            versionManagerInstance.extraVersions = extraVersions;
+            versionManagerInstance.archivalVersions.setExtraVersions(extraVersions);
+            updateAvailableArchivalVersions();
+        }
+
+        Component.onCompleted: {
+            versionManagerInstance._archival = versionManagerInstance.archivalVersions.versions.slice();
+            updateAvailableArchivalVersions();
+        }
+    }
+
+    Connections {
+        target: versionManagerInstance.archivalVersions
+        onVersionsChanged: {
+            versionManagerInstance._archival = versionManagerInstance.archivalVersions.versions.slice();
+            updateAvailableArchivalVersions();
+        }
     }
 
     ProfileManager {
