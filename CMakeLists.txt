@@ -27,7 +27,11 @@ set(LAUNCHER_VERSION_CODE "" CACHE STRING "Specify the version code (integer) sh
 option(LAUNCHER_DISABLE_DEV_MODE "Disables the dev tab by default" ON)
 option(LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK "Enables checking license of the Game" ON)
 option(LAUNCHER_MACOS_HAVE_ARMLAUNCHER "Enables use of the arm launcher" ON)
-option(LAUNCHER_ENABLE_GLFW "Enables glfw integration" ON)
+set(LAUNCHER_ENABLE_GLFW_DEFAULT ON)
+if(APPLE)
+    set(LAUNCHER_ENABLE_GLFW_DEFAULT OFF)
+endif()
+option(LAUNCHER_ENABLE_GLFW "Enables glfw integration" ${LAUNCHER_ENABLE_GLFW_DEFAULT})
 
 find_package(Qt5LinguistTools)
 set(LAUNCHER_LINGUIST_RESOURCES "")
