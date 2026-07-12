@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTemporaryFile>
 #include <QMutex>
+#include <QVariantList>
 #include <zlib.h>
 #include <playapi/api.h>
 #include <utility>
@@ -25,6 +26,7 @@ class GoogleApkDownloadTask : public QObject {
     Q_PROPERTY(qint32 versionCode WRITE setVersionCode READ versionCode)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
     Q_PROPERTY(QStringList filePaths READ filePaths)
+    Q_PROPERTY(QVariantList sourceDescriptors READ sourceDescriptors NOTIFY sourceDescriptorsChanged)
     Q_PROPERTY(bool keepApks READ keepApks WRITE setKeepApks)
     Q_PROPERTY(bool dryrun MEMBER m_dryrun)
 
@@ -35,6 +37,7 @@ private:
     QMutex fileMutex;
     std::vector<std::shared_ptr<QTemporaryFile>> files;
     std::atomic_bool m_active;
+    QVariantList m_sourceDescriptors;
     bool m_keepApks = false;
     bool m_dryrun = false;
 
@@ -60,6 +63,7 @@ public:
     void setVersionCode(qint32 versionCode) { m_versionCode = versionCode; }
 
     QStringList filePaths();
+    QVariantList sourceDescriptors() const { return m_sourceDescriptors; }
 
 signals:
     void progress(qreal progress);
@@ -69,6 +73,7 @@ signals:
     void error(QString const& err);
 
     void activeChanged();
+    void sourceDescriptorsChanged();
 
     void queueDownload(playapi::proto::finsky::download::AndroidAppDeliveryData dd, bool skipMainApk);
 

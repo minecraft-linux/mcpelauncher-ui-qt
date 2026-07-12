@@ -502,6 +502,7 @@ BaseScreen {
                         return
 
                     progressBar.value = 0
+                    apkExtractionTask.oldInstallationFolder = getBaselineInstallationFolder(playDownloadTask.versionCode)
                     const rawname = getRawVersionsName()
                     const partialDownload = !needsFullDownload(rawname)
                     if (partialDownload)
@@ -590,7 +591,11 @@ BaseScreen {
         }
         onFinished: {
             if (!launcherSettings.downloadOnly) {
-                apkExtractionTask.sources = filePaths
+                if (sourceDescriptors.length > 0) {
+                    apkExtractionTask.sourceDescriptors = sourceDescriptors
+                } else {
+                    apkExtractionTask.sources = filePaths
+                }
                 apkExtractionTask.start()
             }
         }
@@ -767,6 +772,36 @@ BaseScreen {
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return profile.versionCode
         return null
+    }
+
+    function getBaselineInstallationFolder(targetCode) {
+        if (targetCode === null || targetCode === undefined)
+            return ""
+
+        const installedVersions = versionManager.versions.getAll()
+        let bestLower = null
+        let bestHigher = null
+
+        for (const version of installedVersions) {
+            if (!version)
+                continue
+            const code = version.versionCode
+            if (code === undefined || code === null || code === targetCode)
+                continue
+
+            if (code < targetCode) {
+                if (bestLower === null || code > bestLower.versionCode)
+                    bestLower = version
+            } else if (code > targetCode) {
+                if (bestHigher === null || code < bestHigher.versionCode)
+                    bestHigher = version
+            }
+        }
+
+        const baseline = bestLower !== null ? bestLower : bestHigher
+        if (baseline === null)
+            return ""
+        return versionManager.getDirectoryFor(baseline.directory)
     }
 
     function getCurrentGameDir(profile) {
