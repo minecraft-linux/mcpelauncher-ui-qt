@@ -2,7 +2,11 @@
 
 #include <playapi/util/http.h>
 
+#include <QDebug>
+
 #include <algorithm>
+#include <cerrno>
+#include <cstring>
 #include <fcntl.h>
 #include <stdexcept>
 #include <sstream>
@@ -31,27 +35,39 @@ void RemoteZipSource::startWorker() {
         throw std::runtime_error("pipe failed");
     m_readFd = pair[0];
     int writeFd = pair[1];
+    const auto startOffset = m_offset;
 #ifdef F_SETNOSIGPIPE
     fcntl(writeFd, F_SETNOSIGPIPE, 1);
 #endif
+    qDebug() << "RemoteZipSource: start worker"
+             << "offset=" << startOffset
+             << "size=" << m_size;
     m_worker = std::thread([this, writeFd](uint64_t start) {
         playapi::http_request req(m_url);
+        const auto rangeHeader = (std::stringstream() << "bytes=" << start << "-").str();
         req.set_method(playapi::http_method::GET);
         req.add_header("Accept-Encoding", "identity");
         req.add_header("Cookie", m_cookie);
         req.add_header("User-Agent", m_userAgent);
-        req.add_header("Range", (std::stringstream() << "bytes=" << start << "-").str());
+        req.add_header("Range", rangeHeader);
         req.set_follow_location(true);
         req.set_timeout(100L);
         req.set_custom_output_func([writeFd](char* data, size_t size) {
             return write(writeFd, data, size);
         });
         try {
-            req.perform();
+            qDebug() << "RemoteZipSource: HTTP GET" << QString::fromStdString(rangeHeader);
+            auto response = req.perform();
+            qDebug() << "RemoteZipSource: HTTP completed: "
+                     << "start=" << start << "status=" << response.get_status_code();
         } catch (...) {
+            qDebug() << "RemoteZipSource: HTTP request threw"
+                     << "start=" << start;
         }
+        qDebug() << "RemoteZipSource: closing write pipe"
+                 << "start=" << start;
         close(writeFd);
-    }, m_offset);
+    }, startOffset);
 }
 
 zip_source_t* RemoteZipSource::create() {
@@ -79,6 +95,7 @@ zip_int64_t RemoteZipSource::callback(void *context, void *data, zip_uint64_t le
         return sizeof(zip_stat_t);
     }
     case ZIP_SOURCE_READ: {
+        bool worker_started = false;
         while (source->m_worker.joinable() &&
                source->m_offset < source->m_pendingSeek &&
                source->m_pendingSeek < source->m_offset + 0x100000) {
@@ -86,11 +103,22 @@ zip_int64_t RemoteZipSource::callback(void *context, void *data, zip_uint64_t le
             char buf[0x1000];
             int r = read(source->m_readFd, buf, std::min(sizeof(buf), remaining));
             if (r <= 0) {
+                qDebug() << "RemoteZipSource: seek-drain read failed"
+                         << "r=" << r
+                         << "errno=" << errno
+                         << strerror(errno)
+                         << "offset=" << source->m_offset
+                         << "pending=" << source->m_pendingSeek
+                         << "remaining=" << remaining;
                 return r;
             }
             source->m_offset += (size_t) r;
         }
         if (!source->m_worker.joinable() || source->m_pendingSeek != source->m_offset) {
+            qDebug() << "RemoteZipSource: restart worker"
+                     << "joinable=" << source->m_worker.joinable()
+                     << "offset=" << source->m_offset
+                     << "pending=" << source->m_pendingSeek;
             source->m_offset = source->m_pendingSeek;
             if (source->m_worker.joinable()) {
                 close(source->m_readFd);
@@ -98,11 +126,35 @@ zip_int64_t RemoteZipSource::callback(void *context, void *data, zip_uint64_t le
                 source->m_worker.join();
             }
             source->startWorker();
+            worker_started = true;
         }
-        size_t r = read(source->m_readFd, data, len);
+        ssize_t r = read(source->m_readFd, data, len);
+        if(r == 0) {
+            if(!worker_started) {
+                qDebug() << "RemoteZipSource: main read returned 0, but worker not started, maybe corrupted?"
+                         << "offset=" << source->m_offset
+                         << "pending=" << source->m_pendingSeek
+                         << "len=" << len;
+            }
+            if (source->m_worker.joinable()) {
+                close(source->m_readFd);
+                source->m_readFd = -1;
+                source->m_worker.join();
+            }
+            return callback(context, data, len, ZIP_SOURCE_READ);
+        }
+        if (r <= 0) {
+            qDebug() << "RemoteZipSource: main read returned"
+                     << "r=" << r
+                     << "errno=" << errno
+                     << strerror(errno)
+                     << "offset=" << source->m_offset
+                     << "pending=" << source->m_pendingSeek
+                     << "len=" << len;
+        }
         if (r > 0) {
-            source->m_offset += r;
-            source->m_pendingSeek += r;
+            source->m_offset += static_cast<size_t>(r);
+            source->m_pendingSeek += static_cast<size_t>(r);
         }
         return r;
     }

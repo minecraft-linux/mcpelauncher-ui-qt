@@ -12,6 +12,7 @@
 #include <zlib.h>
 #include <memory>
 #include <sstream>
+#include <unistd.h>
 #include "versionmanager.h"
 #include "supportedandroidabis.h"
 #include "remotezipsource.h"
@@ -119,9 +120,18 @@ static void emitUnifiedProgress(ApkExtractionTask* task, size_t completed, size_
     QMetaObject::invokeMethod(task, "progress", Qt::DirectConnection, Q_ARG(qreal, value));
 }
 
-static void copyFileWithProgress(QString const& from, QString const& to, size_t totalSize,
-                                 std::function<void(size_t)> const& onProgress) {
+static void materializeReusedFile(QString const& from, QString const& to, size_t totalSize,
+                                  std::function<void(size_t)> const& onProgress) {
     QDir().mkpath(QFileInfo(to).dir().path());
+    QFile::remove(to);
+
+    auto fromBytes = QFile::encodeName(from);
+    auto toBytes = QFile::encodeName(to);
+    if (::link(fromBytes.constData(), toBytes.constData()) == 0) {
+        onProgress(totalSize);
+        return;
+    }
+
     QFile src(from);
     QFile dst(to);
     if (!src.open(QIODevice::ReadOnly))
@@ -246,8 +256,8 @@ void ApkExtractionTask::run() {
             if (!planned.shouldCopy)
                 continue;
             auto baseCompleted = globalCompletedSize;
-            copyFileWithProgress(planned.oldPath, planned.outputPath, (size_t) planned.entry.size,
-                                 [this, baseCompleted, globalTotalSize](size_t copied) {
+            materializeReusedFile(planned.oldPath, planned.outputPath, (size_t) planned.entry.size,
+                                  [this, baseCompleted, globalTotalSize](size_t copied) {
                 emitUnifiedProgress(this, baseCompleted + copied, globalTotalSize);
             });
             globalCompletedSize += (size_t) planned.entry.size;
