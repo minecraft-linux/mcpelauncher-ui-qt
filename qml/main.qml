@@ -295,15 +295,41 @@ Window {
 
     Connections {
         target: window
-        function onClosing() {
-            if (true) {
-                if (gameLauncher.running) {
-                    close.accepted = false
-                    closeRunningDialog.open()
-                } else {
-                    application.quit()
-                }
+        function onClosing(close) {
+            if (gameLauncher.running) {
+                close.accepted = false
+                closeRunningDialog.open()
+            } else {
+                application.quit()
             }
+        }
+    }
+
+    Connections {
+        target: application
+        function onClosing(close) {
+            if (gameLauncher.running) {
+                close.accepted = false
+                closeRunningDialog.open()
+            }
+        }
+    }
+
+    Shortcut {
+        sequence: StandardKey.Quit
+        onActivated: {
+            if (gameLauncher.running) {
+                closeRunningDialog.open()
+            } else {
+                application.quit()
+            }
+        }
+    }
+
+    Shortcut {
+        sequence: StandardKey.Close
+        onActivated: {
+            window.close()
         }
     }
 
