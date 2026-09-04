@@ -28,6 +28,7 @@ public:
 
 public slots:
     void setVisibleInDock(bool visible);
+    void fixWindowStyle();
 
 protected:
     bool event(QEvent*) override;

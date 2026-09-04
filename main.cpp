@@ -194,6 +194,8 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
 
+    QTimer::singleShot(200, &app, &LauncherApp::fixWindowStyle);
+
     if(!parser.isSet(requestGoogleCredentialsOption) && !isSafeMode) {
 #ifdef LAUNCHER_ENABLE_GLFW
     glfwInitHint(GLFW_JOYSTICK_HAT_BUTTONS, GLFW_FALSE);
@@ -276,8 +278,8 @@ int main(int argc, char *argv[])
         }
     }
     bool glfwNeedsInit = true;
+    int startupTicks = 40;
     QObject::connect(timer, &QTimer::timeout, [&]() {
-        // qt6.7 macOS app does not close workaround
         bool hasVisibleWindow = false;
         for(auto&& window : QGuiApplication::topLevelWindows()) {
             if(window->isVisible()) {
@@ -285,7 +287,9 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-        if(!hasVisibleWindow && !gamepadManager->gameRunning()) {
+        if(startupTicks > 0) {
+            startupTicks--;
+        } else if(!hasVisibleWindow && !gamepadManager->gameRunning()) {
             if(!glfwNeedsInit) {
                 glfwTerminate();
                 glfwNeedsInit = true;
@@ -300,7 +304,9 @@ int main(int argc, char *argv[])
             glfwInit();
             glfwNeedsInit = false;
         }
+#ifndef __APPLE__
         glfwPollEvents();
+#endif
         if(gamepadManager->enabled()) {
             for(auto&& gamepad : gamepadManager->gamepads()) {
                 GLFWgamepadstate state;
