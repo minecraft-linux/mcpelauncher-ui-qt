@@ -673,9 +673,6 @@ Popup {
         if (adjustVersionCode && googleLoginHelperInstance.chromeOS && (profile.versionCode > 982000000 && profile.versionCode < 990000000 || profile.versionCode > 972000000 && profile.versionCode < 980000000)) {
             profile.versionCode = profile.versionCode + 1000000000
         }
-        console.log("adjustVersionCode:" + adjustVersionCode)
-        console.log("googleLoginHelperInstance.chromeOS:" + googleLoginHelperInstance.chromeOS)
-        console.log("profile.versionCode:" + profile.versionCode)
         profile.save()
     }
 

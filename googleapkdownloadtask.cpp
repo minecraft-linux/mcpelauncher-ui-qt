@@ -3,7 +3,6 @@
 #include "googleloginhelper.h"
 #include <QStandardPaths>
 #include <QDir>
-#include <QVariantMap>
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -16,12 +15,6 @@ GoogleApkDownloadTask::GoogleApkDownloadTask(QObject *parent) : QObject(parent),
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
     connect(this, &GoogleApkDownloadTask::queueDownload, this, &GoogleApkDownloadTask::startDownload);
 #endif
-}
-
-void GoogleApkDownloadTask::setProgressDetails(qulonglong current, qulonglong total) {
-    m_progressCurrentBytes = current;
-    m_progressTotalBytes = total;
-    emit progressDetailsChanged();
 }
 
 void GoogleApkDownloadTask::setPlayApi(GooglePlayApi *value) {
@@ -38,58 +31,14 @@ QStringList GoogleApkDownloadTask::filePaths() {
     return list;
 }
 
-static std::string buildDeviceUserAgent(GooglePlayApi* playApi) {
-    auto& device = playApi->getLogin()->getDevice();
-    return "AndroidDownloadManager/" + device.build_version_string + " (Linux; U; Android " +
-            device.build_version_string + "; " + device.build_model + " Build/" + device.build_id + ")";
-}
-
-template <class T>
-static QVariantMap buildRemoteSourceDescriptor(T const& data, QString const& label, std::string const& userAgent, QString const& cookieHeader) {
-    QVariantMap headers;
-    headers["Accept-Encoding"] = "identity";
-    headers["Cookie"] = cookieHeader;
-    headers["User-Agent"] = QString::fromStdString(userAgent);
-
-    QVariantMap descriptor;
-    descriptor["type"] = "remote";
-    descriptor["label"] = label;
-    descriptor["url"] = QString::fromStdString(data.downloadurl());
-    descriptor["size"] = qulonglong(data.downloadsize());
-    descriptor["headers"] = headers;
-    return descriptor;
-}
-
 void GoogleApkDownloadTask::start(bool skipMainApk) {
-    setProgressDetails(0, 0);
-    if (!m_sourceDescriptors.isEmpty()) {
-        m_sourceDescriptors.clear();
-        emit sourceDescriptorsChanged();
-    }
-    if (m_keepApks) {
-        m_active.store(true);
-        emit activeChanged();
-    }
+    m_active.store(true);
+    emit activeChanged();
     m_playApi->getApi()->delivery(m_packageName.toStdString(), m_versionCode, std::string())->call([this, skipMainApk](playapi::proto::finsky::response::ResponseWrapper&& resp) {
         auto dd = resp.payload().deliveryresponse().appdeliverydata();
         auto apkUrl = dd.has_gzippeddownloadurl() ? dd.gzippeddownloadurl() : dd.downloadurl();
         if(apkUrl == "") {
             throw std::runtime_error(QObject::tr("Cannot find <a href=\"https://play.google.com/store/apps/details?id=%1\">%1</a> with version %2 on Google Play,<br/><a href=\"https://play.google.com/apps/testing/%1\">Beta Versions requires sign up</a>%3").arg(m_packageName).arg(m_versionCode).arg(m_playApi->getLogin()->isChromeOS() ? QObject::tr(",<br/>you might want to try disabling ChromeOS mode to fix this") : "").toStdString());
-        }
-        if (!m_keepApks && !m_dryrun) {
-            QVariantList descriptors;
-            auto userAgent = buildDeviceUserAgent(m_playApi);
-            auto cookieHeader = QString::fromStdString(dd.downloadauthcookie(0).name() + "=" + dd.downloadauthcookie(0).value());
-            if (!skipMainApk || dd.splitdeliverydata().empty()) {
-                descriptors.push_back(buildRemoteSourceDescriptor(dd, "main", userAgent, cookieHeader));
-            }
-            for (auto&& data : dd.splitdeliverydata()) {
-                descriptors.push_back(buildRemoteSourceDescriptor(data, QString::fromStdString(data.id()), userAgent, cookieHeader));
-            }
-            m_sourceDescriptors = descriptors;
-            emit sourceDescriptorsChanged();
-            emit finished();
-            return;
         }
 #ifdef GOOGLEPLAYDOWNLOADER_USEQT
         emit queueDownload(dd, skipMainApk);
@@ -102,10 +51,8 @@ void GoogleApkDownloadTask::start(bool skipMainApk) {
         } catch(std::exception& e) {
             emit error(e.what());
         }
-        if (m_keepApks) {
-            m_active.store(false);
-            emit activeChanged();
-        }
+        m_active.store(false);
+        emit activeChanged();
     });
 }
 
@@ -181,8 +128,6 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     connect(reply, &QNetworkReply::downloadProgress, [_progress, id, this](qint64 dlnow, qint64 total) {
         if(_progress->downloadsize > 0) {
             _progress->progress[id] = dlnow;
-            auto current = (qulonglong) std::accumulate(_progress->progress.begin(), _progress->progress.end(), size_t{0});
-            setProgressDetails(current, (qulonglong) _progress->downloadsize);
             emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
         }
     });
@@ -238,12 +183,9 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         std::lock_guard<std::mutex> guard(_progress->mtx);
         if(_progress->downloadsize > 0) {
             _progress->progress[id] = dlnow;
-            auto current = (qulonglong) std::accumulate(_progress->progress.begin(), _progress->progress.end(), size_t{0});
-            setProgressDetails(current, (qulonglong) _progress->downloadsize);
             emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
         }
     });
-    setProgressDetails(0, (qulonglong) _progress->downloadsize);
     emit progress(0.f);
     req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
         if (isGzipped) {
@@ -283,6 +225,7 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     });
 #endif
 }
+
 void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk) {
     if(m_dryrun) {
         QString allUrls;
@@ -298,6 +241,7 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
         emit downloadInfo(allUrls);
         return;
     }
+
     auto cookie = dd.downloadauthcookie(0);
     auto progress = std::make_shared<DownloadProgress>();
     std::lock_guard<std::mutex> guard(progress->mtx);
@@ -305,13 +249,11 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
     progress->progress.resize(progress->downloads);
     progress->downloadsize = 0;
     progress->failed = false;
-    setProgressDetails(0, 0);
     auto cleanup = [this, progress]() {
         std::lock_guard<std::mutex> guard(progress->mtx);
         if(!--progress->downloads) {
             progress->failed = true;
             m_active.store(false);
-            setProgressDetails(0, 0);
             emit activeChanged();
         }
     };
@@ -319,7 +261,6 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
         std::lock_guard<std::mutex> guard(progress->mtx);
         if(!--progress->downloads && !progress->failed) {
             m_active.store(false);
-            setProgressDetails((qulonglong) progress->downloadsize, (qulonglong) progress->downloadsize);
             emit activeChanged();
             emit finished();
         }

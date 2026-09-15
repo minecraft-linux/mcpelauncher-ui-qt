@@ -4,33 +4,23 @@
 #include <QThread>
 #include <QMutex>
 #include <QTemporaryDir>
-#include <QFileInfo>
-#include <QVariantList>
 #include "versionmanager.h"
 
 class ApkExtractionTask : public QThread {
     Q_OBJECT
     Q_PROPERTY(VersionManager* versionManager READ versionManager WRITE setVersionManager)
     Q_PROPERTY(QStringList sources READ sources WRITE setSources)
-    Q_PROPERTY(QVariantList sourceDescriptors READ sourceDescriptors WRITE setSourceDescriptors)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
-    Q_PROPERTY(qulonglong progressCurrentBytes READ progressCurrentBytes NOTIFY progressDetailsChanged)
-    Q_PROPERTY(qulonglong progressTotalBytes READ progressTotalBytes NOTIFY progressDetailsChanged)
     Q_PROPERTY(bool allowIncompatible READ allowIncompatible WRITE SetAllowIncompatible)
     Q_PROPERTY(QString versionName READ versionName WRITE setVersionName)
     Q_PROPERTY(QStringList allowedPackages READ allowedPackages WRITE setAllowedPackages)
-    Q_PROPERTY(QString oldInstallationFolder READ oldInstallationFolder WRITE setOldInstallationFolder)
 
     QMutex mutex;
     QStringList m_sources;
-    QVariantList m_sourceDescriptors;
     VersionManager* m_versionManager;
     bool m_allowIncompatible;
     QString m_versionName;
     QStringList m_allowedPackages;
-    QString m_oldInstallationFolder;
-    qulonglong m_progressCurrentBytes = 0;
-    qulonglong m_progressTotalBytes = 0;
 
     void run() override;
 
@@ -40,28 +30,12 @@ class ApkExtractionTask : public QThread {
 
 private slots:
     void onVersionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
-    void setProgressDetails(qulonglong current, qulonglong total) {
-        {
-            QMutexLocker locker(&mutex);
-            m_progressCurrentBytes = current;
-            m_progressTotalBytes = total;
-        }
-        emit progressDetailsChanged();
-    }
 
 
 public:
     explicit ApkExtractionTask(QObject *parent = nullptr);
 
     bool active() const { return isRunning(); }
-    qulonglong progressCurrentBytes() {
-        QMutexLocker locker(&mutex);
-        return m_progressCurrentBytes;
-    }
-    qulonglong progressTotalBytes() {
-        QMutexLocker locker(&mutex);
-        return m_progressTotalBytes;
-    }
 
     QStringList sources() {
         QMutexLocker locker(&mutex);
@@ -71,27 +45,6 @@ public:
     void setSources(QStringList const& value) {
         QMutexLocker locker(&mutex);
         m_sources = value;
-        QVariantList descriptors;
-        for (auto const& source : value) {
-            QVariantMap descriptor;
-            descriptor["type"] = "local";
-            descriptor["path"] = source;
-            descriptor["label"] = QFileInfo(source).fileName();
-            descriptors.push_back(descriptor);
-        }
-        m_sourceDescriptors = descriptors;
-    }
-
-    QVariantList sourceDescriptors() {
-        QMutexLocker locker(&mutex);
-        return m_sourceDescriptors;
-    }
-
-    void setSourceDescriptors(QVariantList const& value) {
-        QMutexLocker locker(&mutex);
-        m_sourceDescriptors = value;
-        if (!value.isEmpty())
-            m_sources.clear();
     }
 
     VersionManager* versionManager() {
@@ -123,14 +76,6 @@ public:
         m_allowedPackages = value;
     }
 
-    QString oldInstallationFolder() const {
-        return m_oldInstallationFolder;
-    }
-
-    void setOldInstallationFolder(QString const& value) {
-        m_oldInstallationFolder = value;
-    }
-
 public slots:
     bool setSourceUrls(QList<QUrl> const& urls);
     void SetAllowIncompatible(bool c) {
@@ -142,11 +87,11 @@ signals:
 
     void versionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
 
+    void finished();
+
     void error(QString const& err);
-    void succeeded();
 
     void activeChanged();
-    void progressDetailsChanged();
 
 };
 

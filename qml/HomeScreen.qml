@@ -502,7 +502,6 @@ BaseScreen {
                         return
 
                     progressBar.value = 0
-                    apkExtractionTask.oldInstallationFolder = getBaselineInstallationFolder(playDownloadTask.versionCode)
                     const rawname = getRawVersionsName()
                     const partialDownload = !needsFullDownload(rawname)
                     if (partialDownload)
@@ -522,9 +521,9 @@ BaseScreen {
         Layout.fillWidth: true
         label: {
             if (playDownloadTask.active)
-                return formatProgressLabel(qsTr("Downloading Minecraft..."), playDownloadTask.progressCurrentBytes, playDownloadTask.progressTotalBytes)
+                return qsTr("Downloading Minecraft...")
             if (apkExtractionTask.active)
-                return formatProgressLabel(qsTr("Extracting Minecraft..."), apkExtractionTask.progressCurrentBytes, apkExtractionTask.progressTotalBytes)
+                return qsTr("Extracting Minecraft...")
             return qsTr("Please wait...")
         }
         visible: showProgressbar || closeAnim.running
@@ -591,11 +590,7 @@ BaseScreen {
         }
         onFinished: {
             if (!launcherSettings.downloadOnly) {
-                if (sourceDescriptors.length > 0) {
-                    apkExtractionTask.sourceDescriptors = sourceDescriptors
-                } else {
-                    apkExtractionTask.sources = filePaths
-                }
+                apkExtractionTask.sources = filePaths
                 apkExtractionTask.start()
             }
         }
@@ -617,7 +612,7 @@ BaseScreen {
             playDownloadError.text = qsTr("Error while extracting the downloaded file(s), <a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues\">please report this error</a>: %1").arg(err)
             playDownloadError.open()
         }
-        onSucceeded: launchGame()
+        onFinished: launchGame()
         allowedPackages: {
             var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
             if (!launcherSettings.trialMode)
@@ -772,46 +767,6 @@ BaseScreen {
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return profile.versionCode
         return null
-    }
-
-    function formatMiB(bytes) {
-        return (bytes / (1024 * 1024)).toFixed(1)
-    }
-
-    function formatProgressLabel(prefix, currentBytes, totalBytes) {
-        if (!totalBytes || totalBytes <= 0)
-            return prefix
-        return prefix + " " + formatMiB(currentBytes) + " / " + formatMiB(totalBytes) + " MB"
-    }
-
-    function getBaselineInstallationFolder(targetCode) {
-        if (targetCode === null || targetCode === undefined)
-            return ""
-
-        const installedVersions = versionManager.versions.getAll()
-        let bestLower = null
-        let bestHigher = null
-
-        for (const version of installedVersions) {
-            if (!version)
-                continue
-            const code = version.versionCode
-            if (code === undefined || code === null || code === targetCode)
-                continue
-
-            if (code < targetCode) {
-                if (bestLower === null || code > bestLower.versionCode)
-                    bestLower = version
-            } else if (code > targetCode) {
-                if (bestHigher === null || code < bestHigher.versionCode)
-                    bestHigher = version
-            }
-        }
-
-        const baseline = bestLower !== null ? bestLower : bestHigher
-        if (baseline === null)
-            return ""
-        return versionManager.getDirectoryFor(baseline.directory)
     }
 
     function getCurrentGameDir(profile) {

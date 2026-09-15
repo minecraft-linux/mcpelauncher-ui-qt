@@ -49,7 +49,7 @@ Item {
             root.progressBar.value = val
         }
 
-        onSucceeded: function () {
+        onFinished: function () {
             root.finished()
             extractingApk = false
         }
