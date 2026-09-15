@@ -34,6 +34,10 @@ void UpdateManager::checkForUpdatesInModDb() {
     auto&& maxKnownVersion = versionsInfoProperty(m_versionList.first(), "versionCode").toInt();
     auto&& maxKnownVersionAbi = versionsInfoProperty(m_versionList.first(), "abi").toString();
 
+    #ifndef LAUNCHER_VERSION_COMPAT
+    #error "LAUNCHER_VERSION_COMPAT is not defined"
+    #endif
+
     for (const ModInfo& mod : m_modManager.remoteMods()) {
         auto vList = mod.metadata.value("versions").toList();
         for(auto it = vList.rbegin(); it != vList.rend(); ++it) {
@@ -46,6 +50,21 @@ void UpdateManager::checkForUpdatesInModDb() {
                 auto codes = et->toMap().value("codes").toMap();
                 if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
                     isApplicable = true;
+                    break;
+                }
+            }
+            for(int i = LAUNCHER_VERSION_COMPAT; i > 0; i--) {
+                auto provides = it->toMap().value("provides").toMap();
+                auto key = QString::number(i);
+                if(provides.contains(key)) {
+                    auto nextraVersions = provides[key].toMap().value("extraVersions").toList();
+                    for(auto et = nextraVersions.rbegin(); et != nextraVersions.rend(); ++et) {
+                        auto codes = et->toMap().value("codes").toMap();
+                        if(codes.contains(maxKnownVersionAbi) && codes[maxKnownVersionAbi].toInt() > maxKnownVersion) {
+                            isApplicable = true;
+                            break;
+                        }
+                    }
                     break;
                 }
             }

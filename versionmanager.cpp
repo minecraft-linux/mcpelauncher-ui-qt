@@ -6,7 +6,7 @@
 #include <QSettings>
 
 #ifndef LAUNCHER_VERSIONDB_URL
-#define LAUNCHER_VERSIONDB_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/master"
+#define LAUNCHER_VERSIONDB_URL "https://raw.githubusercontent.com/minecraft-linux/mcpelauncher-versiondb/v1.5.x"
 #endif
 
 VersionManager::VersionManager() : m_versionList(m_versions), m_archival(LAUNCHER_VERSIONDB_URL) {

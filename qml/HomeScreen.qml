@@ -401,6 +401,19 @@ BaseScreen {
                         abi: abi,
                         isBeta: v.beta
                     })))
+                    if(modInfo.metadata.version.provides) {
+                        for(var compatVer = 1; compatVer <= LAUNCHER_VERSION_COMPAT; compatVer++) {
+                            if(compatVer.toString() in modInfo.metadata.version.provides) {
+                                extraVersions.push(...modInfo.metadata.version.provides[compatVer].extraVersions.filter(ver => ver.codes && ver.codes[abi]).map(v => (
+                                {
+                                    versionName: v.version_name,
+                                    versionCode: v.codes[abi],
+                                    abi: abi,
+                                    isBeta: v.beta
+                                })))
+                            }
+                        }
+                    }
                 }
             }
         }

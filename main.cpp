@@ -164,6 +164,11 @@ int main(int argc, char *argv[])
 #else
     engine.rootContext()->setContextProperty("LAUNCHER_VERSION_CODE", QVariant(0));
 #endif
+#ifdef LAUNCHER_VERSION_COMPAT
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_COMPAT", QVariant(LAUNCHER_VERSION_COMPAT));
+#else
+    engine.rootContext()->setContextProperty("LAUNCHER_VERSION_COMPAT", QVariant(0));
+#endif
     QString license;
     QFile lfile(":/LICENSE");
     if(lfile.open(QIODevice::ReadOnly)) {

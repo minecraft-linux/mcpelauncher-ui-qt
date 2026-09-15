@@ -139,7 +139,7 @@ QString ModManager::getRoot() const
 void ModManager::downloadModList() {
     // Download mod list from remote server and save to mods directory
     // https://github.com/minecraft-linux/mcpelauncher-moddb/raw/main/moddb.json
-    QString url = "https://github.com/minecraft-linux/mcpelauncher-moddb/raw/main/moddb.json";
+    QString url = "https://github.com/minecraft-linux/mcpelauncher-moddb/raw/9e802d74b5fc68c58a5434c26eec337b57622a0a/moddb.json";
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
     QNetworkRequest request({QUrl(url)});
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
