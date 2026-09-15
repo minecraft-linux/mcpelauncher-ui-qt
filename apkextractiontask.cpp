@@ -12,6 +12,7 @@
 #include <zlib.h>
 #include <memory>
 #include <sstream>
+#include <unordered_map>
 #include <unistd.h>
 #include "versionmanager.h"
 #include "supportedandroidabis.h"
@@ -85,6 +86,7 @@ struct PlannedEntry {
     QString oldPath;
     QString outputPath;
     bool shouldCopy = false;
+    size_t transferSize = 0;
 };
 
 static QString joinPath(QString const& base, std::string const& relative) {
@@ -199,12 +201,14 @@ static std::unique_ptr<ZipExtractor> openExtractor(SourceContext& source) {
 void ApkExtractionTask::run() {
     QTemporaryDir dir (versionManager()->getTempTemplate());
     try {
+        setProgressDetails(0, 0);
         QString tempPath = dir.path();
         ApkInfo apkInfo;
         apkInfo.versionCode = 0;
         auto contexts = parseSources(sourceDescriptors(), sources());
         std::vector<PlannedEntry> plan;
         size_t globalTotalSize = 0;
+        size_t globalTransferSize = 0;
 
         for (size_t i = 0; i < contexts.size(); ++i) {
             auto& source = contexts[i];
@@ -241,8 +245,10 @@ void ApkExtractionTask::run() {
                             oldMetadata.size == (size_t) entry.size &&
                             oldMetadata.crc == entry.crc;
                 }
+                planned.transferSize = (!planned.shouldCopy && source.isRemote) ? (size_t) entry.compressedSize : 0;
                 plan.push_back(planned);
                 globalTotalSize += (size_t) entry.size;
+                globalTransferSize += planned.transferSize;
             }
         }
 
@@ -250,6 +256,8 @@ void ApkExtractionTask::run() {
                  << " versionName=" << QString::fromStdString(apkInfo.versionName);
 
         size_t globalCompletedSize = 0;
+        size_t transferCompletedSize = 0;
+        setProgressDetails(0, (qulonglong) globalTransferSize);
         emitUnifiedProgress(this, 0, globalTotalSize);
 
         for (auto const& planned : plan) {
@@ -266,24 +274,41 @@ void ApkExtractionTask::run() {
         for (size_t sourceIndex = 0; sourceIndex < contexts.size(); ++sourceIndex) {
             std::vector<ZipExtractor::EntryInfo> entriesToExtract;
             size_t sourceTotalSize = 0;
+            size_t sourceTransferSize = 0;
+            std::unordered_map<zip_uint64_t, size_t> compressedBeforeEntry;
+            size_t compressedPrefix = 0;
             for (auto const& planned : plan) {
                 if (planned.sourceIndex != sourceIndex || planned.shouldCopy)
                     continue;
                 auto entry = planned.entry;
                 entry.outputName = planned.outputPath.toStdString();
                 sourceTotalSize += (size_t) entry.size;
+                compressedBeforeEntry[entry.index] = compressedPrefix;
+                compressedPrefix += planned.transferSize;
+                sourceTransferSize += planned.transferSize;
                 entriesToExtract.push_back(std::move(entry));
             }
             if (entriesToExtract.empty())
                 continue;
 
             auto baseCompleted = globalCompletedSize;
+            auto baseTransferCompleted = transferCompletedSize;
             contexts[sourceIndex].extractor->extractEntries(entriesToExtract,
-                    [this, baseCompleted, globalTotalSize](size_t current, size_t, ZipExtractor::FileHandle const&, size_t, size_t) {
+                    [this, baseCompleted, baseTransferCompleted, globalTotalSize, globalTransferSize, compressedBeforeEntry]
+                    (size_t current, size_t, ZipExtractor::EntryInfo const& entry, size_t entryCurrent, size_t entryMax) {
+                size_t entryTransferProgress = 0;
+                if (entryMax > 0 && entry.compressedSize > 0) {
+                    entryTransferProgress = (size_t) ((entry.compressedSize * entryCurrent) / entryMax);
+                }
+                auto it = compressedBeforeEntry.find(entry.index);
+                size_t completedTransfer = baseTransferCompleted + (it != compressedBeforeEntry.end() ? it->second : 0) + entryTransferProgress;
+                setProgressDetails((qulonglong) completedTransfer, (qulonglong) globalTransferSize);
                 emitUnifiedProgress(this, baseCompleted + current, globalTotalSize);
             });
             globalCompletedSize += sourceTotalSize;
+            transferCompletedSize += sourceTransferSize;
         }
+        setProgressDetails((qulonglong) transferCompletedSize, (qulonglong) globalTransferSize);
         emitUnifiedProgress(this, globalCompletedSize, globalTotalSize);
 
         bool supported = false;
@@ -344,7 +369,7 @@ void ApkExtractionTask::run() {
     }
     m_versionName.clear();
     
-    emit finished();
+    emit succeeded();
 }
 
 void ApkExtractionTask::onVersionInformationObtained(const QString &directory, const QString &versionName, int versionCode) {

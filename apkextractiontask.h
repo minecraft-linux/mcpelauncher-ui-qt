@@ -14,6 +14,8 @@ class ApkExtractionTask : public QThread {
     Q_PROPERTY(QStringList sources READ sources WRITE setSources)
     Q_PROPERTY(QVariantList sourceDescriptors READ sourceDescriptors WRITE setSourceDescriptors)
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
+    Q_PROPERTY(qulonglong progressCurrentBytes READ progressCurrentBytes NOTIFY progressDetailsChanged)
+    Q_PROPERTY(qulonglong progressTotalBytes READ progressTotalBytes NOTIFY progressDetailsChanged)
     Q_PROPERTY(bool allowIncompatible READ allowIncompatible WRITE SetAllowIncompatible)
     Q_PROPERTY(QString versionName READ versionName WRITE setVersionName)
     Q_PROPERTY(QStringList allowedPackages READ allowedPackages WRITE setAllowedPackages)
@@ -27,6 +29,8 @@ class ApkExtractionTask : public QThread {
     QString m_versionName;
     QStringList m_allowedPackages;
     QString m_oldInstallationFolder;
+    qulonglong m_progressCurrentBytes = 0;
+    qulonglong m_progressTotalBytes = 0;
 
     void run() override;
 
@@ -36,12 +40,28 @@ class ApkExtractionTask : public QThread {
 
 private slots:
     void onVersionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
+    void setProgressDetails(qulonglong current, qulonglong total) {
+        {
+            QMutexLocker locker(&mutex);
+            m_progressCurrentBytes = current;
+            m_progressTotalBytes = total;
+        }
+        emit progressDetailsChanged();
+    }
 
 
 public:
     explicit ApkExtractionTask(QObject *parent = nullptr);
 
     bool active() const { return isRunning(); }
+    qulonglong progressCurrentBytes() {
+        QMutexLocker locker(&mutex);
+        return m_progressCurrentBytes;
+    }
+    qulonglong progressTotalBytes() {
+        QMutexLocker locker(&mutex);
+        return m_progressTotalBytes;
+    }
 
     QStringList sources() {
         QMutexLocker locker(&mutex);
@@ -122,11 +142,11 @@ signals:
 
     void versionInformationObtained(QString const& directory, QString const& versionName, int versionCode);
 
-    void finished();
-
     void error(QString const& err);
+    void succeeded();
 
     void activeChanged();
+    void progressDetailsChanged();
 
 };
 

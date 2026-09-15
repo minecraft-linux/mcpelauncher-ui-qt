@@ -522,9 +522,9 @@ BaseScreen {
         Layout.fillWidth: true
         label: {
             if (playDownloadTask.active)
-                return qsTr("Downloading Minecraft...")
+                return formatProgressLabel(qsTr("Downloading Minecraft..."), playDownloadTask.progressCurrentBytes, playDownloadTask.progressTotalBytes)
             if (apkExtractionTask.active)
-                return qsTr("Extracting Minecraft...")
+                return formatProgressLabel(qsTr("Extracting Minecraft..."), apkExtractionTask.progressCurrentBytes, apkExtractionTask.progressTotalBytes)
             return qsTr("Please wait...")
         }
         visible: showProgressbar || closeAnim.running
@@ -617,7 +617,7 @@ BaseScreen {
             playDownloadError.text = qsTr("Error while extracting the downloaded file(s), <a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues\">please report this error</a>: %1").arg(err)
             playDownloadError.open()
         }
-        onFinished: launchGame()
+        onSucceeded: launchGame()
         allowedPackages: {
             var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
             if (!launcherSettings.trialMode)
@@ -772,6 +772,16 @@ BaseScreen {
         if (profile.versionType === ProfileInfo.LOCKED_CODE)
             return profile.versionCode
         return null
+    }
+
+    function formatMiB(bytes) {
+        return (bytes / (1024 * 1024)).toFixed(1)
+    }
+
+    function formatProgressLabel(prefix, currentBytes, totalBytes) {
+        if (!totalBytes || totalBytes <= 0)
+            return prefix
+        return prefix + " " + formatMiB(currentBytes) + " / " + formatMiB(totalBytes) + " MB"
     }
 
     function getBaselineInstallationFolder(targetCode) {

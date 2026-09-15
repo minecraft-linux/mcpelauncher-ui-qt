@@ -27,6 +27,8 @@ class GoogleApkDownloadTask : public QObject {
     Q_PROPERTY(bool active READ active NOTIFY activeChanged)
     Q_PROPERTY(QStringList filePaths READ filePaths)
     Q_PROPERTY(QVariantList sourceDescriptors READ sourceDescriptors NOTIFY sourceDescriptorsChanged)
+    Q_PROPERTY(qulonglong progressCurrentBytes READ progressCurrentBytes NOTIFY progressDetailsChanged)
+    Q_PROPERTY(qulonglong progressTotalBytes READ progressTotalBytes NOTIFY progressDetailsChanged)
     Q_PROPERTY(bool keepApks READ keepApks WRITE setKeepApks)
     Q_PROPERTY(bool dryrun MEMBER m_dryrun)
 
@@ -38,10 +40,13 @@ private:
     std::vector<std::shared_ptr<QTemporaryFile>> files;
     std::atomic_bool m_active;
     QVariantList m_sourceDescriptors;
+    qulonglong m_progressCurrentBytes = 0;
+    qulonglong m_progressTotalBytes = 0;
     bool m_keepApks = false;
     bool m_dryrun = false;
 
     void startDownload(playapi::proto::finsky::download::AndroidAppDeliveryData const &dd, bool skipMainApk = false);
+    void setProgressDetails(qulonglong current, qulonglong total);
 
     static bool curlDoZlibInflate(z_stream& zs, int file, char* data, size_t len, int flags);
 
@@ -64,6 +69,8 @@ public:
 
     QStringList filePaths();
     QVariantList sourceDescriptors() const { return m_sourceDescriptors; }
+    qulonglong progressCurrentBytes() const { return m_progressCurrentBytes; }
+    qulonglong progressTotalBytes() const { return m_progressTotalBytes; }
 
 signals:
     void progress(qreal progress);
@@ -74,6 +81,7 @@ signals:
 
     void activeChanged();
     void sourceDescriptorsChanged();
+    void progressDetailsChanged();
 
     void queueDownload(playapi::proto::finsky::download::AndroidAppDeliveryData dd, bool skipMainApk);
 

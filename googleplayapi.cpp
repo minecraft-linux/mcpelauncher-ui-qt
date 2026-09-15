@@ -107,6 +107,8 @@ void GooglePlayApi::updateLogin() {
     auto previousUpdateLoginTask = updateLoginTask;
     updateLoginTask = QtConcurrent::run([this, previousUpdateLoginTask]() {
         try {
+            // playapi::checkin_api checkin(loginHelper->getDevice());
+            // checkinResult = checkin.perform_anonymous_checkin()->call();
             QFuture<void> ptask = previousUpdateLoginTask;
             ptask.waitForFinished();
             QMutexLocker checkinMutexLocker (&checkinMutex);

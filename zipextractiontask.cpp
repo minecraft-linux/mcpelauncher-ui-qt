@@ -93,7 +93,7 @@ void ZipExtractionTask::run() {
                     outName = path + "/" + filename;
                     return true; // Extract all files
                 },
-                [this](size_t current, size_t max, ZipExtractor::FileHandle const&, size_t, size_t) {
+                [this](size_t current, size_t max, ZipExtractor::EntryInfo const&, size_t, size_t) {
                     emit progress((float)  current / max);
                 }
             );

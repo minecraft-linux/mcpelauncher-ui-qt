@@ -18,6 +18,12 @@ GoogleApkDownloadTask::GoogleApkDownloadTask(QObject *parent) : QObject(parent),
 #endif
 }
 
+void GoogleApkDownloadTask::setProgressDetails(qulonglong current, qulonglong total) {
+    m_progressCurrentBytes = current;
+    m_progressTotalBytes = total;
+    emit progressDetailsChanged();
+}
+
 void GoogleApkDownloadTask::setPlayApi(GooglePlayApi *value) {
     Q_ASSERT(m_playApi == nullptr);
     m_playApi = value;
@@ -55,6 +61,7 @@ static QVariantMap buildRemoteSourceDescriptor(T const& data, QString const& lab
 }
 
 void GoogleApkDownloadTask::start(bool skipMainApk) {
+    setProgressDetails(0, 0);
     if (!m_sourceDescriptors.isEmpty()) {
         m_sourceDescriptors.clear();
         emit sourceDescriptorsChanged();
@@ -174,6 +181,8 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
     connect(reply, &QNetworkReply::downloadProgress, [_progress, id, this](qint64 dlnow, qint64 total) {
         if(_progress->downloadsize > 0) {
             _progress->progress[id] = dlnow;
+            auto current = (qulonglong) std::accumulate(_progress->progress.begin(), _progress->progress.end(), size_t{0});
+            setProgressDetails(current, (qulonglong) _progress->downloadsize);
             emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
         }
     });
@@ -229,9 +238,12 @@ template<class T, class U> void GoogleApkDownloadTask::downloadFile(T const&dd, 
         std::lock_guard<std::mutex> guard(_progress->mtx);
         if(_progress->downloadsize > 0) {
             _progress->progress[id] = dlnow;
+            auto current = (qulonglong) std::accumulate(_progress->progress.begin(), _progress->progress.end(), size_t{0});
+            setProgressDetails(current, (qulonglong) _progress->downloadsize);
             emit progress((float) std::accumulate(_progress->progress.begin(), _progress->progress.end(), 0) / _progress->downloadsize);
         }
     });
+    setProgressDetails(0, (qulonglong) _progress->downloadsize);
     emit progress(0.f);
     req.perform([this, file, zs, fd, isGzipped, success, _error](playapi::http_response resp) {
         if (isGzipped) {
@@ -293,11 +305,13 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
     progress->progress.resize(progress->downloads);
     progress->downloadsize = 0;
     progress->failed = false;
+    setProgressDetails(0, 0);
     auto cleanup = [this, progress]() {
         std::lock_guard<std::mutex> guard(progress->mtx);
         if(!--progress->downloads) {
             progress->failed = true;
             m_active.store(false);
+            setProgressDetails(0, 0);
             emit activeChanged();
         }
     };
@@ -305,6 +319,7 @@ void GoogleApkDownloadTask::startDownload(playapi::proto::finsky::download::Andr
         std::lock_guard<std::mutex> guard(progress->mtx);
         if(!--progress->downloads && !progress->failed) {
             m_active.store(false);
+            setProgressDetails((qulonglong) progress->downloadsize, (qulonglong) progress->downloadsize);
             emit activeChanged();
             emit finished();
         }
