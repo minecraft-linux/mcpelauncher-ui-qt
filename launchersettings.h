@@ -39,7 +39,7 @@ public:
 
     explicit LauncherSettings(QObject *parent = nullptr) : QObject(parent), settings() {}
 
-    bool startHideLauncher() const { return settings.value("startHideLauncher", true).toBool(); }
+    bool startHideLauncher() const { return settings.value("startHideLauncher", false).toBool(); }
     void setStartHideLauncher(bool value) { settings.setValue("startHideLauncher", value); emit settingsChanged(); }
 
     bool startOpenLog() const { return settings.value("startOpenLog", false).toBool(); }

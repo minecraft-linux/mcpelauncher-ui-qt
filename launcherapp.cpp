@@ -21,6 +21,8 @@ bool LauncherApp::event(QEvent *event) {
             event->setAccepted(false);
             return true;
         }
+        quit();
+        return true;
     } else if (event->type() == QEvent::FileOpen) {
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
         auto url = openEvent->url();
@@ -124,6 +126,7 @@ int LauncherApp::launchProfileFile(QString profileName, QString filePath, bool s
 
 #ifndef __APPLE__
 void LauncherApp::setVisibleInDock(bool) {
-    // stub
+}
+void LauncherApp::fixWindowStyle() {
 }
 #endif
