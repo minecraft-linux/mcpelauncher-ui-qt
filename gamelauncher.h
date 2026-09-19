@@ -27,6 +27,8 @@ private:
 
     void handleError(QProcess::ProcessError error);
 
+    void logAppendFilter(QString const& text);
+
 public:
     explicit GameLauncher(QObject *parent = nullptr);
 

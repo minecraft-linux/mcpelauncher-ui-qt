@@ -22,6 +22,24 @@ std::string GameLauncher::findLauncher(std::string name) {
     return std::string();
 }
 
+void GameLauncher::logAppendFilter(const QString &text) {
+    // It is known that due to pairipcore encryption we get this log message filling the log with unnecessary warnings, so we filter it out.
+    const char filtered[] = "Warn  [Minecraft] NO LOG FILE! - Image failed to load from memory 	Reason: unknown image type";
+    if (text.contains(filtered)) {
+        auto lines = text.split("\n");
+        for (const auto& line : lines) {
+            if (!line.contains(filtered)) {
+                auto trimmed = line.trimmed();
+                if (!trimmed.isEmpty()) {
+                    emit logAppended(trimmed);
+                }
+            }
+        }
+        return;
+    }
+    emit logAppended(text);
+}
+
 void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLicense, QString filepath) {
     if (running()) {
         return;
@@ -210,7 +228,7 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
                 }
                 process->start(executable, args);
                 emit stateChanged();
-                emit logAppended(QString::fromStdString(getCommandLine(executable)) + "\n");
+                logAppendFilter(QString::fromStdString(getCommandLine(executable)) + "\n");
                 return;
             } else {
                 errormsg << tr("Could not find the gamelauncher for Minecraft (%1)\nPlease add the launcher '%2' to your 'PATH' (environmentvariable) and restart the launcher\n").arg(QString::fromStdString(abi.first)).arg(QString::fromStdString(abi.second.launchername)).toStdString();
@@ -224,8 +242,8 @@ void GameLauncher::start(bool disableGameLog, QString arch, bool hasVerifiedLice
     m_crashed = true;
     logAttached();
     emit stateChanged();
-    emit logAppended(QString::fromStdString(getCommandLine("mcpelauncher-client")) + "\n");
-    emit logAppended(QString::fromStdString(errormsg.str()));
+    logAppendFilter(QString::fromStdString(getCommandLine("mcpelauncher-client")) + "\n");
+    logAppendFilter(QString::fromStdString(errormsg.str()));
     emit launchFailed();
 }
 
@@ -242,7 +260,7 @@ void GameLauncher::startFile(QString file) {
         emit fileStarted(false);
     });
     connect(fileprocess.data(), &QProcess::readyReadStandardOutput, [this]() {
-        emit logAppended(QString::fromUtf8(fileprocess->readAllStandardOutput()));
+        logAppendFilter(QString::fromUtf8(fileprocess->readAllStandardOutput()));
     });
 
     std::string launcherpath;
@@ -255,7 +273,7 @@ void GameLauncher::startFile(QString file) {
 }
 
 void GameLauncher::handleStdOutAvailable() {
-    emit logAppended(QString::fromUtf8(process->readAllStandardOutput()));
+    logAppendFilter(QString::fromUtf8(process->readAllStandardOutput()));
 }
 
 void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus) {
@@ -285,7 +303,7 @@ void GameLauncher::handleFinished(int exitCode, QProcess::ExitStatus exitStatus)
     }
     process.reset();
     if (!m_disableGameLog)
-        emit logAppended("\n" + msg);
+        logAppendFilter("\n" + msg);
     emit stateChanged();
 }
 
@@ -293,7 +311,7 @@ void GameLauncher::handleError(QProcess::ProcessError error) {
     if (error == QProcess::FailedToStart) {
         m_crashed = true;
         logAttached();
-        emit logAppended(tr("Your system is unable to execute the launcher"));
+        logAppendFilter(tr("Your system is unable to execute the launcher"));
         emit stateChanged();
         launchFailed();
     }
