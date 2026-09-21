@@ -9,6 +9,9 @@ BaseScreen {
 
     signal finished
 
+    Keys.onReturnPressed: attemptUnlock()
+    Keys.onEnterPressed: attemptUnlock()
+
     headerContent: TabBar {
         background: null
         MTabButton {
@@ -33,7 +36,6 @@ BaseScreen {
             id: continueInvalidCredentials
             Layout.topMargin: 10
             text: qsTr("Continue with invalid credentials")
-            focus: true
         }
 
         Item {
@@ -77,6 +79,7 @@ BaseScreen {
             Layout.fillWidth: true
             echoMode: TextInput.Password
             enabled: !continueInvalidCredentials.checked
+            focus: true
             onAccepted: attemptUnlock()
             onTextChanged: {
                 pwd.color = "#fff"
