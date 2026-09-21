@@ -95,9 +95,31 @@ void GoogleLoginHelper::acquireAccount(QWindow *parent) {
 }
 
 void GoogleLoginHelper::onLoginFinished(int code) {
+    // Detach the dialog pointer early to avoid re-entrant UI transitions
+    // from QML handlers while the dialog teardown is still in progress.
+    auto* finishedWindow = window;
+    window = nullptr;
+
+    auto emitFinish = [this](GoogleAccount* account) {
+        QMetaObject::invokeMethod(this, [this, account]() {
+            emit accountAcquireFinished(account);
+            emit accountInfoChanged();
+        }, Qt::QueuedConnection);
+    };
+
+    if (!finishedWindow) {
+        emitFinish(nullptr);
+        return;
+    }
+
     if (code == QDialog::Accepted) {
         try {
-            unlockkey = window->encryptionToken();
+            const QString encryptionToken = finishedWindow->encryptionToken();
+            const QString accountToken = finishedWindow->accountToken();
+            const QString accountIdentifier = finishedWindow->accountIdentifier();
+            const QString accountUserId = finishedWindow->accountUserId();
+
+            unlockkey = encryptionToken;
             Encryption enc;
             if(unlockkey.isEmpty()) {
                 unlockkey = QString::fromStdString(enc.RandomKey());
@@ -105,9 +127,9 @@ void GoogleLoginHelper::onLoginFinished(int code) {
             }
             loginCache.clear();
             loginCache.setKey(unlockkey.toStdString());
-            login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
+            login.perform_with_access_token(accountToken.toStdString(), accountIdentifier.toStdString(), true)->call();
             currentAccount.setAccountIdentifier(QString::fromStdString(login.get_email()));
-            currentAccount.setAccountUserId(window->accountUserId());
+            currentAccount.setAccountUserId(accountUserId);
             currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
             hasAccount = currentAccount.isValid();
             if (hasAccount) {
@@ -118,20 +140,18 @@ void GoogleLoginHelper::onLoginFinished(int code) {
                 settings.setValue("token", QString::fromStdString(enc.Encrypt(currentAccount.accountToken().toStdString(), unlockkey.toStdString())));
                 settings.endGroup();
                 saveDeviceState();
-                accountAcquireFinished(&currentAccount);
+                emitFinish(&currentAccount);
             } else {
                 loginError("Login failed");
-                accountAcquireFinished(nullptr);
+                emitFinish(nullptr);
             }
         } catch (const std::exception& ex) {
             loginError(ex.what());
-            accountAcquireFinished(nullptr);
+            emitFinish(nullptr);
         }
     } else {
-        accountAcquireFinished(nullptr);
+        emitFinish(nullptr);
     }
-    emit accountInfoChanged();
-    window = nullptr;
 }
 
 void GoogleLoginHelper::updateDevice() {
