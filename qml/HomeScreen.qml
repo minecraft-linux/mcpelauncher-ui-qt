@@ -17,7 +17,7 @@ BaseScreen {
     property GoogleVersionChannel playVerChannel
 
     property bool isVersionsInitialized: false
-    property bool progressbarVisible: playDownloadTask.active || apkExtractionTask.active || updateManager.active
+    property bool progressbarVisible: playDownloader.active || updateManager.active
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
     property string warnMessage: ""
@@ -510,17 +510,17 @@ BaseScreen {
             enabled: !(gameLauncher.running || playScreen.statusChecking || progressbarVisible || updateChecker.active || !playScreen.activeVersionSupported || !playScreen.activeVersionName || playStatusNotify.visible)
             onClicked: {
                 if (playScreen.activeVersionNeedsDownload) {
-                    playDownloadTask.versionCode = getDownloadVersionCode()
-                    if (playDownloadTask.versionCode === 0)
+                    playDownloader.playDownloadTask.versionCode = getDownloadVersionCode()
+                    if (playDownloader.playDownloadTask.versionCode === 0)
                         return
 
                     progressBar.value = 0
                     const rawname = getRawVersionsName()
                     const partialDownload = !needsFullDownload(rawname)
                     if (partialDownload)
-                        apkExtractionTask.versionName = rawname
+                        playDownloader.apkExtractionTask.versionName = rawname
 
-                    playDownloadTask.start(partialDownload)
+                    playDownloader.playDownloadTask.start(partialDownload)
                 } else {
                     launchGame()
                 }
@@ -533,10 +533,8 @@ BaseScreen {
         property bool showProgressbar: progressbarVisible || updateChecker.active
         Layout.fillWidth: true
         label: {
-            if (playDownloadTask.active)
-                return qsTr("Downloading Minecraft...")
-            if (apkExtractionTask.active)
-                return qsTr("Extracting Minecraft...")
+            if (playDownloader.active)
+                return playDownloader.label
             return qsTr("Please wait...")
         }
         visible: showProgressbar || closeAnim.running
@@ -585,53 +583,15 @@ BaseScreen {
         ]
     }
 
-    GoogleApkDownloadTask {
-        id: playDownloadTask
+    property var progressBarInstance: progressBar
+    property var launcherSettingsInstance: launcherSettings
+
+    PlayDownloader {
+        id: playDownloader
         playApi: playScreen.playApi
-        packageName: launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
-        keepApks: launcherSettings.downloadOnly || launcherSettings.keepApks
-        onProgress: {
-            progressBar.value = progress
-        }
-        onError: function (err) {
-            if (playDownloadError.visible) {
-                playDownloadError.text += "\n" + err
-            } else {
-                playDownloadError.text = err
-                playDownloadError.open()
-            }
-        }
-        onFinished: {
-            if (!launcherSettings.downloadOnly) {
-                apkExtractionTask.sources = filePaths
-                apkExtractionTask.start()
-            }
-        }
-    }
-
-    MessageDialog {
-        id: playDownloadError
-        title: qsTr("Download failed")
-    }
-
-    ApkExtractionTask {
-        id: apkExtractionTask
         versionManager: playScreen.versionManager
-        onProgress: {
-            progressBar.value = progress
-        }
-        allowIncompatible: launcherSettings.showUnsupported
-        onError: function (err) {
-            playDownloadError.text = qsTr("Error while extracting the downloaded file(s), <a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues\">please report this error</a>: %1").arg(err)
-            playDownloadError.open()
-        }
-        onFinished: launchGame()
-        allowedPackages: {
-            var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
-            if (!launcherSettings.trialMode)
-                packages.push("com.mojang.minecraftpe")
-            return packages
-        }
+        progressBar: playScreen.progressBarInstance
+        launcherSettings: playScreen.launcherSettingsInstance
     }
 
     MessageDialog {
