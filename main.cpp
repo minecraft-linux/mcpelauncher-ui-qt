@@ -3,6 +3,7 @@
 #include <QQmlContext>
 
 #include "googleloginhelper.h"
+#include "xhelper.h"
 #include "googleplayapi.h"
 #include "versionmanager.h"
 #include "apkextractiontask.h"
@@ -51,15 +52,54 @@ bool LauncherSettings::disableDevMode = 0;
 Q_DECLARE_METATYPE(playapi::proto::finsky::download::AndroidAppDeliveryData)
 #endif
 
+extern "C" void* initialize();
+extern "C" void uninitialize(void*);
+extern "C" void fetch_package(void* runtime, const char* url, void *user,
+    void (*success)(void *user, const void*pkg),
+    void (*failure)(void *user, const char*s)
+);
+extern "C" void destroy_package(const void* pkg);
+extern "C" void demo();
+extern "C" void package_dump(const void* pkg);
+
 int main(int argc, char *argv[])
 {
+    // demo();
+    // return 0;
     bool isSafeMode = getenv("SAFE_MODE") != nullptr;
     CrashHandler::registerCrashHandler(argc, argv);
+    // qDebug() << "initialize";
+    // void* initHandle = initialize();
+    // std::condition_variable cv;
+    // std::mutex mutex;
+    // qDebug() << "initialized handle:" << initHandle;
+    // if(!initHandle) abort();
+    // fetch_package(initHandle, "http://assets2.xboxlive.com/14/aa14a80d-58ae-492a-8a48-b9e5ae421187/1d4dfd7a-d46b-4eaa-b2d2-d855c95bbbd1/1.75.0.0.119fa092-373a-4e87-a067-e3c4f7efa433/RawFury.StarTrucker_1.75.0.0_x64__9s0pnehqffj7t.msixvc", &cv, [](void *user, const void* pkg){
+    //     qDebug() << "fetch success for handle:" << pkg;
+    //     package_dump(pkg);
+    //     destroy_package(pkg);
+    //     std::condition_variable* cv = static_cast<std::condition_variable*>(user);
+    //     cv->notify_one();
+    //     // abort();
+    // }, [](void *user, const char* error){
+    //     qDebug() << "Failed to fetch package:" << error;
+    //     std::condition_variable* cv = static_cast<std::condition_variable*>(user);
+    //     cv->notify_one();
+    //     // abort();
+    // });
+    // std::unique_lock<std::mutex> lock(mutex);
+    // cv.wait(lock);
+    // uninitialize(initHandle);
+    // // abort();
+    // qDebug() << "sleep:" << initHandle;
+    // sleep(60);
+    // return 0;
 #ifdef LAUNCHER_INIT_PATCH
     LAUNCHER_INIT_PATCH
 #endif
     curl_global_init(CURL_GLOBAL_ALL);
     Q_INIT_RESOURCE(googlesigninui);
+    Q_INIT_RESOURCE(xsigninui);
     QCoreApplication::setOrganizationName("Minecraft Linux Launcher");
     QCoreApplication::setOrganizationDomain("mrarm.io");
     QCoreApplication::setApplicationName("Minecraft Linux Launcher UI");
@@ -120,6 +160,7 @@ int main(int argc, char *argv[])
 #endif
     qmlRegisterType<GoogleAccount>("io.mrarm.mcpelauncher", 1, 0, "GoogleAccount");
     qmlRegisterType<GoogleLoginHelper>("io.mrarm.mcpelauncher", 1, 0, "GoogleLoginHelper");
+    qmlRegisterType<XHelper>("io.mrarm.mcpelauncher", 1, 0, "XHelper");
     qmlRegisterType<GooglePlayApi>("io.mrarm.mcpelauncher", 1, 0, "GooglePlayApi");
     qmlRegisterType<VersionInfo>("io.mrarm.mcpelauncher", 1, 0, "VersionInfo");
     qmlRegisterType<VersionManager>("io.mrarm.mcpelauncher", 1, 0, "VersionManager");

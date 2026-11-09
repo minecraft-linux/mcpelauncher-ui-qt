@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "Components"
+import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {
     width: parent.width
@@ -70,6 +71,19 @@ ColumnLayout {
             }
         }
     }
+
+    MButton {
+        Layout.alignment: Qt.AlignRight
+        text: qsTr("Sign in MS")
+
+        property var xhelper: XHelper {
+
+        }
+        onClicked: {
+            xhelper.acquireAccount(window)
+        }
+    }
+
 
     HorizontalDivider {}
 
