@@ -492,22 +492,24 @@ BaseScreen {
         }
 
         PlayButton {
+            property var xhelper: XHelper {
+            }
             id: pbutton
             x: parent.width > 700 ? (parent.width - width) / 2 : (parent.width - width - 12)
             y: 54 - height
             width: Math.min(Math.max(Math.max(implicitWidth, 230), playScreen.width / 4), 320)
             Layout.alignment: Qt.AlignHCenter
             text: {
-                if (playScreen.statusChecking || !playScreen.activeVersionName)
-                    return ""
-                return (playScreen.activeVersionNeedsDownload ? qsTr("Download and play") : qsTr("Play")).toUpperCase()
+                console.log("..")
+                for(var x in xhelper.packages) {
+                    console.log(x)
+                    console.log(xhelper.packages[x].version)
+                    var s = xhelper.packages[x].version.split(".")
+                    return s[0] + "." + s[1] + "." + s[2] + "." + s[3];
+                }
+                return "....";
             }
-            subText: {
-                if (playScreen.statusChecking)
-                    return ""
-                return playScreen.activeVersionName ? ("Minecraft " + playScreen.activeVersionName) : qsTr("Unknown")
-            }
-            enabled: !(gameLauncher.running || playScreen.statusChecking || progressbarVisible || updateChecker.active || !playScreen.activeVersionSupported || !playScreen.activeVersionName || playStatusNotify.visible)
+            subText: "Minecraft for Windows"
             onClicked: {
                 if (playScreen.activeVersionNeedsDownload) {
                     playDownloader.playDownloadTask.versionCode = getDownloadVersionCode()

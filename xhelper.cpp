@@ -109,32 +109,6 @@ void XHelper::loadAccount() {
         return;
     }
     hasEncryptedCredentials = false;
-    // settings.beginGroup("googlelogin");
-    // if (settings.contains("identifier")) {
-    //     Encryption enc;
-    //     auto got = settings.value("encrypted", "true").toString().toStdString();
-    //     if(enc.Decrypt(got, unlockkey.toStdString()) == "true") {
-    //         currentAccount.setAccountIdentifier(QString::fromStdString(enc.Decrypt(settings.value("identifier").toString().toStdString(), unlockkey.toStdString())));
-    //         currentAccount.setAccountUserId(QString::fromStdString(enc.Decrypt(settings.value("userId").toString().toStdString(), unlockkey.toStdString())));
-    //         currentAccount.setAccountToken(QString::fromStdString(enc.Decrypt(settings.value("token").toString().toStdString(), unlockkey.toStdString())));
-    //     } else if(got == "true") {
-    //         currentAccount.setAccountIdentifier(settings.value("identifier").toString());
-    //         currentAccount.setAccountUserId(settings.value("userId").toString());
-    //         currentAccount.setAccountToken(settings.value("token").toString());
-    //     } else {
-    //         hasEncryptedCredentials = true;
-    //     }
-
-    //     hasAccount = currentAccount.isValid();
-    //     if (hasAccount) {
-    //         login.set_token(currentAccount.accountIdentifier().toStdString(), currentAccount.accountToken().toStdString());
-    //     } else {
-    //         settings.endGroup();
-    //         return;
-    //     }
-    // }
-    // settings.endGroup();
-
     Encryption enc;
 
     int entries = settings.beginReadArray("msaccounts");
@@ -148,6 +122,7 @@ void XHelper::loadAccount() {
             u->setAccountName(QString::fromStdString(identifier));
             u->user = user_import(serialized.data());
             loginCache[QString::fromStdString(identifier)] = u;
+            accountInfoChanged();
 
             struct Data {
                 XHelper* helper;
@@ -155,8 +130,22 @@ void XHelper::loadAccount() {
                 QTimer *timer;
             };
 
-            get_game_versions(runtime, get_device_key_chain(), "7792d9ce-355a-493c-afbd-768f4a77c3b0", "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e", 0, [](uint64_t context, const char* version){
-                qDebug() << "Success:" << QString::fromUtf8(version);
+            auto d = new Data{this, u->user, nullptr};
+            // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
+            get_game_versions(runtime, get_device_key_chain(), "7792d9ce-355a-493c-afbd-768f4a77c3b0", nullptr, (uint64_t)d, [](uint64_t context, const char* version){
+                QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(version));
+                auto ver = doc.object()["Version"].toString();
+                auto cid = doc.object()["ContentId"].toString();
+                qDebug() << "Success: " << cid << "/" << ver;
+                auto d = (Data*)context;
+                QMetaObject::invokeMethod(d->helper, [context, cid, ver]() {
+                    auto d = (Data*)context;
+
+                    auto pkg = new XPackage();
+                    pkg->setVersion(ver);
+                    d->helper->packages[cid] = pkg;
+                    d->helper->packagesChanged();
+                });
             }, [](uint64_t context, const char* version){
                 qDebug() << "Failure:" << QString::fromUtf8(version);
             });
@@ -263,8 +252,8 @@ void XHelper::acquireAccount(QWindow *parent) {
             helper->window->windowHandle()->setTransientParent(parent);
             helper->window->move(parent->x() + parent->width() / 2 - helper->window->width() / 2, parent->y() + parent->height() / 2 - helper->window->height() / 2);
             helper->window->show();
-            data->accountName = helper->window->accountIdentifier().toStdString();
             connect(helper->window, &QDialog::finished, helper, [helper, data, webview_context](int code) {
+                data->accountName = helper->window->accountIdentifier().toStdString();
                 user_webview_submit(webview_context, helper->window->accountServerData().toStdString().c_str());
                 XHelper* helper = data->helper;
                 if(helper->window) {
@@ -279,6 +268,7 @@ void XHelper::acquireAccount(QWindow *parent) {
             u->setAccountName(QString::fromStdString(data->accountName));
             u->user = (void*)user;
             data->helper->loginCache[QString::fromStdString(data->accountName)] = u;
+            data->helper->accountInfoChanged();
             user_export(user, data, [](void* ctx, const char* serialized) {
                 Data* data = (Data*)ctx;
                 // unlockkey = data->helper->window->encryptionToken();

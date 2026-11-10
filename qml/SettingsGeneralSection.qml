@@ -72,7 +72,85 @@ ColumnLayout {
         }
     }
 
+    ColumnLayout {
+        spacing: 20
+        Layout.fillWidth: true
+
+        Repeater {
+            model: {
+                console.log("loginCache")
+                console.log(btn.xhelper);
+                console.log(btn.xhelper.loginCache);
+                console.log(Object.keys(btn.xhelper.loginCache));
+                //return Object.keys(btn.xhelper.loginCache);
+                var ret = [];
+                for(var k in btn.xhelper.loginCache) {
+                    console.log(k)
+                    ret.push(k);
+                }
+                return ret;
+            } 
+
+            RowLayout {
+                id: googleAcountRow
+                property var d: modelData
+
+                ColumnLayout {
+                    MText {
+                        text: qsTr("Microsoft Account")
+                        font.bold: true
+                    }
+                    Button {
+                        id: emailField
+                        property int wh: fontMetrics.advanceWidth(text)
+                        text: googleAcountRow.d
+                        hoverEnabled: true
+                        implicitWidth: wh + revealText.width + 10
+                        padding: 0
+                        contentItem: MText {
+                            text: {
+                                const mail = parent.text
+                                if (emailField.pressed)
+                                    return mail
+                                if (mail.length < 4)
+                                    return "..."
+                                return mail.substring(0, 3) + "*".repeat(mail.length - 3)
+                            }
+                            MText {
+                                id: revealText
+                                x: emailField.wh + 10
+                                text: qsTr("(Press to reveal)")
+                                color: emailField.hovered ? "#aaa" : "#888"
+                                visible: emailField.enabled
+                            }
+                        }
+                        background: FocusBorder {
+                            anchors.fill: parent
+                            visible: parent.visualFocus
+                        }
+                        FontMetrics {
+                            id: fontMetrics
+                            font.pointSize: 10
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                MButton {
+                    id: googlesigninbtn
+                    Layout.alignment: Qt.AlignRight
+                    text: qsTr("Sign out")
+                    onClicked: { }
+                }
+            }
+        }
+    }
+
     MButton {
+        id: btn
         Layout.alignment: Qt.AlignRight
         text: qsTr("Sign in MS")
 
