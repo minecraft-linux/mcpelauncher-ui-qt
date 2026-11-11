@@ -352,3 +352,74 @@ void XHelper::signOut() {
     hasEncryptedCredentials = false;
     emit accountInfoChanged();
 }
+
+XProgress *XHelper::downloadPackage(const QString &packageId, const QString &version) {
+    XProgress* progress = new XProgress();
+    progress->setProgress(0);
+    progress->setMaximum(100);
+
+    struct Data {
+        XHelper* helper;
+        const void* user;
+        QTimer *timer;
+        XProgress* progress;
+    };
+
+    auto d = new Data{this, this->loginCache.first()->user, nullptr, progress};
+    
+    fetch_package(runtime, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", d, [](void *user, const void* pkg){
+    auto data = (Data*)user;
+    qDebug() << "fetch success for handle:" << pkg;
+    package_dump(pkg);
+    auto qapp = QCoreApplication::instance();
+    QMetaObject::invokeMethod(qapp, [data, pkg]() {
+        data->timer = new QTimer(data->helper);
+
+        // Connect the timer's timeout signal to a periodic lambda execution loop
+        QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg, data]() {
+            // qDebug() << "This runs every 1000 milliseconds!";
+            auto progress = get_progress_all(pkg);
+            qDebug() << "Progress:" << progress.cur << "/" << progress.total;
+            data->progress->setProgress(progress.cur);
+            data->progress->setMaximum(progress.total);
+        });
+
+        // Start the timer with your periodic interval in milliseconds
+        data->timer->start(1000); 
+
+        download_all(data->helper->runtime, pkg, get_device_key_chain(), data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", reinterpret_cast<uint64_t>(data),
+            [](uint64_t ucontext){
+                auto data = (Data*)ucontext;
+                qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
+                QMetaObject::invokeMethod(data->timer, [data]() {
+                    data->timer->stop();
+                    delete data->timer;
+                    delete data;
+                });
+            },
+            [](uint64_t ucontext, const char* error){
+                auto data = (Data*)ucontext;
+                qDebug() << "Download failed for context:" << ucontext << "error:" << error << "user:" << data->user;
+                QMetaObject::invokeMethod(data->timer, [data]() {
+                    data->timer->stop();
+                    delete data->timer;
+                    delete data;
+                });
+            }
+        );
+    });
+//     // abort();
+}, [](void *user, const char* error){
+    qDebug() << "Failed to fetch package:" << error;
+    // abort();
+});
+
+
+    return progress;
+}
+
+void XHelper::runPackage(const QString &packageId, const QString &version) {
+    std::thread([runtime = runtime, user = this->loginCache.first()->user](){
+        run_game(runtime, get_device_key_chain(), user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+    }).detach();
+}

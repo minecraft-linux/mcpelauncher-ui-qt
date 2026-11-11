@@ -17,7 +17,8 @@ BaseScreen {
     property GoogleVersionChannel playVerChannel
 
     property bool isVersionsInitialized: false
-    property bool progressbarVisible: playDownloader.active || updateManager.active
+    property var xprogress: null
+    property bool progressbarVisible: xprogress || playDownloader.active || updateManager.active
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
     property string warnMessage: ""
@@ -511,21 +512,9 @@ BaseScreen {
             }
             subText: "Minecraft for Windows"
             onClicked: {
-                if (playScreen.activeVersionNeedsDownload) {
-                    playDownloader.playDownloadTask.versionCode = getDownloadVersionCode()
-                    if (playDownloader.playDownloadTask.versionCode === 0)
-                        return
-
-                    progressBar.value = 0
-                    const rawname = getRawVersionsName()
-                    const partialDownload = !needsFullDownload(rawname)
-                    if (partialDownload)
-                        playDownloader.apkExtractionTask.versionName = rawname
-
-                    playDownloader.playDownloadTask.start(partialDownload)
-                } else {
-                    launchGame()
-                }
+                playScreen.xprogress = xhelper.downloadPackage("", "");
+                progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
+                pbutton.subText = "Downloading..."
             }
         }
     }

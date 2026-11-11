@@ -31,6 +31,34 @@ signals:
     void accountInfoChanged();
 };
 
+class XProgress : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(int progress READ getProgress NOTIFY progressChanged)
+    Q_PROPERTY(int maximum READ getMaximum NOTIFY progressChanged)
+    int progress;
+    int maximum;
+public:
+    int getProgress() const {
+        return progress;
+    }
+    int getMaximum() const {
+        return maximum;
+    }
+    void setProgress(int p) {
+        if (progress != p) {
+            progress = p;
+            emit progressChanged();
+        }
+    }
+    void setMaximum(int m) {
+        if (maximum != m) {
+            maximum = m;
+            emit progressChanged();
+        }
+    }
+signals:
+    void progressChanged();
+};
 
 class XUser : public QObject {
     Q_OBJECT
@@ -118,6 +146,9 @@ public slots:
     void acquireAccount(QWindow *parent);
 
     void signOut();
+
+    XProgress* downloadPackage(const QString& packageId, const QString& version);
+    void runPackage(const QString& packageId, const QString& version);
 signals:
     void accountAcquireFinished(QObject* account);
 
