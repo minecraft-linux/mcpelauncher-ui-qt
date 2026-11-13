@@ -423,3 +423,29 @@ void XHelper::runPackage(const QString &packageId, const QString &version) {
         run_game(runtime, get_device_key_chain(), user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
     }).detach();
 }
+
+XAsyncVariant* XHelper::resolvePackage(const QString &packageId, const QString &version) {
+    XAsyncVariant* progress = new XAsyncVariant();
+    auto user = this->loginCache.first()->user;
+    struct Data {
+        XHelper* helper;
+        void* user;
+        XAsyncVariant* progress; 
+    } *d = new Data{this, user, progress};
+    // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
+    get_game_versions(runtime, get_device_key_chain(), packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
+        std::string sver = version;
+        auto d = (Data*)context;
+        QMetaObject::invokeMethod(d->helper, [context, sver]() {
+            auto d = (Data*)context;
+            QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(sver));
+            d->progress->setVersion(QVariant::fromValue(doc.object()));
+            delete d;
+        });
+    }, [](uint64_t context, const char* version){
+        qDebug() << "Failure:" << QString::fromUtf8(version);
+        auto d = (Data*)context;
+        delete d;
+    });
+    return progress;
+}

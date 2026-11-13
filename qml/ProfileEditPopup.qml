@@ -129,6 +129,7 @@ Popup {
                         }
                         MComboBox {
                             id: profileVersion
+                            property XHelper xhelper: XHelper { }
                             textRole: "name"
                             model: versionsmodel
                             property var versions: versionManager.versions.getAll().sort(function (a, b) {
@@ -138,61 +139,103 @@ Popup {
                             property var extraVersionName: null
                             property var hideLatest: googleLoginHelper.hideLatest
                             property var data: []
-                            property var update: () => {
+                            onLoadMoreRequested: {
+                                profileVersion.update(true, 0)
+                            }
+                            property var update: (loadMore, skip) => {
+                                                    isLoading = true
                                                      data = []
-                                                     versionsmodel.clear()
-                                                     var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
-                                                     var append = function (obj) {
-                                                         data.push(obj)
-                                                         versionsmodel.append({
-                                                                                  "name": obj.name
-                                                                              })
+                                                     var lastVersion = "";
+                                                     if(!loadMore) {
+                                                        versionsmodel.clear()
+                                                     } else if (versionsmodel.count > 0) {
+                                                        var lv = versionsmodel.get(versionsmodel.count - 1 - skip);
+                                                        if(lv.resolved) {
+                                                            hasMore = false;
+                                                            isLoading = false;
+                                                            return;
+                                                        }
+                                                        lastVersion = lv.id;
                                                      }
-                                                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
-                                                         var support = checkGooglePlayLatestSupport()
-                                                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
-                                                         append({
-                                                                    "name": qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))),
-                                                                    "versionType": ProfileInfo.LATEST_GOOGLE_PLAY
+
+                                                     var p = xhelper.resolvePackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", lastVersion)
+                                                     p.accountInfoChanged.connect(() => {
+                                                        if(!p.version.PackageFound && loadMore) {
+                                                            profileVersion.update(true, skip + 1)
+                                                            return;
+                                                        }
+                                                        var vers = [];
+                                                        var parseVer = function(vername) {
+                                                            var s = vername.split(".");
+                                                            var a = Number.parseInt(s[0]);
+                                                            var b = Number.parseInt(s[1]);
+                                                            var c = Number.parseInt(s[2]);
+                                                            var d = Number.parseInt(s[3]);
+                                                            return [a, b, c, d]
+                                                        };
+                                                        var compare = function(a, b) {
+                                                            var l = a.parsed;
+                                                            var r = b.parsed;
+                                                            for(var i = 0; i < 4; i++) {
+                                                                if(l[i] < r[i]) {
+                                                                    return 1;
+                                                                }
+                                                                if(l[i] > r[i]) {
+                                                                    return -1;
+                                                                }
+                                                            }
+                                                            return 0;
+                                                        }
+                                                        if(!loadMore)
+                                                        {
+                                                            var vername = p.version.VersionId;
+                                                            var s = vername.split(".");
+                                                            vers.push({
+                                                                "name": s[0] + "." + s[1] + "." + s[2] + "." + s[3],
+                                                                "id": vername,
+                                                                "parsed": parseVer(vername),
+                                                                "resolved": true,
+                                                                "location": p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                            })
+                                                        } else {
+                                                            for(var i = 0; i < versionsmodel.count; i++) {
+                                                                if(versionsmodel[i] && versionsmodel[i].id === p.version.VersionId) {
+                                                                    versionsmodel[i].location = p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                                    versionsmodel[i].resolved = true;
+                                                                    if(!versionsmodel[i].location) {
+                                                                        versionsmodel[i].name = versionsmodel[i].name + " (Deleted)";
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                        for(var pkg of p.version.PackageFiles) {
+                                                            if(pkg.FileName.startsWith("update-") && pkg.FileName.endsWith(".xsp"))
+                                                            {
+                                                                var vername = pkg.FileName.substring(7, pkg.FileName.length - 4);
+                                                                var s = vername.split(".");
+                                                                vers.push({
+                                                                    "name": s[0] + "." + s[1] + "." + s[2] + "." + s[3],
+                                                                    "id": vername,
+                                                                    "parsed": parseVer(vername),
                                                                 })
-                                                     }
-                                                     for (var i = 0; i < versions.length; i++) {
-                                                         for (var j = 0; j < abis.length; j++) {
-                                                             for (var k = 0; k < versions[i].archs.length; k++) {
-                                                                 if (versions[i].archs[k] == abis[j]) {
-                                                                     append({
-                                                                                "name": qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs[k]),
-                                                                                "versionType": ProfileInfo.LOCKED_CODE,
-                                                                                "obj": versions[i],
-                                                                                "arch": versions[i].archs[k]
-                                                                            })
-                                                                     break
-                                                                 }
-                                                             }
-                                                         }
-                                                     }
-                                                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
-                                                         for (i = 0; i < archivalVersions.length; i++) {
-                                                             for (var j = 0; j < abis.length; j++) {
-                                                                 if (archivalVersions[i].abi == abis[j]) {
-                                                                     append({
-                                                                                "name": qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")),
-                                                                                "versionType": ProfileInfo.LOCKED_CODE,
-                                                                                "obj": archivalVersions[i],
-                                                                                "arch": archivalVersions[i].abi,
-                                                                                "adjustVersionCode": true
-                                                                            })
-                                                                     break
-                                                                 }
-                                                             }
-                                                         }
-                                                     }
-                                                     if (extraVersionName != null) {
-                                                         append({
-                                                                    "name": extraVersionName,
-                                                                    "versionType": ProfileInfo.LOCKED_NAME
-                                                                })
-                                                     }
+                                                            }
+                                                        }
+                                                        vers.sort(compare);
+                                                        for(var v of vers) {
+                                                            if(skip) {
+                                                                skip--;
+                                                                continue;
+                                                            }
+                                                            versionsmodel.append(v);
+                                                        }
+                                                        hasMore = vers.length > 0;
+                                                        isLoading = false
+                                                     })
+
+                                                     //versionsmodel.append({
+                                                     //    "name": obj.name
+                                                     //})
                                                  }
 
                             ListModel {

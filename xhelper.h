@@ -31,6 +31,26 @@ signals:
     void accountInfoChanged();
 };
 
+class XAsyncVariant : public QObject {
+    Q_OBJECT
+    Q_PROPERTY(QVariant version READ getVersion NOTIFY accountInfoChanged)
+    QVariant version;
+public:
+    void* user = nullptr;
+    QVariant getVersion() const {
+        return version;
+    }
+    void setVersion(const QVariant& ver) {
+        if (version != ver) {
+            version = ver;
+            emit accountInfoChanged();
+        }
+    }
+
+signals:
+    void accountInfoChanged();
+};
+
 class XProgress : public QObject {
     Q_OBJECT
     Q_PROPERTY(int progress READ getProgress NOTIFY progressChanged)
@@ -149,6 +169,7 @@ public slots:
 
     XProgress* downloadPackage(const QString& packageId, const QString& version);
     void runPackage(const QString& packageId, const QString& version);
+    XAsyncVariant* resolvePackage(const QString& packageId, const QString& version);
 signals:
     void accountAcquireFinished(QObject* account);
 

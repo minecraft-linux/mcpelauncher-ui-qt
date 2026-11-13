@@ -74,10 +74,6 @@ Window {
         }
     }
 
-    function needsToLogIn() {
-        return googleLoginHelperInstance.account == null && !googleLoginHelperInstance.hasEncryptedCredentials && versionManagerInstance.versions.size === 0
-    }
-
     Component.onCompleted: {
         next()
     }
