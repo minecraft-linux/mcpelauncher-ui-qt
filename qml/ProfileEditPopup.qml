@@ -339,12 +339,12 @@ Popup {
                     }
 
                     RowLayout {
-                        visible: !popup.isXodus
                         spacing: 15
                         Layout.topMargin: 10
                         Layout.fillWidth: true
 
                         ColumnLayout {
+                            visible: !popup.isXodus
                             Layout.fillWidth: true
                             MText {
                                 text: qsTr("Texture Patch")
@@ -393,6 +393,25 @@ Popup {
                                     ListElement {
                                         name: "OpenGL"
                                     }
+                                }
+                            }
+                        }
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            visible: popup.isXodus
+                            MText {
+                                text: "Account"
+                                font.bold: true
+                            }
+                            MComboBox {
+                                id: xboxAccount
+                                Layout.fillWidth: true
+                                textRole: ""
+                                model: {
+                                    var accounts = Object.keys(profileVersion.xhelper.loginCache);
+                                    accounts.unshift("None")
+                                    return accounts;
                                 }
                             }
                         }
@@ -593,6 +612,7 @@ Popup {
         if (SHOW_ANGLEBACKEND) {
             profileGraphicsAPI.currentIndex = 0
         }
+        xboxAccount.currentIndex = 0
         dataDirCheck.checked = false
         dataDirPath.text = QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = false
