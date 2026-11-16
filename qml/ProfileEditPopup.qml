@@ -13,6 +13,7 @@ Popup {
     property GoogleVersionChannel playVerChannel
     property ProfileInfo profile: null
     property int targetHeight: Math.min(contentHeight, window.height - 20)
+    property bool isXodus: profileBackend.currentIndex === 0
     id: popup
     modal: true
     clip: true
@@ -118,6 +119,25 @@ Popup {
                             id: profileName
                             Layout.fillWidth: true
                             placeholderText: "unamed"
+                        }
+                    }
+
+                    ColumnLayout {
+                        MText {
+                            text: "Backend"
+                            font.bold: true
+                        }
+                        MComboBox {
+                            id: profileBackend
+                            textRole: "name"
+                            model: ListModel {
+                                ListElement {
+                                    name: "xgameruntime-rs"
+                                }
+                                ListElement {
+                                    name: "mcpelauncher"
+                                }
+                            }
                         }
                     }
 
@@ -319,6 +339,7 @@ Popup {
                     }
 
                     RowLayout {
+                        visible: !popup.isXodus
                         spacing: 15
                         Layout.topMargin: 10
                         Layout.fillWidth: true
@@ -351,7 +372,7 @@ Popup {
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            visible: SHOW_ANGLEBACKEND
+                            visible: !popup.isXodus && SHOW_ANGLEBACKEND
                             MText {
                                 text: "ANGLE backend"
                                 font.bold: true
@@ -377,6 +398,7 @@ Popup {
                         }
 
                         ColumnLayout {
+                            visible: !popup.isXodus
                             Layout.fillWidth: true
                             MCheckBox {
                                 id: windowSizeCheck
@@ -567,6 +589,7 @@ Popup {
         profileVersion.update()
         profileVersion.currentIndex = 0
         profileTexturePatch.currentIndex = 0
+        profileBackend.currentIndex = 0;
         if (SHOW_ANGLEBACKEND) {
             profileGraphicsAPI.currentIndex = 0
         }
@@ -599,22 +622,7 @@ Popup {
                     break
                 }
             }
-            if (index === -1) {
-                profileVersion.extraVersionName = getDisplayedVersionName()
-                var extraversion = {
-                    "name": profileVersion.extraVersionName,
-                    "versionType": ProfileInfo.LOCKED_CODE,
-                    "obj": {
-                        "versionCode": profile.versionCode
-                    },
-                    "arch": profile.arch
-                }
-                versionsmodel.append(extraversion)
-                profileVersion.data.push(extraversion)
-                profileVersion.currentIndex = versionsmodel.count - 1
-            } else {
-                profileVersion.currentIndex = index
-            }
+            profileVersion.currentIndex = index
         } else if (profile.versionType == ProfileInfo.LOCKED_NAME) {
             var index = -1
             for (var i = 0; i < versionsmodel.count; i++) {
@@ -623,18 +631,7 @@ Popup {
                     break
                 }
             }
-            if (index === -1) {
-                profileVersion.extraVersionName = getDisplayedVersionName() //profile.versionDirName
-                var extraversion = {
-                    "name": profileVersion.extraVersionName,
-                    "versionType": ProfileInfo.LOCKED_NAME
-                }
-                versionsmodel.append(extraversion)
-                profileVersion.data.push(extraversion)
-                profileVersion.currentIndex = versionsmodel.count - 1
-            } else {
-                profileVersion.currentIndex = index
-            }
+            profileVersion.currentIndex = index
         }
 
         profileTexturePatch.currentIndex = 0
@@ -685,29 +682,33 @@ Popup {
             else
                 profile.setName(profileName.text)
         }
-        profile.texturePatch = profileTexturePatch.currentIndex
-        if (SHOW_ANGLEBACKEND) {
-            profile.graphicsAPI = profileGraphicsAPI.currentIndex
-        }
-        profile.arch = ""
         var adjustVersionCode = false
-        if (profileVersion.data[profileVersion.currentIndex].obj || profileVersion.data[profileVersion.currentIndex].versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
-            profile.versionType = profileVersion.data[profileVersion.currentIndex].versionType
-            // fails if it is a extraversion
-            if (profile.versionType == ProfileInfo.LOCKED_NAME)
-                profile.versionDirName = profileVersion.data[profileVersion.currentIndex].obj.directory
-            if (profile.versionType == ProfileInfo.LOCKED_CODE) {
-                profile.versionCode = profileVersion.data[profileVersion.currentIndex].obj.versionCode
-                profile.arch = profileVersion.data[profileVersion.currentIndex].arch || ""
-                adjustVersionCode = profileVersion.data[profileVersion.currentIndex].adjustVersionCode || false
+        if(!popup.isXodus) {
+            profile.texturePatch = profileTexturePatch.currentIndex
+            if (SHOW_ANGLEBACKEND) {
+                profile.graphicsAPI = profileGraphicsAPI.currentIndex
             }
-        }
+            profile.arch = ""
+            if (profileVersion.data[profileVersion.currentIndex].obj || profileVersion.data[profileVersion.currentIndex].versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
+                profile.versionType = profileVersion.data[profileVersion.currentIndex].versionType
+                // fails if it is a extraversion
+                if (profile.versionType == ProfileInfo.LOCKED_NAME)
+                    profile.versionDirName = profileVersion.data[profileVersion.currentIndex].obj.directory
+                if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+                    profile.versionCode = profileVersion.data[profileVersion.currentIndex].obj.versionCode
+                    profile.arch = profileVersion.data[profileVersion.currentIndex].arch || ""
+                    adjustVersionCode = profileVersion.data[profileVersion.currentIndex].adjustVersionCode || false
+                }
+            }
 
-        profile.windowCustomSize = windowSizeCheck.checked
+            profile.windowCustomSize = windowSizeCheck.checked
+        }
         profile.dataDirCustom = dataDirCheck.checked
         profile.dataDir = dataDirPath.text
-        profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
-        profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        if(!popup.isXodus) {
+            profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
+            profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        }
         profile.clearEnv()
         for (var i = 0; i < envs.model.count - 1; i++) {
             profile.env[envs.model.get(i).key] = envs.model.get(i).value
