@@ -737,6 +737,8 @@ Popup {
         if (adjustVersionCode && googleLoginHelperInstance.chromeOS && (profile.versionCode > 982000000 && profile.versionCode < 990000000 || profile.versionCode > 972000000 && profile.versionCode < 980000000)) {
             profile.versionCode = profile.versionCode + 1000000000
         }
+        profile.backend = profileBackend.currentValue;
+        profile.account = xboxAccount.currentValue;
         profile.save()
     }
 
