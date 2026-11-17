@@ -78,6 +78,7 @@ public:
     }
 signals:
     void progressChanged();
+    void finished();
 };
 
 class XUser : public QObject {

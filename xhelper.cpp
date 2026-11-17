@@ -84,7 +84,7 @@ extern "C" CProgress get_progress_all(const void* package);
 
 // pub extern "system" fn run_game(runtime: *const Runtime, device: *const Device, user: *const User, source: *const c_char, wine: *const c_char) -> i32 {
 
-extern "C" int run_game(const void* runtime, const void* device, const void* user, const char* source, const char* wine);
+extern "C" int run_game(const void* runtime, const void* device, const void* user, const void* xuser, const char* source, const char* wine);
 
 // pub extern "system" fn get_game_versions(runtime: *const Runtime, device: *const Device, content_id: *const c_char, version: *const c_char, context: u64, success: unsafe extern "system" fn(context: u64, version: *const c_char), failure: unsafe extern "system" fn(context: u64, version: *const c_char) ) {
 
@@ -387,9 +387,10 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
         // Start the timer with your periodic interval in milliseconds
         data->timer->start(1000); 
 
-        download_all(data->helper->runtime, pkg, get_device_key_chain(), data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", reinterpret_cast<uint64_t>(data),
+        download_all(data->helper->runtime, pkg, get_device_key_chain(), data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe", reinterpret_cast<uint64_t>(data),
             [](uint64_t ucontext){
                 auto data = (Data*)ucontext;
+                data->progress->finished();
                 qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
                 QMetaObject::invokeMethod(data->timer, [data]() {
                     data->timer->stop();
@@ -420,7 +421,7 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
 
 void XHelper::runPackage(const QString &packageId, const QString &version) {
     std::thread([runtime = runtime, user = this->loginCache.first()->user](){
-        run_game(runtime, get_device_key_chain(), user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+        run_game(runtime, get_device_key_chain(), user, user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
     }).detach();
 }
 

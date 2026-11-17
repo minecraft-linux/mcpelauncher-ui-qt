@@ -513,6 +513,9 @@ BaseScreen {
             subText: "Minecraft for Windows"
             onClicked: {
                 playScreen.xprogress = xhelper.downloadPackage("", "");
+                playScreen.xprogress.finished.connect(function() {
+                    xhelper.runPackage("", "");
+                });
                 progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
                 pbutton.subText = "Downloading..."
             }
