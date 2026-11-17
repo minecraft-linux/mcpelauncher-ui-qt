@@ -5,6 +5,12 @@ import QtQuick.Templates as T
 T.ComboBox {
     id: control
 
+    // Lazy-loading state and signal
+    property bool isLoading: false
+    property bool hasMore: true
+    property real loadThreshold: 40 // pixels from bottom to trigger load
+    signal loadMoreRequested()
+
     implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
     implicitHeight: 35
     leftPadding: 8
@@ -78,13 +84,46 @@ T.ComboBox {
         bottomMargin: 6
         padding: 4
 
+        onOpened: {
+            // In case the initial list is shorter than the popup height
+            listView.checkLoadMore()
+        }
+
         contentItem: ListView {
+            id: listView
             ScrollBar.vertical: ScrollBar {}
             clip: true
             implicitHeight: contentHeight
             model: control.delegateModel
             currentIndex: control.highlightedIndex
             highlightMoveDuration: 0
+
+            function checkLoadMore() {
+                if (!popupBox.visible || control.isLoading || !control.hasMore)
+                    return
+
+                // Trigger if content doesn't fill the view OR user scrolled within threshold of bottom
+                if (contentHeight <= height || (contentY + height >= contentHeight - control.loadThreshold)) {
+                    control.loadMoreRequested()
+                }
+            }
+
+            onContentYChanged: checkLoadMore()
+            onContentHeightChanged: checkLoadMore()
+
+            // Optional loading footer at the bottom of the dropdown
+            footer: Item {
+                width: listView.width
+                height: control.isLoading ? 28 : 0
+                visible: control.isLoading
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "Loading..."
+                    color: "#888"
+                    font.pointSize: 9
+                }
+            }
         }
 
         background: Rectangle {

@@ -105,6 +105,8 @@ void ProfileManager::loadProfiles() {
             }
         }
         settings.endArray();
+        profile->backend = settings.value("backend").toString();
+        profile->account = settings.value("account").toString();
         settings.endGroup();
     }
 }
@@ -154,6 +156,9 @@ void ProfileInfo::save() {
         settings.setValue("path", mods[i]);
     }
     settings.endArray();
+
+    settings.setValue("backend", backend);
+    settings.setValue("account", account);
     settings.endGroup();
 }
 

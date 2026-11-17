@@ -13,6 +13,7 @@ Popup {
     property GoogleVersionChannel playVerChannel
     property ProfileInfo profile: null
     property int targetHeight: Math.min(contentHeight, window.height - 20)
+    property bool isXodus: profileBackend.currentIndex === 0
     id: popup
     modal: true
     clip: true
@@ -122,6 +123,25 @@ Popup {
                     }
 
                     ColumnLayout {
+                        MText {
+                            text: "Backend"
+                            font.bold: true
+                        }
+                        MComboBox {
+                            id: profileBackend
+                            textRole: "name"
+                            model: ListModel {
+                                ListElement {
+                                    name: "xgameruntime-rs"
+                                }
+                                ListElement {
+                                    name: "mcpelauncher"
+                                }
+                            }
+                        }
+                    }
+
+                    ColumnLayout {
                         Layout.fillWidth: true
                         MText {
                             text: qsTr("Version")
@@ -129,6 +149,7 @@ Popup {
                         }
                         MComboBox {
                             id: profileVersion
+                            property XHelper xhelper: XHelper { }
                             textRole: "name"
                             model: versionsmodel
                             property var versions: versionManager.versions.getAll().sort(function (a, b) {
@@ -138,61 +159,103 @@ Popup {
                             property var extraVersionName: null
                             property var hideLatest: googleLoginHelper.hideLatest
                             property var data: []
-                            property var update: () => {
+                            onLoadMoreRequested: {
+                                profileVersion.update(true, 0)
+                            }
+                            property var update: (loadMore, skip) => {
+                                                    isLoading = true
                                                      data = []
-                                                     versionsmodel.clear()
-                                                     var abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
-                                                     var append = function (obj) {
-                                                         data.push(obj)
-                                                         versionsmodel.append({
-                                                                                  "name": obj.name
-                                                                              })
+                                                     var lastVersion = "";
+                                                     if(!loadMore) {
+                                                        versionsmodel.clear()
+                                                     } else if (versionsmodel.count > 0) {
+                                                        var lv = versionsmodel.get(versionsmodel.count - 1 - skip);
+                                                        if(lv.resolved) {
+                                                            hasMore = false;
+                                                            isLoading = false;
+                                                            return;
+                                                        }
+                                                        lastVersion = lv.id;
                                                      }
-                                                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
-                                                         var support = checkGooglePlayLatestSupport()
-                                                         var latest = support ? playVerChannel.latestVersion : launcherLatestVersion().versionName
-                                                         append({
-                                                                    "name": qsTr("Latest %1 (%2)").arg((latest.length === 0 ? qsTr("version") : latest)).arg((support ? qsTr("Google Play") : qsTr("compatible"))),
-                                                                    "versionType": ProfileInfo.LATEST_GOOGLE_PLAY
+
+                                                     var p = xhelper.resolvePackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", lastVersion)
+                                                     p.accountInfoChanged.connect(() => {
+                                                        if(!p.version.PackageFound && loadMore) {
+                                                            profileVersion.update(true, skip + 1)
+                                                            return;
+                                                        }
+                                                        var vers = [];
+                                                        var parseVer = function(vername) {
+                                                            var s = vername.split(".");
+                                                            var a = Number.parseInt(s[0]);
+                                                            var b = Number.parseInt(s[1]);
+                                                            var c = Number.parseInt(s[2]);
+                                                            var d = Number.parseInt(s[3]);
+                                                            return [a, b, c, d]
+                                                        };
+                                                        var compare = function(a, b) {
+                                                            var l = a.parsed;
+                                                            var r = b.parsed;
+                                                            for(var i = 0; i < 4; i++) {
+                                                                if(l[i] < r[i]) {
+                                                                    return 1;
+                                                                }
+                                                                if(l[i] > r[i]) {
+                                                                    return -1;
+                                                                }
+                                                            }
+                                                            return 0;
+                                                        }
+                                                        if(!loadMore)
+                                                        {
+                                                            var vername = p.version.VersionId;
+                                                            var s = vername.split(".");
+                                                            vers.push({
+                                                                "name": s[0] + "." + s[1] + "." + s[2] + "." + s[3],
+                                                                "id": vername,
+                                                                "parsed": parseVer(vername),
+                                                                "resolved": true,
+                                                                "location": p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                            })
+                                                        } else {
+                                                            for(var i = 0; i < versionsmodel.count; i++) {
+                                                                if(versionsmodel[i] && versionsmodel[i].id === p.version.VersionId) {
+                                                                    versionsmodel[i].location = p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                                    versionsmodel[i].resolved = true;
+                                                                    if(!versionsmodel[i].location) {
+                                                                        versionsmodel[i].name = versionsmodel[i].name + " (Deleted)";
+                                                                    }
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                        for(var pkg of p.version.PackageFiles) {
+                                                            if(pkg.FileName.startsWith("update-") && pkg.FileName.endsWith(".xsp"))
+                                                            {
+                                                                var vername = pkg.FileName.substring(7, pkg.FileName.length - 4);
+                                                                var s = vername.split(".");
+                                                                vers.push({
+                                                                    "name": s[0] + "." + s[1] + "." + s[2] + "." + s[3],
+                                                                    "id": vername,
+                                                                    "parsed": parseVer(vername),
                                                                 })
-                                                     }
-                                                     for (var i = 0; i < versions.length; i++) {
-                                                         for (var j = 0; j < abis.length; j++) {
-                                                             for (var k = 0; k < versions[i].archs.length; k++) {
-                                                                 if (versions[i].archs[k] == abis[j]) {
-                                                                     append({
-                                                                                "name": qsTr("%1 (installed, %2)").arg(versions[i].versionName).arg(versions[i].archs[k]),
-                                                                                "versionType": ProfileInfo.LOCKED_CODE,
-                                                                                "obj": versions[i],
-                                                                                "arch": versions[i].archs[k]
-                                                                            })
-                                                                     break
-                                                                 }
-                                                             }
-                                                         }
-                                                     }
-                                                     if (!hideLatest && googleLoginHelper.account !== null && playVerChannel.hasVerifiedLicense) {
-                                                         for (i = 0; i < archivalVersions.length; i++) {
-                                                             for (var j = 0; j < abis.length; j++) {
-                                                                 if (archivalVersions[i].abi == abis[j]) {
-                                                                     append({
-                                                                                "name": qsTr("%1 (%2%3)").arg(archivalVersions[i].versionName).arg(archivalVersions[i].abi).arg((archivalVersions[i].isBeta ? (qsTr(", ") + qsTr("beta")) : "")),
-                                                                                "versionType": ProfileInfo.LOCKED_CODE,
-                                                                                "obj": archivalVersions[i],
-                                                                                "arch": archivalVersions[i].abi,
-                                                                                "adjustVersionCode": true
-                                                                            })
-                                                                     break
-                                                                 }
-                                                             }
-                                                         }
-                                                     }
-                                                     if (extraVersionName != null) {
-                                                         append({
-                                                                    "name": extraVersionName,
-                                                                    "versionType": ProfileInfo.LOCKED_NAME
-                                                                })
-                                                     }
+                                                            }
+                                                        }
+                                                        vers.sort(compare);
+                                                        for(var v of vers) {
+                                                            if(skip) {
+                                                                skip--;
+                                                                continue;
+                                                            }
+                                                            versionsmodel.append(v);
+                                                        }
+                                                        hasMore = vers.length > 0;
+                                                        isLoading = false
+                                                     })
+
+                                                     //versionsmodel.append({
+                                                     //    "name": obj.name
+                                                     //})
                                                  }
 
                             ListModel {
@@ -281,6 +344,7 @@ Popup {
                         Layout.fillWidth: true
 
                         ColumnLayout {
+                            visible: !popup.isXodus
                             Layout.fillWidth: true
                             MText {
                                 text: qsTr("Texture Patch")
@@ -308,7 +372,7 @@ Popup {
 
                         ColumnLayout {
                             Layout.fillWidth: true
-                            visible: SHOW_ANGLEBACKEND
+                            visible: !popup.isXodus && SHOW_ANGLEBACKEND
                             MText {
                                 text: "ANGLE backend"
                                 font.bold: true
@@ -334,6 +398,26 @@ Popup {
                         }
 
                         ColumnLayout {
+                            Layout.fillWidth: true
+                            visible: popup.isXodus
+                            MText {
+                                text: "Account"
+                                font.bold: true
+                            }
+                            MComboBox {
+                                id: xboxAccount
+                                Layout.fillWidth: true
+                                textRole: ""
+                                model: {
+                                    var accounts = Object.keys(profileVersion.xhelper.loginCache);
+                                    accounts.unshift("None")
+                                    return accounts;
+                                }
+                            }
+                        }
+
+                        ColumnLayout {
+                            visible: !popup.isXodus
                             Layout.fillWidth: true
                             MCheckBox {
                                 id: windowSizeCheck
@@ -524,9 +608,11 @@ Popup {
         profileVersion.update()
         profileVersion.currentIndex = 0
         profileTexturePatch.currentIndex = 0
+        profileBackend.currentIndex = 0;
         if (SHOW_ANGLEBACKEND) {
             profileGraphicsAPI.currentIndex = 0
         }
+        xboxAccount.currentIndex = 0
         dataDirCheck.checked = false
         dataDirPath.text = QmlUrlUtils.urlToLocalFile(launcherSettings.gameDataDir)
         windowSizeCheck.checked = false
@@ -556,22 +642,7 @@ Popup {
                     break
                 }
             }
-            if (index === -1) {
-                profileVersion.extraVersionName = getDisplayedVersionName()
-                var extraversion = {
-                    "name": profileVersion.extraVersionName,
-                    "versionType": ProfileInfo.LOCKED_CODE,
-                    "obj": {
-                        "versionCode": profile.versionCode
-                    },
-                    "arch": profile.arch
-                }
-                versionsmodel.append(extraversion)
-                profileVersion.data.push(extraversion)
-                profileVersion.currentIndex = versionsmodel.count - 1
-            } else {
-                profileVersion.currentIndex = index
-            }
+            profileVersion.currentIndex = index
         } else if (profile.versionType == ProfileInfo.LOCKED_NAME) {
             var index = -1
             for (var i = 0; i < versionsmodel.count; i++) {
@@ -580,18 +651,7 @@ Popup {
                     break
                 }
             }
-            if (index === -1) {
-                profileVersion.extraVersionName = getDisplayedVersionName() //profile.versionDirName
-                var extraversion = {
-                    "name": profileVersion.extraVersionName,
-                    "versionType": ProfileInfo.LOCKED_NAME
-                }
-                versionsmodel.append(extraversion)
-                profileVersion.data.push(extraversion)
-                profileVersion.currentIndex = versionsmodel.count - 1
-            } else {
-                profileVersion.currentIndex = index
-            }
+            profileVersion.currentIndex = index
         }
 
         profileTexturePatch.currentIndex = 0
@@ -642,29 +702,33 @@ Popup {
             else
                 profile.setName(profileName.text)
         }
-        profile.texturePatch = profileTexturePatch.currentIndex
-        if (SHOW_ANGLEBACKEND) {
-            profile.graphicsAPI = profileGraphicsAPI.currentIndex
-        }
-        profile.arch = ""
         var adjustVersionCode = false
-        if (profileVersion.data[profileVersion.currentIndex].obj || profileVersion.data[profileVersion.currentIndex].versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
-            profile.versionType = profileVersion.data[profileVersion.currentIndex].versionType
-            // fails if it is a extraversion
-            if (profile.versionType == ProfileInfo.LOCKED_NAME)
-                profile.versionDirName = profileVersion.data[profileVersion.currentIndex].obj.directory
-            if (profile.versionType == ProfileInfo.LOCKED_CODE) {
-                profile.versionCode = profileVersion.data[profileVersion.currentIndex].obj.versionCode
-                profile.arch = profileVersion.data[profileVersion.currentIndex].arch || ""
-                adjustVersionCode = profileVersion.data[profileVersion.currentIndex].adjustVersionCode || false
+        if(!popup.isXodus) {
+            profile.texturePatch = profileTexturePatch.currentIndex
+            if (SHOW_ANGLEBACKEND) {
+                profile.graphicsAPI = profileGraphicsAPI.currentIndex
             }
-        }
+            profile.arch = ""
+            if (profileVersion.data[profileVersion.currentIndex].obj || profileVersion.data[profileVersion.currentIndex].versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
+                profile.versionType = profileVersion.data[profileVersion.currentIndex].versionType
+                // fails if it is a extraversion
+                if (profile.versionType == ProfileInfo.LOCKED_NAME)
+                    profile.versionDirName = profileVersion.data[profileVersion.currentIndex].obj.directory
+                if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+                    profile.versionCode = profileVersion.data[profileVersion.currentIndex].obj.versionCode
+                    profile.arch = profileVersion.data[profileVersion.currentIndex].arch || ""
+                    adjustVersionCode = profileVersion.data[profileVersion.currentIndex].adjustVersionCode || false
+                }
+            }
 
-        profile.windowCustomSize = windowSizeCheck.checked
+            profile.windowCustomSize = windowSizeCheck.checked
+        }
         profile.dataDirCustom = dataDirCheck.checked
         profile.dataDir = dataDirPath.text
-        profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
-        profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        if(!popup.isXodus) {
+            profile.windowWidth = parseInt(windowWidth.text) || profile.windowWidth
+            profile.windowHeight = parseInt(windowHeight.text) || profile.windowHeight
+        }
         profile.clearEnv()
         for (var i = 0; i < envs.model.count - 1; i++) {
             profile.env[envs.model.get(i).key] = envs.model.get(i).value
@@ -673,6 +737,8 @@ Popup {
         if (adjustVersionCode && googleLoginHelperInstance.chromeOS && (profile.versionCode > 982000000 && profile.versionCode < 990000000 || profile.versionCode > 972000000 && profile.versionCode < 980000000)) {
             profile.versionCode = profile.versionCode + 1000000000
         }
+        profile.backend = profileBackend.currentValue;
+        profile.account = xboxAccount.currentValue;
         profile.save()
     }
 

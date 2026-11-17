@@ -28,6 +28,8 @@ class ProfileInfo : public QObject {
 #ifdef __APPLE__
     Q_PROPERTY(int graphicsAPI MEMBER graphicsAPI WRITE setGraphicsAPI NOTIFY changed)
 #endif
+    Q_PROPERTY(QString backend MEMBER backend NOTIFY changed)
+    Q_PROPERTY(QString account MEMBER account NOTIFY changed)
 
     ProfileManager* manager;
 
@@ -64,6 +66,10 @@ public:
     QString commandline;
 
     QQmlPropertyMap* env;
+
+    QString backend;
+
+    QString account;
 
 public slots:
     void setName(QString const& newName);
