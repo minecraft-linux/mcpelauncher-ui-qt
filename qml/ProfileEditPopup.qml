@@ -124,7 +124,7 @@ Popup {
 
                     ColumnLayout {
                         MText {
-                            text: "Backend"
+                            text: qsTr("Game")
                             font.bold: true
                         }
                         MComboBox {
@@ -132,10 +132,22 @@ Popup {
                             textRole: "name"
                             model: ListModel {
                                 ListElement {
-                                    name: "xgameruntime-rs"
+                                    name: "Minecraft for Windows"
                                 }
                                 ListElement {
-                                    name: "mcpelauncher"
+                                    name: "Minecraft for Android"
+                                }
+                                ListElement {
+                                    name: "Minecraft for ChromeOS"
+                                }
+                                ListElement {
+                                    name: "Minecraft Trial for ChromeOS"
+                                }
+                                ListElement {
+                                    name: "Minecraft Dungeons"
+                                }
+                                ListElement {
+                                    name: "Minecraft Dungeons 2"
                                 }
                             }
                         }
@@ -159,24 +171,32 @@ Popup {
                             property var extraVersionName: null
                             property var hideLatest: googleLoginHelper.hideLatest
                             property var data: []
+                            property var done: false
                             onLoadMoreRequested: {
                                 profileVersion.update(true, 0)
                             }
                             property var update: (loadMore, skip) => {
-                                                    isLoading = true
                                                      data = []
                                                      var lastVersion = "";
                                                      if(!loadMore) {
                                                         versionsmodel.clear()
                                                      } else if (versionsmodel.count > 0) {
+                                                        if(!hasMore) {
+                                                            console.log("fully loaded");
+                                                            hasMore = false;
+                                                            isLoading = false;
+                                                            return;
+                                                        }
                                                         var lv = versionsmodel.get(versionsmodel.count - 1 - skip);
                                                         if(lv.resolved) {
+                                                            console.log("loaded ver list resolved");
                                                             hasMore = false;
                                                             isLoading = false;
                                                             return;
                                                         }
                                                         lastVersion = lv.id;
                                                      }
+                                                    isLoading = true
 
                                                      var p = xhelper.resolvePackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", lastVersion)
                                                      p.accountInfoChanged.connect(() => {
@@ -242,20 +262,17 @@ Popup {
                                                             }
                                                         }
                                                         vers.sort(compare);
+                                                        hasMore = false;
                                                         for(var v of vers) {
                                                             if(skip) {
                                                                 skip--;
                                                                 continue;
                                                             }
+                                                            hasMore = true;
                                                             versionsmodel.append(v);
                                                         }
-                                                        hasMore = vers.length > 0;
                                                         isLoading = false
                                                      })
-
-                                                     //versionsmodel.append({
-                                                     //    "name": obj.name
-                                                     //})
                                                  }
 
                             ListModel {
@@ -410,6 +427,7 @@ Popup {
                                 textRole: ""
                                 model: {
                                     var accounts = Object.keys(profileVersion.xhelper.loginCache);
+                                    accounts.unshift("Store")
                                     accounts.unshift("None")
                                     return accounts;
                                 }

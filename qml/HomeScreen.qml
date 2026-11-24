@@ -493,7 +493,7 @@ BaseScreen {
         }
 
         PlayButton {
-            property var xhelper: XHelper {
+            property XHelper xhelper: XHelper {
             }
             id: pbutton
             x: parent.width > 700 ? (parent.width - width) / 2 : (parent.width - width - 12)
@@ -512,6 +512,8 @@ BaseScreen {
             }
             subText: "Minecraft for Windows"
             onClicked: {
+                xhelper.runPackage("", "");
+                return;
                 playScreen.xprogress = xhelper.downloadPackage("", "");
                 playScreen.xprogress.finished.connect(function() {
                     xhelper.runPackage("", "");

@@ -271,7 +271,6 @@ void XHelper::acquireAccount(QWindow *parent) {
             data->helper->accountInfoChanged();
             user_export(user, data, [](void* ctx, const char* serialized) {
                 Data* data = (Data*)ctx;
-                // unlockkey = data->helper->window->encryptionToken();
                 Encryption enc;
                 if(data->helper->unlockkey.isEmpty()) {
                     data->helper->unlockkey = data->helper->settings.value("key", "").toString();
@@ -288,8 +287,6 @@ void XHelper::acquireAccount(QWindow *parent) {
                 data->helper->settings.setValue("identifier", QString::fromStdString(enc.Encrypt(data->accountName, data->helper->unlockkey.toStdString())));
                 data->helper->settings.setValue("serialized", QString::fromStdString(enc.Encrypt(serialized, data->helper->unlockkey.toStdString())));
                 data->helper->settings.endArray();
-                // saveDeviceState();
-                // accountAcquireFinished(&currentAccount);
 
                 delete data;
             });
@@ -302,42 +299,6 @@ void XHelper::acquireAccount(QWindow *parent) {
 
 void XHelper::onLoginFinished(int code) {
     accountAcquireFinished(nullptr);
-    
-    // if (code == QDialog::Accepted) {
-    //     try {
-    //         unlockkey = window->encryptionToken();
-    //         Encryption enc;
-    //         if(unlockkey.isEmpty()) {
-    //             unlockkey = QString::fromStdString(enc.RandomKey());
-    //             settings.setValue("key", unlockkey);
-    //         }
-    //         loginCache.clear();
-    //         loginCache.setKey(unlockkey.toStdString());
-    //         login.perform_with_access_token(window->accountToken().toStdString(), window->accountIdentifier().toStdString(), true)->call();
-    //         currentAccount.setAccountIdentifier(QString::fromStdString(login.get_email()));
-    //         currentAccount.setAccountUserId(window->accountUserId());
-    //         currentAccount.setAccountToken(QString::fromStdString(login.get_token()));
-    //         hasAccount = currentAccount.isValid();
-    //         if (hasAccount) {
-    //             settings.beginGroup("googlelogin");
-    //             settings.setValue("encrypted", QString::fromStdString(enc.Encrypt("true", unlockkey.toStdString())));
-    //             settings.setValue("identifier", QString::fromStdString(enc.Encrypt(currentAccount.accountIdentifier().toStdString(), unlockkey.toStdString())));
-    //             settings.setValue("userId", QString::fromStdString(enc.Encrypt(currentAccount.accountUserId().toStdString(), unlockkey.toStdString())));
-    //             settings.setValue("token", QString::fromStdString(enc.Encrypt(currentAccount.accountToken().toStdString(), unlockkey.toStdString())));
-    //             settings.endGroup();
-    //             saveDeviceState();
-    //             accountAcquireFinished(&currentAccount);
-    //         } else {
-    //             loginError("Login failed");
-    //             accountAcquireFinished(nullptr);
-    //         }
-    //     } catch (const std::exception& ex) {
-    //         loginError(ex.what());
-    //         accountAcquireFinished(nullptr);
-    //     }
-    // } else {
-    //     accountAcquireFinished(nullptr);
-    // }
     emit accountInfoChanged();
     window = nullptr;
 }
@@ -347,9 +308,30 @@ void XHelper::updateDevice() {
     emit accountInfoChanged();
 }
 
-void XHelper::signOut() {
+void XHelper::signOut(const QString& accountName) {
+    if (loginCache.contains(accountName)) {
+        loginCache.take(accountName)->deleteLater();
+        settings.beginWriteArray("msaccounts", loginCache.size());
+        Encryption enc;
+        if(unlockkey.isEmpty()) {
+            unlockkey = settings.value("key", "").toString();
+        }
 
-    hasEncryptedCredentials = false;
+        for (int i = 0; i < loginCache.size(); ++i) {
+            settings.setArrayIndex(i);
+            settings.setValue("encrypted", QString::fromStdString(enc.Encrypt("true", unlockkey.toStdString())));
+            settings.setValue("identifier", QString::fromStdString(enc.Encrypt(loginCache.values().at(i)->getAccountName().toStdString(), unlockkey.toStdString())));
+            std::string serialized;
+            user_export(loginCache.values().at(i)->user, &serialized, [](void* ctx, const char* serialized) {
+                *reinterpret_cast<std::string*>(ctx) = serialized;
+            });
+            settings.setValue("serialized", QString::fromStdString(enc.Encrypt(serialized, unlockkey.toStdString())));
+        }
+        settings.endArray();
+    }
+    if(loginCache.empty()) {
+        hasEncryptedCredentials = false;
+    }
     emit accountInfoChanged();
 }
 

@@ -73,23 +73,11 @@ ColumnLayout {
     }
 
     ColumnLayout {
-        spacing: 20
+        spacing: 5
         Layout.fillWidth: true
 
         Repeater {
-            model: {
-                console.log("loginCache")
-                console.log(btn.xhelper);
-                console.log(btn.xhelper.loginCache);
-                console.log(Object.keys(btn.xhelper.loginCache));
-                //return Object.keys(btn.xhelper.loginCache);
-                var ret = [];
-                for(var k in btn.xhelper.loginCache) {
-                    console.log(k)
-                    ret.push(k);
-                }
-                return ret;
-            } 
+            model: Object.keys(btn.xhelper.loginCache)
 
             RowLayout {
                 id: googleAcountRow
@@ -140,10 +128,11 @@ ColumnLayout {
                 }
 
                 MButton {
-                    id: googlesigninbtn
                     Layout.alignment: Qt.AlignRight
                     text: qsTr("Sign out")
-                    onClicked: { }
+                    onClicked: {
+                        btn.xhelper.signOut(googleAcountRow.d)
+                    }
                 }
             }
         }
@@ -154,7 +143,7 @@ ColumnLayout {
         Layout.alignment: Qt.AlignRight
         text: qsTr("Sign in MS")
 
-        property var xhelper: XHelper {
+        property XHelper xhelper: XHelper {
 
         }
         onClicked: {

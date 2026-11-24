@@ -111,7 +111,6 @@ private:
     void* runtime = nullptr;
     QSettings settings;
     XSignInUiQt::XLoginWindow* window = nullptr;
-    GoogleAccount currentAccount;
     bool hasAccount = false;
     bool hasEncryptedCredentials = false;
     QString unlockkey;
@@ -166,7 +165,7 @@ public:
 public slots:
     void acquireAccount(QWindow *parent);
 
-    void signOut();
+    void signOut(const QString& accountName);
 
     XProgress* downloadPackage(const QString& packageId, const QString& version);
     void runPackage(const QString& packageId, const QString& version);
