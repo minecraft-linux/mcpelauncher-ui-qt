@@ -26,15 +26,10 @@ extern "C" void demo();
 extern "C" void package_dump(const void* pkg);
 
 
-//pub extern "system" fn user_export(user: *const User, callback: unsafe extern "system" fn(serialized: *const c_char))
 extern "C" void user_export(const void* user, void*ctx, void (*callback)(void*ctx, const char* serialized));
 extern "C" void* user_import(const char* serialized);
 extern "C" void user_release(void* user);
 extern "C" void device_release(const void* device);
-
-// pub extern "system" fn user_webview_submit(context: *const UserWebviewContext, payload: *const c_char);
-// pub extern "system" fn user_refresh(runtime: *const Runtime, device: *const Device, user: *const User, ucontext: u64, webview: unsafe extern "system" fn(u64, context: *const UserWebviewContext, start_url: *const c_char, end_url: *const c_char), success: unsafe extern "system" fn(u64, *const User),
-
 extern "C" void user_webview_submit(const void* context, const char* payload);
 extern "C" void user_refresh(const void* runtime, const void* device, const void* user, uint64_t ucontext,
     void (*webview)(uint64_t, const void* context, const char* start_url, const char* end_url),
@@ -43,39 +38,11 @@ extern "C" void user_refresh(const void* runtime, const void* device, const void
 );
 
 extern "C" const void* get_device_key_chain();
-
-// pub extern "system" fn download_all(
-//     runtime: *const Runtime,
-//     package: *const Package,
-//     device: *const Device,
-//     user: *const User,
-//     url: *const c_char,
-//     destination: *const c_char,
-//     ucontext: u64,
-//     success: unsafe extern "system" fn(c: u64),
-//     failure: unsafe extern "system" fn(c: u64, error: *const c_char),
-// ) {
-
 extern "C" void download_all(const void* runtime, const void* package, const void* device, const void* user,
     const char* url, const char* destination, uint64_t ucontext,
     void (*success)(uint64_t),
     void (*failure)(uint64_t, const char*)
 );
-
-// #[repr(C)]
-// pub struct CProgress {
-//     cur: usize,
-//     total: usize,
-// }
-
-// #[unsafe(no_mangle)]
-// pub extern "system" fn get_progress_all(package: *const Package) -> CProgress {
-//     let package = unsafe { &*package };
-//     let Ok((c, t)) = package.get_progress(vec![]) else {
-//         return CProgress { cur: 0, total: 0 };
-//     };
-//     CProgress { cur: c, total: t }
-// }
 
 struct CProgress {
     size_t cur;
@@ -84,11 +51,7 @@ struct CProgress {
 
 extern "C" CProgress get_progress_all(const void* package);
 
-// pub extern "system" fn run_game(runtime: *const Runtime, device: *const Device, user: *const User, source: *const c_char, wine: *const c_char) -> i32 {
-
 extern "C" int run_game(const void* runtime, const void* device, const void* user, const void* xuser, const char* source, const char* wine);
-
-// pub extern "system" fn get_game_versions(runtime: *const Runtime, device: *const Device, content_id: *const c_char, version: *const c_char, context: u64, success: unsafe extern "system" fn(context: u64, version: *const c_char), failure: unsafe extern "system" fn(context: u64, version: *const c_char) ) {
 
 extern "C" void get_game_versions(const void* runtime, const void* device, const char* content_id, const char* version, uint64_t context,
     void (*success)(uint64_t, const char*),
@@ -162,52 +125,6 @@ void XHelper::loadAccount() {
             }, [](uint64_t context, const char* version){
                 qDebug() << "Failure:" << QString::fromUtf8(version);
             });
-
-            // std::thread([runtime = runtime, user = u->user](){
-            //     run_game(runtime, device, user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
-            // }).detach();
-
-            // fetch_package(runtime, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", new Data{this, u->user}, [](void *user, const void* pkg){
-            //     auto data = (Data*)user;
-            //     qDebug() << "fetch success for handle:" << pkg;
-            //     package_dump(pkg);
-            //     destroy_package(pkg);
-            //     delete data;
-            // //     auto qapp = QCoreApplication::instance();
-            // //     QMetaObject::invokeMethod(qapp, [data, pkg]() {
-            // //         data->timer = new QTimer(data->helper);
-
-            // //         // Connect the timer's timeout signal to a periodic lambda execution loop
-            // //         QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg]() {
-            // //             // qDebug() << "This runs every 1000 milliseconds!";
-            // //             auto progress = get_progress_all(pkg);
-            // //             qDebug() << "Progress:" << progress.cur << "/" << progress.total;
-            // //         });
-
-            // //         // Start the timer with your periodic interval in milliseconds
-            // //         data->timer->start(1000); 
-
-            // //         download_all(data->helper->runtime, pkg, data->helper->device, data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", reinterpret_cast<uint64_t>(data),
-            // //             [](uint64_t ucontext){
-            // //                 auto data = (Data*)ucontext;
-            // //                 qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
-            // //                 data->timer->stop();
-            // //                 delete data;
-            // //             },
-            // //             [](uint64_t ucontext, const char* error){
-            // //                 auto data = (Data*)ucontext;
-            // //                 qDebug() << "Download failed for context:" << ucontext << "error:" << error << "user:" << data->user;
-            // //                 data->timer->stop();
-            // //                 delete data;
-            // //             }
-            // //         );
-            // //     });
-            // //     // abort();
-            // }, [](void *user, const char* error){
-            //     qDebug() << "Failed to fetch package:" << error;
-            //     // abort();
-            // });
-
         } else {
             hasEncryptedCredentials = true;
         }
@@ -219,28 +136,9 @@ void XHelper::loadAccount() {
 }
 
 void XHelper::loadDeviceState() {
-    // settings.beginGroup("device_state");
-    // device.generated_mac_addr = settings.value("generated_mac_addr").toString().toStdString();
-    // device.generated_meid = settings.value("generated_meid").toString().toStdString();
-    // device.generated_serial_number = settings.value("generated_serial_number").toString().toStdString();
-    // device.random_logging_id = settings.value("generated_serial_number").toLongLong();
-    // settings.endGroup();
 }
 
 void XHelper::saveDeviceState() {
-    // settings.beginGroup("device_state");
-    // settings.setValue("generated_mac_addr", QString::fromStdString(device.generated_mac_addr));
-    // settings.setValue("generated_meid", QString::fromStdString(device.generated_meid));
-    // settings.setValue("generated_serial_number", QString::fromStdString(device.generated_serial_number));
-    // settings.setValue("random_logging_id", device.random_logging_id);
-    // // Continue to write it for backward compatibility
-    // settings.beginWriteArray("native_platforms", device.config_native_platforms.size());
-    // for (int i = 0; i < device.config_native_platforms.size(); ++i) {
-    //     settings.setArrayIndex(i);
-    //     settings.setValue("platform", QString::fromStdString(device.config_native_platforms[i]));
-    // }
-    // settings.endArray();
-    // settings.endGroup();
 }
 
 void XHelper::acquireAccount(QWindow *parent) {
@@ -353,70 +251,98 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
     progress->setProgress(0);
     progress->setMaximum(100);
 
+    auto baseDir = QDir(QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions")).filePath(packageId)).filePath(version);
+    QDir().mkpath(baseDir);
+
     struct Data {
         XHelper* helper;
         const void* user;
         QTimer *timer;
         XProgress* progress;
+        std::string url;
+        std::string baseDir;
     };
 
-    auto d = new Data{this, this->loginCache.first()->user, nullptr, progress};
-    
-    fetch_package(runtime, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", d, [](void *user, const void* pkg){
-    auto data = (Data*)user;
-    qDebug() << "fetch success for handle:" << pkg;
-    package_dump(pkg);
-    auto qapp = QCoreApplication::instance();
-    QMetaObject::invokeMethod(qapp, [data, pkg]() {
-        data->timer = new QTimer(data->helper);
+    auto d = new Data{this, this->loginCache.first()->user, nullptr, progress, "", baseDir.toStdString()};
 
-        // Connect the timer's timeout signal to a periodic lambda execution loop
-        QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg, data]() {
-            // qDebug() << "This runs every 1000 milliseconds!";
-            auto progress = get_progress_all(pkg);
-            qDebug() << "Progress:" << progress.cur << "/" << progress.total;
-            data->progress->setProgress(progress.cur);
-            data->progress->setMaximum(progress.total);
-        });
+    get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
+        std::string sver = version;
+        auto d = (Data*)context;
+        QMetaObject::invokeMethod(d->helper, [context, sver]() {
+            auto d = (Data*)context;
+            QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(sver));
+            auto packageFiles = doc.object().value("PackageFiles").toArray();
+            for (const auto& file : packageFiles) {
+                if (file.toObject().value("FileName").toString().endsWith(".msixvc")) {
+                    QString cdnroot = file.toObject().value("CdnRootPaths").toArray().first().toString();
+                    QString relativeUrl = file.toObject().value("RelativeUrl").toString();
+                    qDebug() << "Fetching package from URL:" << (cdnroot + relativeUrl);
 
-        // Start the timer with your periodic interval in milliseconds
-        data->timer->start(1000); 
+                    d->url = (cdnroot + relativeUrl).toStdString();
 
-        download_all(data->helper->runtime, pkg, get_device_key_chain(), data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe", reinterpret_cast<uint64_t>(data),
-            [](uint64_t ucontext){
-                auto data = (Data*)ucontext;
-                data->progress->finished();
-                qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
-                QMetaObject::invokeMethod(data->timer, [data]() {
-                    data->timer->stop();
-                    delete data->timer;
-                    delete data;
-                });
-            },
-            [](uint64_t ucontext, const char* error){
-                auto data = (Data*)ucontext;
-                qDebug() << "Download failed for context:" << ucontext << "error:" << error << "user:" << data->user;
-                QMetaObject::invokeMethod(data->timer, [data]() {
-                    data->timer->stop();
-                    delete data->timer;
-                    delete data;
-                });
+                    fetch_package(d->helper->runtime, d->url.c_str(), d, [](void *user, const void* pkg){
+                        auto data = (Data*)user;
+                        qDebug() << "fetch success for handle:" << pkg;
+                        package_dump(pkg);
+                        auto qapp = QCoreApplication::instance();
+                        QMetaObject::invokeMethod(qapp, [data, pkg]() {
+                            data->timer = new QTimer(data->helper);
+
+                            // Connect the timer's timeout signal to a periodic lambda execution loop
+                            QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg, data]() {
+                                // qDebug() << "This runs every 1000 milliseconds!";
+                                auto progress = get_progress_all(pkg);
+                                qDebug() << "Progress:" << progress.cur << "/" << progress.total;
+                                data->progress->setProgress(progress.cur);
+                                data->progress->setMaximum(progress.total);
+                            });
+
+                            data->timer->start(100);
+
+                            download_all(data->helper->runtime, pkg, data->helper->device, data->user, data->url.c_str(), data->baseDir.c_str(), reinterpret_cast<uint64_t>(data),
+                                [](uint64_t ucontext){
+                                    auto data = (Data*)ucontext;
+                                    data->progress->finished();
+                                    qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
+                                    QMetaObject::invokeMethod(data->timer, [data]() {
+                                        data->timer->stop();
+                                        delete data->timer;
+                                        delete data;
+                                    });
+                                },
+                                [](uint64_t ucontext, const char* error){
+                                    auto data = (Data*)ucontext;
+                                    qDebug() << "Download failed for context:" << ucontext << "error:" << error << "user:" << data->user;
+                                    QMetaObject::invokeMethod(data->timer, [data]() {
+                                        data->timer->stop();
+                                        delete data->timer;
+                                        delete data;
+                                    });
+                                }
+                            );
+                        });
+                    }, [](void *user, const char* error){
+                        qDebug() << "Failed to fetch package:" << error;
+                    });
+
+                }
             }
-        );
-    });
-//     // abort();
-}, [](void *user, const char* error){
-    qDebug() << "Failed to fetch package:" << error;
-    // abort();
-});
 
+        });
+    }, [](uint64_t context, const char* version){
+        qDebug() << "Failure:" << QString::fromUtf8(version);
+        auto d = (Data*)context;
+        delete d;
+    });
 
     return progress;
 }
 
 void XHelper::runPackage(const QString &packageId, const QString &version) {
-    std::thread([runtime = runtime, device = device, user = this->loginCache.first()->user, xuser = this->loginCache.last()->user](){
-        run_game(runtime, device, user, xuser, "/Volumes/Extreme Pro/MinecraftDungeonsE"/*"/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe"*/, "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+    auto baseDir = QDir(QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions")).filePath(packageId)).filePath(version);
+
+    std::thread([runtime = runtime, device = device, user = this->loginCache.first()->user, xuser = this->loginCache.last()->user, baseDir](){
+        run_game(runtime, device, user, xuser, baseDir.toStdString().c_str(), "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
     }).detach();
 }
 

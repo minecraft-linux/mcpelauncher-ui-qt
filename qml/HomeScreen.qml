@@ -500,23 +500,19 @@ BaseScreen {
             y: 54 - height
             width: Math.min(Math.max(Math.max(implicitWidth, 230), playScreen.width / 4), 320)
             Layout.alignment: Qt.AlignHCenter
+            enabled: !progressbarVisible
             text: {
-                console.log("..")
-                for(var x in xhelper.packages) {
-                    console.log(x)
-                    console.log(xhelper.packages[x].version)
-                    var s = xhelper.packages[x].version.split(".")
-                    return s[0] + "." + s[1] + "." + s[2] + "." + s[3];
-                }
-                return "....";
+                const profile = profileManager.activeProfile
+                console.log("profile.versionDirName" + profile.versionDirName);
+                var s = profile.versionDirName.split(".")
+                return s.length === 5 ? (s[0] + "." + s[1] + "." + s[2] + "." + s[3]) : profile.versionDirName;
             }
             subText: "Minecraft for Windows"
             onClicked: {
-                xhelper.runPackage("", "");
-                return;
-                playScreen.xprogress = xhelper.downloadPackage("", "");
+                const profile = profileManager.activeProfile
+                playScreen.xprogress = xhelper.downloadPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName);
                 playScreen.xprogress.finished.connect(function() {
-                    xhelper.runPackage("", "");
+                    xhelper.runPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName);
                 });
                 progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
                 pbutton.subText = "Downloading..."

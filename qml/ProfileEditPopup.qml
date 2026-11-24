@@ -740,6 +740,10 @@ Popup {
             }
 
             profile.windowCustomSize = windowSizeCheck.checked
+        } else {
+            profile.versionType = ProfileInfo.LOCKED_NAME
+            profile.versionDirName = profileVersion.model.get(profileVersion.currentIndex).id
+            console.log("Selected: " + profile.versionDirName);
         }
         profile.dataDirCustom = dataDirCheck.checked
         profile.dataDir = dataDirPath.text
