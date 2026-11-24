@@ -343,10 +343,13 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
     return progress;
 }
 
-void XHelper::runPackage(const QString &packageId, const QString &version) {
+void XHelper::runPackage(const QString &packageId, const QString &version, const QString& user) {
     auto baseDir = QDir(QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions")).filePath(packageId)).filePath(version);
 
-    std::thread([runtime = runtime, device = device, user = this->loginCache.first()->user, xuser = this->loginCache.last()->user, baseDir](){
+    auto suser = this->loginCache.first();
+    auto xuser = this->loginCache.value(user, suser);
+
+    std::thread([runtime = runtime, device = device, user = suser->user, xuser = xuser->user, baseDir](){
         run_game(runtime, device, user, xuser, baseDir.toStdString().c_str(), "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
     }).detach();
 }

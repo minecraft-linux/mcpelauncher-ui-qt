@@ -170,7 +170,7 @@ public slots:
     void signOut(const QString& accountName);
 
     XProgress* downloadPackage(const QString& packageId, const QString& version);
-    void runPackage(const QString& packageId, const QString& version);
+    void runPackage(const QString& packageId, const QString& version, const QString& user);
     XAsyncVariant* resolvePackage(const QString& packageId, const QString& version);
 signals:
     void accountAcquireFinished(QObject* account);
