@@ -272,6 +272,18 @@ Popup {
                                                             versionsmodel.append(v);
                                                         }
                                                         isLoading = false
+                                                        if(hasMore && profileVersion.currentIndex === -1) {
+                                                            if (profile.versionType == ProfileInfo.LOCKED_NAME) {
+                                                                var index = -1
+                                                                for (var i = 0; i < profileVersion.model.count; i++) {
+                                                                    if (profileVersion.model.get(i).id === profile.versionDirName) {
+                                                                        index = i
+                                                                        break
+                                                                    }
+                                                                }
+                                                                profileVersion.currentIndex = index
+                                                            }
+                                                        }
                                                      })
                                                  }
 
@@ -648,29 +660,6 @@ Popup {
         profileName.enabled = !profile.nameLocked
         profileVersion.extraVersionName = null
         profileVersion.update()
-        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
-            profileVersion.currentIndex = 0
-        } else if (profile.versionType == ProfileInfo.LOCKED_CODE) {
-            var index = -1
-            for (var i = 0; i < versionsmodel.count; i++) {
-                var entry = profileVersion.data[i]
-                var diff = googleLoginHelperInstance.chromeOS ? 1000000000 : 0
-                if (entry && entry.obj && ((entry.obj.versionCode === profile.versionCode) || (entry.obj.versionCode === (profile.versionCode - diff))) && profile.arch === entry.arch) {
-                    index = i
-                    break
-                }
-            }
-            profileVersion.currentIndex = index
-        } else if (profile.versionType == ProfileInfo.LOCKED_NAME) {
-            var index = -1
-            for (var i = 0; i < versionsmodel.count; i++) {
-                if (profileVersion.data[i].obj && profileVersion.data[i].obj.directory === profile.directory) {
-                    index = i
-                    break
-                }
-            }
-            profileVersion.currentIndex = index
-        }
 
         profileTexturePatch.currentIndex = 0
         if (profile.texturePatch) {
