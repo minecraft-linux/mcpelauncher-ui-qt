@@ -254,6 +254,13 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
     auto baseDir = QDir(QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions")).filePath(packageId)).filePath(version);
     QDir().mkpath(baseDir);
 
+    if(QDir(baseDir).exists(".xodus-streaming.msixvc")) {
+        QMetaObject::invokeMethod(this, [progress]() {
+            progress->finished();
+        }, Qt::QueuedConnection);
+        return progress;
+    }
+
     struct Data {
         XHelper* helper;
         const void* user;
@@ -288,9 +295,7 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
                         QMetaObject::invokeMethod(qapp, [data, pkg]() {
                             data->timer = new QTimer(data->helper);
 
-                            // Connect the timer's timeout signal to a periodic lambda execution loop
                             QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg, data]() {
-                                // qDebug() << "This runs every 1000 milliseconds!";
                                 auto progress = get_progress_all(pkg);
                                 qDebug() << "Progress:" << progress.cur << "/" << progress.total;
                                 data->progress->setProgress(progress.cur);

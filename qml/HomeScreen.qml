@@ -507,15 +507,15 @@ BaseScreen {
                 var s = profile.versionDirName.split(".")
                 return s.length === 5 ? (s[0] + "." + s[1] + "." + s[2] + "." + s[3]) : profile.versionDirName;
             }
-            subText: "Minecraft for Windows"
+            subText: playScreen.xprogress ? qsTr("Downloading...") : qsTr("Minecraft for Windows")
             onClicked: {
                 const profile = profileManager.activeProfile
                 playScreen.xprogress = xhelper.downloadPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName);
                 playScreen.xprogress.finished.connect(function() {
+                    playScreen.xprogress = null;
                     xhelper.runPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName);
                 });
                 progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
-                pbutton.subText = "Downloading..."
             }
         }
     }
