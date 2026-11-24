@@ -96,6 +96,7 @@ public:
             emit accountInfoChanged();
         }
     }
+    ~XUser() noexcept;
 signals:
     void accountInfoChanged();
 };
@@ -109,6 +110,7 @@ class XHelper : public QObject {
 
 private:
     void* runtime = nullptr;
+    const void* device = nullptr;
     QSettings settings;
     XSignInUiQt::XLoginWindow* window = nullptr;
     bool hasAccount = false;

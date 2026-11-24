@@ -29,6 +29,8 @@ extern "C" void package_dump(const void* pkg);
 //pub extern "system" fn user_export(user: *const User, callback: unsafe extern "system" fn(serialized: *const c_char))
 extern "C" void user_export(const void* user, void*ctx, void (*callback)(void*ctx, const char* serialized));
 extern "C" void* user_import(const char* serialized);
+extern "C" void user_release(void* user);
+extern "C" void device_release(const void* device);
 
 // pub extern "system" fn user_webview_submit(context: *const UserWebviewContext, payload: *const c_char);
 // pub extern "system" fn user_refresh(runtime: *const Runtime, device: *const Device, user: *const User, ucontext: u64, webview: unsafe extern "system" fn(u64, context: *const UserWebviewContext, start_url: *const c_char, end_url: *const c_char), success: unsafe extern "system" fn(u64, *const User),
@@ -93,14 +95,25 @@ extern "C" void get_game_versions(const void* runtime, const void* device, const
     void (*failure)(uint64_t, const char*)
 );
 
+XUser::~XUser() noexcept {
+    if (user != nullptr) 
+        user_release(user);
+}
+
 XHelper::XHelper() {
     runtime = initialize();
+    device = get_device_key_chain();
     unlockkey = settings.value("key").toString();
     loadAccount();
 }
 
 XHelper::~XHelper() {
-    delete window;
+    if (window != nullptr) {
+        delete window;
+    }
+    loginCache.clear();
+    packages.clear();
+    device_release(device);
     uninitialize(runtime);
 }
 
@@ -132,7 +145,7 @@ void XHelper::loadAccount() {
 
             auto d = new Data{this, u->user, nullptr};
             // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
-            get_game_versions(runtime, get_device_key_chain(), "7792d9ce-355a-493c-afbd-768f4a77c3b0", nullptr, (uint64_t)d, [](uint64_t context, const char* version){
+            get_game_versions(runtime, device, "7792d9ce-355a-493c-afbd-768f4a77c3b0", nullptr, (uint64_t)d, [](uint64_t context, const char* version){
                 QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(version));
                 auto ver = doc.object()["Version"].toString();
                 auto cid = doc.object()["ContentId"].toString();
@@ -151,7 +164,7 @@ void XHelper::loadAccount() {
             });
 
             // std::thread([runtime = runtime, user = u->user](){
-            //     run_game(runtime, get_device_key_chain(), user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+            //     run_game(runtime, device, user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
             // }).detach();
 
             // fetch_package(runtime, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", new Data{this, u->user}, [](void *user, const void* pkg){
@@ -174,7 +187,7 @@ void XHelper::loadAccount() {
             // //         // Start the timer with your periodic interval in milliseconds
             // //         data->timer->start(1000); 
 
-            // //         download_all(data->helper->runtime, pkg, get_device_key_chain(), data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", reinterpret_cast<uint64_t>(data),
+            // //         download_all(data->helper->runtime, pkg, data->helper->device, data->user, "http://assets2.xboxlive.com/10/90cabc1f-237a-477d-8c9d-38a76810a793/7792d9ce-355a-493c-afbd-768f4a77c3b0/1.26.6201.0.805550f5-bc84-493d-8f34-c57cadd9eccf/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe.msixvc", reinterpret_cast<uint64_t>(data),
             // //             [](uint64_t ucontext){
             // //                 auto data = (Data*)ucontext;
             // //                 qDebug() << "Download success for context:" << ucontext << "user:" << data->user;
@@ -402,21 +415,23 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
 }
 
 void XHelper::runPackage(const QString &packageId, const QString &version) {
-    std::thread([runtime = runtime, user = this->loginCache.first()->user](){
-        run_game(runtime, get_device_key_chain(), user, user, "/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe", "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+    std::thread([runtime = runtime, device = device, user = this->loginCache.first()->user, xuser = this->loginCache.last()->user](){
+        run_game(runtime, device, user, xuser, "/Volumes/Extreme Pro/MinecraftDungeonsE"/*"/tmp/Microsoft.MinecraftUWP_1.26.6201.0_x64__8wekyb3d8bbwe"*/, "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
     }).detach();
 }
 
 XAsyncVariant* XHelper::resolvePackage(const QString &packageId, const QString &version) {
     XAsyncVariant* progress = new XAsyncVariant();
     auto user = this->loginCache.first()->user;
+    auto device = this->device;
     struct Data {
         XHelper* helper;
         void* user;
         XAsyncVariant* progress; 
-    } *d = new Data{this, user, progress};
+        const void* device;
+    } *d = new Data{this, user, progress, device};
     // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
-    get_game_versions(runtime, get_device_key_chain(), packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
+    get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
         std::string sver = version;
         auto d = (Data*)context;
         QMetaObject::invokeMethod(d->helper, [context, sver]() {
