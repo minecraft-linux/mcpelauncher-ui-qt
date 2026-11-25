@@ -8,6 +8,7 @@
 #include "supportedandroidabis.h"
 #include "launchersettings.h"
 #include "encryption.h"
+#include <dlfcn.h>
 
 using namespace XSignInUiQt;
 
@@ -15,57 +16,52 @@ std::string XHelper::getTokenCachePath() {
     return QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)).filePath("playapi_token_cache.conf").toStdString();
 }
 
-extern "C" void* initialize();
-extern "C" void uninitialize(void*);
-extern "C" void fetch_package(void* runtime, const char* url, void *user,
-    void (*success)(void *user, const void*pkg),
-    void (*failure)(void *user, const char*s)
-);
-extern "C" void destroy_package(const void* pkg);
-extern "C" void demo();
-extern "C" void package_dump(const void* pkg);
+LibXApi::LibXApi() {
+    const char* path = std::getenv("X_API_PATH");
+    if (!path) {
+        handle = nullptr;
+        return;
+    }
+    handle = dlopen(path, RTLD_LAZY);
+    if (!handle) {
+        return;
+    }
 
+    initialize = (decltype(initialize))dlsym(handle, "initialize");
+    uninitialize = (decltype(uninitialize))dlsym(handle, "uninitialize");
+    fetch_package = (decltype(fetch_package))dlsym(handle, "fetch_package");
+    destroy_package = (decltype(destroy_package))dlsym(handle, "destroy_package");
+    package_dump = (decltype(package_dump))dlsym(handle, "package_dump");
+    user_export = (decltype(user_export))dlsym(handle, "user_export");
+    user_import = (decltype(user_import))dlsym(handle, "user_import");
+    user_release = (decltype(user_release))dlsym(handle, "user_release");
+    device_release = (decltype(device_release))dlsym(handle, "device_release");
+    user_webview_submit = (decltype(user_webview_submit))dlsym(handle, "user_webview_submit");
+    user_refresh = (decltype(user_refresh))dlsym(handle, "user_refresh");
+    get_device_key_chain = (decltype(get_device_key_chain))dlsym(handle, "get_device_key_chain");
+    download_all = (decltype(download_all))dlsym(handle, "download_all");
+    get_progress_all = (decltype(get_progress_all))dlsym(handle, "get_progress_all");
+    run_game = (decltype(run_game))dlsym(handle, "run_game");
+    get_game_versions = (decltype(get_game_versions))dlsym(handle, "get_game_versions");
+}
 
-extern "C" void user_export(const void* user, void*ctx, void (*callback)(void*ctx, const char* serialized));
-extern "C" void* user_import(const char* serialized);
-extern "C" void user_release(void* user);
-extern "C" void device_release(const void* device);
-extern "C" void user_webview_submit(const void* context, const char* payload);
-extern "C" void user_refresh(const void* runtime, const void* device, const void* user, uint64_t ucontext,
-    void (*webview)(uint64_t, const void* context, const char* start_url, const char* end_url),
-    void (*success)(uint64_t, const void*),
-    void (*failure)(uint64_t, const char*)
-);
-
-extern "C" const void* get_device_key_chain();
-extern "C" void download_all(const void* runtime, const void* package, const void* device, const void* user,
-    const char* url, const char* destination, uint64_t ucontext,
-    void (*success)(uint64_t),
-    void (*failure)(uint64_t, const char*)
-);
-
-struct CProgress {
-    size_t cur;
-    size_t total;
-};
-
-extern "C" CProgress get_progress_all(const void* package);
-
-extern "C" int run_game(const void* runtime, const void* device, const void* user, const void* xuser, const char* source, const char* wine);
-
-extern "C" void get_game_versions(const void* runtime, const void* device, const char* content_id, const char* version, uint64_t context,
-    void (*success)(uint64_t, const char*),
-    void (*failure)(uint64_t, const char*)
-);
+LibXApi::~LibXApi() {
+    if (handle != nullptr) {
+        dlclose(handle);
+    }
+}
 
 XUser::~XUser() noexcept {
     if (user != nullptr) 
-        user_release(user);
+        helper->api.user_release(user);
 }
 
 XHelper::XHelper() {
-    runtime = initialize();
-    device = get_device_key_chain();
+    if (!api.isValid()) {
+        return;
+    }
+    runtime = api.initialize();
+    device = api.get_device_key_chain();
     unlockkey = settings.value("key").toString();
     loadAccount();
 }
@@ -76,11 +72,17 @@ XHelper::~XHelper() {
     }
     loginCache.clear();
     packages.clear();
-    device_release(device);
-    uninitialize(runtime);
+    if (!api.isValid()) {
+        return;
+    }
+    api.device_release(device);
+    api.uninitialize(runtime);
 }
 
 void XHelper::loadAccount() {
+    if (!api.isValid()) {
+        return;
+    }
     if (hasAccount) {
         return;
     }
@@ -94,9 +96,9 @@ void XHelper::loadAccount() {
         if(enc.Decrypt(got, unlockkey.toStdString()) == "true") {
             auto identifier = enc.Decrypt(settings.value("identifier").toString().toStdString(), unlockkey.toStdString());
             auto serialized = enc.Decrypt(settings.value("serialized").toString().toStdString(), unlockkey.toStdString());
-            auto u = new XUser();
+            auto u = new XUser(this);
             u->setAccountName(QString::fromStdString(identifier));
-            u->user = user_import(serialized.data());
+            u->user = api.user_import(serialized.data());
             loginCache[QString::fromStdString(identifier)] = u;
             accountInfoChanged();
 
@@ -108,7 +110,7 @@ void XHelper::loadAccount() {
 
             auto d = new Data{this, u->user, nullptr};
             // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
-            get_game_versions(runtime, device, "7792d9ce-355a-493c-afbd-768f4a77c3b0", nullptr, (uint64_t)d, [](uint64_t context, const char* version){
+            api.get_game_versions(runtime, device, "7792d9ce-355a-493c-afbd-768f4a77c3b0", nullptr, (uint64_t)d, [](uint64_t context, const char* version){
                 QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(version));
                 auto ver = doc.object()["Version"].toString();
                 auto cid = doc.object()["ContentId"].toString();
@@ -142,6 +144,9 @@ void XHelper::saveDeviceState() {
 }
 
 void XHelper::acquireAccount(QWindow *parent) {
+    if (!api.isValid()) {
+        return;
+    }
     if (window)
         return;
     struct Data {
@@ -149,7 +154,7 @@ void XHelper::acquireAccount(QWindow *parent) {
         QWindow* parent;
         std::string accountName;
     };
-    user_refresh(runtime, get_device_key_chain(), nullptr, (uint64_t)(new Data{this, parent}), [](uint64_t context, const void* webview_context, const char* start_url, const char* end_url) {
+    api.user_refresh(runtime, device, nullptr, (uint64_t)(new Data{this, parent}), [](uint64_t context, const void* webview_context, const char* start_url, const char* end_url) {
         auto qapp = QCoreApplication::instance();
         QMetaObject::invokeMethod(qapp, [data = (Data*)context, webview_context, start_url, end_url]() {
             XHelper* helper = data->helper;
@@ -165,7 +170,7 @@ void XHelper::acquireAccount(QWindow *parent) {
             helper->window->show();
             connect(helper->window, &QDialog::finished, helper, [helper, data, webview_context](int code) {
                 data->accountName = helper->window->accountIdentifier().toStdString();
-                user_webview_submit(webview_context, helper->window->accountServerData().toStdString().c_str());
+                helper->api.user_webview_submit(webview_context, helper->window->accountServerData().toStdString().c_str());
                 XHelper* helper = data->helper;
                 if(helper->window) {
                     helper->window = nullptr;
@@ -175,12 +180,12 @@ void XHelper::acquireAccount(QWindow *parent) {
     }, [](uint64_t context, const void* user) {
         auto qapp = QCoreApplication::instance();
         QMetaObject::invokeMethod(qapp, [data = (Data*)context, user]() {
-            auto u = new XUser();
+            auto u = new XUser(data->helper);
             u->setAccountName(QString::fromStdString(data->accountName));
             u->user = (void*)user;
             data->helper->loginCache[QString::fromStdString(data->accountName)] = u;
             data->helper->accountInfoChanged();
-            user_export(user, data, [](void* ctx, const char* serialized) {
+            data->helper->api.user_export(user, data, [](void* ctx, const char* serialized) {
                 Data* data = (Data*)ctx;
                 Encryption enc;
                 if(data->helper->unlockkey.isEmpty()) {
@@ -209,6 +214,9 @@ void XHelper::acquireAccount(QWindow *parent) {
 }
 
 void XHelper::onLoginFinished(int code) {
+    if (!api.isValid()) {
+        return;
+    }
     accountAcquireFinished(nullptr);
     emit accountInfoChanged();
     window = nullptr;
@@ -220,6 +228,9 @@ void XHelper::updateDevice() {
 }
 
 void XHelper::signOut(const QString& accountName) {
+    if (!api.isValid()) {
+        return;
+    }
     if (loginCache.contains(accountName)) {
         loginCache.take(accountName)->deleteLater();
         settings.beginWriteArray("msaccounts", loginCache.size());
@@ -233,7 +244,7 @@ void XHelper::signOut(const QString& accountName) {
             settings.setValue("encrypted", QString::fromStdString(enc.Encrypt("true", unlockkey.toStdString())));
             settings.setValue("identifier", QString::fromStdString(enc.Encrypt(loginCache.values().at(i)->getAccountName().toStdString(), unlockkey.toStdString())));
             std::string serialized;
-            user_export(loginCache.values().at(i)->user, &serialized, [](void* ctx, const char* serialized) {
+            api.user_export(loginCache.values().at(i)->user, &serialized, [](void* ctx, const char* serialized) {
                 *reinterpret_cast<std::string*>(ctx) = serialized;
             });
             settings.setValue("serialized", QString::fromStdString(enc.Encrypt(serialized, unlockkey.toStdString())));
@@ -247,6 +258,9 @@ void XHelper::signOut(const QString& accountName) {
 }
 
 XProgress *XHelper::downloadPackage(const QString &packageId, const QString &version) {
+    if (!api.isValid()) {
+        return nullptr;
+    }
     XProgress* progress = new XProgress();
     progress->setProgress(0);
     progress->setMaximum(100);
@@ -272,7 +286,7 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
 
     auto d = new Data{this, this->loginCache.first()->user, nullptr, progress, "", baseDir.toStdString()};
 
-    get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
+    d->helper->api.get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
         std::string sver = version;
         auto d = (Data*)context;
         QMetaObject::invokeMethod(d->helper, [context, sver]() {
@@ -287,24 +301,23 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
 
                     d->url = (cdnroot + relativeUrl).toStdString();
 
-                    fetch_package(d->helper->runtime, d->url.c_str(), d, [](void *user, const void* pkg){
+                    d->helper->api.fetch_package(d->helper->runtime, d->url.c_str(), d, [](void *user, const void* pkg){
                         auto data = (Data*)user;
                         qDebug() << "fetch success for handle:" << pkg;
-                        package_dump(pkg);
+                        data->helper->api.package_dump(pkg);
                         auto qapp = QCoreApplication::instance();
                         QMetaObject::invokeMethod(qapp, [data, pkg]() {
                             data->timer = new QTimer(data->helper);
 
                             QObject::connect(data->timer, &QTimer::timeout, data->helper, [pkg, data]() {
-                                auto progress = get_progress_all(pkg);
-                                qDebug() << "Progress:" << progress.cur << "/" << progress.total;
+                                auto progress = data->helper->api.get_progress_all(pkg);
                                 data->progress->setProgress(progress.cur);
                                 data->progress->setMaximum(progress.total);
                             });
 
                             data->timer->start(100);
 
-                            download_all(data->helper->runtime, pkg, data->helper->device, data->user, data->url.c_str(), data->baseDir.c_str(), reinterpret_cast<uint64_t>(data),
+                            data->helper->api.download_all(data->helper->runtime, pkg, data->helper->device, data->user, data->url.c_str(), data->baseDir.c_str(), reinterpret_cast<uint64_t>(data),
                                 [](uint64_t ucontext){
                                     auto data = (Data*)ucontext;
                                     data->progress->finished();
@@ -344,17 +357,28 @@ XProgress *XHelper::downloadPackage(const QString &packageId, const QString &ver
 }
 
 void XHelper::runPackage(const QString &packageId, const QString &version, const QString& user) {
+    if (!api.isValid()) {
+        return;
+    }
     auto baseDir = QDir(QDir(QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)).filePath("mcpelauncher/versions")).filePath(packageId)).filePath(version);
 
     auto suser = this->loginCache.first();
     auto xuser = this->loginCache.value(user, suser);
 
-    std::thread([runtime = runtime, device = device, user = suser->user, xuser = xuser->user, baseDir](){
-        run_game(runtime, device, user, xuser, baseDir.toStdString().c_str(), "/Users/christopher/Documents/minecraft/crossover/sources/gdk-min/usr/local/bin/wine");
+    std::thread([runtime = runtime, device = device, user = suser->user, xuser = xuser->user, baseDir, d = this](){
+        const char* wine = std::getenv("X_API_WINE");
+        if (!wine) {
+            wine = "wine";
+        }
+
+        d->api.run_game(runtime, device, user, xuser, baseDir.toStdString().c_str(), wine);
     }).detach();
 }
 
 XAsyncVariant* XHelper::resolvePackage(const QString &packageId, const QString &version) {
+    if (!api.isValid()) {
+        return nullptr;
+    }
     XAsyncVariant* progress = new XAsyncVariant();
     auto user = this->loginCache.first()->user;
     auto device = this->device;
@@ -364,8 +388,7 @@ XAsyncVariant* XHelper::resolvePackage(const QString &packageId, const QString &
         XAsyncVariant* progress; 
         const void* device;
     } *d = new Data{this, user, progress, device};
-    // "1.26.3301.0.657f39f1-dcd0-491b-9bb7-c799d208f75e"
-    get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
+    d->helper->api.get_game_versions(runtime, d->helper->device, packageId.toStdString().c_str(), version.isEmpty() ? nullptr : version.toStdString().c_str(), (uint64_t)d, [](uint64_t context, const char* version){
         std::string sver = version;
         auto d = (Data*)context;
         QMetaObject::invokeMethod(d->helper, [context, sver]() {

@@ -1,5 +1,4 @@
-#ifndef XHelper_H
-#define XHelper_H
+#pragma once
 
 #include <QObject>
 #include <QSettings>
@@ -81,12 +80,14 @@ signals:
     void finished();
 };
 
+class XHelper;
 class XUser : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString accountName READ getAccountName NOTIFY accountInfoChanged)
     QString accountName;
 public:
     void* user = nullptr;
+    XHelper* helper;
     QString getAccountName() const {
         return accountName;
     }
@@ -96,9 +97,62 @@ public:
             emit accountInfoChanged();
         }
     }
+    XUser(XHelper* helper) : helper(helper) {}
+
     ~XUser() noexcept;
 signals:
     void accountInfoChanged();
+};
+
+struct CProgress {
+    size_t cur;
+    size_t total;
+};
+
+struct LibXApi {
+    LibXApi();
+    ~LibXApi();
+
+    void* (*initialize)();
+    void (*uninitialize)(void*);
+    void (*fetch_package)(void* runtime, const char* url, void *user,
+        void (*success)(void *user, const void*pkg),
+        void (*failure)(void *user, const char*s)
+    );
+    void (*destroy_package)(const void* pkg);
+    void (*package_dump)(const void* pkg);
+    void (*user_export)(const void* user, void*ctx, void (*callback)(void*ctx, const char* serialized));
+    void* (*user_import)(const char* serialized);
+    void (*user_release)(void* user);
+    void (*device_release)(const void* device);
+    void (*user_webview_submit)(const void* context, const char* payload);
+    void (*user_refresh)(const void* runtime, const void* device, const void* user, uint64_t ucontext,
+        void (*webview)(uint64_t, const void* context, const char* start_url, const char* end_url),
+        void (*success)(uint64_t, const void*),
+        void (*failure)(uint64_t, const char*)
+    );
+
+    const void* (*get_device_key_chain)();
+    void (*download_all)(const void* runtime, const void* package, const void* device, const void* user,
+        const char* url, const char* destination, uint64_t ucontext,
+        void (*success)(uint64_t),
+        void (*failure)(uint64_t, const char*)
+    );
+
+    CProgress (*get_progress_all)(const void* package);
+
+    int (*run_game)(const void* runtime, const void* device, const void* user, const void* xuser, const char* source, const char* wine);
+
+    void (*get_game_versions)(const void* runtime, const void* device, const char* content_id, const char* version, uint64_t context,
+        void (*success)(uint64_t, const char*),
+        void (*failure)(uint64_t, const char*)
+    );
+
+    void* handle;
+
+    bool isValid() {
+        return handle != nullptr;
+    }
 };
 
 class XHelper : public QObject {
@@ -142,6 +196,8 @@ private:
     }
 
 public:
+    LibXApi api;
+
     bool getHasEncryptedCredentials() {
         return hasEncryptedCredentials;
     }
@@ -180,5 +236,3 @@ signals:
 
     void loginError(QString error);
 };
-
-#endif // XHelper_H

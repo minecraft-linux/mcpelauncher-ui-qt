@@ -119,7 +119,7 @@ if (APPLE)
     endif()
 endif()
 
-target_link_libraries(${PROJECT_NAME} Qt6::Core Qt6::Quick Qt6::Svg Qt6::Concurrent playdl-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-common mcpelauncher-apkinfo file-util gplayapi)
+target_link_libraries(${PROJECT_NAME} Qt6::Core Qt6::Quick Qt6::Svg Qt6::Concurrent playdl-signin-ui-qt-lib x-signin-ui-qt-lib mcpelauncher-extract-lib mcpelauncher-common mcpelauncher-apkinfo file-util gplayapi)
 
 if(OpenSSL_FOUND)
     target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
