@@ -394,7 +394,7 @@ XAsyncVariant* XHelper::resolvePackage(const QString &packageId, const QString &
         QMetaObject::invokeMethod(d->helper, [context, sver]() {
             auto d = (Data*)context;
             QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(sver));
-            d->progress->setVersion(QVariant::fromValue(doc.object()));
+            d->progress->setVariant(QVariant::fromValue(doc.object()));
             delete d;
         });
     }, [](uint64_t context, const char* version){

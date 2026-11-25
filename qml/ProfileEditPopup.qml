@@ -188,8 +188,11 @@ Popup {
                                     hasMore = false
                                 }
                             }
+                            property var generation: 0;
                             property var update: (loadMore, skip) => {
                                                      data = []
+                                                     // avoid lazy loading clash
+                                                     var gen = loadMore ? generation : ++generation;
                                                      if(popup.isXodus) {
                                                         console.log("update xodus")
                                                         var lastVersion = "";
@@ -214,8 +217,12 @@ Popup {
                                                         isLoading = true
 
                                                         var p = xhelper.resolvePackage(xodusContentID, lastVersion)
-                                                        p.accountInfoChanged.connect(() => {
-                                                            if(!p.version.PackageFound && loadMore) {
+                                                        p.done.connect(() => {
+                                                            if(gen !== generation) {
+                                                                console.log("discard query")
+                                                                return;
+                                                            }
+                                                            if(!p.variant.PackageFound && loadMore) {
                                                                 profileVersion.update(true, skip + 1)
                                                                 return;
                                                             }
@@ -243,19 +250,19 @@ Popup {
                                                             }
                                                             if(!loadMore)
                                                             {
-                                                                var vername = p.version.VersionId;
+                                                                var vername = p.variant.VersionId;
                                                                 var s = vername.split(".");
                                                                 vers.push({
                                                                     "name": s[0] + "." + s[1] + "." + s[2] + "." + s[3],
                                                                     "id": vername,
                                                                     "parsed": parseVer(vername),
                                                                     "resolved": true,
-                                                                    "location": p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                                    "location": p.variant.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
                                                                 })
                                                             } else {
                                                                 for(var i = 0; i < versionsmodel.count; i++) {
-                                                                    if(versionsmodel[i] && versionsmodel[i].id === p.version.VersionId) {
-                                                                        versionsmodel[i].location = p.version.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
+                                                                    if(versionsmodel[i] && versionsmodel[i].id === p.variant.VersionId) {
+                                                                        versionsmodel[i].location = p.variant.PackageFiles.filter(x => x.FileName.endsWith(".msixvc"))
                                                                         versionsmodel[i].resolved = true;
                                                                         if(!versionsmodel[i].location) {
                                                                             versionsmodel[i].name = versionsmodel[i].name + " (Deleted)";
@@ -264,7 +271,7 @@ Popup {
                                                                     }
                                                                 }
                                                             }
-                                                            for(var pkg of p.version.PackageFiles) {
+                                                            for(var pkg of p.variant.PackageFiles) {
                                                                 if(pkg.FileName.startsWith("update-") && pkg.FileName.endsWith(".xsp"))
                                                                 {
                                                                     var vername = pkg.FileName.substring(7, pkg.FileName.length - 4);

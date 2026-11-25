@@ -503,6 +503,24 @@ BaseScreen {
             y: 54 - height
             width: Math.min(Math.max(Math.max(implicitWidth, 230), playScreen.width / 4), 320)
             Layout.alignment: Qt.AlignHCenter
+            property ListModel gdk: ListModel {
+                ListElement {
+                    name: "Minecraft for Windows"
+                    backend: "gdk/7792d9ce-355a-493c-afbd-768f4a77c3b0"
+                }
+                ListElement {
+                    name: "Minecraft for Windows (Preview)"
+                    backend: "gdk/98bd2335-9b01-4e4c-bd05-ccc01614078b"
+                }
+                ListElement {
+                    name: "Minecraft Dungeons"
+                    backend: "gdk/911f6225-c9c8-4641-a6db-29d4ccafc666"
+                }
+                ListElement {
+                    name: "Minecraft Dungeons 2"
+                    backend: "gdk/c1c08142-2be1-4620-b13b-d84d58bd730d"
+                }
+            }
             text: {
                 if(isXodus) {
                     const profile = profileManager.activeProfile
@@ -516,7 +534,15 @@ BaseScreen {
             }
             subText: {
                 if(isXodus) {
-                    return playScreen.xprogress ? qsTr("Downloading...") : qsTr("GDK")
+                    if (playScreen.xprogress) {
+                        return qsTr("Downloading...")
+                    }
+                    for(var i = 0; i < gdk.count; i++) {
+                        if(gdk.get(i).backend === backend) {
+                            return gdk.get(i).name;
+                        }
+                    }
+                    return "GDK"
                 }
                 if (playScreen.statusChecking)
                     return ""
@@ -834,6 +860,9 @@ BaseScreen {
     }
 
     function checkSupport() {
+        if(pbutton.isXodus) {
+            return true;
+        }
         const profile = profileManager.activeProfile
 
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)

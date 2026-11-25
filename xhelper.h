@@ -12,7 +12,7 @@ class XLoginWindow;
 
 class XPackage : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QString version READ getVersion NOTIFY accountInfoChanged)
+    Q_PROPERTY(QString version READ getVersion NOTIFY packageChanged)
     QString version;
 public:
     void* user = nullptr;
@@ -22,32 +22,31 @@ public:
     void setVersion(const QString& ver) {
         if (version != ver) {
             version = ver;
-            emit accountInfoChanged();
+            emit packageChanged();
         }
     }
 
 signals:
-    void accountInfoChanged();
+    void packageChanged();
 };
 
 class XAsyncVariant : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QVariant version READ getVersion NOTIFY accountInfoChanged)
-    QVariant version;
+    Q_PROPERTY(QVariant variant READ getVariant NOTIFY done)
+    QVariant variant;
 public:
-    void* user = nullptr;
-    QVariant getVersion() const {
-        return version;
+    QVariant getVariant() const {
+        return variant;
     }
-    void setVersion(const QVariant& ver) {
-        if (version != ver) {
-            version = ver;
-            emit accountInfoChanged();
+    void setVariant(const QVariant& ver) {
+        if (variant != ver) {
+            variant = ver;
+            emit done();
         }
     }
 
 signals:
-    void accountInfoChanged();
+    void done();
 };
 
 class XProgress : public QObject {
