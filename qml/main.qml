@@ -1,3 +1,4 @@
+import QtQuick.Controls.Fusion
 import QtQuick
 import QtQuick.Window
 import QtQuick.Dialogs
@@ -10,7 +11,7 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Linux Minecraft Launcher")
+    title: qsTr("Minecraft Launcher for linux and macOS")
     color: "#333333"
     property bool hasUpdate: false
     property bool hasAskedForKey: false

@@ -44,6 +44,7 @@
         <file>qml/Components/PlayButton.qml</file>
         <file>qml/Components/TransparentButton.qml</file>
         <file>qml/Components/ModsGrid.qml</file>
+        <file>qml/Components/PlayDownloader.qml</file>
         <file>Resources/mcpelauncher-logo.svg</file>
         <file>Resources/mcpelauncher-icon.svg</file>
         <file>Resources/green-button.png</file>

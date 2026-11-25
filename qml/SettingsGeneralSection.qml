@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "Components"
+import io.mrarm.mcpelauncher 1.0
 
 ColumnLayout {
     width: parent.width
@@ -70,6 +71,86 @@ ColumnLayout {
             }
         }
     }
+
+    ColumnLayout {
+        spacing: 5
+        Layout.fillWidth: true
+
+        Repeater {
+            model: Object.keys(btn.xhelper.loginCache)
+
+            RowLayout {
+                id: googleAcountRow
+                property var d: modelData
+
+                ColumnLayout {
+                    MText {
+                        text: qsTr("Microsoft Account")
+                        font.bold: true
+                    }
+                    Button {
+                        id: emailField
+                        property int wh: fontMetrics.advanceWidth(text)
+                        text: googleAcountRow.d
+                        hoverEnabled: true
+                        implicitWidth: wh + revealText.width + 10
+                        padding: 0
+                        contentItem: MText {
+                            text: {
+                                const mail = parent.text
+                                if (emailField.pressed)
+                                    return mail
+                                if (mail.length < 4)
+                                    return "..."
+                                return mail.substring(0, 3) + "*".repeat(mail.length - 3)
+                            }
+                            MText {
+                                id: revealText
+                                x: emailField.wh + 10
+                                text: qsTr("(Press to reveal)")
+                                color: emailField.hovered ? "#aaa" : "#888"
+                                visible: emailField.enabled
+                            }
+                        }
+                        background: FocusBorder {
+                            anchors.fill: parent
+                            visible: parent.visualFocus
+                        }
+                        FontMetrics {
+                            id: fontMetrics
+                            font.pointSize: 10
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                MButton {
+                    Layout.alignment: Qt.AlignRight
+                    text: qsTr("Sign out")
+                    onClicked: {
+                        btn.xhelper.signOut(googleAcountRow.d)
+                    }
+                }
+            }
+        }
+    }
+
+    MButton {
+        id: btn
+        Layout.alignment: Qt.AlignRight
+        text: qsTr("Sign in MS")
+
+        property XHelper xhelper: XHelper {
+
+        }
+        onClicked: {
+            xhelper.acquireAccount(window)
+        }
+    }
+
 
     HorizontalDivider {}
 

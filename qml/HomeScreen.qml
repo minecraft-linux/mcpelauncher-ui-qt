@@ -17,7 +17,8 @@ BaseScreen {
     property GoogleVersionChannel playVerChannel
 
     property bool isVersionsInitialized: false
-    property bool progressbarVisible: playDownloadTask.active || apkExtractionTask.active || updateManager.active
+    property var xprogress: null
+    property bool progressbarVisible: xprogress || playDownloader.active || updateManager.active
     property bool hasUpdate: false
     property string updateDownloadUrl: ""
     property string warnMessage: ""
@@ -492,23 +493,78 @@ BaseScreen {
         }
 
         PlayButton {
+            property XHelper xhelper: XHelper {
+            }
+            property var backend: profileManager.activeProfile && profileManager.activeProfile.backend || ""
+            property var isXodus: backend.startsWith("gdk/")
+            property var xodusContentID: isXodus && backend.substring(4)
             id: pbutton
             x: parent.width > 700 ? (parent.width - width) / 2 : (parent.width - width - 12)
             y: 54 - height
             width: Math.min(Math.max(Math.max(implicitWidth, 230), playScreen.width / 4), 320)
             Layout.alignment: Qt.AlignHCenter
+            property ListModel gdk: ListModel {
+                ListElement {
+                    name: "Minecraft for Windows"
+                    backend: "gdk/7792d9ce-355a-493c-afbd-768f4a77c3b0"
+                }
+                ListElement {
+                    name: "Minecraft for Windows (Preview)"
+                    backend: "gdk/98bd2335-9b01-4e4c-bd05-ccc01614078b"
+                }
+                ListElement {
+                    name: "Minecraft Dungeons"
+                    backend: "gdk/911f6225-c9c8-4641-a6db-29d4ccafc666"
+                }
+                ListElement {
+                    name: "Minecraft Dungeons 2"
+                    backend: "gdk/c1c08142-2be1-4620-b13b-d84d58bd730d"
+                }
+            }
             text: {
+                if(isXodus) {
+                    const profile = profileManager.activeProfile
+                    console.log("profile.versionDirName" + profile.versionDirName);
+                    var s = profile.versionDirName.split(".")
+                    return s.length === 5 ? (s[0] + "." + s[1] + "." + s[2] + "." + s[3]) : profile.versionDirName;
+                }
                 if (playScreen.statusChecking || !playScreen.activeVersionName)
                     return ""
                 return (playScreen.activeVersionNeedsDownload ? qsTr("Download and play") : qsTr("Play")).toUpperCase()
             }
             subText: {
+                if(isXodus) {
+                    if (playScreen.xprogress) {
+                        return qsTr("Downloading...")
+                    }
+                    for(var i = 0; i < gdk.count; i++) {
+                        if(gdk.get(i).backend === backend) {
+                            return gdk.get(i).name;
+                        }
+                    }
+                    return "GDK"
+                }
                 if (playScreen.statusChecking)
                     return ""
                 return playScreen.activeVersionName ? ("Minecraft " + playScreen.activeVersionName) : qsTr("Unknown")
             }
-            enabled: !(gameLauncher.running || playScreen.statusChecking || progressbarVisible || updateChecker.active || !playScreen.activeVersionSupported || !playScreen.activeVersionName || playStatusNotify.visible)
+            enabled: isXodus ? !progressbarVisible : !(gameLauncher.running || playScreen.statusChecking || progressbarVisible || updateChecker.active || !playScreen.activeVersionSupported || !playScreen.activeVersionName || playStatusNotify.visible)
             onClicked: {
+                if(isXodus) {
+                    const profile = profileManager.activeProfile
+                    playScreen.xprogress = xhelper.downloadPackage(xodusContentID, profile.versionDirName);
+                    playScreen.xprogress.finished.connect(function() {
+                        //progressBar.value = 1.0;
+                        playScreen.xprogress = null;
+                        xhelper.runPackage(xodusContentID, profile.versionDirName, profile.account);
+                    });
+                    progressBar.value = Qt.binding(function() {
+                        var p = 1.0 * playScreen.xprogress.progress / playScreen.xprogress.maximum;
+                        console.log("progress " + p + " " + playScreen.xprogress.progress + " / " + playScreen.xprogress.maximum)
+                        return p
+                    });
+                    return
+                }
                 if (playScreen.activeVersionNeedsDownload) {
                     playDownloadTask.versionCode = getDownloadVersionCode()
                     if (playDownloadTask.versionCode === 0)
@@ -533,10 +589,8 @@ BaseScreen {
         property bool showProgressbar: progressbarVisible || updateChecker.active
         Layout.fillWidth: true
         label: {
-            if (playDownloadTask.active)
-                return qsTr("Downloading Minecraft...")
-            if (apkExtractionTask.active)
-                return qsTr("Extracting Minecraft...")
+            if (playDownloader.active)
+                return playDownloader.label
             return qsTr("Please wait...")
         }
         visible: showProgressbar || closeAnim.running
@@ -585,53 +639,15 @@ BaseScreen {
         ]
     }
 
-    GoogleApkDownloadTask {
-        id: playDownloadTask
+    property var progressBarInstance: progressBar
+    property var launcherSettingsInstance: launcherSettings
+
+    PlayDownloader {
+        id: playDownloader
         playApi: playScreen.playApi
-        packageName: launcherSettings.trialMode ? "com.mojang.minecrafttrialpe" : "com.mojang.minecraftpe"
-        keepApks: launcherSettings.downloadOnly || launcherSettings.keepApks
-        onProgress: {
-            progressBar.value = progress
-        }
-        onError: function (err) {
-            if (playDownloadError.visible) {
-                playDownloadError.text += "\n" + err
-            } else {
-                playDownloadError.text = err
-                playDownloadError.open()
-            }
-        }
-        onFinished: {
-            if (!launcherSettings.downloadOnly) {
-                apkExtractionTask.sources = filePaths
-                apkExtractionTask.start()
-            }
-        }
-    }
-
-    MessageDialog {
-        id: playDownloadError
-        title: qsTr("Download failed")
-    }
-
-    ApkExtractionTask {
-        id: apkExtractionTask
         versionManager: playScreen.versionManager
-        onProgress: {
-            progressBar.value = progress
-        }
-        allowIncompatible: launcherSettings.showUnsupported
-        onError: function (err) {
-            playDownloadError.text = qsTr("Error while extracting the downloaded file(s), <a href=\"https://github.com/minecraft-linux/mcpelauncher-ui-manifest/issues\">please report this error</a>: %1").arg(err)
-            playDownloadError.open()
-        }
-        onFinished: launchGame()
-        allowedPackages: {
-            var packages = ["com.mojang.minecrafttrialpe", "com.mojang.minecraftedu"]
-            if (!launcherSettings.trialMode)
-                packages.push("com.mojang.minecraftpe")
-            return packages
-        }
+        progressBar: playScreen.progressBarInstance
+        launcherSettings: playScreen.launcherSettingsInstance
     }
 
     MessageDialog {
@@ -848,6 +864,9 @@ BaseScreen {
     }
 
     function checkSupport() {
+        if(pbutton.isXodus) {
+            return true;
+        }
         const profile = profileManager.activeProfile
 
         if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
