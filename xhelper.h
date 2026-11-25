@@ -51,24 +51,24 @@ signals:
 
 class XProgress : public QObject {
     Q_OBJECT
-    Q_PROPERTY(int progress READ getProgress NOTIFY progressChanged)
-    Q_PROPERTY(int maximum READ getMaximum NOTIFY progressChanged)
-    int progress;
-    int maximum;
+    Q_PROPERTY(long long progress READ getProgress NOTIFY progressChanged)
+    Q_PROPERTY(long long maximum READ getMaximum NOTIFY progressChanged)
+    long long progress;
+    long long maximum;
 public:
-    int getProgress() const {
+    long long getProgress() const {
         return progress;
     }
-    int getMaximum() const {
+    long long getMaximum() const {
         return maximum;
     }
-    void setProgress(int p) {
+    void setProgress(long long p) {
         if (progress != p) {
             progress = p;
             emit progressChanged();
         }
     }
-    void setMaximum(int m) {
+    void setMaximum(long long m) {
         if (maximum != m) {
             maximum = m;
             emit progressChanged();

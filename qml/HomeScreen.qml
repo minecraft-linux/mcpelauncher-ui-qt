@@ -554,11 +554,15 @@ BaseScreen {
                     const profile = profileManager.activeProfile
                     playScreen.xprogress = xhelper.downloadPackage(xodusContentID, profile.versionDirName);
                     playScreen.xprogress.finished.connect(function() {
-                        progressBar.value = 1.0;
+                        //progressBar.value = 1.0;
                         playScreen.xprogress = null;
                         xhelper.runPackage(xodusContentID, profile.versionDirName, profile.account);
                     });
-                    progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
+                    progressBar.value = Qt.binding(function() {
+                        var p = 1.0 * playScreen.xprogress.progress / playScreen.xprogress.maximum;
+                        console.log("progress " + p + " " + playScreen.xprogress.progress + " / " + playScreen.xprogress.maximum)
+                        return p
+                    });
                     return
                 }
                 if (playScreen.activeVersionNeedsDownload) {
