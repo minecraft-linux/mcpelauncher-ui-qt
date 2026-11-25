@@ -495,27 +495,61 @@ BaseScreen {
         PlayButton {
             property XHelper xhelper: XHelper {
             }
+            property var backend: profileManager.activeProfile && profileManager.activeProfile.backend || ""
+            property var isXodus: backend.startsWith("gdk/")
+            property var xodusContentID: isXodus && backend.substring(4)
             id: pbutton
             x: parent.width > 700 ? (parent.width - width) / 2 : (parent.width - width - 12)
             y: 54 - height
             width: Math.min(Math.max(Math.max(implicitWidth, 230), playScreen.width / 4), 320)
             Layout.alignment: Qt.AlignHCenter
-            enabled: !progressbarVisible
             text: {
-                const profile = profileManager.activeProfile
-                console.log("profile.versionDirName" + profile.versionDirName);
-                var s = profile.versionDirName.split(".")
-                return s.length === 5 ? (s[0] + "." + s[1] + "." + s[2] + "." + s[3]) : profile.versionDirName;
+                if(isXodus) {
+                    const profile = profileManager.activeProfile
+                    console.log("profile.versionDirName" + profile.versionDirName);
+                    var s = profile.versionDirName.split(".")
+                    return s.length === 5 ? (s[0] + "." + s[1] + "." + s[2] + "." + s[3]) : profile.versionDirName;
+                }
+                if (playScreen.statusChecking || !playScreen.activeVersionName)
+                    return ""
+                return (playScreen.activeVersionNeedsDownload ? qsTr("Download and play") : qsTr("Play")).toUpperCase()
             }
-            subText: playScreen.xprogress ? qsTr("Downloading...") : qsTr("Minecraft for Windows")
+            subText: {
+                if(isXodus) {
+                    return playScreen.xprogress ? qsTr("Downloading...") : qsTr("GDK")
+                }
+                if (playScreen.statusChecking)
+                    return ""
+                return playScreen.activeVersionName ? ("Minecraft " + playScreen.activeVersionName) : qsTr("Unknown")
+            }
+            enabled: isXodus ? !progressbarVisible : !(gameLauncher.running || playScreen.statusChecking || progressbarVisible || updateChecker.active || !playScreen.activeVersionSupported || !playScreen.activeVersionName || playStatusNotify.visible)
             onClicked: {
-                const profile = profileManager.activeProfile
-                playScreen.xprogress = xhelper.downloadPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName);
-                playScreen.xprogress.finished.connect(function() {
-                    playScreen.xprogress = null;
-                    xhelper.runPackage("7792d9ce-355a-493c-afbd-768f4a77c3b0", profile.versionDirName, profile.account);
-                });
-                progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
+                if(isXodus) {
+                    const profile = profileManager.activeProfile
+                    playScreen.xprogress = xhelper.downloadPackage(xodusContentID, profile.versionDirName);
+                    playScreen.xprogress.finished.connect(function() {
+                        progressBar.value = 1.0;
+                        playScreen.xprogress = null;
+                        xhelper.runPackage(xodusContentID, profile.versionDirName, profile.account);
+                    });
+                    progressBar.value = Qt.binding(function() { return playScreen.xprogress.progress / playScreen.xprogress.maximum })
+                    return
+                }
+                if (playScreen.activeVersionNeedsDownload) {
+                    playDownloadTask.versionCode = getDownloadVersionCode()
+                    if (playDownloadTask.versionCode === 0)
+                        return
+
+                    progressBar.value = 0
+                    const rawname = getRawVersionsName()
+                    const partialDownload = !needsFullDownload(rawname)
+                    if (partialDownload)
+                        apkExtractionTask.versionName = rawname
+
+                    playDownloadTask.start(partialDownload)
+                } else {
+                    launchGame()
+                }
             }
         }
     }
@@ -603,6 +637,227 @@ BaseScreen {
         function onProgress() {
             progressBar.value = progress
         }
+    }
+
+    /* utility functions */
+    function adjustForChromeOSMode(latestVersion) {
+        if(latestVersion && googleLoginHelper.chromeOS) {
+            return {
+                "versionName": latestVersion.versionName,
+                "versionCode": 1000000000 + latestVersion.versionCode
+            }
+        }
+        return latestVersion
+    }
+
+    function launcherLatestVersion() {
+        const showBeta = playVerChannel.latestVersionIsBeta && launcherSettings.showBetaVersions
+        const versions = showBeta ? versionManager.availableArchivalVersions : versionManager.availableArchivalVersions.filter(ver => !ver.isBeta)
+
+        const abis = googleLoginHelper.getAbis(launcherSettings.showUnsupported)
+        console.log("launcherAbis: " + JSON.stringify(abis))
+
+        const latestVersion = adjustForChromeOSMode(versions.find(ver => abis.includes(ver.abi)))
+        if (latestVersion) {
+            console.log("launcherLatestVersion: " + JSON.stringify(latestVersion))
+            return latestVersion
+        }
+
+        console.log(abis.length === 0 ? "Unsupported Device" : "Bug: No version")
+
+        return null
+    }
+
+    function launcherLatestVersionBase() {
+        return launcherLatestVersion() ?? {
+            "versionName": "Invalid",
+            "versionCode": 0
+        }
+    }
+
+    function launcherLatestVersionscode() {
+        console.log("Query version")
+        if (!isVersionsInitialized) {
+            return 0
+        }
+        if (checkGooglePlayLatestSupport()) {
+            console.log("Use play version")
+            return playScreen.playVerChannel.latestVersionCode
+        } else {
+            console.log("Use compat version")
+            const ver = launcherLatestVersion()
+            return ver ? ver.versionCode : 0
+        }
+    }
+
+    function needsDownload() {
+        const profile = profileManager.activeProfile
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY)
+            return !versionManager.versions.contains(launcherLatestVersionscode())
+        if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+            const dver = versionManager.versions.get(profile.versionCode)
+            return !dver || !launcherSettings.showUnsupported && !versionManager.checkSupport(dver)
+        }
+        if (profile.versionType == ProfileInfo.LOCKED_NAME)
+            return false
+        return false
+    }
+
+    function getRawVersionsName() {
+        const profile = profileManager.activeProfile
+        if (profile.versionType == ProfileInfo.LATEST_GOOGLE_PLAY) {
+            return getDisplayedNameForCode(launcherLatestVersionscode())
+        }
+        if (profile.versionType == ProfileInfo.LOCKED_CODE) {
+            const ver = findArchivalVersion(profile.versionCode)
+            if (ver !== null) {
+                return ver.versionName
+            }
+        }
+        return null
+    }
+
+    /* Skip downloading assets, only download missing native libs */
+    function needsFullDownload(vername) {
+        if (!vername)
+            return true
+        return !versionManager.versions.getAll().some(version => version.versionName === vername)
+    }
+
+    function findArchivalVersion(code) {
+        const versions = versionManager.availableArchivalVersions
+        for (var i = versions.length - 1; i >= 0; --i) {
+            if (versions[i].versionCode === code || versions[i].versionCode === (code - 1000000000))
+                return versions[i]
+        }
+        return null
+    }
+
+    function getDisplayedNameForCode(code) {
+        const suffix = code > 1000000000 ? qsTr(" (ChromeOS)") : launcherSettings.chromeOSMode ? qsTr(" (Android)") : "";
+        const archiveInfo = findArchivalVersion(code)
+        const ver = versionManager.versions.get(code)
+        if (archiveInfo !== null && (ver === null || ver.archs.length === 1 && ver.archs[0] === archiveInfo.abi)) {
+            return archiveInfo.versionName + " (" + archiveInfo.abi + ((archiveInfo.isBeta ? ", beta" : "") + ")") + suffix
+        }
+        if (code === playScreen.playVerChannel.latestVersionCode)
+            return playScreen.playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : "") + suffix
+        if (ver !== null) {
+            const profile = profileManager.activeProfile
+            return qsTr("%1  (%2, %3)").arg(ver.versionName).arg(code).arg(profile.arch.length ? profile.arch : ver.archs.join(", ")) + suffix
+        }
+    }
+
+    function getDisplayedVersionName() {
+        const profile = profileManager.activeProfile
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return getDisplayedNameForCode(launcherLatestVersionscode()) || ("Unknown (" + launcherLatestVersionscode() + ")")
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return getDisplayedNameForCode(profile.versionCode) || ((profile.versionDirName ? profile.versionDirName : "Unknown") + " (" + profile.versionCode + ")")
+        if (profile.versionType === ProfileInfo.LOCKED_NAME)
+            return profile.versionDirName || "Unknown Version"
+        return "Unknown"
+    }
+
+    function getDownloadVersionCode() {
+        const profile = profileManager.activeProfile
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return launcherLatestVersionscode()
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return profile.versionCode
+        return null
+    }
+
+    function getCurrentGameDir(profile) {
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return versionManager.getDirectoryFor(versionManager.versions.get(launcherLatestVersionscode()))
+        if (profile.versionType === ProfileInfo.LOCKED_CODE)
+            return versionManager.getDirectoryFor(versionManager.versions.get(profile.versionCode))
+        if (profile.versionType === ProfileInfo.LOCKED_NAME)
+            return versionManager.getDirectoryFor(profile.versionDirName)
+        return null
+    }
+
+    // Tests if it really works
+    function checkLauncherLatestSupport() {
+        const latestCode = launcherLatestVersionscode()
+        return versionManager.availableArchivalVersions.length === 0 || launcherSettings.showUnsupported || (launcherSettings.showUnverified || findArchivalVersion(latestCode) !== null || checkRollForward(latestCode))
+    }
+
+    function checkRollForward(code) {
+        return versionManager.archivalVersions.rollforwardVersionRange.some(range => range.minVersionCode <= code && code <= range.maxVersionCode)
+    }
+
+    // Tests for raw Google Play latest (previous default, always true)
+    function checkGooglePlayLatestSupport() {
+        if (versionManager.availableArchivalVersions.length === 0) {
+            console.log("Bug errata 1")
+            playScreen.warnMessage = qsTr("mcpelauncher-versiondb not loaded. Cannot check Minecraft version compatibility.")
+            playScreen.warnUrl = ""
+            return true
+        }
+
+        if (launcherSettings.showUnsupported || versionManager.availableArchivalVersions.length === 0) {
+            console.log("Bug errata 2")
+            return true
+        }
+
+        // Handle latest is beta, beta isn't enabled
+        if (playVerChannel.latestVersionIsBeta && !launcherSettings.showBetaVersions) {
+            playScreen.warnMessage = qsTr("Latest Minecraft Version %1 is a beta version, which is hidden by default.").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
+            playScreen.warnUrl = "https://github.com/minecraft-linux/mcpelauncher-manifest/issues/797"
+            return false
+        }
+
+        if (launcherSettings.showUnverified) {
+            console.log("Bug errata 3")
+            return true
+        }
+
+        if (checkRollForward(playVerChannel.latestVersionCode))
+            return true
+
+        const archiveInfo = findArchivalVersion(playVerChannel.latestVersionCode)
+        if (archiveInfo !== null) {
+            if (playVerChannel.latestVersionIsBeta && (launcherSettings.showBetaVersions || launcherSettings.showUnsupported) || !archiveInfo.isBeta) {
+                if (googleLoginHelper.getAbis(launcherSettings.showUnsupported).includes(archiveInfo.abi)) {
+                    playScreen.warnMessage = ""
+                    playScreen.warnUrl = ""
+                    return true
+                }
+            }
+        }
+
+        playScreen.warnMessage = qsTr("Compatibility for latest Minecraft version %1 is unknown. Support for new Minecraft versions is a feature request.").arg(playVerChannel.latestVersion + (playVerChannel.latestVersionIsBeta ? " (beta)" : ""))
+        playScreen.warnUrl = "https://github.com/minecraft-linux/mcpelauncher-manifest/issues/797"
+        return false
+    }
+
+    function checkSupport() {
+        const profile = profileManager.activeProfile
+
+        if (profile.versionType === ProfileInfo.LATEST_GOOGLE_PLAY)
+            return checkLauncherLatestSupport()
+
+        if (profile.versionType === ProfileInfo.LOCKED_CODE) {
+            const dver = versionManager.versions.get(profile.versionCode)
+            if (dver && dver.archs.length > 0 && launcherSettings.showUnsupported)
+                return true
+
+            const ver = findArchivalVersion(profile.versionCode)
+            if (ver !== null && (playVerChannel.latestVersionIsBeta && (launcherSettings.showBetaVersions || launcherSettings.showUnsupported) || !ver.isBeta)) {
+                if (googleLoginHelper.getAbis(launcherSettings.showUnsupported).includes(ver.abi))
+                    return true
+            }
+
+            return launcherSettings.showUnverified || launcherSettings.showUnsupported
+        }
+
+        if (profile.versionType === ProfileInfo.LOCKED_NAME)
+            return launcherSettings.showUnsupported || launcherSettings.showUnverified && versionManager.checkSupport(profile.versionDirName)
+
+        console.log("Failed")
+        return false
     }
 
     function showLaunchError(message) {
